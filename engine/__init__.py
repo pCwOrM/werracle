@@ -15,6 +15,16 @@ from .defi_gates import (
     AmmDynamicFeeGate,
     RegulatoryComplianceGate
 )
+from .domain_ontology import (
+    OntologicalDomain,
+    TELEMETRY_ENABLED
+)
+from .calibrated_oracle import (
+    CalibratedWerracleOracle,
+    float_to_fp,
+    fp_to_float,
+    fp_mul
+)
 
 __all__ = [
     "WerracleCoreEngine",
@@ -24,4 +34,10 @@ __all__ = [
     "DeFiFlashLoanGate",
     "AmmDynamicFeeGate",
     "RegulatoryComplianceGate",
+    "OntologicalDomain",
+    "TELEMETRY_ENABLED",
+    "CalibratedWerracleOracle",
+    "float_to_fp",
+    "fp_to_float",
+    "fp_mul",
 ]

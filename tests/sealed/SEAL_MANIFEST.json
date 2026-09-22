@@ -1,0 +1,49 @@
+{
+  "organization": "ITOUCH B\u0130L\u0130\u015e\u0130M S\u0130STEMLER\u0130 LTD. \u015eT\u0130. & Werr Research Lab",
+  "project": "Werracle On-Chain AI Decision Oracle",
+  "seal_timestamp_utc": "2026-09-22T23:40:24Z",
+  "patent_reference": "TR 2026/016285",
+  "license": "BSL 1.1",
+  "telemetry_status": "PERMANENTLY_DISABLED (ZERO_NETWORK_LEAK)",
+  "environment": {
+    "platform": "Windows-10-10.0.19045-SP0",
+    "processor": "Intel64 Family 6 Model 78 Stepping 3, GenuineIntel",
+    "python": "3.11.9",
+    "model_size_bytes": 0,
+    "storage_slot_size_bytes": 32,
+    "vram_bytes": 0
+  },
+  "test_battery_summary": {
+    "total_executed": 1000,
+    "total_passed": 1000,
+    "total_failed": 0,
+    "success_rate_percent": 100.0,
+    "mean_execution_latency_us": 213.85,
+    "category_breakdown": {
+      "MATH_Q16_INVARIANCE": {
+        "total": 250,
+        "passed": 250
+      },
+      "DEFI_FLASH_LOAN_TRIAGE": {
+        "total": 250,
+        "passed": 250
+      },
+      "AML_REGULATORY_TRIAGE": {
+        "total": 250,
+        "passed": 250
+      },
+      "DYNAMIC_FEE_CALIBRATION": {
+        "total": 250,
+        "passed": 250
+      }
+    }
+  },
+  "cryptographic_seals": {
+    "test_1000_sealed_results": {
+      "file": "test_1000_sealed_results.json",
+      "sha256": "e287d010efee159d6ea3f307509a3e1e306f8a919867de9d2491549240d5fd5e",
+      "file_size_bytes": 444658,
+      "status": "SEALED_AND_VERIFIED"
+    }
+  }
+}
