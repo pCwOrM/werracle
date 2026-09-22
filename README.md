@@ -120,7 +120,17 @@ node -e "const solc=require('solc'); /* compiles all contracts cleanly */"
 
 ---
 
+---
+
+## 💳 Funding & Grants Receiving Wallets
+* **Trust Wallet (USDT TRC20 / TRON Network):** `TQ6UjobN9HpGkPst2E6Cm3GiG5PSeLn5Bb`
+* **Binance Wallet (USDT TRC20 / TRON Network):** `TQc3VjKPkpv3nkHcaT4LKVcfdrS6yTRSUG`
+* **Official Contacts:** `vdagli@itouch.com.tr` | `pcworm@pcworm.net` | Web: `https://answerr.me`
+
+---
+
 ## 📜 License
 Werracle is released under the **Business Source License 1.1 (BSL 1.1)**.  
 * Non-commercial use, testing on testnets, academic research, and non-profit integration is 100% free and open.
-* Commercial mainnet deployments require canonical router routing or written licensing until **September 23, 2028**, after which it automatically converts to the **MIT License**.
+* Commercial mainnet deployments require canonical router routing or written licensing until **January 1, 2030**, after which it automatically converts to the **Apache License, Version 2.0**.
+* Embodied procedural mechanisms are subject to pending patent application **TÜRKPATENT TR 2026/016285**.

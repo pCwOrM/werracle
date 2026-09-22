@@ -42,7 +42,9 @@
 
 ---
 
-## 🎯 Target Ecosystems
-* **Ethereum Mainnet, Base, Arbitrum One / Stylus, Optimism, Polygon, Avalanche.**
-* **GitHub Repository:** `https://github.com/pCwOrM/werracle`
-* **Contact & Research Lead:** Volkan Dağlı (`@pCwOrM`), ITouch Systems & Anadolu University.
+## 🎯 Target Ecosystems & Official Wallets
+* **Target Chains:** Ethereum Mainnet, Base, Arbitrum One / Stylus, Optimism, Polygon, Avalanche.
+* **Primary Funding Wallet (USDT TRC20 / TRON):** `TQ6UjobN9HpGkPst2E6Cm3GiG5PSeLn5Bb`
+* **Secondary Funding Wallet (USDT TRC20 / TRON):** `TQc3VjKPkpv3nkHcaT4LKVcfdrS6yTRSUG`
+* **Corporate Entity:** ITOUCH BİLİŞİM SİSTEMLERİ LTD. ŞTİ. (Çukurova Teknokent, Adana / Türkiye)
+* **Contacts:** `vdagli@itouch.com.tr` | `pcworm@pcworm.net` | Web: `https://answerr.me`

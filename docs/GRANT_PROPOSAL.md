@@ -56,3 +56,22 @@ Werracle eliminates stored weight matrices entirely. Operating on procedural qua
 
 ## 5. Ecosystem Impact
 Werracle provides Ethereum and L2 rollups with their first true **native, autonomous, intra-block decision capability**. Protocols no longer need to trust centralized Web2 oracle signers or endure multi-minute ZK-ML prover delays for basic reflexive security.
+
+---
+
+## 6. Official Grant Receiving Wallets & Contact Information
+
+* **Primary Trust Wallet (USDT - TRC20 / TRON Network):**
+  `TQ6UjobN9HpGkPst2E6Cm3GiG5PSeLn5Bb`
+* **Secondary Binance Wallet (USDT - TRC20 / TRON Network):**
+  `TQc3VjKPkpv3nkHcaT4LKVcfdrS6yTRSUG`
+* **EVM Compatible Receiving Address:**
+  `0x4642C97991461A5f98A4c023B5F698991206f52C` (Derived Ethereum / Base / Arbitrum)
+* **Corporate Entity & Licensor:**
+  ITOUCH BİLİŞİM SİSTEMLERİ MÜHENDİSLİK DANIŞMANLIK SANAYİ VE TİCARET LİMİTED ŞİRKETİ  
+  Balcalı Mah. Güney Kampüs/5 Sk. No: 4/1 Daire: 26 Sarıçam / Adana, Türkiye (Çukurova Teknokent)  
+  MERSİS: `0469094455800001` | Ticaret Sicil: `77766` | Tax ID / VKN: `4690944558` (Yüreğir V.D.)
+* **Official Communications:**
+  - Corporate Email: `vdagli@itouch.com.tr` / `info@itouch.com.tr`
+  - Personal Research Email: `pcworm@pcworm.net`
+  - Official Web Portal: `https://answerr.me`

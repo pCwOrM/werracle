@@ -120,7 +120,17 @@ node -e "const solc=require('solc'); /* tüm kontratları derler */"
 
 ---
 
+---
+
+## 💳 Bağış ve Hibe Kabul Cüzdanları
+* **Trust Wallet (USDT TRC20 / TRON Ağı):** `TQ6UjobN9HpGkPst2E6Cm3GiG5PSeLn5Bb`
+* **Binance Wallet (USDT TRC20 / TRON Ağı):** `TQc3VjKPkpv3nkHcaT4LKVcfdrS6yTRSUG`
+* **Resmi İletişim:** `vdagli@itouch.com.tr` | `pcworm@pcworm.net` | Web: `https://answerr.me`
+
+---
+
 ## 📜 Lisans
 Werracle, **Business Source License 1.1 (BSL 1.1)** ile korunmaktadır (Uniswap v3/v4 modeli):
 * Testnet'lerde test etmek, akademik araştırmalar ve kar amacı gütmeyen protokoller için **%100 ücretsiz ve açık kaynaklıdır**.
-* Ticari ana ağ (mainnet) dağıtımları **23 Eylül 2028** tarihine kadar resmi yönlendirici kullanımına veya ticari lisansa tabidir; bu tarihten sonra otomatik olarak **MIT Lisansı**'na dönüşür.
+* Ticari ana ağ (mainnet) dağıtımları **1 Ocak 2030** tarihine kadar resmi yönlendirici kullanımına veya ticari lisansa tabidir; bu tarihten sonra otomatik olarak **Apache License, Version 2.0**'a dönüşür.
+* Somutlaştırılan prosedürel mekanizmalar **TÜRKPATENT TR 2026/016285** patent başvurusu koruması altındadır.
