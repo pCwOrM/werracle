@@ -1,0 +1,38 @@
+Business Source License 1.1
+
+Parameters:
+
+Licensor:               Volkan Dağlı / WERR & Werracle Research Group
+Licensed Work:          Werracle On-Chain AI Oracle Contracts and Libraries
+Additional Use Grant:   Non-commercial use, testing on testnets (e.g. Sepolia, Arbitrum Sepolia, Base Sepolia), 
+                        academic research, and integration by verified non-profit open-source protocols is fully permitted. 
+                        Commercial production mainnet deployment requires either the canonical deployed router 
+                        or prior written license agreement from Licensor.
+Change Date:            September 23, 2028
+Change License:         MIT License
+
+========================================================================
+
+Notice:
+The Business Source License 1.1 (the "License") grants you rights to use 
+the Licensed Work subject to the terms hereof.
+
+1. Grant of License.
+Subject to the terms and conditions hereof, Licensor hereby grants you a 
+worldwide, non-exclusive, non-sublicensable, royalty-free license to copy, 
+modify, create derivative works of, and distribute the Licensed Work, solely 
+for purposes permitted under the Additional Use Grant until the Change Date.
+
+2. Effective on the Change Date.
+Effective on the Change Date, the Licensor hereby grants you a license to 
+copy, modify, create derivative works of, and distribute the Licensed Work 
+under the terms of the Change License.
+
+3. Trademarks.
+This License does not grant any rights to use Licensor's name, trademarks, 
+service marks, or logos.
+
+4. Disclaimer of Warranties.
+THE LICENSED WORK IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, 
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF 
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.

@@ -1,0 +1,37 @@
+{
+  "name": "@werracle/contracts",
+  "version": "0.1.0",
+  "description": "Zero-Storage On-Chain AI Oracle powered by WERR fractal escape dynamics in a single 32-byte EVM storage slot.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "forge test",
+    "test:gas": "forge test --gas-report",
+    "sim": "python sim/test_cross_validation.py"
+  },
+  "keywords": [
+    "werr",
+    "werracle",
+    "oracle",
+    "ai",
+    "on-chain-ai",
+    "evm",
+    "solidity",
+    "zero-storage",
+    "mandelbrot",
+    "defi",
+    "flash-loan-guard",
+    "uniswap-v4-hook"
+  ],
+  "author": "Volkan Dağlı <pCwOrM>",
+  "license": "BSL-1.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pCwOrM/werracle.git"
+  },
+  "devDependencies": {
+    "solc": "^0.8.20"
+  }
+}
