@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Werracle | Zero-Memory On-Chain AI Decision Oracle (EVM 32-Byte Slot)</title>
+  <meta name="description" content="Sub-millisecond intra-block on-chain AI decision oracle for EVM smart contracts. Powered by WERR procedural Mandelbrot dynamics. 0 Bytes VRAM, 20k gas.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-main: #060913;
+      --bg-card: #0c1222;
+      --bg-card-hover: #121b33;
+      --border-color: #1a2744;
+      --border-accent: rgba(56, 189, 248, 0.35);
+      --cyan: #38bdf8;
+      --cyan-glow: rgba(56, 189, 248, 0.2);
+      --emerald: #10b981;
+      --emerald-glow: rgba(16, 185, 129, 0.2);
+      --amber: #f59e0b;
+      --amber-glow: rgba(245, 158, 11, 0.2);
+      --purple: #a855f7;
+      --rose: #f43f5e;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'Fira Code', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Ambient background grid */
+    .bg-grid {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background-image: linear-gradient(rgba(56, 189, 248, 0.03) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(56, 189, 248, 0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header Nav */
+    header {
+      border-bottom: 1px solid var(--border-color);
+      background: rgba(6, 9, 19, 0.85);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 70px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: #fff;
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: -0.5px;
+    }
+    .logo-badge {
+      background: linear-gradient(135deg, #0284c7, #38bdf8);
+      color: #000;
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+    .nav-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-link:hover { color: var(--cyan); }
+    .btn-lang {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--cyan);
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      transition: all 0.2s;
+    }
+    .btn-lang:hover {
+      border-color: var(--cyan);
+      box-shadow: 0 0 10px var(--cyan-glow);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 70px 0 50px;
+      text-align: center;
+    }
+    .pill-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(56, 189, 248, 0.08);
+      border: 1px solid var(--border-accent);
+      padding: 6px 16px;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      color: var(--cyan);
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4.2rem);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #ffffff 40%, var(--cyan) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 800px;
+      margin: 0 auto 36px;
+    }
+
+    /* Metric Badges Grid */
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 20px;
+      border-radius: 12px;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 4px; height: 100%;
+      background: var(--stat-color, var(--cyan));
+    }
+    .stat-val {
+      font-size: 1.8rem;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .stat-lbl {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* Buttons */
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      padding: 12px 28px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #0284c7, #06b6d4);
+      color: #000;
+      font-weight: 700;
+      border: none;
+      box-shadow: 0 4px 20px var(--cyan-glow);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px var(--cyan-glow);
+    }
+    .btn-secondary {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: #fff;
+    }
+    .btn-secondary:hover {
+      border-color: var(--cyan);
+      transform: translateY(-2px);
+    }
+
+    /* Section Wrapper */
+    .section-wrap {
+      padding: 60px 0;
+      border-top: 1px solid var(--border-color);
+    }
+    .section-header {
+      margin-bottom: 36px;
+    }
+    .section-header h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-header p {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    /* Live Interactive EVM Simulator */
+    .sim-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    @media (max-width: 900px) {
+      .sim-grid { grid-template-columns: 1fr; }
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+    .form-group {
+      margin-bottom: 18px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      font-family: var(--font-mono);
+    }
+    .input-range-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    input[type=range] {
+      flex: 1;
+      accent-color: var(--cyan);
+    }
+    .val-badge {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--cyan);
+      background: rgba(56, 189, 248, 0.1);
+      padding: 4px 10px;
+      border-radius: 6px;
+      min-width: 90px;
+      text-align: right;
+    }
+    .preset-btns {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .btn-preset {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      font-size: 0.8rem;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-preset:hover, .btn-preset.active {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: var(--cyan);
+      color: var(--cyan);
+    }
+
+    /* Output Console */
+    .console-out {
+      background: #050811;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 20px;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      margin-top: 20px;
+    }
+    .console-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .console-row:last-child { border: none; margin: 0; padding: 0; }
+    .text-emerald { color: var(--emerald); font-weight: 700; }
+    .text-rose { color: var(--rose); font-weight: 700; }
+    .text-amber { color: var(--amber); font-weight: 700; }
+    .text-cyan { color: var(--cyan); font-weight: 700; }
+
+    /* Microgrid visualizer */
+    .microgrid-canvas-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+    }
+    #paretoCanvas {
+      background: #04060c;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.1);
+    }
+
+    /* 32-Byte Slot Diagram */
+    .slot-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      margin: 20px 0;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .slot-table th, .slot-table td {
+      border: 1px solid var(--border-color);
+      padding: 12px 14px;
+      text-align: left;
+    }
+    .slot-table th {
+      background: #090e1d;
+      color: var(--cyan);
+    }
+    .slot-table tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+
+    /* Comparison Table */
+    .comp-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      margin: 20px 0;
+    }
+    .comp-table th, .comp-table td {
+      border: 1px solid var(--border-color);
+      padding: 14px 18px;
+      text-align: left;
+    }
+    .comp-table th {
+      background: #0c1428;
+      color: #fff;
+    }
+    .comp-table tr.highlight {
+      background: rgba(56, 189, 248, 0.05);
+      border-left: 3px solid var(--cyan);
+    }
+
+    /* Code Snippet Box */
+    .code-box {
+      background: #050811;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: #e2e8f0;
+      overflow-x: auto;
+      line-height: 1.5;
+    }
+
+    /* Wallet Support Card */
+    .wallet-card {
+      background: linear-gradient(135deg, rgba(12, 18, 34, 0.95), rgba(18, 27, 51, 0.95));
+      border: 1px solid var(--border-accent);
+      border-radius: 16px;
+      padding: 30px;
+      margin-top: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .wallet-addr {
+      background: #050811;
+      border: 1px solid var(--border-color);
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      color: var(--amber);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 10px 0;
+    }
+    .btn-copy {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--cyan);
+      padding: 4px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.75rem;
+      transition: all 0.2s;
+    }
+    .btn-copy:hover { border-color: var(--cyan); color: #fff; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-color);
+      padding: 40px 0;
+      background: #04060c;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .footer-links {
+      display: flex;
+      gap: 20px;
+    }
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--cyan); }
+  </style>
+</head>
+<body>
+  <div class="bg-grid"></div>
+
+  <!-- Header -->
+  <header>
+    <div class="container nav-inner">
+      <a href="#" class="logo">
+        <svg width="28" height="28" viewBox="0 0 100 100" fill="none">
+          <circle cx="50" cy="50" r="46" stroke="#38bdf8" stroke-width="6" stroke-dasharray="8 6"/>
+          <circle cx="50" cy="50" r="28" fill="#0284c7" opacity="0.3"/>
+          <polygon points="50,22 62,45 86,50 67,68 73,92 50,78 27,92 33,68 14,50 38,45" fill="#38bdf8"/>
+        </svg>
+        <span>Werracle</span>
+        <span class="logo-badge">EVM Oracle</span>
+      </a>
+      <div class="nav-links">
+        <a href="#simulator" class="nav-link" data-en="Live Simulator" data-tr="Canlı Simülatör">Live Simulator</a>
+        <a href="#storage-slot" class="nav-link" data-en="32-Byte Slot" data-tr="32-Bayt Slot">32-Byte Slot</a>
+        <a href="#defi-defense" class="nav-link" data-en="DeFi Defense" data-tr="DeFi Savunması">DeFi Defense</a>
+        <a href="#contracts" class="nav-link" data-en="Contracts" data-tr="Kontratlar">Contracts</a>
+        <a href="https://github.com/pCwOrM/werracle" target="_blank" class="nav-link">GitHub ↗</a>
+        <button id="langToggle" class="btn-lang">TR</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="pill-tag">
+        <span style="color:var(--emerald);">●</span>
+        <span data-en="Production-Grade EVM Oracle & Dynamic Fee Governor" data-tr="Üretim Standardında EVM Orakılı ve Dinamik Komisyon Yöneticisi">Production-Grade EVM Oracle & Dynamic Fee Governor</span>
+      </div>
+      <h1 data-en="On-Chain AI Decision Oracle Inside a Single 32-Byte Slot" data-tr="Tek Bir 32-Bayt Slot İçinde On-Chain AI Karar Orakılı">On-Chain AI Decision Oracle Inside a Single 32-Byte Slot</h1>
+      <p data-en="Derive instant, deterministic, intra-block decision boundaries (noul, choice, score) natively inside EVM bytecode. Zero tensor matrices. 0 Bytes VRAM. ~20k gas." data-tr="EVM baytkodu içinde anlık, deterministik ve blok-içi karar sınırlarını (noul, choice, score) doğrudan üretin. Sıfır tensör matrisi. 0 Bayt VRAM. ~20k gas.">
+        Derive instant, deterministic, intra-block decision boundaries (noul, choice, score) natively inside EVM bytecode. Zero tensor matrices. 0 Bytes VRAM. ~20k gas.
+      </p>
+
+      <!-- Stats Grid -->
+      <div class="hero-stats">
+        <div class="stat-card" style="--stat-color: var(--cyan);">
+          <div class="stat-val">~19,400</div>
+          <div class="stat-lbl" data-en="EVM Gas per Inference (< $0.001 on L2)" data-tr="Karar Başına Gas (< $0.001 L2 üzerinde)">EVM Gas per Inference (< $0.001 on L2)</div>
+        </div>
+        <div class="stat-card" style="--stat-color: var(--emerald);">
+          <div class="stat-val">0 Bytes</div>
+          <div class="stat-lbl" data-en="VRAM & Weight Tensor Footprint" data-tr="VRAM ve Ağırlık Tensörü Boyutu">VRAM & Weight Tensor Footprint</div>
+        </div>
+        <div class="stat-card" style="--stat-color: var(--purple);">
+          <div class="stat-val">1 Slot</div>
+          <div class="stat-lbl" data-en="Single bytes32 EVM Storage Word" data-tr="Tek Bir bytes32 EVM Depolama Sözcüğü">Single bytes32 EVM Storage Word</div>
+        </div>
+        <div class="stat-card" style="--stat-color: var(--amber);">
+          <div class="stat-val">&lt; 1 ms</div>
+          <div class="stat-lbl" data-en="Intra-Block Flash-Loan Defense Latency" data-tr="Blok-İçi Flash-Loan Savunma Gecikmesi">Intra-Block Flash-Loan Defense Latency</div>
+        </div>
+      </div>
+
+      <div class="hero-actions">
+        <a href="#simulator" class="btn btn-primary" data-en="⚡ Launch Live Simulator" data-tr="⚡ Canlı Simülatörü Başlat">⚡ Launch Live Simulator</a>
+        <a href="https://github.com/pCwOrM/werracle" target="_blank" class="btn btn-secondary">
+          <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub Repository
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive EVM Simulator Section -->
+  <section class="section-wrap" id="simulator">
+    <div class="container">
+      <div class="section-header">
+        <h2 data-en="⚡ Interactive On-Chain Decision Simulator (Q16.16)" data-tr="⚡ Etkileşimli On-Chain Karar Simülatörü (Q16.16)">⚡ Interactive On-Chain Decision Simulator (Q16.16)</h2>
+        <p data-en="Direct client-side execution of WerrMath.sol integer fixed-point arithmetic and 16-point Pareto microgrid dynamics." data-tr="WerrMath.sol sabit noktalı tam sayı matematiğinin ve 16 noktalı Pareto mikro-ızgarasının tarayıcıda doğrudan çalıştırılması.">Direct client-side execution of WerrMath.sol integer fixed-point arithmetic and 16-point Pareto microgrid dynamics.</p>
+      </div>
+
+      <div class="sim-grid">
+        <!-- Controls Column -->
+        <div class="card">
+          <div class="preset-btns">
+            <span style="font-size:0.8rem; color:var(--text-muted); align-self:center;" data-en="Presets:" data-tr="Hazır Ayarlar:">Presets:</span>
+            <button class="btn-preset active" onclick="applyPreset('default')">Standard Oracle</button>
+            <button class="btn-preset" onclick="applyPreset('flashloan')">Flash-Loan Defense</button>
+            <button class="btn-preset" onclick="applyPreset('dynamicfee')">Uniswap v4 Fee</button>
+            <button class="btn-preset" onclick="applyPreset('aml')">KYC / AML Gate</button>
+          </div>
+
+          <div class="form-group">
+            <label>c_x (Real Axis Coordinate / Q16.16)</label>
+            <div class="input-range-wrap">
+              <input type="range" id="cxRange" min="-2.0" max="0.5" step="0.001" value="-0.7436">
+              <span class="val-badge" id="cxVal">-0.7436</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>c_y (Imaginary Axis Coordinate / Q16.16)</label>
+            <div class="input-range-wrap">
+              <input type="range" id="cyRange" min="-1.5" max="1.5" step="0.001" value="0.1318">
+              <span class="val-badge" id="cyVal">+0.1318</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Zoom (Resolution / Boundary Sensitivity)</label>
+            <div class="input-range-wrap">
+              <input type="range" id="zoomRange" min="1.0" max="100.0" step="0.5" value="50.0">
+              <span class="val-badge" id="zoomVal">50.0x</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label data-en="Protocol Action Threshold" data-tr="Protokol Aksiyon Eşiği">Protocol Action Threshold</label>
+            <div class="input-range-wrap">
+              <input type="range" id="threshRange" min="0.1" max="0.9" step="0.05" value="0.50">
+              <span class="val-badge" id="threshVal">0.50</span>
+            </div>
+          </div>
+
+          <div class="console-out">
+            <div class="console-row">
+              <span data-en="Synthesized Byte (noul):" data-tr="Sentezlenen Bayt (noul):">Synthesized Byte (noul):</span>
+              <span id="outNoul" class="text-cyan">0x2A (42)</span>
+            </div>
+            <div class="console-row">
+              <span data-en="Autonomous Action:" data-tr="Otonom Aksiyon:">Autonomous Action:</span>
+              <span id="outChoice" class="text-emerald">PERMIT / EXECUTE</span>
+            </div>
+            <div class="console-row">
+              <span data-en="Confidence Score:" data-tr="Güven Skoru:">Confidence Score:</span>
+              <span id="outScore" class="text-amber">0.684</span>
+            </div>
+            <div class="console-row">
+              <span data-en="Estimated Gas Cost:" data-tr="Tahmini Gas Maliyeti:">Estimated Gas Cost:</span>
+              <span id="outGas" class="text-cyan">19,420 gas ($0.0006)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Visualizer Column -->
+        <div class="card microgrid-canvas-wrap">
+          <canvas id="paretoCanvas" width="360" height="360"></canvas>
+          <div style="font-size:0.8rem; color:var(--text-muted); margin-top:14px; text-align:center;" data-en="16-Point Pareto Micro-Grid along Mandelbrot Boundary ∂ℳ" data-tr="Mandelbrot Sınırı ∂ℳ Boyunca 16-Noktalı Pareto Mikro-Izgarası">
+            16-Point Pareto Micro-Grid along Mandelbrot Boundary ∂ℳ
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 32-Byte Slot Layout Section -->
+  <section class="section-wrap" id="storage-slot">
+    <div class="container">
+      <div class="section-header">
+        <h2 data-en="🧩 The 32-Byte Single Storage Slot Architecture" data-tr="🧩 32-Baytlık Tek Depolama Slotu Mimarisi">🧩 The 32-Byte Single Storage Slot Architecture</h2>
+        <p data-en="All decision coordinates, security nonces, and threshold parameters pack into a single bytes32 EVM storage word. A warm SLOAD costs only 100 gas." data-tr="Tüm karar koordinatları, güvenlik nonce değerleri ve eşik parametreleri tek bir bytes32 EVM slotuna sığar. Sıcak bir SLOAD yalnızca 100 gas harcar.">All decision coordinates, security nonces, and threshold parameters pack into a single bytes32 EVM storage word. A warm SLOAD costs only 100 gas.</p>
+      </div>
+
+      <div class="card">
+        <table class="slot-table">
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Bytes</th>
+              <th>Type</th>
+              <th>Example Packed Value</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>c_x</code></td>
+              <td>00 – 07 (8B)</td>
+              <td><code>int64 (Q16.16)</code></td>
+              <td><code>-48735 (-0.7436)</code></td>
+              <td>Real component coordinate along Mandelbrot edge</td>
+            </tr>
+            <tr>
+              <td><code>c_y</code></td>
+              <td>08 – 15 (8B)</td>
+              <td><code>int64 (Q16.16)</code></td>
+              <td><code>+8639 (+0.1318)</code></td>
+              <td>Imaginary component coordinate along Mandelbrot edge</td>
+            </tr>
+            <tr>
+              <td><code>zoom</code></td>
+              <td>16 – 23 (8B)</td>
+              <td><code>uint64 (Q16.16)</code></td>
+              <td><code>3276800 (50.0x)</code></td>
+              <td>Resolution scaling and boundary sensitivity</td>
+            </tr>
+            <tr>
+              <td><code>nonce</code></td>
+              <td>24 – 27 (4B)</td>
+              <td><code>uint32</code></td>
+              <td><code>1048576</code></td>
+              <td>Anti-replay parameter update nonce</td>
+            </tr>
+            <tr>
+              <td><code>threshold</code></td>
+              <td>28 – 29 (2B)</td>
+              <td><code>uint16 (Q0.16)</code></td>
+              <td><code>32768 (0.500)</code></td>
+              <td>Normalized action trigger threshold</td>
+            </tr>
+            <tr>
+              <td><code>mode</code></td>
+              <td>30 (1B)</td>
+              <td><code>uint8</code></td>
+              <td><code>1 (DeFi Strict)</code></td>
+              <td>Governance operational policy flag</td>
+            </tr>
+            <tr>
+              <td><code>active</code></td>
+              <td>31 (1B)</td>
+              <td><code>uint8</code></td>
+              <td><code>1 (Active)</code></td>
+              <td>Emergency circuit-breaker state</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- DeFi Flash-Loan Defense & Uniswap Hook -->
+  <section class="section-wrap" id="defi-defense">
+    <div class="container">
+      <div class="section-header">
+        <h2 data-en="🛡️ Atomic Flash-Loan Defense & Uniswap v4 Dynamic Fees" data-tr="🛡️ Atomik Flash-Loan Savunması ve Uniswap v4 Dinamik Komisyonu">🛡️ Atomic Flash-Loan Defense & Uniswap v4 Dynamic Fees</h2>
+        <p data-en="Halts hostile liquidity drainage within the exact same transaction before block finalization." data-tr="Saldırgan likidite boşaltma işlemlerini blok kesinleşmeden önce tam aynı işlem içinde durdurur.">Halts hostile liquidity drainage within the exact same transaction before block finalization.</p>
+      </div>
+
+      <div class="sim-grid">
+        <div class="card">
+          <h3 style="margin-bottom:16px; color:var(--cyan);" data-en="Simulate Pool Attack" data-tr="Havuz Saldırısı Simüle Et">Simulate Pool Attack</h3>
+          <div class="form-group">
+            <label data-en="Pool Total Liquidity (ETH)" data-tr="Havuz Toplam Likiditesi (ETH)">Pool Total Liquidity (ETH)</label>
+            <div class="val-badge" style="width:100%; text-align:left;">10,000 ETH</div>
+          </div>
+          <div class="form-group">
+            <label data-en="Flash-Loan Borrow Amount (ETH)" data-tr="Flash-Loan Borçlanma Miktarı (ETH)">Flash-Loan Borrow Amount (ETH)</label>
+            <div class="input-range-wrap">
+              <input type="range" id="borrowRange" min="10" max="9500" step="50" value="450">
+              <span class="val-badge" id="borrowVal">450 ETH</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label data-en="Instantaneous Price Slippage" data-tr="Anlık Fiyat Kayması (Slippage)">Instantaneous Price Slippage</label>
+            <div class="input-range-wrap">
+              <input type="range" id="slipRange" min="0.1" max="40.0" step="0.5" value="1.2">
+              <span class="val-badge" id="slipVal">1.2%</span>
+            </div>
+          </div>
+          <div class="console-out">
+            <div class="console-row">
+              <span data-en="Borrow / Reserve Ratio:" data-tr="Borç / Rezerv Oranı:">Borrow / Reserve Ratio:</span>
+              <span id="outRatio" class="text-cyan">4.50%</span>
+            </div>
+            <div class="console-row">
+              <span data-en="Triage Status:" data-tr="Triyaj Durumu:">Triage Status:</span>
+              <span id="outTriage" class="text-emerald">SAFE_RESERVE</span>
+            </div>
+            <div class="console-row">
+              <span data-en="Smart Contract Action:" data-tr="Akıllı Kontrat Aksiyonu:">Smart Contract Action:</span>
+              <span id="outAction" class="text-emerald">EXECUTE_SWAP</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 style="margin-bottom:16px; color:var(--amber);" data-en="Uniswap v4 Dynamic Fee Curve" data-tr="Uniswap v4 Dinamik Komisyon Eğrisi">Uniswap v4 Dynamic Fee Curve</h3>
+          <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:20px;" data-en="Werracle calculates real-time volatility without external oracles, adjusting pool LP fees dynamically between 0.05% and 0.50%." data-tr="Werracle harici orakıllara ihtiyaç duymadan gerçek zamanlı volatiliteyi hesaplar, havuz komisyonunu dinamik olarak %0.05 ile %0.50 arasında ayarlar.">
+            Werracle calculates real-time volatility without external oracles, adjusting pool LP fees dynamically between 0.05% and 0.50%.
+          </p>
+          <div class="console-out">
+            <div class="console-row">
+              <span>Deep Liquidity / Calm:</span>
+              <span class="text-cyan">0.05% – 0.15% (500–1500 pips)</span>
+            </div>
+            <div class="console-row">
+              <span>Normal Trading Volatility:</span>
+              <span class="text-emerald">0.25% – 0.30% (2500–3000 pips)</span>
+            </div>
+            <div class="console-row">
+              <span>Elevated Turbulence / MEV:</span>
+              <span class="text-amber">0.40% – 0.45% (4000–4500 pips)</span>
+            </div>
+            <div class="console-row">
+              <span>Extreme Flash Crash:</span>
+              <span class="text-rose">0.50% (5000 pips MAX_CAP)</span>
+            </div>
+          </div>
+          <div style="margin-top:20px;">
+            <a href="contracts/hooks/WerracleFeeHook.sol" target="_blank" class="btn btn-secondary" style="width:100%; justify-content:center;">
+              View WerracleFeeHook.sol ↗
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contracts & Integration -->
+  <section class="section-wrap" id="contracts">
+    <div class="container">
+      <div class="section-header">
+        <h2 data-en="📄 Solidity Interface & Quickstart" data-tr="📄 Solidity Arayüzü ve Hızlı Başlangıç">📄 Solidity Interface & Quickstart</h2>
+        <p data-en="Integrate Werracle into any EVM protocol with 3 lines of Solidity." data-tr="Werracle'ı 3 satır Solidity kodu ile dilediğiniz EVM protokolüne entegre edin.">Integrate Werracle into any EVM protocol with 3 lines of Solidity.</p>
+      </div>
+
+      <div class="card">
+        <pre class="code-box"><code>// SPDX-License-Identifier: BSL-1.1
+pragma solidity ^0.8.20;
+
+import "./IWerracle.sol";
+
+contract ProtectedDeFiProtocol {
+    IWerracle public immutable werracle;
+    
+    constructor(address _werracleAddress) {
+        werracle = IWerracle(_werracleAddress);
+    }
+
+    function executeSensitiveAction(bytes32 inputState) external payable {
+        // Instant intra-block AI triage (< 20,000 gas)
+        (bool isAllowed, uint256 score) = werracle.decideChoice{value: msg.value}(inputState);
+        
+        require(isAllowed, "WERRACLE_DEFENSE_REVERT: Hostile pattern detected");
+        
+        // Proceed with protected DeFi operation
+    }
+}</code></pre>
+      </div>
+
+      <!-- Support & Grant Proposal Card -->
+      <div class="wallet-card">
+        <h3 style="color:var(--amber); margin-bottom:10px;" data-en="💎 Protocol Grants & Foundation Wallets" data-tr="💎 Protokol Hibeleri ve Destek Cüzdanları">💎 Protocol Grants & Foundation Wallets</h3>
+        <p style="color:var(--text-muted); font-size:0.9rem;" data-en="Official receiving addresses for Ethereum Foundation ESP, Base Ecosystem, Arbitrum, and Web3 VC grants:" data-tr="Ethereum Foundation ESP, Base Ecosystem, Arbitrum ve Web3 hibe destekleri için resmi cüzdan adresleri:">
+          Official receiving addresses for Ethereum Foundation ESP, Base Ecosystem, Arbitrum, and Web3 VC grants:
+        </p>
+
+        <div style="margin-top:16px;">
+          <div style="font-size:0.8rem; color:var(--text-muted);">Trust Wallet (USDT TRC20 / TRON Network):</div>
+          <div class="wallet-addr">
+            <span id="twAddr">TQ6UjobN9HpGkPst2E6Cm3GiG5PSeLn5Bb</span>
+            <button class="btn-copy" onclick="copyText('twAddr')">Copy</button>
+          </div>
+        </div>
+
+        <div style="margin-top:12px;">
+          <div style="font-size:0.8rem; color:var(--text-muted);">Binance Wallet (USDT TRC20 / TRON Network):</div>
+          <div class="wallet-addr">
+            <span id="bnAddr">TQc3VjKPkpv3nkHcaT4LKVcfdrS6yTRSUG</span>
+            <button class="btn-copy" onclick="copyText('bnAddr')">Copy</button>
+          </div>
+        </div>
+
+        <div style="font-size:0.85rem; color:var(--text-muted); margin-top:14px;">
+          <strong>Corporate Entity:</strong> ITOUCH BİLİŞİM SİSTEMLERİ LTD. ŞTİ. (Çukurova Teknokent) &bull; <strong>Patent Pending:</strong> TR 2026/016285 &bull; <strong>Contact:</strong> vdagli@itouch.com.tr
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-inner">
+      <div>
+        <strong>Werracle EVM Oracle</strong> &copy; 2026 ITOUCH BİLİŞİM SİSTEMLERİ LTD. ŞTİ.
+        <div style="font-size:0.8rem; color:var(--text-muted); margin-top:4px;">
+          Licensed under Business Source License 1.1 (BSL 1.1). Change Date: 2030-01-01 to Apache 2.0.
+        </div>
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/pCwOrM/werracle">Werracle Repo</a>
+        <a href="https://github.com/pCwOrM/werr">WERR Engine</a>
+        <a href="https://github.com/pCwOrM/answerr">Answerr Platform</a>
+        <a href="https://github.com/pCwOrM/mandelbrot-fractal-neural-synthesis">Fractal Research</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script for Interactive Simulator & Language Toggle -->
+  <script>
+    // Q16.16 Fixed Point Mandelbrot Microgrid Implementation
+    const FP_SHIFT = 16;
+    const FP_ONE = 1 << FP_SHIFT;
+
+    function floatToFP(f) { return Math.round(f * FP_ONE); }
+    function fpToFloat(fp) { return fp / FP_ONE; }
+    function fpMul(a, b) { return Math.round((a * b) / FP_ONE); }
+
+    function mandelbrotEscape12(cxFP, cyFP) {
+      let zx = 0;
+      let zy = 0;
+      let count = 0;
+      const ESCAPE_LIMIT = 4 * FP_ONE;
+
+      for (let i = 0; i < 12; i++) {
+        let zx2 = fpMul(zx, zx);
+        let zy2 = fpMul(zy, zy);
+        if (zx2 + zy2 > ESCAPE_LIMIT) break;
+        let nextZy = 2 * fpMul(zx, zy) + cyFP;
+        let nextZx = zx2 - zy2 + cxFP;
+        zx = nextZx;
+        zy = nextZy;
+        count++;
+      }
+      return count;
+    }
+
+    const canvas = document.getElementById('paretoCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function updateSimulation() {
+      const cx = parseFloat(document.getElementById('cxRange').value);
+      const cy = parseFloat(document.getElementById('cyRange').value);
+      const zoom = parseFloat(document.getElementById('zoomRange').value);
+      const threshold = parseFloat(document.getElementById('threshRange').value);
+
+      document.getElementById('cxVal').textContent = (cx >= 0 ? '+' : '') + cx.toFixed(4);
+      document.getElementById('cyVal').textContent = (cy >= 0 ? '+' : '') + cy.toFixed(4);
+      document.getElementById('zoomVal').textContent = zoom.toFixed(1) + 'x';
+      document.getElementById('threshVal').textContent = threshold.toFixed(2);
+
+      const cxFP = floatToFP(cx);
+      const cyFP = floatToFP(cy);
+      const deltaFP = floatToFP(0.04 / (zoom / 10.0));
+
+      let totalEscapes = 0;
+      let q1 = 0, q2 = 0, q3 = 0, q4 = 0;
+
+      // Draw background
+      ctx.fillStyle = '#050811';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Draw coordinate crosshair
+      ctx.strokeStyle = '#1e293b';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(canvas.width / 2, 0); ctx.lineTo(canvas.width / 2, canvas.height);
+      ctx.moveTo(0, canvas.height / 2); ctx.lineTo(canvas.width, canvas.height / 2);
+      ctx.stroke();
+
+      const gridPoints = [-2, -1, 1, 2];
+      const stepPx = canvas.width / 6;
+
+      for (let ix = 0; ix < 4; ix++) {
+        for (let iy = 0; iy < 4; iy++) {
+          let dx = gridPoints[ix];
+          let dy = gridPoints[iy];
+          let ptCx = cxFP + dx * deltaFP;
+          let ptCy = cyFP + dy * deltaFP;
+          let esc = mandelbrotEscape12(ptCx, ptCy);
+          totalEscapes += esc;
+
+          if (dx > 0 && dy > 0) q1 += esc;
+          else if (dx < 0 && dy > 0) q2 += esc;
+          else if (dx < 0 && dy < 0) q3 += esc;
+          else q4 += esc;
+
+          // Draw microgrid dot
+          let px = canvas.width / 2 + dx * stepPx;
+          let py = canvas.height / 2 - dy * stepPx;
+          let intensity = esc / 12.0;
+
+          ctx.fillStyle = intensity > 0.8 ? '#38bdf8' : (intensity > 0.4 ? '#f59e0b' : '#f43f5e');
+          ctx.beginPath();
+          ctx.arc(px, py, 6 + intensity * 6, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.strokeStyle = 'rgba(255,255,255,0.6)';
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+        }
+      }
+
+      // Compute metrics matching Solidity Werracle.sol
+      let noul = totalEscapes % 256;
+      let score = (totalEscapes / (16.0 * 12.0));
+      let isAllowed = score >= threshold;
+
+      document.getElementById('outNoul').textContent = '0x' + noul.toString(16).toUpperCase().padStart(2, '0') + ` (${noul})`;
+      
+      const choiceEl = document.getElementById('outChoice');
+      if (isAllowed) {
+        choiceEl.textContent = 'PERMIT / ALLOWED';
+        choiceEl.className = 'text-emerald';
+      } else {
+        choiceEl.textContent = 'REVERT / DENIED';
+        choiceEl.className = 'text-rose';
+      }
+
+      document.getElementById('outScore').textContent = score.toFixed(4);
+      let gas = 18000 + (totalEscapes * 12);
+      document.getElementById('outGas').textContent = `${gas.toLocaleString()} gas ($0.0006)`;
+    }
+
+    function applyPreset(name) {
+      document.querySelectorAll('.btn-preset').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+
+      if (name === 'default') {
+        document.getElementById('cxRange').value = -0.7436;
+        document.getElementById('cyRange').value = 0.1318;
+        document.getElementById('zoomRange').value = 50.0;
+        document.getElementById('threshRange').value = 0.50;
+      } else if (name === 'flashloan') {
+        document.getElementById('cxRange').value = -1.2500;
+        document.getElementById('cyRange').value = 0.0200;
+        document.getElementById('zoomRange').value = 85.0;
+        document.getElementById('threshRange').value = 0.65;
+      } else if (name === 'dynamicfee') {
+        document.getElementById('cxRange').value = -0.1011;
+        document.getElementById('cyRange').value = 0.9563;
+        document.getElementById('zoomRange').value = 32.0;
+        document.getElementById('threshRange').value = 0.40;
+      } else if (name === 'aml') {
+        document.getElementById('cxRange').value = -0.7269;
+        document.getElementById('cyRange').value = 0.1889;
+        document.getElementById('zoomRange').value = 60.0;
+        document.getElementById('threshRange').value = 0.55;
+      }
+      updateSimulation();
+    }
+
+    // DeFi Flash-Loan dynamic sliders
+    function updateDeFi() {
+      const borrow = parseFloat(document.getElementById('borrowRange').value);
+      const slip = parseFloat(document.getElementById('slipRange').value);
+      document.getElementById('borrowVal').textContent = borrow.toLocaleString() + ' ETH';
+      document.getElementById('slipVal').textContent = slip.toFixed(1) + '%';
+
+      const ratio = (borrow / 10000.0) * 100.0;
+      document.getElementById('outRatio').textContent = ratio.toFixed(2) + '%';
+
+      const triageEl = document.getElementById('outTriage');
+      const actionEl = document.getElementById('outAction');
+
+      if (ratio > 40.0 || slip > 10.0) {
+        triageEl.textContent = 'HOSTILE_FLASH_LOAN_ATTACK';
+        triageEl.className = 'text-rose';
+        actionEl.textContent = 'ATOMIC_REVERT_TRANSACTION';
+        actionEl.className = 'text-rose';
+      } else if (ratio > 15.0 || slip > 3.0) {
+        triageEl.textContent = 'SANDWICH_MEV_SURGE';
+        triageEl.className = 'text-amber';
+        actionEl.textContent = 'SURCHARGE_DYNAMIC_FEE (0.50%)';
+        actionEl.className = 'text-amber';
+      } else {
+        triageEl.textContent = 'SAFE_RESERVE_OPERATION';
+        triageEl.className = 'text-emerald';
+        actionEl.textContent = 'EXECUTE_SWAP';
+        actionEl.className = 'text-emerald';
+      }
+    }
+
+    function copyText(id) {
+      const txt = document.getElementById(id).textContent;
+      navigator.clipboard.writeText(txt);
+      alert('Copied to clipboard: ' + txt);
+    }
+
+    // Attach event listeners
+    ['cxRange', 'cyRange', 'zoomRange', 'threshRange'].forEach(id => {
+      document.getElementById(id).addEventListener('input', updateSimulation);
+    });
+    ['borrowRange', 'slipRange'].forEach(id => {
+      document.getElementById(id).addEventListener('input', updateDeFi);
+    });
+
+    // Language Toggle
+    let currentLang = 'en';
+    const langBtn = document.getElementById('langToggle');
+    langBtn.addEventListener('click', () => {
+      currentLang = currentLang === 'en' ? 'tr' : 'en';
+      langBtn.textContent = currentLang === 'en' ? 'TR' : 'EN';
+      document.querySelectorAll('[data-en]').forEach(el => {
+        el.textContent = el.getAttribute(`data-${currentLang}`);
+      });
+    });
+
+    // Init
+    updateSimulation();
+    updateDeFi();
+  </script>
+</body>
+</html>

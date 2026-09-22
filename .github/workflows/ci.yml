@@ -1,0 +1,27 @@
+name: CI / Verification
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run Mathematical Cross-Validation
+        run: |
+          python sim/test_cross_validation.py
+
+      - name: Run DeFi Flash-Loan Simulation
+        run: |
+          python sim/defi_flashloan_sim.py
