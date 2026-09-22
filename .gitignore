@@ -1,0 +1,13 @@
+# Node modules & build artifacts
+node_modules/
+package-lock.json
+out/
+cache/
+
+# Python caches
+__pycache__/
+*.py[cod]
+
+# OS files
+.DS_Store
+Thumbs.db
