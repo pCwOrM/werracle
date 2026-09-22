@@ -2,37 +2,57 @@ Business Source License 1.1
 
 Parameters:
 
-Licensor:               Volkan Dağlı / WERR & Werracle Research Group
-Licensed Work:          Werracle On-Chain AI Oracle Contracts and Libraries
-Additional Use Grant:   Non-commercial use, testing on testnets (e.g. Sepolia, Arbitrum Sepolia, Base Sepolia), 
-                        academic research, and integration by verified non-profit open-source protocols is fully permitted. 
-                        Commercial production mainnet deployment requires either the canonical deployed router 
-                        or prior written license agreement from Licensor.
-Change Date:            September 23, 2028
-Change License:         MIT License
+Licensor:
+  ITOUCH BİLİŞİM SİSTEMLERİ MÜHENDİSLİK DANIŞMANLIK SANAYİ VE TİCARET LİMİTED ŞİRKETİ
+  (MERSİS: 0469094455800001, Ticaret Sicil No: 77766, Tax ID / VKN: 4690944558, Yüreğir V.D., Sanayi Sicil No: 827254 - Adana, Türkiye)
+  and Volkan Dağlı (along with co-authors Zerrin Dağlı and Dağhan Dağlı)
 
-========================================================================
+Licensed Work:
+  Werracle: Zero-Storage On-Chain AI Decision Oracle, including all smart contracts, 
+  fixed-point fractal escape libraries, Uniswap v4 hook templates, and simulation runtimes 
+  contained in this repository.
 
-Notice:
-The Business Source License 1.1 (the "License") grants you rights to use 
-the Licensed Work subject to the terms hereof.
+Additional Use Grant:
+  1. Non-Commercial, Educational, and Academic Research Use:
+     You may run, compile, inspect, benchmark, test, study, fork, and reproduce the Licensed Work 
+     free of charge for non-commercial research, academic, educational, student collaboration, 
+     testnet deployments (e.g. Sepolia, Arbitrum Sepolia, Base Sepolia), and personal evaluations. 
+     Academic citation and open-science collaboration are explicitly permitted and encouraged.
+  2. Commercial Restriction:
+     Any production use, deployment on commercial mainnets, or provision of the Licensed Work 
+     (or substantial parts thereof) as a commercial product, hosted oracle service, paid API, 
+     or cloud/blockchain-based decision service—or in direct commercial competition with services 
+     offered by ITouch Bilişim Sistemleri Ltd. Şti., answerr.me, or canonical Werracle routers—requires 
+     an express written Commercial Enterprise License from the Licensor.
+  3. Commercial Licensing Inquiries:
+     For commercial and enterprise licensing agreements, please contact:
+     ITOUCH BİLİŞİM SİSTEMLERİ MÜHENDİSLİK DANIŞMANLIK SANAYİ VE TİCARET LİMİTED ŞİRKETİ
+     Address: Balcalı Mah. Güney Kampüs/5 Sk. No: 4/1 Daire: 26 Sarıçam / Adana, Türkiye (Çukurova Teknokent)
+     MERSİS No: 0469094455800001 | Ticaret Sicil No: 77766 | Tax ID / VKN: 4690944558 (Yüreğir V.D.)
+     Sanayi Sicil No: 827254 | Registered Trademarks: ITouch® (No: 2018/43211, 2022/209583), TEKNOSANAT® (No: 2024/169039)
+     KEP: itouchbilisim@hs01.kep.tr | Email: info@itouch.com.tr | Web: https://answerr.me
 
-1. Grant of License.
-Subject to the terms and conditions hereof, Licensor hereby grants you a 
-worldwide, non-exclusive, non-sublicensable, royalty-free license to copy, 
-modify, create derivative works of, and distribute the Licensed Work, solely 
-for purposes permitted under the Additional Use Grant until the Change Date.
+Change Date:
+  2030-01-01
 
-2. Effective on the Change Date.
-Effective on the Change Date, the Licensor hereby grants you a license to 
-copy, modify, create derivative works of, and distribute the Licensed Work 
-under the terms of the Change License.
+Change License:
+  Apache License, Version 2.0
 
-3. Trademarks.
-This License does not grant any rights to use Licensor's name, trademarks, 
-service marks, or logos.
+Patent Notice:
+  Certain procedural algorithms and neural synthesis formulations embodied in this work are subject 
+  to pending patent application TÜRKPATENT TR 2026/016285. No commercial patent license or implied patent 
+  rights are granted herein without an express written agreement from the patent applicant.
 
-4. Disclaimer of Warranties.
-THE LICENSED WORK IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, 
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF 
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+================================================================================
+
+Terms
+
+The Licensor hereby grants you the right to copy, modify, create derivative works, redistribute, and make non-production, non-commercial use of the Licensed Work. The Licensor may have trademarks, service marks, or trade names associated with the Licensed Work, and this license does not grant you rights to use them, other than as necessary to display the notice below and to identify the Licensed Work.
+
+You may make non-production use of the Licensed Work only in accordance with the Additional Use Grant above, which may specify terms under which the Licensed Work may be used without obtaining a separate commercial license from Licensor.
+
+The Licensor may not decrease the Additional Use Grant while this license is in effect. You must reproduce this license, including all parameters, and any copyright notices in any copy of the Licensed Work that you make or distribute.
+
+Effective on the Change Date, or the fourth anniversary of the first publicly available distribution of a specific version of the Licensed Work under this License, whichever comes first, the Licensor hereby grants you rights under the terms of the Change License, and the terms of this License will not apply. The Licensor agrees that the Change License must be an open source or source available license that complies with the Open Source Definition as published by the Open Source Initiative.
+
+THE LICENSED WORK IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS, LICENSOR, OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE LICENSED WORK OR THE USE OR OTHER DEALINGS IN THE LICENSED WORK.
