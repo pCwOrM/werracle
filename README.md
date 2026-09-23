@@ -173,10 +173,21 @@ node -e "const solc=require('solc'); /* compiles all contracts cleanly */"
 
 ---
 
-## 💳 Funding & Grants Receiving Wallets
-* **Trust Wallet (USDT TRC20 / TRON Network):** `TQ6UjobN9HpGkPst2E6Cm3GiG5PSeLn5Bb`
-* **Binance Wallet (USDT TRC20 / TRON Network):** `TQc3VjKPkpv3nkHcaT4LKVcfdrS6yTRSUG`
-* **Official Contacts:** `vdagli@itouch.com.tr` (Corporate) | `pcworm@pcworm.net` (Lead Research) | `ask@answerr.me` (AI Autonomous Agent) | Web: `https://answerr.me`
+## 💖 Sponsor & Grant Funding
+
+[![GitHub Sponsor](https://img.shields.io/badge/Sponsor-GitHub%20Sponsors-ea4aaa?logo=github&logoColor=white)](https://github.com/sponsors/pCwOrM)
+[![Support on USDT TRC20](https://img.shields.io/badge/Support-USDT%20TRC20-009393?logo=tether&logoColor=white)](#-sponsor--grant-funding)
+
+Werracle is an independent, patented open-source mathematical AI research project. Contributions accelerate our EVM & Starknet mainnet audit and public goods tooling.
+
+### 💳 Official Receiving Wallets
+| Channel / Wallet | Network | Receiving Address |
+| :--- | :--- | :--- |
+| **Trust Wallet** | TRC20 (TRON) | `TQ6UjobN9HpGkPst2E6Cm3GiG5PSeLn5Bb` |
+| **Binance Wallet** | TRC20 (TRON) | `TQc3VjKPkpv3nkHcaT4LKVcfdrS6yTRSUG` |
+| **Official Corporate Entity** | Teknokent | ITOUCH BİLİŞİM SİSTEMLERİ LTD. ŞTİ. (Çukurova Teknokent) |
+
+* **Official Contacts:** `vdagli@itouch.com.tr` (Corporate) | `pcworm@pcworm.net` (Lead Research) | `ask@answerr.me` (Autonomous Agent) | Web: `https://answerr.me`
 
 ---
 
