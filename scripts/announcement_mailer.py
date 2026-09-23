@@ -117,7 +117,7 @@ def send_announcement(target_key="self_test"):
     try:
         with smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT, context=context) as server:
             server.login(AUTH_USER, AUTH_PASS)
-            server.sendmail(AUTH_USER, to_emails, msg.as_string())
+            server.sendmail("ask@answerr.me", to_emails, msg.as_string())
         print(f"SUCCESS: Email delivered to {to_emails} ({recipient_name})")
         return True
     except Exception as e:
