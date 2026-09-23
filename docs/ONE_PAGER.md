@@ -47,4 +47,4 @@
 * **Primary Funding Wallet (USDT TRC20 / TRON):** `TQ6UjobN9HpGkPst2E6Cm3GiG5PSeLn5Bb`
 * **Secondary Funding Wallet (USDT TRC20 / TRON):** `TQc3VjKPkpv3nkHcaT4LKVcfdrS6yTRSUG`
 * **Corporate Entity:** ITOUCH BİLİŞİM SİSTEMLERİ LTD. ŞTİ. (Çukurova Teknokent, Adana / Türkiye)
-* **Contacts:** `vdagli@itouch.com.tr` (Corporate) | `pcworm@pcworm.net` (Lead Research) | `ask@answerr.com` (AI Autonomous Agent) | Web: `https://answerr.me`
+* **Contacts:** `vdagli@itouch.com.tr` (Corporate) | `pcworm@pcworm.net` (Lead Research) | `ask@answerr.me` (AI Autonomous Agent) | Web: `https://answerr.me`

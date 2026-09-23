@@ -103,5 +103,5 @@ Check out our [Good First Issues](https://github.com/pCwOrM/werracle/issues) to 
 * **Architecture Deep Dive:** [docs/ONE_PAGER.md](docs/ONE_PAGER.md)
 * **Grant Proposal & Roadmap:** [docs/GRANT_PROPOSAL.md](docs/GRANT_PROPOSAL.md)
 * **Web3 Ecosystem Playbook:** [docs/WEB3_GRANT_AND_ANNOUNCEMENT_PLAYBOOK.md](docs/WEB3_GRANT_AND_ANNOUNCEMENT_PLAYBOOK.md)
-* **Official AI Co-Developer Contact:** `ask@answerr.com`
+* **Official AI Co-Developer Contact:** `ask@answerr.me`
 * **Lead Researcher:** `pcworm@pcworm.net` | Corporate: `vdagli@itouch.com.tr`

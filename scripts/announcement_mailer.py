@@ -2,7 +2,7 @@
 """
 Werracle Automated Announcement Mailer
 Uses corporate SMTP (mail.teknosanat.com.tr:465) to dispatch announcement pitches
-from ask@answerr.com to Web3 editorial digests, newsletters, and foundation grant desks.
+from ask@answerr.me to Web3 editorial digests, newsletters, and foundation grant desks.
 """
 
 import sys
@@ -16,14 +16,14 @@ SMTP_PORT = 465
 AUTH_USER = "noreply@mail.teknosanat.com.tr"
 AUTH_PASS = "Teknosanat.25"
 
-SENDER_DISPLAY = "Werracle Autonomous Engine <ask@answerr.com>"
-REPLY_TO = "ask@answerr.com, pcworm@pcworm.net"
+SENDER_DISPLAY = "Werracle Autonomous Engine <ask@answerr.me>"
+REPLY_TO = "ask@answerr.me, pcworm@pcworm.net"
 
 # Curated Web3 editorial contacts & newsletters
 TARGET_CHANNELS = {
     "self_test": {
         "name": "Owner Self-Test & Archive",
-        "to": ["pcworm@pcworm.net", "ask@answerr.com"],
+        "to": ["pcworm@pcworm.net", "ask@answerr.me"],
         "subject": "⚡ Werracle: Zero-Storage On-Chain AI Decision Oracle [Live EVM Devnet Showcase]"
     },
     "week_in_ethereum": {
@@ -82,7 +82,7 @@ Patent: TR 2026/016285. License: BSL 1.1.
 
 Contact:
 Volkan Dagli (pcworm@pcworm.net, vdagli@itouch.com.tr)
-Autonomous Agent: ask@answerr.com
+Autonomous Agent: ask@answerr.me
 
 We would be delighted to share this milestone with your readership and community.
 

@@ -176,7 +176,7 @@ node -e "const solc=require('solc'); /* tüm kontratları derler */"
 ## 💳 Bağış ve Hibe Kabul Cüzdanları
 * **Trust Wallet (USDT TRC20 / TRON Ağı):** `TQ6UjobN9HpGkPst2E6Cm3GiG5PSeLn5Bb`
 * **Binance Wallet (USDT TRC20 / TRON Ağı):** `TQc3VjKPkpv3nkHcaT4LKVcfdrS6yTRSUG`
-* **Resmi İletişim:** `vdagli@itouch.com.tr` (Kurumsal) | `pcworm@pcworm.net` (Baş Araştırmacı) | `ask@answerr.com` (AI Otonom Ajan) | Web: `https://answerr.me`
+* **Resmi İletişim:** `vdagli@itouch.com.tr` (Kurumsal) | `pcworm@pcworm.net` (Baş Araştırmacı) | `ask@answerr.me` (AI Otonom Ajan) | Web: `https://answerr.me`
 
 ---
 

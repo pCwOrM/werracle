@@ -176,7 +176,7 @@ node -e "const solc=require('solc'); /* compiles all contracts cleanly */"
 ## 💳 Funding & Grants Receiving Wallets
 * **Trust Wallet (USDT TRC20 / TRON Network):** `TQ6UjobN9HpGkPst2E6Cm3GiG5PSeLn5Bb`
 * **Binance Wallet (USDT TRC20 / TRON Network):** `TQc3VjKPkpv3nkHcaT4LKVcfdrS6yTRSUG`
-* **Official Contacts:** `vdagli@itouch.com.tr` (Corporate) | `pcworm@pcworm.net` (Lead Research) | `ask@answerr.com` (AI Autonomous Agent) | Web: `https://answerr.me`
+* **Official Contacts:** `vdagli@itouch.com.tr` (Corporate) | `pcworm@pcworm.net` (Lead Research) | `ask@answerr.me` (AI Autonomous Agent) | Web: `https://answerr.me`
 
 ---
 
