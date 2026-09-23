@@ -561,6 +561,19 @@
       <div class="sim-grid">
         <!-- Controls Column -->
         <div class="card">
+          <!-- Live EVM Testnet Status Bar -->
+          <div class="evm-mode-bar" style="display:flex; justify-content:space-between; align-items:center; background:rgba(56,189,248,0.08); border:1px solid var(--border-accent); border-radius:8px; padding:10px 14px; margin-bottom:16px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span id="liveDot" style="display:inline-block; width:10px; height:10px; border-radius:50%; background:var(--emerald); box-shadow:0 0 8px var(--emerald);"></span>
+              <strong style="font-size:0.85rem;" data-en="Live EVM Node (mechsrv)" data-tr="Canlı EVM Düğümü (mechsrv)">Live EVM Node (mechsrv)</strong>
+              <span class="badge" style="font-size:0.7rem; background:#1e293b; color:var(--cyan); padding:2px 6px; border-radius:4px; font-family:var(--font-mono);">ChainID: 4242</span>
+            </div>
+            <label style="display:flex; align-items:center; gap:6px; cursor:pointer; font-size:0.8rem;">
+              <input type="checkbox" id="liveEvmToggle" checked style="accent-color:var(--cyan); cursor:pointer;">
+              <span data-en="Live On-Chain" data-tr="Canlı On-Chain">Live On-Chain</span>
+            </label>
+          </div>
+
           <div class="preset-btns">
             <span style="font-size:0.8rem; color:var(--text-muted); align-self:center;" data-en="Presets:" data-tr="Hazır Ayarlar:">Presets:</span>
             <button class="btn-preset active" onclick="applyPreset('default')">Standard Oracle</button>
@@ -617,6 +630,10 @@
             <div class="console-row">
               <span data-en="Estimated Gas Cost:" data-tr="Tahmini Gas Maliyeti:">Estimated Gas Cost:</span>
               <span id="outGas" class="text-cyan">19,420 gas ($0.0006)</span>
+            </div>
+            <div class="console-row" id="liveEvmRow" style="border-top:1px dashed #334155; padding-top:8px; margin-top:8px;">
+              <span style="color:var(--text-muted); font-size:0.8rem;" data-en="Live EVM Node (api.answerr.me):" data-tr="Canlı EVM Düğümü (api.answerr.me):">Live EVM Node (api.answerr.me):</span>
+              <span id="outLiveDetails" class="text-emerald" style="font-size:0.8rem; font-family:var(--font-mono);">Connecting...</span>
             </div>
           </div>
         </div>
@@ -817,6 +834,36 @@ contract ProtectedDeFiProtocol {
 }</code></pre>
       </div>
 
+      <!-- Live Deployed Devnet Card -->
+      <div class="card" style="margin-top:20px; border-color:var(--border-accent); background:linear-gradient(180deg, rgba(56,189,248,0.06) 0%, rgba(12,18,34,1) 100%);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:10px;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:var(--emerald); box-shadow:0 0 8px var(--emerald);"></span>
+            <h3 style="color:var(--cyan); font-size:1.1rem; margin:0;" data-en="Live Deployed Contracts on Werracle Devnet" data-tr="Werracle Devnet Üzerinde Canlı Dağıtılmış Kontratlar">Live Deployed Contracts on Werracle Devnet</h3>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <span class="badge" style="font-size:0.75rem; background:#1e293b; color:var(--emerald); padding:3px 8px; border-radius:4px; font-family:var(--font-mono);">Chain ID: 4242</span>
+            <span class="badge" style="font-size:0.75rem; background:#1e293b; color:var(--cyan); padding:3px 8px; border-radius:4px; font-family:var(--font-mono);">Server: mechsrv</span>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:12px; margin-bottom:16px;">
+          <div style="background:rgba(0,0,0,0.3); padding:12px; border-radius:6px; border:1px solid var(--border-color);">
+            <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px;">Werracle Core Oracle</div>
+            <code style="color:var(--text-main); font-size:0.85rem; word-break:break-all;">0x5FbDB2315678afecb367f032d93F642f64180aa3</code>
+          </div>
+          <div style="background:rgba(0,0,0,0.3); padding:12px; border-radius:6px; border:1px solid var(--border-color);">
+            <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px;">WerracleFeeHook (Uniswap v4)</div>
+            <code style="color:var(--text-main); font-size:0.85rem; word-break:break-all;">0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512</code>
+          </div>
+        </div>
+
+        <div style="font-size:0.85rem; color:var(--text-muted); display:flex; gap:16px; flex-wrap:wrap;">
+          <span>🌐 <strong>Public RPC:</strong> <code style="color:var(--cyan);">https://api.answerr.me:4431/werracle/rpc</code></span>
+          <span>⚡ <strong>REST Status:</strong> <a href="https://api.answerr.me:4431/werracle/status" target="_blank" style="color:var(--cyan); text-decoration:none;">/werracle/status ↗</a></span>
+        </div>
+      </div>
+
       <!-- Support & Grant Proposal Card -->
       <div class="wallet-card">
         <h3 style="color:var(--amber); margin-bottom:10px;" data-en="💎 Protocol Grants & Foundation Wallets" data-tr="💎 Protokol Hibeleri ve Destek Cüzdanları">💎 Protocol Grants & Foundation Wallets</h3>
@@ -979,6 +1026,44 @@ contract ProtectedDeFiProtocol {
       document.getElementById('outScore').textContent = score.toFixed(4);
       let gas = 18000 + (totalEscapes * 12);
       document.getElementById('outGas').textContent = `${gas.toLocaleString()} gas ($0.0006)`;
+
+      if (liveEvmTimer) clearTimeout(liveEvmTimer);
+      liveEvmTimer = setTimeout(() => queryLiveEvmNode(score), 150);
+    }
+
+    let liveEvmTimer = null;
+    async function queryLiveEvmNode(score) {
+      const toggle = document.getElementById('liveEvmToggle');
+      const detailsEl = document.getElementById('outLiveDetails');
+      const dotEl = document.getElementById('liveDot');
+
+      if (!toggle || !toggle.checked) {
+        if (detailsEl) detailsEl.textContent = 'Client-Side Mode';
+        if (dotEl) { dotEl.style.background = '#94a3b8'; dotEl.style.boxShadow = 'none'; }
+        return;
+      }
+
+      if (detailsEl) detailsEl.textContent = 'Querying mechsrv EVM...';
+      if (dotEl) { dotEl.style.background = 'var(--cyan)'; dotEl.style.boxShadow = '0 0 8px var(--cyan)'; }
+
+      try {
+        const res = await fetch('https://api.answerr.me:4431/werracle/oracle/noul', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ risk_score: score - 0.5 })
+        });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+        if (dotEl) { dotEl.style.background = 'var(--emerald)'; dotEl.style.boxShadow = '0 0 8px var(--emerald)'; }
+        if (detailsEl) {
+          detailsEl.textContent = `Block #${data.blockNumber} • ${data.executionMs}ms • Gas: ${data.gasUsed.toLocaleString()}`;
+        }
+      } catch (err) {
+        if (dotEl) { dotEl.style.background = 'var(--amber)'; dotEl.style.boxShadow = 'none'; }
+        if (detailsEl) {
+          detailsEl.textContent = 'Client-Side JS Fallback';
+        }
+      }
     }
 
     function applyPreset(name) {
@@ -1053,6 +1138,7 @@ contract ProtectedDeFiProtocol {
     ['borrowRange', 'slipRange'].forEach(id => {
       document.getElementById(id).addEventListener('input', updateDeFi);
     });
+    document.getElementById('liveEvmToggle').addEventListener('change', updateSimulation);
 
     // Language Toggle
     let currentLang = 'en';
