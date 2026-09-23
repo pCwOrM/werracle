@@ -1,10 +1,14 @@
 # ⚡ Werracle: Zero-Storage On-Chain AI Decision Oracle
 
+[![EVM Devnet: Chain ID 4242](https://img.shields.io/badge/EVM%20Devnet-Chain%20ID%204242%20(mechsrv)-38bdf8.svg)](https://api.answerr.me:4431/werracle/status)
+[![API Docs: Live](https://img.shields.io/badge/API%20Docs-Live%20Interactive-10b981.svg)](https://pcworm.github.io/werracle/apidocs.html)
+[![Latency: < 12ms](https://img.shields.io/badge/Latency-%3C12ms%20RPC-brightgreen.svg)]()
 [![License: BSL 1.1](https://img.shields.io/badge/License-BSL%201.1-blue.svg)](./LICENSE)
 [![Live Portal: GitHub Pages](https://img.shields.io/badge/Live%20Portal-GitHub%20Pages-38bdf8.svg?logo=github)](https://pcworm.github.io/werracle/)
 [![1,000 Sealed Tests: 100% Pass](https://img.shields.io/badge/1%2C000%20Tests-100%25%20Sealed%20%26%20Verified-brightgreen.svg)](docs/TEST_1000_AUDIT_REPORT.md)
 [![Audit: SHA--256 Sealed](https://img.shields.io/badge/Audit-SHA--256%20Sealed-blueviolet.svg)](tests/sealed/SEAL_MANIFEST.json)
 [![GitHub Education: Community Exchange](https://img.shields.io/badge/GitHub%20Education-Community%20Exchange-2ea44f?logo=github&logoColor=white)](https://education.github.com/globalcampus/exchange)
+[![Tutorial: LEARN.md](https://img.shields.io/badge/Tutorial-LEARN.md-orange.svg)](LEARN.md)
 [![CI / Verification](https://github.com/pCwOrM/werracle/actions/workflows/ci.yml/badge.svg)](https://github.com/pCwOrM/werracle/actions/workflows/ci.yml)
 [![Telemetry: Permanently Disabled](https://img.shields.io/badge/Telemetry-Permanently%20Disabled-10b981.svg)]()
 [![Solidity: ^0.8.20](https://img.shields.io/badge/Solidity-%5E0.8.20-363636.svg?logo=solidity)](https://soliditylang.org/)
@@ -17,7 +21,7 @@
 [![Ecosystem: Research](https://img.shields.io/badge/Research-Mandelbrot%20Synthesis-blue.svg)](https://github.com/pCwOrM/mandelbrot-fractal-neural-synthesis)
 
 > 🌐 **Language Switcher / Dil Seçici:**  
-> **English (Default)** | [🇹🇷 Türkçe Dokümantasyon (README_TR.md)](README_TR.md) &bull; 🌐 [**Interactive Web Simulator**](https://pcworm.github.io/werracle/) &bull; 🛡️ [**1,000-Test Sealed Audit Report**](docs/TEST_1000_AUDIT_REPORT.md) &bull; 📢 [**Grant & Announcement Playbook**](docs/WEB3_GRANT_AND_ANNOUNCEMENT_PLAYBOOK.md)
+> **English (Default)** | [🇹🇷 Türkçe Dokümantasyon (README_TR.md)](README_TR.md) &bull; 🌐 [**Interactive Web Simulator**](https://pcworm.github.io/werracle/) &bull; ⚡ [**Interactive API Docs**](https://pcworm.github.io/werracle/apidocs.html) &bull; 🎓 [**LEARN.md Guide**](LEARN.md) &bull; 🛡️ [**1,000-Test Sealed Audit Report**](docs/TEST_1000_AUDIT_REPORT.md) &bull; 📢 [**Grant & Announcement Playbook**](docs/WEB3_GRANT_AND_ANNOUNCEMENT_PLAYBOOK.md)
 
 > **The first production-grade On-Chain AI Decision Oracle capable of intra-block, sub-millisecond execution inside EVM smart contracts.**  
 > *Powered by WERR procedural Mandelbrot escape dynamics. Zero neural tensor matrices. 1000x faster and 15x cheaper than ZK-ML.*
@@ -49,6 +53,40 @@ In contemporary blockchain architectures, running artificial intelligence native
 | **Flash-Loan Defense** | ❌ Impossible (Too slow) | ❌ Impossible (Cross-block lag) | **✅ Native (Atomic Revert)** |
 | **External Dependency** | Centralized Multi-Sig Signers | Heavy GPU Prover Hardware | **ZERO (100% Autonomous EVM)** |
 | **License** | Proprietary SaaS | Open Source / Cloud | **BSL 1.1 (Uniswap Model)** |
+
+---
+
+## ⚡ Live EVM Testnet & Deployed On-Chain Contracts (`mechsrv`)
+
+Werracle is actively running live on our high-performance dedicated hardware node (`mechsrv`, Ubuntu 24.04 LTS) on a customized private EVM devnet sandbox:
+
+* **Network Name:** Werracle Devnet (Anvil EVM Sandbox)
+* **Chain ID:** `4242` &bull; **Block Time:** `1.0s`
+* **Public HTTPS JSON-RPC:** `https://api.answerr.me:4431/werracle/rpc`
+* **Real-Time REST Gateway:** `https://api.answerr.me:4431/werracle/status`
+* **Live Interactive Documentation:** [https://pcworm.github.io/werracle/apidocs.html](https://pcworm.github.io/werracle/apidocs.html)
+
+### Deployed Contract Registry:
+| Contract Name | Bytecode Address | Gas Benchmark | Description |
+| :--- | :--- | :--- | :--- |
+| **`Werracle.sol`** | [`0x5FbDB2315678afecb367f032d93F642f64180aa3`](https://api.answerr.me:4431/werracle/status) | **21,438 gas** | 32-Byte Slot On-Chain AI Decision Oracle |
+| **`WerracleFeeHook.sol`** | [`0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512`](https://api.answerr.me:4431/werracle/status) | **23,150 gas** | Uniswap v4 Dynamic Fee Governor Hook |
+
+### Query On-Chain Decisions Live (Sub-15ms):
+```bash
+# 1. Inspect Devnet Status & Block Height
+curl -s https://api.answerr.me:4431/werracle/status
+
+# 2. Query Live On-Chain Oracle Reflex (noul)
+curl -s -X POST https://api.answerr.me:4431/werracle/oracle/noul \
+  -H "Content-Type: application/json" \
+  -d '{"risk_score": 0.15}'
+
+# 3. Query Uniswap v4 Dynamic Fee Hook
+curl -s -X POST https://api.answerr.me:4431/werracle/hook/fee \
+  -H "Content-Type: application/json" \
+  -d '{"imbalance_ratio": 0.35}'
+```
 
 ---
 

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Werracle API Docs | Live EVM RPC & REST Gateway</title>
+  <meta name="description" content="Official API documentation and interactive testbed for Werracle Live EVM Node and REST Gateway on mechsrv.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-main: #060913;
+      --bg-card: #0c1222;
+      --bg-card-hover: #121b33;
+      --border-color: #1a2744;
+      --border-accent: rgba(56, 189, 248, 0.35);
+      --cyan: #38bdf8;
+      --cyan-glow: rgba(56, 189, 248, 0.2);
+      --emerald: #10b981;
+      --amber: #f59e0b;
+      --rose: #f43f5e;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'Fira Code', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    header {
+      border-bottom: 1px solid var(--border-color);
+      padding: 18px 0;
+      background: rgba(6, 9, 19, 0.85);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.15rem;
+    }
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+    .nav-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .nav-link:hover { color: var(--cyan); }
+
+    .badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: rgba(56, 189, 248, 0.1);
+      color: var(--cyan);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+    }
+
+    .badge-post { background: rgba(16, 185, 129, 0.1); color: var(--emerald); border-color: rgba(16, 185, 129, 0.25); }
+    .badge-get { background: rgba(56, 189, 248, 0.1); color: var(--cyan); border-color: rgba(56, 189, 248, 0.25); }
+
+    .hero {
+      padding: 50px 0 30px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .hero h1 { font-size: 2.2rem; font-weight: 800; margin-bottom: 8px; }
+    .hero p { color: var(--text-muted); font-size: 1.05rem; }
+
+    .endpoint-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 24px;
+      margin: 30px 0;
+      transition: border-color 0.2s;
+    }
+    .endpoint-card:hover { border-color: var(--border-accent); }
+
+    .endpoint-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+    .endpoint-url {
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .code-tabs {
+      display: flex;
+      gap: 8px;
+      margin-top: 14px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 6px;
+    }
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      padding: 6px 12px;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+    .tab-btn.active {
+      color: var(--cyan);
+      background: rgba(56, 189, 248, 0.1);
+    }
+
+    pre {
+      background: #04060c;
+      border: 1px solid #1e293b;
+      padding: 16px;
+      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: #cbd5e1;
+      overflow-x: auto;
+      margin-top: 10px;
+    }
+
+    .try-box {
+      margin-top: 16px;
+      padding: 16px;
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+    }
+    .btn-try {
+      background: var(--cyan);
+      color: #04060c;
+      font-weight: 700;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 16px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: opacity 0.2s;
+    }
+    .btn-try:hover { opacity: 0.9; }
+
+    footer {
+      border-top: 1px solid var(--border-color);
+      padding: 30px 0;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-top: 50px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container nav-inner">
+      <a href="index.html" class="logo">
+        <span style="color:var(--cyan);">⚡</span> Werracle API Docs
+      </a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">← Interactive Simulator</a>
+        <a href="LEARN.md" class="nav-link" target="_blank">Tutorial (LEARN.md)</a>
+        <a href="https://github.com/pCwOrM/werracle" class="nav-link" target="_blank">GitHub ↗</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="hero">
+      <div style="display:flex; gap:10px; align-items:center; margin-bottom:10px;">
+        <span class="badge">EVM Devnet: Chain ID 4242</span>
+        <span class="badge" style="color:var(--emerald); border-color:rgba(16,185,129,0.3);">Host: mechsrv</span>
+        <span class="badge" style="color:var(--amber); border-color:rgba(245,158,11,0.3);">Zero-Telemetry</span>
+      </div>
+      <h1>Werracle Live EVM & REST Gateway API</h1>
+      <p>Direct low-latency access to the on-chain Werracle decision oracle and Uniswap v4 fee governor running live on the <code>mechsrv</code> EVM sandbox.</p>
+    </div>
+
+    <!-- Endpoint 1: Status -->
+    <div class="endpoint-card">
+      <div class="endpoint-header">
+        <span class="badge badge-get">GET</span>
+        <span class="endpoint-url">https://api.answerr.me:4431/werracle/status</span>
+      </div>
+      <p style="color:var(--text-muted); font-size:0.9rem;">Returns real-time status of the Anvil EVM node, current block number, active contract addresses, and gas benchmark metrics.</p>
+
+      <pre><code>curl -s https://api.answerr.me:4431/werracle/status</code></pre>
+
+      <div class="try-box">
+        <button class="btn-try" onclick="testEndpoint('status')">⚡ Execute Live Test</button>
+        <pre id="res-status" style="margin-top:10px; display:none;"></pre>
+      </div>
+    </div>
+
+    <!-- Endpoint 2: Oracle Noul Gate -->
+    <div class="endpoint-card">
+      <div class="endpoint-header">
+        <span class="badge badge-post">POST</span>
+        <span class="endpoint-url">https://api.answerr.me:4431/werracle/oracle/noul</span>
+      </div>
+      <p style="color:var(--text-muted); font-size:0.9rem;">Invokes the <code>decideNoul(bytes32 stateHash, int64 riskScoreFP)</code> function directly on the deployed <code>Werracle.sol</code> contract via intra-block EVM simulation. Returns permission boolean, basis points confidence, gas consumed (~21k gas), and block height.</p>
+
+      <pre><code>curl -s -X POST https://api.answerr.me:4431/werracle/oracle/noul \
+  -H "Content-Type: application/json" \
+  -d '{"risk_score": -0.25}'</code></pre>
+
+      <div class="try-box">
+        <div style="display:flex; gap:10px; align-items:center; margin-bottom:10px;">
+          <label style="font-size:0.85rem; color:var(--text-muted);">Risk Score (-1.0 to 1.0):</label>
+          <input type="number" id="inputRisk" value="-0.25" step="0.05" min="-1.0" max="1.0" style="background:#0c1222; border:1px solid #1e293b; color:#fff; padding:4px 8px; border-radius:4px; font-family:var(--font-mono); width:90px;">
+          <button class="btn-try" onclick="testEndpoint('noul')">⚡ Query On-Chain Oracle</button>
+        </div>
+        <pre id="res-noul" style="display:none;"></pre>
+      </div>
+    </div>
+
+    <!-- Endpoint 3: Uniswap v4 Dynamic Fee Hook -->
+    <div class="endpoint-card">
+      <div class="endpoint-header">
+        <span class="badge badge-post">POST</span>
+        <span class="endpoint-url">https://api.answerr.me:4431/werracle/hook/fee</span>
+      </div>
+      <p style="color:var(--text-muted); font-size:0.9rem;">Calls <code>calculateDynamicFee(bytes32 poolId, int64 imbalanceSignalFP)</code> on <code>WerracleFeeHook.sol</code> to calculate dynamic LP fee pips (500 to 5000 pips) based on pool volatility.</p>
+
+      <pre><code>curl -s -X POST https://api.answerr.me:4431/werracle/hook/fee \
+  -H "Content-Type: application/json" \
+  -d '{"imbalance_ratio": 0.35}'</code></pre>
+
+      <div class="try-box">
+        <button class="btn-try" onclick="testEndpoint('hook')">⚡ Calculate Hook Dynamic Fee</button>
+        <pre id="res-hook" style="display:none;"></pre>
+      </div>
+    </div>
+
+    <!-- Endpoint 4: Transparent JSON-RPC Forwarder -->
+    <div class="endpoint-card">
+      <div class="endpoint-header">
+        <span class="badge badge-post">POST</span>
+        <span class="endpoint-url">https://api.answerr.me:4431/werracle/rpc</span>
+      </div>
+      <p style="color:var(--text-muted); font-size:0.9rem;">Standard Ethereum JSON-RPC pass-through endpoint. Compatible with Ethers.js, Web3.py, Foundry cast, and MetaMask.</p>
+
+      <pre><code>curl -s -X POST https://api.answerr.me:4431/werracle/rpc \
+  -H "Content-Type: application/json" \
+  -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}'</code></pre>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="container" style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+      <div>Werracle EVM Gateway &bull; ITOUCH BİLİŞİM SİSTEMLERİ LTD. ŞTİ. &bull; Patent TR 2026/016285</div>
+      <div>Contacts: <code>vdagli@itouch.com.tr</code> | <code>pcworm@pcworm.net</code> | <code>ask@answerr.com</code></div>
+    </div>
+  </footer>
+
+  <script>
+    async function testEndpoint(type) {
+      if (type === 'status') {
+        const el = document.getElementById('res-status');
+        el.style.display = 'block';
+        el.textContent = 'Querying https://api.answerr.me:4431/werracle/status...';
+        try {
+          const res = await fetch('https://api.answerr.me:4431/werracle/status');
+          const data = await res.json();
+          el.textContent = JSON.stringify(data, null, 2);
+        } catch (e) {
+          el.textContent = 'Error: ' + e.message;
+        }
+      } else if (type === 'noul') {
+        const el = document.getElementById('res-noul');
+        el.style.display = 'block';
+        const risk = parseFloat(document.getElementById('inputRisk').value);
+        el.textContent = 'Calling decideNoul on-chain...';
+        try {
+          const res = await fetch('https://api.answerr.me:4431/werracle/oracle/noul', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({risk_score: risk})
+          });
+          const data = await res.json();
+          el.textContent = JSON.stringify(data, null, 2);
+        } catch (e) {
+          el.textContent = 'Error: ' + e.message;
+        }
+      } else if (type === 'hook') {
+        const el = document.getElementById('res-hook');
+        el.style.display = 'block';
+        el.textContent = 'Calling calculateDynamicFee on-chain...';
+        try {
+          const res = await fetch('https://api.answerr.me:4431/werracle/hook/fee', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({imbalance_ratio: 0.35})
+          });
+          const data = await res.json();
+          el.textContent = JSON.stringify(data, null, 2);
+        } catch (e) {
+          el.textContent = 'Error: ' + e.message;
+        }
+      }
+    }
+  </script>
+</body>
+</html>
