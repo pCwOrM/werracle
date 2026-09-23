@@ -59,12 +59,10 @@ Werracle provides Ethereum and L2 rollups with their first true **native, autono
 
 ---
 
-## 6. Official Grant Receiving Wallets & Contact Information
+## 6. Official Grant Receiving Wallet & Contact Information
 
-* **Primary Trust Wallet (USDT - TRC20 / TRON Network):**
-  `TQ6UjobN9HpGkPst2E6Cm3GiG5PSeLn5Bb`
-* **Secondary Binance Wallet (USDT - TRC20 / TRON Network):**
-  `TQc3VjKPkpv3nkHcaT4LKVcfdrS6yTRSUG`
+* **Official Wallet (USDT - TRC20 / TRON Network - Binance):**
+  `TLMhaDJTVYBHBSGJ9nCQGLvqnYFPSBgLJu`
 * **EVM Compatible Receiving Address:**
   `0x4642C97991461A5f98A4c023B5F698991206f52C` (Derived Ethereum / Base / Arbitrum)
 * **Corporate Entity & Licensor:**
