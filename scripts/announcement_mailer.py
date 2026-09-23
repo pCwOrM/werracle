@@ -55,6 +55,26 @@ TARGET_CHANNELS = {
         "name": "Bankless Editorial Team",
         "to": ["editorial@banklesshq.com"],
         "subject": "Web3 Innovation: Zero-Storage On-Chain AI Oracle for Intra-Block Defense"
+    },
+    "avalanche_grants": {
+        "name": "Avalanche Foundation Grants Desk & Blizzard Fund",
+        "to": ["grants@avax.network", "Blizzard@avalabs.org"],
+        "subject": "Grant Inquiry: Werracle - Machine-Native On-Chain AI Decisions for Avalanche C-Chain & Subnets"
+    },
+    "solana_grants": {
+        "name": "Solana Foundation Grants Program",
+        "to": ["grants@solana.org"],
+        "subject": "Grant Inquiry: Werracle - High-Throughput Procedural Decision Oracle & Micro-AI Public Good"
+    },
+    "near_grants": {
+        "name": "NEAR Foundation Grants Desk",
+        "to": ["grants@near.foundation"],
+        "subject": "Grant Inquiry: Werracle - Deterministic Zero-Storage Decision Engine for Sharded State"
+    },
+    "protocol_labs_grants": {
+        "name": "Protocol Labs Research & Grants Team",
+        "to": ["research-grants@protocol.ai"],
+        "subject": "Research Grant Inquiry: Werracle - Procedural Zero-Storage Model Synthesis for Decentralized Compute"
     }
 }
 
