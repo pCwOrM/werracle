@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Google reCAPTCHA v3 API & Telemetry Protection -->
+  <script src="https://www.google.com/recaptcha/api.js?render=6LdP-JgqAAAAAJLdy_W8uowqstSa4XKlJTOkVAux" async defer></script>
   <style>
     :root {
       --bg-main: #060913;
@@ -290,13 +292,39 @@
   </footer>
 
   <script>
+    const RECAPTCHA_SITE_KEY = "6LdP-JgqAAAAAJLdy_W8uowqstSa4XKlJTOkVAux";
+
+    function getRecaptchaToken(action = "werracle_apidocs") {
+      return new Promise((resolve) => {
+        try {
+          if (typeof grecaptcha !== 'undefined' && grecaptcha.ready) {
+            grecaptcha.ready(function() {
+              grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: action })
+                .then(function(token) { resolve(token); })
+                .catch(function() { resolve(null); });
+            });
+          } else {
+            resolve(null);
+          }
+        } catch (e) {
+          resolve(null);
+        }
+      });
+    }
+
     async function testEndpoint(type) {
+      const token = await getRecaptchaToken("apidocs_" + type);
+      const headers = { 'Content-Type': 'application/json' };
+      if (token) headers['X-Recaptcha-Token'] = token;
+
       if (type === 'status') {
         const el = document.getElementById('res-status');
         el.style.display = 'block';
         el.textContent = 'Querying https://api.answerr.me:4431/werracle/status...';
         try {
-          const res = await fetch('https://api.answerr.me:4431/werracle/status');
+          const res = await fetch('https://api.answerr.me:4431/werracle/status', {
+            headers: token ? { 'X-Recaptcha-Token': token } : {}
+          });
           const data = await res.json();
           el.textContent = JSON.stringify(data, null, 2);
         } catch (e) {
@@ -310,7 +338,7 @@
         try {
           const res = await fetch('https://api.answerr.me:4431/werracle/oracle/noul', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: headers,
             body: JSON.stringify({risk_score: risk})
           });
           const data = await res.json();
@@ -325,7 +353,7 @@
         try {
           const res = await fetch('https://api.answerr.me:4431/werracle/hook/fee', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: headers,
             body: JSON.stringify({imbalance_ratio: 0.35})
           });
           const data = await res.json();

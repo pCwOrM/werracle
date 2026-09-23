@@ -11,7 +11,7 @@ import ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-SMTP_SERVER = "mail.teknosanat.com.tr"
+SMTP_SERVER = "mail.answerr.me"
 SMTP_PORT = 465
 AUTH_USER = "noreply@mail.teknosanat.com.tr"
 AUTH_PASS = "Teknosanat.25"
@@ -45,6 +45,16 @@ TARGET_CHANNELS = {
         "name": "Uniswap Foundation Grants Desk",
         "to": ["grants@uniswapfoundation.org"],
         "subject": "Grant Inquiry: WerracleFeeHook - Dynamic Chaos-Adaptive AMM Fee Governor for Uniswap v4"
+    },
+    "dlnews": {
+        "name": "DL News / DefiLlama Editorial",
+        "to": ["news@dlnews.com"],
+        "subject": "DeFi Security Release: Werracle - Native Sub-Millisecond AI Decision Oracle for EVM"
+    },
+    "bankless": {
+        "name": "Bankless Editorial Team",
+        "to": ["editorial@banklesshq.com"],
+        "subject": "Web3 Innovation: Zero-Storage On-Chain AI Oracle for Intra-Block Defense"
     }
 }
 

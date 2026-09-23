@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Google reCAPTCHA v3 API & Telemetry Protection -->
+  <script src="https://www.google.com/recaptcha/api.js?render=6LdP-JgqAAAAAJLdy_W8uowqstSa4XKlJTOkVAux" async defer></script>
   <style>
     :root {
       --bg-main: #060913;
@@ -1033,6 +1035,26 @@ contract ProtectedDeFiProtocol {
     }
 
     let liveEvmTimer = null;
+    const RECAPTCHA_SITE_KEY = "6LdP-JgqAAAAAJLdy_W8uowqstSa4XKlJTOkVAux";
+
+    function getRecaptchaToken(action = "werracle_sim") {
+      return new Promise((resolve) => {
+        try {
+          if (typeof grecaptcha !== 'undefined' && grecaptcha.ready) {
+            grecaptcha.ready(function() {
+              grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: action })
+                .then(function(token) { resolve(token); })
+                .catch(function() { resolve(null); });
+            });
+          } else {
+            resolve(null);
+          }
+        } catch (e) {
+          resolve(null);
+        }
+      });
+    }
+
     async function queryLiveEvmNode(score) {
       const toggle = document.getElementById('liveEvmToggle');
       const detailsEl = document.getElementById('outLiveDetails');
@@ -1048,9 +1070,13 @@ contract ProtectedDeFiProtocol {
       if (dotEl) { dotEl.style.background = 'var(--cyan)'; dotEl.style.boxShadow = '0 0 8px var(--cyan)'; }
 
       try {
+        const token = await getRecaptchaToken("evm_eval");
+        const headers = { 'Content-Type': 'application/json' };
+        if (token) headers['X-Recaptcha-Token'] = token;
+
         const res = await fetch('https://api.answerr.me:4431/werracle/oracle/noul', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: headers,
           body: JSON.stringify({ risk_score: score - 0.5 })
         });
         if (!res.ok) throw new Error('HTTP ' + res.status);
