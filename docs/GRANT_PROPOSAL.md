@@ -74,4 +74,5 @@ Werracle provides Ethereum and L2 rollups with their first true **native, autono
 * **Official Communications:**
   - Corporate Email: `vdagli@itouch.com.tr` / `info@itouch.com.tr`
   - Personal Research Email: `pcworm@pcworm.net`
+  - Autonomous AI Co-Developer Email: `ask@answerr.com`
   - Official Web Portal: `https://answerr.me`

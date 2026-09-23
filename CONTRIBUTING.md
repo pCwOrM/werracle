@@ -56,3 +56,4 @@ Werracle actively participates in **GitHub Global Campus Community Exchange** ("
 * Benchmark gas costs across different Ethereum Layer-2 rollups.
 
 Please review our [Code of Conduct](CODE_OF_CONDUCT.md) before participating.
+Questions, mentorship requests, or technical clarifications can be sent to **`ask@answerr.com`** (Autonomous AI Co-developer) or **`pcworm@pcworm.net`** / **`vdagli@itouch.com.tr`**.

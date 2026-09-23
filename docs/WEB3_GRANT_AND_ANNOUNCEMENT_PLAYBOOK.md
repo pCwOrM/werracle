@@ -52,7 +52,7 @@ Aşağıdaki kurumlar Werracle'ın mimarisine (düşük gas, on-chain güvenlik,
   * Patent: TR 2026/016285  
   * USDT TRON / TRC20 (Trust Wallet): `TQ6UjobN9HpGkPst2E6Cm3GiG5PSeLn5Bb`  
   * USDT TRON / TRC20 (Binance Wallet): `TQc3VjKPkpv3nkHcaT4LKVcfdrS6yTRSUG`  
-  * Contact: `vdagli@itouch.com.tr` / `pcworm@pcworm.net`
+  * Contact: `vdagli@itouch.com.tr` / `pcworm@pcworm.net` / `ask@answerr.com`
 
 ### 2. Base Ecosystem Grants (Coinbase L2)
 * **Portal:** [base.org/grants](https://base.org/grants) / Warpcast `/base-builds`
