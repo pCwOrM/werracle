@@ -11,10 +11,31 @@ import ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-SMTP_SERVER = "mail.answerr.me"
-SMTP_PORT = 465
-AUTH_USER = "noreply@mail.teknosanat.com.tr"
-AUTH_PASS = "Teknosanat.25"
+import json
+import os
+
+MAIL_CONFIG_PATH = os.path.expanduser("~/.answerr/mail.json")
+
+def load_mail_credentials():
+    smtp_server = os.environ.get("SMTP_SERVER", "mail.answerr.me")
+    smtp_port = int(os.environ.get("SMTP_PORT", 465))
+    auth_user = os.environ.get("SMTP_USER", "ask@answerr.me")
+    auth_pass = os.environ.get("SMTP_PASS", "")
+
+    if os.path.exists(MAIL_CONFIG_PATH):
+        try:
+            with open(MAIL_CONFIG_PATH, "r", encoding="utf-8") as f:
+                cfg = json.load(f)
+                smtp_server = cfg.get("smtp_server", smtp_server)
+                smtp_port = int(cfg.get("smtp_port", smtp_port))
+                auth_user = cfg.get("email", auth_user)
+                auth_pass = cfg.get("password", auth_pass)
+        except Exception as e:
+            print(f"Warning: could not load config from {MAIL_CONFIG_PATH}: {e}")
+
+    return smtp_server, smtp_port, auth_user, auth_pass
+
+SMTP_SERVER, SMTP_PORT, AUTH_USER, AUTH_PASS = load_mail_credentials()
 
 SENDER_DISPLAY = "Werracle Autonomous Engine <ask@answerr.me>"
 REPLY_TO = "ask@answerr.me, pcworm@pcworm.net"
