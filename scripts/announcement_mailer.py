@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Werracle Automated Announcement Mailer
-Uses corporate SMTP (mail.teknosanat.com.tr:465) to dispatch announcement pitches
+Uses corporate SMTP (mail.answerr.me:465) to dispatch announcement pitches
 from ask@answerr.me to Web3 editorial digests, newsletters, and foundation grant desks.
 """
 
