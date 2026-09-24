@@ -35,6 +35,10 @@ def fp_to_float(fp: int) -> float:
     return float(fp) / FP_ONE
 
 
+def fp_mul(a: int, b: int) -> int:
+    return (a * b) >> FP_SHIFT
+
+
 class BlockchainPillar(Enum):
     AMM_LIQUIDITY = "AMM_LIQUIDITY"     # Orderbook, ticks, reserves, LVR
     MEV_ATTACK = "MEV_ATTACK"           # Flash-loans, sandwiches, snipes, frontrunning
@@ -306,15 +310,27 @@ class BlockchainResonanceMatrix:
     def match_tokens(cls, text: str) -> List[Tuple[SemanticToken, float]]:
         """
         Scans transaction input text for all matching semantic tokens.
+        Checks both original and underscore-normalized text to support snake_case and prose.
         Returns: List of (SemanticToken, match_intensity: [0.0 .. 1.0])
         """
         matches = []
+        text_norm = text.replace('_', ' ')
         for token in BlockchainVocabulary.all_tokens():
             hit_count = 0
             for rx in token.compiled_regex:
+                # Search in original text
                 found = rx.findall(text)
                 if found:
                     hit_count += len(found)
+                # Search in space-normalized text
+                found_norm = rx.findall(text_norm)
+                if found_norm:
+                    hit_count += len(found_norm)
+                # Also check exact token name (lowercase, with or without underscores)
+                name_snake = token.name.lower()
+                name_space = name_snake.replace('_', ' ')
+                if name_snake in text.lower() or name_space in text_norm.lower():
+                    hit_count += 1
             if hit_count > 0:
                 # Intensity saturates with multiple hits
                 intensity = min(1.0, 0.6 + 0.2 * hit_count)
