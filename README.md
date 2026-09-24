@@ -20,6 +20,8 @@
 [![Ecosystem: answerr](https://img.shields.io/badge/Platform-answerr-8b5cf6.svg)](https://github.com/pCwOrM/answerr)
 [![Ecosystem: Research](https://img.shields.io/badge/Research-Mandelbrot%20Synthesis-blue.svg)](https://github.com/pCwOrM/mandelbrot-fractal-neural-synthesis)
 [![arXiv: 2609.25498](https://img.shields.io/badge/arXiv-2609.25498-b31b1b.svg)](https://arxiv.org/abs/2609.25498)
+[![Zenodo DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.22939253-024dad.svg)](https://doi.org/10.5281/zenodo.22939253)
+[![Paper: Camera-Ready PDF](https://img.shields.io/badge/Paper%20v2.0-Camera--Ready-emerald.svg)](https://github.com/pCwOrM/werr/blob/main/paper/Universal_Fractal_Natural_Language_Decision_Map_CameraReady.pdf)
 
 > 🌐 **Language Switcher / Dil Seçici:**  
 > **English (Default)** | [🇹🇷 Türkçe Dokümantasyon (README_TR.md)](README_TR.md) &bull; 🌐 [**Interactive Web Simulator**](https://pcworm.github.io/werracle/) &bull; ⚡ [**Interactive API Docs**](https://pcworm.github.io/werracle/apidocs.html) &bull; 🎓 [**LEARN.md Guide**](LEARN.md) &bull; 🛡️ [**1,000-Test Sealed Audit Report**](docs/TEST_1000_AUDIT_REPORT.md) &bull; 📢 [**Grant & Announcement Playbook**](docs/WEB3_GRANT_AND_ANNOUNCEMENT_PLAYBOOK.md)
@@ -188,6 +190,31 @@ Werracle is an independent, patented open-source mathematical AI research projec
 | **Official Corporate Entity** | Teknokent | ITOUCH BİLİŞİM SİSTEMLERİ LTD. ŞTİ. (Çukurova Teknokent) |
 
 * **Official Contacts:** `vdagli@itouch.com.tr` (Corporate) | `pcworm@pcworm.net` (Lead Research) | `ask@answerr.me` (Autonomous Agent) | Web: `https://answerr.me`
+
+---
+
+## 📖 Academic Citation
+
+If you utilize Werracle or the underlying WERR fractal System-One decision engine in your Web3 research, dApps, or academic publications, please cite:
+
+```bibtex
+@article{dagli2026fractalmap,
+  author        = {Volkan Dağlı and Zerrin Dağlı and Dağhan Dağlı},
+  title         = {Universal Fractal Natural Language Decision Map: Real-Time Edge Triage Across Heterogeneous Domains},
+  journal       = {arXiv preprint arXiv:2609.25498 [cs.NE]},
+  year          = {2026},
+  url           = {https://arxiv.org/abs/2609.25498},
+  doi           = {10.5281/zenodo.22939253}
+}
+
+@software{werracle2026,
+  author        = {Volkan Dağlı},
+  title         = {Werracle: Zero-Storage On-Chain AI Decision Oracle for EVM Smart Contracts},
+  year          = {2026},
+  url           = {https://github.com/pCwOrM/werracle},
+  doi           = {10.5281/zenodo.22939253}
+}
+```
 
 ---
 

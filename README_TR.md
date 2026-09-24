@@ -20,6 +20,8 @@
 [![Ekosistem: answerr](https://img.shields.io/badge/Platform-answerr-8b5cf6.svg)](https://github.com/pCwOrM/answerr)
 [![Ekosistem: Araştırma](https://img.shields.io/badge/Ara%C5%9Ft%C4%B1rma-Mandelbrot%20Sentezi-blue.svg)](https://github.com/pCwOrM/mandelbrot-fractal-neural-synthesis)
 [![arXiv: 2609.25498](https://img.shields.io/badge/arXiv-2609.25498-b31b1b.svg)](https://arxiv.org/abs/2609.25498)
+[![Zenodo DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.22939253-024dad.svg)](https://doi.org/10.5281/zenodo.22939253)
+[![Makale: Kamera-Hazır PDF](https://img.shields.io/badge/Makale%20v2.0-Kamera--Haz%C4%B1r-emerald.svg)](https://github.com/pCwOrM/werr/blob/main/paper/Universal_Fractal_Natural_Language_Decision_Map_CameraReady.pdf)
 
 > 🌐 **Dil Seçici / Language Switcher:**  
 > **Türkçe (Varsayılan)** | [🇬🇧 English Documentation (README.md)](README.md) &bull; 🌐 [**Etkileşimli Web Simülatörü**](https://pcworm.github.io/werracle/) &bull; ⚡ [**Etkileşimli API Dokümanı**](https://pcworm.github.io/werracle/apidocs.html) &bull; 🎓 [**LEARN.md Eğitim Kılavuzu**](LEARN.md) &bull; 🛡️ [**1.000 Test Mühürlü Denetim Raporu**](docs/TEST_1000_AUDIT_REPORT.md) &bull; 📢 [**Hibe ve Duyuru Rehberi**](docs/WEB3_GRANT_AND_ANNOUNCEMENT_PLAYBOOK.md)
@@ -177,6 +179,31 @@ node -e "const solc=require('solc'); /* tüm kontratları derler */"
 ## 💳 Bağış ve Hibe Kabul Cüzdanı
 * **Resmi Cüzdan (Binance - USDT TRC20 / TRON Ağı):** `TLMhaDJTVYBHBSGJ9nCQGLvqnYFPSBgLJu`
 * **Resmi İletişim:** `vdagli@itouch.com.tr` (Kurumsal) | `pcworm@pcworm.net` (Baş Araştırmacı) | `ask@answerr.me` (AI Otonom Ajan) | Web: `https://answerr.me`
+
+---
+
+## 📖 Akademik Alıntı (Citation)
+
+Werracle'ı veya temelindeki WERR fraktal Sistem-1 karar motorunu Web3 araştırmalarınızda, dApp'lerinizde veya akademik yayınlarınızda kullanıyorsanız lütfen şu şekilde atıfta bulununuz:
+
+```bibtex
+@article{dagli2026fractalmap,
+  author        = {Volkan Dağlı and Zerrin Dağlı and Dağhan Dağlı},
+  title         = {Universal Fractal Natural Language Decision Map: Real-Time Edge Triage Across Heterogeneous Domains},
+  journal       = {arXiv preprint arXiv:2609.25498 [cs.NE]},
+  year          = {2026},
+  url           = {https://arxiv.org/abs/2609.25498},
+  doi           = {10.5281/zenodo.22939253}
+}
+
+@software{werracle2026,
+  author        = {Volkan Dağlı},
+  title         = {Werracle: Zero-Storage On-Chain AI Decision Oracle for EVM Smart Contracts},
+  year          = {2026},
+  url           = {https://github.com/pCwOrM/werracle},
+  doi           = {10.5281/zenodo.22939253}
+}
+```
 
 ---
 
