@@ -1,0 +1,44 @@
+cff-version: 1.2.0
+message: "If you use this software, smart contracts, or cite this research, please cite it as below."
+authors:
+  - family-names: "Dağlı"
+    given-names: "Volkan"
+    orcid: "https://orcid.org/0009-0000-1587-8703"
+    affiliation: "ITOUCH Bilişim Sistemleri Ltd. Şti. (Çukurova Teknokent) & Anadolu University, Turkey"
+  - family-names: "Dağlı"
+    given-names: "Zerrin"
+    orcid: "https://orcid.org/0000-0001-9490-6425"
+    affiliation: "Mersin University, Mersin, Turkey"
+  - family-names: "Dağlı"
+    given-names: "Dağhan"
+    orcid: "https://orcid.org/0009-0003-2492-8313"
+    affiliation: "Toros Science College, Mersin, Turkey"
+title: "Werracle: Sub-Cent Intra-Block AI Reflex Oracles and Flash-Loan Circuit Breakers for EVM Smart Contracts"
+version: "1.0.0"
+date-released: 2026-09-24
+url: "https://github.com/pCwOrM/werracle"
+repository-code: "https://github.com/pCwOrM/werracle"
+keywords:
+  - "on-chain ai"
+  - "evm smart contracts"
+  - "zero-storage ai"
+  - "mandelbrot escape dynamics"
+  - "q16.16 fixed-point math"
+  - "uniswap v4 hook"
+  - "flash-loan defense"
+  - "patent pending TR 2026/016285"
+license: "BUSL-1.1"
+references:
+  - type: article
+    authors:
+      - family-names: "Dağlı"
+        given-names: "Volkan"
+      - family-names: "Dağlı"
+        given-names: "Zerrin"
+      - family-names: "Dağlı"
+        given-names: "Dağhan"
+    title: "Universal Fractal Natural Language Decision Map: Real-Time Edge Triage Across Heterogeneous Domains"
+    doi: "10.5281/zenodo.22939253"
+    url: "https://arxiv.org/abs/2609.25498"
+    year: 2026
+    notes: "Patent Pending: TR 2026/016285 (Turkish Patent and Trademark Office)"

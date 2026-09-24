@@ -1,0 +1,75 @@
+{
+  "title": "Werracle: Sub-Cent Intra-Block AI Reflex Oracles and Flash-Loan Circuit Breakers for EVM Smart Contracts",
+  "description": "Production-grade, zero-storage on-chain AI decision oracle fitting inside a single 32-byte EVM storage slot. Eliminates multi-gigabyte neural weight matrices and high-latency ZK-ML provers by procedurally evaluating 16-point Pareto micro-grids using Q16.16 fixed-point arithmetic in standard EVM bytecode (~21,438 gas, <1ms latency). Features Uniswap v4 chaos-adaptive dynamic fee governor hooks (WerracleFeeHook.sol) and a 1,000-test cryptographically sealed deterministic verification suite.",
+  "creators": [
+    {
+      "name": "Dağlı, Volkan",
+      "affiliation": "ITOUCH Bilişim Sistemleri Ltd. Şti. (Çukurova Teknokent) & Anadolu University, Turkey",
+      "orcid": "0009-0000-1587-8703"
+    },
+    {
+      "name": "Dağlı, Zerrin",
+      "affiliation": "Mersin University, Mersin, Turkey",
+      "orcid": "0000-0001-9490-6425"
+    },
+    {
+      "name": "Dağlı, Dağhan",
+      "affiliation": "Toros Science College, Mersin, Turkey",
+      "orcid": "0009-0003-2492-8313"
+    }
+  ],
+  "access_right": "open",
+  "license": "BUSL-1.1",
+  "keywords": [
+    "on-chain artificial intelligence",
+    "evm smart contracts",
+    "ai reflex oracle",
+    "zero-storage ai",
+    "mandelbrot escape dynamics",
+    "q16.16 fixed-point math",
+    "uniswap v4 hook",
+    "dynamic fee governor",
+    "flash-loan circuit breaker",
+    "mev defense",
+    "zk-ml alternative",
+    "patent pending TR 2026/016285"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/pCwOrM/werracle",
+      "relation": "isSupplementTo",
+      "resource_type": "software",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://pcworm.github.io/werracle/",
+      "relation": "isDocumentedBy",
+      "resource_type": "interactive-resource",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://pcworm.github.io/werracle/apidocs.html",
+      "relation": "isDocumentedBy",
+      "resource_type": "interactive-resource",
+      "scheme": "url"
+    },
+    {
+      "identifier": "10.5281/zenodo.22939253",
+      "relation": "isDerivedFrom",
+      "resource_type": "publication-preprint",
+      "scheme": "doi"
+    },
+    {
+      "identifier": "https://arxiv.org/abs/2609.25498",
+      "relation": "isDerivedFrom",
+      "resource_type": "publication-preprint",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://github.com/pCwOrM/werr",
+      "relation": "isSupplementedBy",
+      "resource_type": "software",
+      "scheme": "url"
+    }
+  ]
+}
