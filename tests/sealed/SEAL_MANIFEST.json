@@ -1,7 +1,7 @@
 {
   "organization": "ITOUCH B\u0130L\u0130\u015e\u0130M S\u0130STEMLER\u0130 LTD. \u015eT\u0130. & Werr Research Lab",
   "project": "Werracle On-Chain AI Decision Oracle",
-  "seal_timestamp_utc": "2026-09-22T23:40:24Z",
+  "seal_timestamp_utc": "2026-09-24T19:59:05Z",
   "patent_reference": "TR 2026/016285",
   "license": "BSL 1.1",
   "telemetry_status": "PERMANENTLY_DISABLED (ZERO_NETWORK_LEAK)",
@@ -18,7 +18,7 @@
     "total_passed": 1000,
     "total_failed": 0,
     "success_rate_percent": 100.0,
-    "mean_execution_latency_us": 213.85,
+    "mean_execution_latency_us": 162.7,
     "category_breakdown": {
       "MATH_Q16_INVARIANCE": {
         "total": 250,
@@ -41,8 +41,8 @@
   "cryptographic_seals": {
     "test_1000_sealed_results": {
       "file": "test_1000_sealed_results.json",
-      "sha256": "e287d010efee159d6ea3f307509a3e1e306f8a919867de9d2491549240d5fd5e",
-      "file_size_bytes": 444658,
+      "sha256": "4b1c15950220980fb59d6ccd36715c9d4119613bce927203ef46bbfd203edd74",
+      "file_size_bytes": 444649,
       "status": "SEALED_AND_VERIFIED"
     }
   }
