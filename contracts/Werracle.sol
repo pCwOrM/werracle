@@ -132,6 +132,28 @@ contract Werracle is IWerracle {
     }
 
     /**
+     * @notice View / Pure Forward Inference Preview for v1.0 baseline.
+     */
+    function previewDecision(
+        bytes32 /*stateHash*/,
+        int64 riskScoreFP
+    ) external view returns (bool allowed, uint16 confidenceBps) {
+        require(seed.activeFlag == 1, "Werracle: Engine Paused");
+
+        (int64[4] memory weights, ) = _sampleQuadrants(seed.cx, seed.cy, seed.zoom);
+
+        // Fractal balance bias: (w1 + w2 - w3 - w4) / 4
+        int64 fractalBias = (weights[0] + weights[1] - weights[2] - weights[3]) >> 2;
+
+        // Net logit = -riskScore + fractalBias
+        int64 logit = -riskScoreFP + fractalBias;
+        uint16 probBps = WerrMath.sigmoidBps(logit);
+
+        allowed = probBps >= seed.threshold;
+        confidenceBps = allowed ? probBps : (10000 - probBps);
+    }
+
+    /**
      * @notice Choice Route Selector among N routes.
      */
     function decideChoice(
