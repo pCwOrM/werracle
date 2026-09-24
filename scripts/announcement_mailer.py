@@ -112,7 +112,7 @@ Key Innovations:
 • Privacy by Design: Telemetry is permanently disabled.
 
 Live Sandbox & Resources:
-• Live EVM Node (mechsrv, Chain ID 4242): https://api.answerr.me:4431/werracle/status
+• Live EVM Node (api.answerr.me, Chain ID 4242): https://api.answerr.me:4431/werracle/status
 • Live Interactive API Docs: https://pcworm.github.io/werracle/apidocs.html
 • Browser Simulator: https://pcworm.github.io/werracle/
 • GitHub Repository: https://github.com/pCwOrM/werracle

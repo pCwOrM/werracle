@@ -1,6 +1,6 @@
 # ⚡ Werracle: Sıfır-Bellekli On-Chain Yapay Zekâ ve Karar Oracle'ı
 
-[![EVM Devnet: Chain ID 4242](https://img.shields.io/badge/EVM%20Devnet-Chain%20ID%204242%20(mechsrv)-38bdf8.svg)](https://api.answerr.me:4431/werracle/status)
+[![EVM Devnet: Chain ID 4242](https://img.shields.io/badge/EVM%20Devnet-Chain%20ID%204242%20(api.answerr.me)-38bdf8.svg)](https://api.answerr.me:4431/werracle/status)
 [![API Dokümantasyonu](https://img.shields.io/badge/API%20Belgeleri-Canl%C4%B1%20Etkile%C5%9Fimli-10b981.svg)](https://pcworm.github.io/werracle/apidocs.html)
 [![Gecikme: < 12ms](https://img.shields.io/badge/Gecikme-%3C12ms%20RPC-brightgreen.svg)]()
 [![Lisans: BSL 1.1](https://img.shields.io/badge/Lisans-BSL%201.1-blue.svg)](./LICENSE)
@@ -59,9 +59,9 @@ Blokzincir mimarilerinde geleneksel derin öğrenme modellerini çalıştırmak 
 
 ---
 
-## ⚡ Canlı EVM Testnet ve Akıllı Kontratlar (`mechsrv`)
+## ⚡ Canlı EVM Testnet ve Akıllı Kontratlar (`api.answerr.me`)
 
-Werracle, yüksek performanslı özel donanım düğümümüz (`mechsrv`, Ubuntu 24.04 LTS) üzerinde özelleştirilmiş özel EVM devnet kum havuzunda canlı olarak çalışmaktadır:
+Werracle, yüksek performanslı özel donanım düğümümüz (`api.answerr.me`, Ubuntu 24.04 LTS) üzerinde özelleştirilmiş özel EVM devnet kum havuzunda canlı olarak çalışmaktadır:
 
 * **Ağ Adı:** Werracle Devnet (Anvil EVM Sandbox)
 * **Chain ID:** `4242` &bull; **Blok Süresi:** `1.0s`
