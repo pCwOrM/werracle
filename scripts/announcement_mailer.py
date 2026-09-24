@@ -87,15 +87,15 @@ TARGET_CHANNELS = {
         "to": ["grants@solana.org"],
         "subject": "Grant Inquiry: Werracle - High-Throughput Procedural Decision Oracle & Micro-AI Public Good"
     },
-    "near_grants": {
-        "name": "NEAR Foundation Grants Desk",
-        "to": ["grants@near.foundation"],
-        "subject": "Grant Inquiry: Werracle - Deterministic Zero-Storage Decision Engine for Sharded State"
+    "arbitrum_grants": {
+        "name": "Arbitrum Foundation Grants Program",
+        "to": ["grants@arbitrum.foundation"],
+        "subject": "Grant Inquiry: Werracle - Sub-Cent On-Chain AI Decision Oracle on Arbitrum Nitro"
     },
-    "protocol_labs_grants": {
-        "name": "Protocol Labs Research & Grants Team",
-        "to": ["research-grants@protocol.ai"],
-        "subject": "Research Grant Inquiry: Werracle - Procedural Zero-Storage Model Synthesis for Decentralized Compute"
+    "optimism_grants": {
+        "name": "Optimism Foundation Grants Desk",
+        "to": ["grants@optimism.io"],
+        "subject": "Grant Inquiry: Werracle - Public Good System-One AI Oracle for the Superchain"
     }
 }
 
