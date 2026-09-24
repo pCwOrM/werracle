@@ -1,19 +1,19 @@
 {
-  "timestamp": "2026-09-24T19:58:53.480Z",
+  "timestamp": "2026-09-24T20:26:45.469Z",
   "evmEnvironment": "Ganache In-Memory EVM (Solidity 0.8.20 / EIP-150 / EIP-2929 / EIP-3860)",
   "contracts": {
     "Werracle_v1": {
-      "address": "0x552148FDF09625A8005a16E3eB4123B071d73a96",
+      "address": "0xBd2e54F034ff0BB0754741b5d5db3061643C8381",
       "bytecodeSize": 6418,
       "deploymentGas": 1533883
     },
     "WerracleTripodZMod9_Phase2": {
-      "address": "0x0a95887dBa2783E1E445bB4D3A9a1f7cB3152d04",
+      "address": "0x4c5d2Af9C98110EDe8fF44D2c51e175d05123241",
       "bytecodeSize": 7466,
-      "deploymentGas": 1760791
+      "deploymentGas": 1760779
     },
     "WerracleFeeHook": {
-      "address": "0xdef5Ad647Af159D27cd111007e4CCD1fDE9d4006",
+      "address": "0xE3B7855877E00885B43e5bA1a15fB509f332F1DB",
       "bytecodeSize": 1016,
       "deploymentGas": 275177
     }

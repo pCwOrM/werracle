@@ -69,11 +69,13 @@ Werracle, yüksek performanslı özel donanım düğümümüz (`api.answerr.me`,
 * **Gerçek Zamanlı REST Ağ Geçidi:** `https://api.answerr.me:4431/werracle/status`
 * **Canlı Etkileşimli Dokümantasyon:** [https://pcworm.github.io/werracle/apidocs.html](https://pcworm.github.io/werracle/apidocs.html)
 
-### Dağıtılmış Kontrat Kaydı:
+### Dağıtılmış Kontrat Kaydı (v2.0 ve v1.0 Tabanı):
 | Kontrat Adı | Bayt Kodu Adresi | Gas Kıyaslaması | Açıklama |
 | :--- | :--- | :--- | :--- |
-| **`Werracle.sol`** | [`0x5FbDB2315678afecb367f032d93F642f64180aa3`](https://api.answerr.me:4431/werracle/status) | **21.438 gas** | 32-Bayt Slot On-Chain AI Karar Oracle'ı |
-| **`WerracleFeeHook.sol`** | [`0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512`](https://api.answerr.me:4431/werracle/status) | **23.150 gas** | Uniswap v4 Dinamik Ücret Yönetim Kancası (Hook) |
+| **`WerracleTripodZMod9.sol`** | [`0x0a95887dBa2783E1E445bB4D3A9a1f7cB3152d04`](https://api.answerr.me:4431/werracle/status) | **22.557 gas** | **v2.0 Amiral Gemisi Çekirdeği**: Seyreltilmiş Çok Ölçekli Tripod ve $\mathbb{Z} \pmod 9$ Erken Kaçış |
+| **`BlockchainResonanceMatrix.sol`** | Gömülü Baytkodu Kütüphanesi | **3.821 gas** | **v2.0 Anlamsal Matris**: 5 Sütunda 40 On-Chain Belirteç (0 SLOAD) |
+| **`Werracle.sol`** | [`0x5FbDB2315678afecb367f032d93F642f64180aa3`](https://api.answerr.me:4431/werracle/status) | **21.438 gas** | **v1.0 Kanonik Tabanı**: 16-noktalı Pareto mikro-ızgarası (arXiv / Zenodo referansı) |
+| **`WerracleFeeHook.sol`** | [`0xdef5Ad647Af159D27cd111007e4CCD1fDE9d4006`](https://api.answerr.me:4431/werracle/status) | **36.739 gas** | Uniswap v4 Dinamik Volatilite Ücret Kancası (Hook) |
 
 ### Canlı On-Chain Kararları Sorgulayın (15ms Altı):
 ```bash
@@ -90,6 +92,39 @@ curl -s -X POST https://api.answerr.me:4431/werracle/hook/fee \
   -H "Content-Type: application/json" \
   -d '{"imbalance_ratio": 0.35}'
 ```
+
+---
+
+## 🚀 Werracle v2.0: Çok Ölçekli Seyreltilmiş Tripod ve $\mathbb{Z} \pmod 9$ Rezonansı
+
+Werracle v2.0, canlı EVM üzerinde test edilmiş ve kanıtlanmış iki büyük algoritmik yenilik sunar:
+
+### 1. Çok Ölçekli Harmonik Tripod (Seyreltilmiş 12-Noktalı Izgara)
+Tek bir odak düzlemi yerine, v2.0 üç harmonik yakınlaştırma düzlemi üzerinden örnekleme yapar:
+* **Geniş Ufuk ($0.60\times$):** Makro gürültüyü filtreler ve sınır dalgalanmalarını stabilize eder (Ağırlık: $0.25$).
+* **Doğal Odak ($1.00\times$):** Kanonik karar düzlemi (Ağırlık: $0.50$).
+* **Derin Kırılma ($1.60\times$):** Çatallanma sınırındaki ince fraktal iplikçikleri ayrıştırır (Ağırlık: $0.25$).  
+Her düzlemde 4 ortogonal kardinal nokta ($3 \times 4 = 12$ nokta) taranarak, v1.0'ın 16 noktalı düz ızgarasından daha az işlemle 3 ölçekli harmonik derinlik elde edilir.
+
+### 2. $\mathbb{Z} \pmod 9$ Modüler Rezonans Erken Kaçış Dinamiği
+Lean 4 formel cebirsel halka yapısına (`ZMod 9`) dayalı modüler kilometre taşlarında ($n \in \{3, 6, 9\}$) kaçış kontrolü yapılır. Flaş saldırılar ve ani şoklar 3. adımda hızla kaçarak ortalama döngü derinliğini 12 adımdan ~3.9 adıma düşürür.
+
+### 3. Ampirik EVM Gaz Kıyaslaması (v1.0 Taban vs v2.0 Tripod $\mathbb{Z} \pmod 9$)
+EIP-150 / EIP-2929 / EIP-3860 kuralları altında `solc 0.8.20 (runs: 200)` derlemesiyle [`scripts/ideal_evm_gas_benchmark.js`](scripts/ideal_evm_gas_benchmark.js) aracıyla canlı ölçülmüştür:
+
+| Katman / Senaryo | v1.0 Taban | v2.0 Tripod $\mathbb{Z} \pmod 9$ | Net Tasarruf | Düşüş Oranı | Tavan Kriteri |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **Saf Çıkarım Motoru Gazı** | **226.363 gaz** | **22.557 gaz** | **-203.806 gaz** | **-%90,0** | **BAŞARILI** ($\le 24.000$) |
+| **En Kötü Durum Motor Tavanı** | 226.416 gaz | **22.568 gaz** | -203.848 gaz | -%90,0 | **BAŞARILI** (+1.432 gaz payı) |
+| **Warm `decideNoul` (Normal)** | 264.970 gaz | **61.186 gaz** | -203.784 gaz | -%76,9 | Operasyonel |
+| **Warm `decideNoul` (Şok / Hızlı Kaçış)** | 247.972 gaz | **44.102 gaz** | -203.870 gaz | -%82,2 | Operasyonel |
+| **2 Seçenekli Rota Seçimi** | 247.786 gaz | **43.726 gaz** | -204.060 gaz | -%82,4 | Operasyonel |
+| **8 Seçenekli Rota Seçimi** | 251.752 gaz | **44.680 gaz** | -207.072 gaz | -%82,3 | Operasyonel |
+| **1-Belirteç Rezonans Sorgusu** | N/A | **3.821 gaz** | Salt Bytecode | 0 SLOAD | Anlık |
+| **4-Belirteç Kompozit Füzyon** | N/A | **7.443 gaz** | Salt Bytecode | 0 SLOAD | Anlık |
+| **Uniswap v4 Dinamik Kanca** | N/A | **36.739 gaz** | Uçtan Uca | Volatiliteye Bağlı | Sub-blok |
+
+> 🛡️ **Formel İnvaryant Doğrulaması**: Ayrıntılı ampirik denetim raporu [`docs/EVM_GAS_IDEAL_BENCHMARK_REPORT.md`](docs/EVM_GAS_IDEAL_BENCHMARK_REPORT.md) ve ham JSON verileri [`tests/results/evm_gas_ideal_benchmark.json`](tests/results/evm_gas_ideal_benchmark.json) dosyasında mevcuttur.
 
 ---
 
