@@ -477,6 +477,45 @@
       transition: color 0.2s;
     }
     .footer-links a:hover { color: var(--cyan); }
+
+    /* Mobile Responsiveness Enhancements */
+    .slot-table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin: 16px 0;
+    }
+    @media (max-width: 768px) {
+      .container { padding: 0 16px; }
+      .hero { padding: 40px 0 30px; }
+      .hero h1 { font-size: 2.1rem; }
+      .hero p { font-size: 1rem; }
+      .hero-stats { grid-template-columns: 1fr; }
+      .nav-inner { flex-direction: column; gap: 14px; }
+      .nav-links { flex-wrap: wrap; justify-content: center; gap: 12px; }
+      .card { padding: 18px; }
+      #paretoCanvas {
+        width: 100% !important;
+        max-width: 340px !important;
+        height: auto !important;
+      }
+      .wallet-card { padding: 20px; }
+      .wallet-addr {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        word-break: break-all;
+      }
+      .code-box, pre {
+        font-size: 0.75rem;
+        padding: 12px;
+      }
+      .footer-inner {
+        flex-direction: column;
+        text-align: center;
+        gap: 16px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -661,7 +700,8 @@
       </div>
 
       <div class="card">
-        <table class="slot-table">
+        <div class="slot-table-wrap">
+          <table class="slot-table">
           <thead>
             <tr>
               <th>Field</th>
@@ -723,6 +763,7 @@
             </tr>
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   </section>
