@@ -1,14 +1,16 @@
 {
   "name": "@werracle/contracts",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "description": "Zero-Storage On-Chain AI Oracle powered by WERR fractal escape dynamics in a single 32-byte EVM storage slot.",
   "main": "index.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "forge test",
-    "test:gas": "forge test --gas-report",
+    "test": "python tests/run_1000_sealed_battery.py",
+    "test:phase2": "python tests/test_tripod_zmod9.py && python tests/test_blockchain_resonance.py",
+    "benchmark:gas": "node scripts/ideal_evm_gas_benchmark.js",
+    "compile": "node scripts/compile_and_profile_gas.js",
     "sim": "python sim/test_cross_validation.py"
   },
   "keywords": [
