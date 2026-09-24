@@ -9,5 +9,117 @@
     ],
     "subject": "\u26a1 Werracle v2.0 Release: Sparse Harmonic Tripod & ZMod 9 Modular Resonance [EVM Benchmarks & 1000-Test Seal]",
     "status": "DELIVERED"
+  },
+  {
+    "timestamp_utc": "2026-09-24T20:43:17.546931Z",
+    "target_key": "self_test",
+    "recipient_name": "Werracle Lead Engineering & Archive",
+    "recipients": [
+      "pcworm@pcworm.net",
+      "ask@answerr.me"
+    ],
+    "subject": "\u26a1 Werracle v2.0 Release: Sparse Harmonic Tripod & ZMod 9 Modular Resonance [EVM Benchmarks & 1000-Test Seal]",
+    "status": "DELIVERED"
+  },
+  {
+    "timestamp_utc": "2026-09-24T20:43:21.581452Z",
+    "target_key": "week_in_ethereum",
+    "recipient_name": "Week in Ethereum News (Evan Van Ness)",
+    "recipients": [
+      "editor@weekinethereumnews.com"
+    ],
+    "subject": "Project Submission: Werracle v2.0 - Zero-Storage On-Chain AI in 32-Byte Slot (22.5k gas on EVM)",
+    "status": "DELIVERED"
+  },
+  {
+    "timestamp_utc": "2026-09-24T20:43:25.433167Z",
+    "target_key": "solidity_weekly",
+    "recipient_name": "Solidity Weekly Newsletter",
+    "recipients": [
+      "solidityweekly@gmail.com"
+    ],
+    "subject": "Solidity Architecture: Werracle v2.0 - 90% Gas Cut via Native Unchecked Int256 & ZMod 9 Early Escape",
+    "status": "DELIVERED"
+  },
+  {
+    "timestamp_utc": "2026-09-24T20:43:29.370054Z",
+    "target_key": "ethereum_esp",
+    "recipient_name": "Ethereum Foundation Ecosystem Support Program (ESP)",
+    "recipients": [
+      "esp@ethereum.org"
+    ],
+    "subject": "Grant Inquiry: Werracle v2.0 - Machine-Native On-Chain AI Decisions (Public Good / Open Source)",
+    "status": "DELIVERED"
+  },
+  {
+    "timestamp_utc": "2026-09-24T20:43:33.576216Z",
+    "target_key": "uniswap_grants",
+    "recipient_name": "Uniswap Foundation Grants Desk",
+    "recipients": [
+      "grants@uniswapfoundation.org"
+    ],
+    "subject": "Grant Inquiry: WerracleFeeHook v2.0 - Dynamic Chaos-Adaptive AMM Fee Governor for Uniswap v4 (36k gas)",
+    "status": "DELIVERED"
+  },
+  {
+    "timestamp_utc": "2026-09-24T20:43:37.485855Z",
+    "target_key": "dlnews",
+    "recipient_name": "DL News / DefiLlama Editorial",
+    "recipients": [
+      "news@dlnews.com"
+    ],
+    "subject": "DeFi Breakthrough: Werracle v2.0 - Micro-Gas AI Decision Oracle Defending EVM Transactions",
+    "status": "DELIVERED"
+  },
+  {
+    "timestamp_utc": "2026-09-24T20:43:41.513466Z",
+    "target_key": "bankless",
+    "recipient_name": "Bankless Editorial Team",
+    "recipients": [
+      "editorial@banklesshq.com"
+    ],
+    "subject": "Web3 Innovation: Zero-Storage On-Chain AI Oracle Drops EVM Inference to 22.5k Gas",
+    "status": "DELIVERED"
+  },
+  {
+    "timestamp_utc": "2026-09-24T20:43:45.466376Z",
+    "target_key": "avalanche_grants",
+    "recipient_name": "Avalanche Foundation Grants Desk & Blizzard Fund",
+    "recipients": [
+      "grants@avax.network",
+      "blizzard@avalabs.org"
+    ],
+    "subject": "Grant Inquiry: Werracle v2.0 - Machine-Native On-Chain AI Decisions for Avalanche C-Chain & Subnets",
+    "status": "DELIVERED"
+  },
+  {
+    "timestamp_utc": "2026-09-24T20:43:49.472503Z",
+    "target_key": "solana_grants",
+    "recipient_name": "Solana Foundation Grants Program",
+    "recipients": [
+      "grants@solana.org"
+    ],
+    "subject": "Grant Inquiry: Werracle - High-Throughput Procedural Decision Oracle & Micro-AI Public Good",
+    "status": "DELIVERED"
+  },
+  {
+    "timestamp_utc": "2026-09-24T20:43:53.411587Z",
+    "target_key": "arbitrum_grants",
+    "recipient_name": "Arbitrum Foundation Grants Program",
+    "recipients": [
+      "grants@arbitrum.foundation"
+    ],
+    "subject": "Grant Inquiry: Werracle v2.0 - Sub-Cent On-Chain AI Decision Oracle on Arbitrum Nitro (22.5k gas)",
+    "status": "DELIVERED"
+  },
+  {
+    "timestamp_utc": "2026-09-24T20:43:57.367528Z",
+    "target_key": "optimism_grants",
+    "recipient_name": "Optimism Foundation Grants Desk",
+    "recipients": [
+      "grants@optimism.io"
+    ],
+    "subject": "Grant Inquiry: Werracle v2.0 - Public Good Micro-AI Oracle for the Superchain",
+    "status": "DELIVERED"
   }
 ]
