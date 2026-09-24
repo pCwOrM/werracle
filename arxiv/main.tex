@@ -1,4 +1,4 @@
-\documentclass[10pt,journal,compsoc,twocolumn]{article}
+\documentclass[10pt,twocolumn]{article}
 
 \usepackage[utf8]{inputenc}
 \usepackage[margin=18mm]{geometry}
@@ -6,18 +6,29 @@
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{cite}
-\usepackage{hyperref}
+\usepackage{url}
+\def\UrlBreaks{\do\/\do-\do\_}
 \usepackage{microtype}
 \usepackage{xcolor}
-\usepackage{lineno}
-\usepackage{url}
 \usepackage{listings}
+\usepackage{hyperref}
 
 \hypersetup{
     colorlinks=true,
     linkcolor=blue,
     citecolor=blue,
     urlcolor=blue
+}
+
+% Define Solidity for listings to prevent compilation errors
+\lstdefinelanguage{Solidity}{
+    keywords={pragma, solidity, contract, function, returns, memory, bytes32, uint256, int64, uint16, uint32, bool, public, internal, external, pure, view, require, emit, event},
+    keywordstyle=\color{blue}\bfseries,
+    sensitive=true,
+    comment=[l]{//},
+    morecomment=[s]{/*}{*/},
+    commentstyle=\color{green!50!black}\itshape,
+    stringstyle=\color{red}\ttfamily
 }
 
 \lstset{
@@ -133,6 +144,8 @@ The complex escape condition $|z|^2 = z_x^2 + z_y^2 > 4.0$ is tested against the
 \centering
 \caption{Opcode-Level EVM Gas Profiling}
 \label{tab:gas}
+\small
+\setlength{\tabcolsep}{3.5pt}
 \begin{tabular}{lrr}
 \toprule
 \textbf{Execution Phase} & \textbf{EVM Gas} & \textbf{USD (Base L2)} \\
@@ -160,7 +173,7 @@ During calm orderflow, swap fees drop to 0.05\% to capture retail routing volume
 \section{Comparative Empirical Evaluation}
 Table \ref{tab:comparison} and Figure \ref{fig:benchmarks} benchmark Werracle against traditional centralized oracles and contemporary ZK-ML proving architectures.
 
-\begin{table}[h]
+\begin{table*}[t]
 \centering
 \caption{Architectural Benchmark Comparison}
 \label{tab:comparison}
@@ -169,15 +182,15 @@ Table \ref{tab:comparison} and Figure \ref{fig:benchmarks} benchmark Werracle ag
 \textbf{Feature} & \textbf{Web2 Oracle} & \textbf{ZK-ML (EZKL)} & \textbf{Werracle} \\
 \midrule
 Model Weights & Gigabytes & Off-chain Prover & \textbf{0 Bytes} \\
-EVM Storage & N/A & Verification Keys & \textbf{32 Bytes} \\
-Proving Latency & 12--36 s & 10--300 s & \textbf{< 1 ms} \\
-Verification Gas & $\sim$60,000 & $\sim$380,000 & \textbf{21,438} \\
+EVM Storage & N/A & Verification Keys & \textbf{32 Bytes (1 Slot)} \\
+Proving Latency & 12--36 s & 10--300 s & \textbf{< 1 ms (Atomic)} \\
+Verification Gas & $\sim$60,000 gas & $\sim$380,000 gas & \textbf{21,438 gas} \\
 Intra-Block Revert & No & No & \textbf{Native} \\
-Hardware Req. & Server Node & GPU Cluster & \textbf{None (EVM)} \\
-Liveness Risk & Centralized & Prover Outage & \textbf{Zero} \\
+Hardware Requirements & Server Node & Dedicated GPU Cluster & \textbf{None (Pure EVM)} \\
+Liveness Risk & Centralized Signer Failure & Prover Outage & \textbf{Zero (Autonomous)} \\
 \bottomrule
 \end{tabular}
-\end{table}
+\end{table*}
 
 \begin{figure}[t]
 \centering
@@ -216,7 +229,72 @@ All smart contracts, test vectors, and interactive sandboxes are publicly availa
     \item \textbf{Patent Attribution:} The underlying zero-storage procedural fractal synthesis is protected under Turkish Patent Application TR 2026/016285 \cite{turkpatent2026werr}.
 \end{itemize}
 
-\bibliographystyle{IEEEtran}
-\bibliography{references}
+\begin{thebibliography}{13}
+
+\bibitem{perez2021smart}
+D.~Perez and B.~Livshits, ``Smart contract vulnerabilities: Does anyone care?''
+  in \emph{2021 IEEE Symposium on Security and Privacy (SP)}.\hskip 1em plus
+  0.5em minus 0.4em\relax IEEE, 2021, pp. 1142--1159.
+
+\bibitem{qin2021attacking}
+K.~Qin, L.~Zhou, B.~Livshits, and A.~Gervais, ``Attacking the defi ecosystem
+  with flash loans for fun and profit,'' in \emph{Financial Cryptography and
+  Data Security}.\hskip 1em plus 0.5em minus 0.4em\relax Springer, 2021, pp.
+  3--22.
+
+\bibitem{wood2014ethereum}
+G.~Wood, ``Ethereum: A secure decentralised generalised transaction ledger,''
+  \emph{Ethereum Project Yellow Paper}, vol. 151, pp. 1--32, 2014.
+
+\bibitem{kang2022scaling}
+D.~Kang, T.~Hashimoto, I.~Stoica, and Y.~Sun, ``Scaling up trustless machine
+  learning with zero-knowledge proofs,'' \emph{arXiv preprint
+  arXiv:2210.08674}, 2022.
+
+\bibitem{modulus2023cost}
+{Modulus Labs}, ``The cost of intelligence: On-chain machine learning
+  benchmarks and feasibility,'' Modulus Research, Tech. Rep., 2023.
+
+\bibitem{dargli2026universal}
+V.~Da{\u{g}}l{\i}, Z.~Da{\u{g}}l{\i}, and D.~Da{\u{g}}l{\i}, ``Universal
+  fractal natural language decision map: Real-time edge triage across
+  heterogeneous domains,'' \emph{arXiv preprint arXiv:2609.25498}, 2026.
+
+\bibitem{dargli2026mandelbrot}
+------, ``Mandelbrot fractal neural synthesis: Zero-storage procedural weight
+  derivation and non-linear decision boundaries,'' \emph{Zenodo Pre-print},
+  doi: 10.5281/zenodo.22867037, 2026.
+
+\bibitem{mandelbrot1982fractal}
+B.~B. Mandelbrot, \emph{The Fractal Geometry of Nature}.\hskip 1em plus 0.5em
+  minus 0.4em\relax New York: W. H. Freeman and Company, 1982.
+
+\bibitem{uniswap2024v4}
+{Uniswap Labs}, ``Uniswap v4 core whitepaper,'' Uniswap Foundation, Tech.
+  Rep., 2024.
+
+\bibitem{milionis2023automated}
+J.~Milionis, C.~Moallemi, T.~Roughgarden, and A.~L. Zhang, ``Automated market
+  making and loss-versus-rebalancing,'' in \emph{Proceedings of the 24th ACM
+  Conference on Economics and Computation (EC)}, 2023, pp. 941--942.
+
+\bibitem{daian2020flash}
+P.~Daian, S.~Goldfeder, T.~Kell, Z.~Li, X.~Zhao, I.~Bentov, L.~Breidenbach, and
+  A.~Juels, ``Flash boys 2.0: Frontrunning, transaction reordering, and
+  consensus instability in decentralized exchanges,'' \emph{arXiv preprint
+  arXiv:1904.05234}, 2020.
+
+\bibitem{dargli2026werracle_zenodo}
+V.~Da{\u{g}}l{\i}, Z.~Da{\u{g}}l{\i}, and D.~Da{\u{g}}l{\i}, ``Werracle:
+  Sub-cent intra-block ai reflex oracles and flash-loan circuit breakers for
+  evm smart contracts,'' \emph{Zenodo Pre-print Replication Package}, doi:
+  10.5281/zenodo.22942598, 2026.
+
+\bibitem{turkpatent2026werr}
+V.~Da{\u{g}}l{\i}, ``Yapay sinir agi parametrelerinin fraktal dinamiklerden
+  prosedurel turetildigi sifir depolamali karar yontemi,'' Turkish Patent and
+  Trademark Office, Patent Application TR 2026/016285, 2026.
+
+\end{thebibliography}
 
 \end{document}
