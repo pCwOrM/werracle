@@ -1,0 +1,51 @@
+{
+  "curated_awesome_lists": [
+    {
+      "repo": "bkrem/awesome-solidity",
+      "url": "https://github.com/bkrem/awesome-solidity",
+      "section": "Oracles",
+      "entry": "* [Werracle](https://github.com/pCwOrM/werracle) - Zero-storage On-Chain AI Decision Oracle executing intra-block procedural inference in a single 32-byte slot (~22.5k gas)."
+    },
+    {
+      "repo": "fewwwww/awesome-uniswap-hooks",
+      "url": "https://github.com/fewwwww/awesome-uniswap-hooks",
+      "section": "Dynamic Fees / Volatility",
+      "entry": "* [WerracleFeeHook](https://github.com/pCwOrM/werracle/blob/main/contracts/WerracleFeeHook.sol) - Chaos-adaptive dynamic fee governor for Uniswap v4 tying LP swap fees to fractal phase transitions (~36.7k gas)."
+    },
+    {
+      "repo": "johnsonstephan/awesome-uniswap-v4-hooks",
+      "url": "https://github.com/johnsonstephan/awesome-uniswap-v4-hooks",
+      "section": "Fee Management Hooks",
+      "entry": "* [WerracleFeeHook](https://github.com/pCwOrM/werracle/blob/main/contracts/WerracleFeeHook.sol) - Real-time orderbook chaos governor adjusting fees between 0.05% and 0.50% atomically."
+    },
+    {
+      "repo": "Pond-International/awesome-crypto-ai",
+      "url": "https://github.com/Pond-International/awesome-crypto-ai",
+      "section": "On-Chain AI",
+      "entry": "* [Werracle v2.0](https://github.com/pCwOrM/werracle) - Sparse Multi-Scale Harmonic Tripod and ZMod 9 modular resonance oracle on EVM (22.5k gas, zero tensor storage)."
+    },
+    {
+      "repo": "michaltakac/awesome-crypto-ai-agents",
+      "url": "https://github.com/michaltakac/awesome-crypto-ai-agents",
+      "section": "Autonomous Decision Systems",
+      "entry": "* [Werracle](https://github.com/pCwOrM/werracle) - Deterministic System-1 procedural decision oracle for autonomous smart contract defense."
+    }
+  ],
+  "technical_discussions": [
+    {
+      "repo": "ethereum/solidity",
+      "url": "https://github.com/ethereum/solidity/discussions",
+      "title": "Case Study: Cutting EVM Opcodes by 83.7% and Gas by 90.0% using Native Int256, Unchecked Arithmetic, and Modular Early Escape"
+    },
+    {
+      "repo": "ethereum-optimism/community-hub",
+      "url": "https://github.com/ethereum-optimism/community-hub/discussions",
+      "title": "Showcase: Werracle - Sub-Cent Zero-Storage AI Decision Oracle for the Superchain"
+    },
+    {
+      "repo": "starknet-io/starknet-ecosystem",
+      "url": "https://github.com/starknet-io/starknet-ecosystem",
+      "title": "Ecosystem Project Listing: Werracle Procedural Decision Oracle"
+    }
+  ]
+}
