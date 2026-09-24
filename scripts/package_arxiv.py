@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 """
 Package Werracle arXiv submission into .tar.gz and .zip archives.
-Archive root must contain:
-- main.tex
-- main.bbl
-- references.bib
+Archive root contains ONLY self-contained source files:
+- main.tex (contains embedded bibliography - no external .bib or .bbl needed)
 - figures/fig1_werracle_architecture.png
 - figures/fig2_benchmarks_comparison.png
 """
@@ -19,14 +17,12 @@ ZIP_OUT = os.path.join(ARXIV_DIR, "werracle_arxiv_package.zip")
 
 FILES_TO_PACK = [
     ("main.tex", "main.tex"),
-    ("main.bbl", "main.bbl"),
-    ("references.bib", "references.bib"),
     (os.path.join("figures", "fig1_werracle_architecture.png"), "figures/fig1_werracle_architecture.png"),
     (os.path.join("figures", "fig2_benchmarks_comparison.png"), "figures/fig2_benchmarks_comparison.png"),
 ]
 
 def build_archives():
-    print(f"Packaging files from: {ARXIV_DIR}")
+    print(f"Packaging self-contained files from: {ARXIV_DIR}")
     
     # 1. Build .tar.gz
     with tarfile.open(TAR_GZ_OUT, "w:gz") as tar:
