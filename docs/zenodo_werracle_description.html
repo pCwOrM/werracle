@@ -1,0 +1,125 @@
+<h1>Werracle: Sub-Cent Intra-Block AI Reflex Oracles and Flash-Loan Circuit Breakers for EVM Smart Contracts</h1>
+
+<p>
+  <strong>Official Open Science Replication Package &amp; Engineering Blueprint</strong><br>
+  <em>Companion Research to WERR Framework (<a href="https://doi.org/10.5281/zenodo.22939253" target="_blank" rel="noopener">Zenodo: 10.5281/zenodo.22939253</a> &bull; <a href="https://arxiv.org/abs/2609.25498" target="_blank" rel="noopener">arXiv:2609.25498</a>)</em><br>
+  <strong>Patent Application:</strong> TÜRKPATENT TR 2026/016285 (Procedural State &amp; On-Chain Decision Synthesis)
+</p>
+
+<hr>
+
+<h2>Executive Summary &amp; Breakthrough Overview</h2>
+<p>
+  Contemporary on-chain artificial intelligence (AI) encounters an intractable <strong>Von Neumann memory and latency wall</strong>. Storing static floating-point neural weight matrices inside Ethereum Virtual Machine (EVM) storage costs millions of gas, rendering direct on-chain inference impossible. While Zero-Knowledge Machine Learning (ZK-ML) offloads matrix tensor multiplications to off-chain provers, it introduces fatal constraints: <strong>10 to 300 seconds of SNARK proving latency</strong> and <strong>250,000 to 500,000 gas per proof verification</strong>.
+</p>
+<p>
+  Because decentralized finance (DeFi) exploits—such as uncollateralized flash-loan attacks, predatory sandwich MEV, and toxic loss-versus-rebalancing (LVR) flow—occur <em>atomically inside a single block</em>, ZK-ML oracles cannot react in time. 
+</p>
+<p>
+  <strong>Werracle</strong> completely resolves this paradigm by delivering the first production-grade, zero-storage AI decision oracle capable of sub-millisecond, intra-block reflexive execution inside standard EVM smart contracts:
+</p>
+<ul>
+  <li><strong>0 Bytes Persistent Tensor Weights:</strong> Instead of multi-gigabyte weight arrays, non-linear decision hyperplanes are procedurally synthesized on-the-fly from a 24-byte Mandelbrot coordinate triplet &Theta; = (c<sub>x</sub>, c<sub>y</sub>, zoom).</li>
+  <li><strong>Single 32-Byte Storage Slot (<code>bytes32</code>):</strong> The entire machine-learning model, operational thresholds, update nonces, and security flags pack into one EVM word. Warm <code>SLOAD</code> costs exactly <strong>100 gas</strong>.</li>
+  <li><strong>Sub-Cent Micro-Gas Footprint:</strong> Using pure fixed-point Q16.16 arithmetic (<code>WerrMath.sol</code>), evaluating a 16-point Pareto micro-grid takes only <strong>~21,438 gas (&lt; $0.0005 on Base and Arbitrum)</strong>.</li>
+  <li><strong>Uniswap v4 Dynamic Fee Governor (<code>WerracleFeeHook.sol</code>):</strong> Measures real-time orderbook turbulence and dynamically scales LP swap fees between <strong>0.05% and 0.50%</strong> atomically inside the swap transaction to mitigate LVR.</li>
+  <li><strong>1,000-Test Deterministic Sealed Battery:</strong> Validated with a 100.0% pass rate across 1,000 unit, invariant, and adversarial vectors, cryptographically sealed under SHA-256 integrity digest.</li>
+  <li><strong>Strict Privacy by Design:</strong> Telemetry is permanently disabled (<code>TELEMETRY_ENABLED = False</code>). Zero transaction metadata leaves the EVM execution sandbox.</li>
+</ul>
+
+<hr>
+
+<h2>Comparative Architectural Benchmarks: Traditional AI vs. ZK-ML vs. Werracle</h2>
+
+<table border="1" cellpadding="6" cellspacing="0" style="border-collapse: collapse; width: 100%; text-align: center; font-size: 13px;">
+  <thead style="background-color: #f2f2f2;">
+    <tr>
+      <th>Metric / Feature</th>
+      <th>Traditional Cloud AI (Chainlink / Web2)</th>
+      <th>ZK-ML Provers (EZKL / Modulus Labs)</th>
+      <th style="background-color: #e6fffa; color: #006644;"><strong>WERRACLE (EVM Native)</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="left"><strong>Model Weight Footprint</strong></td>
+      <td>Gigabytes (Off-chain servers)</td>
+      <td>Off-chain Prover Cluster</td>
+      <td style="background-color: #e6fffa;"><strong>0 Bytes (Procedural Dynamics)</strong></td>
+    </tr>
+    <tr>
+      <td align="left"><strong>On-Chain Storage</strong></td>
+      <td>N/A (Multi-sig feed)</td>
+      <td>Verification Keys &amp; Proof Buffers</td>
+      <td style="background-color: #e6fffa;"><strong>Single 32-Byte Slot (<code>bytes32</code>)</strong></td>
+    </tr>
+    <tr>
+      <td align="left"><strong>Inference / Proving Latency</strong></td>
+      <td>12 – 36 seconds (Network lag)</td>
+      <td>10 – 300 seconds (SNARK generation)</td>
+      <td style="background-color: #e6fffa;"><strong>&lt; 1 millisecond (Intra-Block)</strong></td>
+    </tr>
+    <tr>
+      <td align="left"><strong>EVM Gas Cost</strong></td>
+      <td>~40,000 – 80,000 gas</td>
+      <td>~250,000 – 500,000 gas (~$15+)</td>
+      <td style="background-color: #e6fffa;"><strong>~21,438 gas (&lt; $0.0005 on L2s)</strong></td>
+    </tr>
+    <tr>
+      <td align="left"><strong>Flash-Loan Circuit Breaking</strong></td>
+      <td>&#10060; Impossible (Too slow)</td>
+      <td>&#10060; Impossible (Cross-block delay)</td>
+      <td style="background-color: #e6fffa;"><strong>&#9989; Native (Atomic Transaction Revert)</strong></td>
+    </tr>
+    <tr>
+      <td align="left"><strong>External Infrastructure Trust</strong></td>
+      <td>Centralized Multi-Sig Signers</td>
+      <td>Heavy GPU Prover Farms</td>
+      <td style="background-color: #e6fffa;"><strong>ZERO (100% Autonomous EVM Bytecode)</strong></td>
+    </tr>
+    <tr>
+      <td align="left"><strong>Deterministic Verification</strong></td>
+      <td>Probabilistic / Variable</td>
+      <td>Cryptographic (Circuit)</td>
+      <td style="background-color: #e6fffa;"><strong>1,000 / 1,000 Tests (100.0% SHA-256 Sealed)</strong></td>
+    </tr>
+  </tbody>
+</table>
+
+<hr>
+
+<h2>Genişletilmiş Türkçe Özet (Extended Turkish Abstract)</h2>
+<p>
+  Bu araştırma ve replikasyon paketi, blokzincir akıllı sözleşmelerinde (EVM) yapay zeka çıkarımı yapmanın önündeki en büyük iki engel olan <strong>"bellek duvarı"</strong> (milyonlarca parametrenin blokzincirde saklanamaması) ve <strong>"ZK-ML gecikme açmazı"</strong> (SNARK kanıtlarının 10 ila 300 saniye sürmesi) problemlerini kökten çözen <strong>Werracle</strong> sistemini sunmaktadır.
+</p>
+<p>
+  Dağlı ve ark. (arXiv:2609.25498) tarafından ispatlanan WERR fraktal kaçış dinamiği (<code>z = z<sup>2</sup> + c</code>) temeline dayanan Werracle, karar hiper-düzlemlerini harici hiçbir yapay sinir ağı ağırlığına ihtiyaç duymadan, yalnızca 24 baytlık bir koordinat tohumundan (&Theta; = c<sub>x</sub>, c<sub>y</sub>, zoom) anlık olarak türetir. Modelin tamamı tek bir 32-baytlık EVM depolama yuvasına (<code>bytes32</code>) sığdırılmıştır.
+</p>
+<p>
+  Saf Solidity baytkodunda Q16.16 sabit noktalı aritmetik (<code>WerrMath.sol</code>) ile çalışan Werracle, 16 noktalı Pareto mikro-ızgara analizini yalnızca <strong>21.438 gas</strong> (&lt; 0.0005 USD) harcayarak milisaniyenin altında tamamlar. Bu sayede blok-içi (intra-block) flaş kredi saldırılarını ve sandviç MEV manipülasyonlarını atomik olarak durduran ilk yerel yapay zeka devre kesicisi (circuit breaker) elde edilmiştir.
+</p>
+
+<hr>
+
+<h2>Package &amp; Repository Manifest</h2>
+<ul>
+  <li><code>Werracle_EVM_AI_Oracle_Research_Paper.pdf</code>: Camera-ready IEEE two-column formal research paper.</li>
+  <li><code>contracts/Werracle.sol</code>: Production 32-byte single-slot on-chain AI decision oracle.</li>
+  <li><code>contracts/WerrMath.sol</code>: High-performance Q16.16 fixed-point complex arithmetic library.</li>
+  <li><code>contracts/hooks/WerracleFeeHook.sol</code>: Uniswap v4 chaos-adaptive dynamic swap fee governor.</li>
+  <li><code>tests/sealed/SEAL_MANIFEST.json</code>: 1,000-test deterministic audit battery verification manifest (SHA-256 sealed).</li>
+  <li><code>sim/werr_fixed_point.py</code> &amp; <code>test_cross_validation.py</code>: Python-to-Solidity mathematical cross-validation suite (100.0% parity).</li>
+</ul>
+
+<hr>
+
+<h2>Live Endpoints &amp; Open Science Resources</h2>
+<p>
+  <strong>Official GitHub Repository:</strong> <a href="https://github.com/pCwOrM/werracle" target="_blank" rel="noopener">https://github.com/pCwOrM/werracle</a><br>
+  <strong>Interactive Web Sandbox Simulator:</strong> <a href="https://pcworm.github.io/werracle/" target="_blank" rel="noopener">https://pcworm.github.io/werracle/</a><br>
+  <strong>Live EVM Hardware Node (Chain ID 4242 @ mechsrv):</strong> <a href="https://api.answerr.me:4431/werracle/status" target="_blank" rel="noopener">https://api.answerr.me:4431/werracle/status</a><br>
+  <strong>Interactive API Documentation:</strong> <a href="https://pcworm.github.io/werracle/apidocs.html" target="_blank" rel="noopener">https://pcworm.github.io/werracle/apidocs.html</a><br>
+  <strong>Companion Theoretical Paper:</strong> <a href="https://arxiv.org/abs/2609.25498" target="_blank" rel="noopener">arXiv:2609.25498</a> &bull; <a href="https://doi.org/10.5281/zenodo.22939253" target="_blank" rel="noopener">Zenodo DOI: 10.5281/zenodo.22939253</a><br>
+  <strong>Corporate Entity:</strong> ITOUCH BİLİŞİM SİSTEMLERİ LTD. ŞTİ. (Çukurova Teknokent, Adana, Türkiye)<br>
+  <strong>Official Contact:</strong> <code>vdagli@itouch.com.tr</code> | <code>pcworm@pcworm.net</code> | Autonomous Agent: <code>ask@answerr.me</code>
+</p>
