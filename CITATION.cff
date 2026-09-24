@@ -15,6 +15,7 @@ authors:
     affiliation: "Toros Science College, Mersin, Turkey"
 title: "Werracle: Sub-Cent Intra-Block AI Reflex Oracles and Flash-Loan Circuit Breakers for EVM Smart Contracts"
 version: "1.0.0"
+doi: "10.5281/zenodo.22942598"
 date-released: 2026-09-24
 url: "https://github.com/pCwOrM/werracle"
 repository-code: "https://github.com/pCwOrM/werracle"
