@@ -194,20 +194,16 @@ window.MathJax = {
   <h1 class="title">Werracle: Sub-Cent Intra-Block AI Reflex Oracles and Flash-Loan Circuit Breakers for EVM Smart Contracts</h1>
   
   <div class="authors">
-    <strong>Volkan Dağlı</strong><sup>1,2*</sup>, 
+    <strong>Volkan Dağlı</strong><sup>1,2</sup>, 
     <strong>Zerrin Dağlı</strong><sup>3</sup>, 
     <strong>Dağhan Dağlı</strong><sup>4</sup>
   </div>
 
   <div class="affiliations">
-    <sup>1</sup>ITOUCH Bilişim Sistemleri Ltd. Şti., Çukurova Teknokent, Adana, Türkiye<br>
-    <sup>2</sup>Department of Computer Engineering, Anadolu University, Eskişehir, Türkiye<br>
-    <sup>3</sup>Department of Information Systems, Mersin University, Mersin, Türkiye<br>
-    <sup>4</sup>Toros Science High School, Mersin, Türkiye
-  </div>
-
-  <div class="emails">
-    *Corresponding Lead Author: vdagli@itouch.com.tr &bull; pcworm@pcworm.net &bull; Autonomous Node: ask@answerr.me
+    <sup>1</sup>Anadolu University &bull; 
+    <sup>2</sup>ITouch Systems, Turkey &bull; 
+    <sup>3</sup>Mersin University, Turkey &bull; 
+    <sup>4</sup>Toros Science College, Turkey
   </div>
 </div>
 
