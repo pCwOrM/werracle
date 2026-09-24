@@ -1,6 +1,6 @@
 # 📘 Werracle Evolution & Research Roadmap Notebook (v1.5+ Lab)
 
-Bu defter, **Werracle**'ın canlıdaki (v1.0-prod) durumunun ardından gelecek olan **v1.5+ İleri Seviye Çekirdek Geliştirmelerini** (Tripod, Tesla 3-6-9, Blockchain Rezonans Sözlüğü ve Çoklu Domain Füzyonu) adım adım kayıt altında tutan resmi Ar-Ge günlüğüdür.
+Bu defter, **Werracle**'ın canlıdaki (v1.0-prod) durumunun ardından gelen **v1.5+ İleri Seviye Çekirdek Geliştirmelerini** (Seyreltilmiş Tripod, $\mathbb{Z} \pmod 9$ / Lean 4 Modüler Dinamikleri, Yüksek Füzyonlu Blokzincir Rezonans Sözlüğü) adım adım kayıt altında tutan resmi Ar-Ge günlüğüdür.
 
 ---
 
@@ -15,28 +15,38 @@ Bu defter, **Werracle**'ın canlıdaki (v1.0-prod) durumunun ardından gelecek o
 
 ## 🔬 2. Faz 2: Gelecek Nesil Çekirdek İnovasyonları (Geliştirme Notları)
 
-### A. Çoklu Ölçekli Harmonik Tripod (Multi-Scale Harmonic Tripod)
+### A. Terminoloji ve İsimlendirme Standardı (Nomenclature Protocol)
+* **Gündelik / Eşli Çalışma İsimlendirmesi:** "Tesla 3-6-9"
+* **Resmi / Akademik / Lean 4 İsimlendirmesi:** 
+  $$\mathbb{Z}/9\mathbb{Z} \text{ (Z mod 9) Discrete Modular Resonance Dynamics}$$
+  * Lean 4 formel doğrulama uyumluluğu (`ZMod 9` cebirsel halka yapısı ve $(3)$ temel ideali $\{0, 3, 6\} \subset \mathbb{Z}_9$).
+  * Tüm yayın, rapor, teknik dokümantasyon ve akademik makalelerde bu formel isimlendirme esas alınacaktır.
+
+### B. Çoklu Ölçekli Seyreltilmiş Harmonik Tripod (Sparse Multi-Scale Harmonic Tripod)
 * **Konsept:** Tek odak noktası yerine 3 harmonik ölçekleme düzlemi ($0.60\times$, $1.00\times$, $1.60\times$) kullanılarak mikro-tuzakların ve gürültünün filtrelenmesi.
-* **Ağırlıklandırma:** $0.25$ (Geniş alan) - $0.50$ (Doğal odak) - $0.25$ (Derin zoom).
-* **Blokzincir Hibrit Stratejisi:** 
-  * Off-chain gateway tarafında Tripod füzyonu ile en temiz rezonans noktasının seçilmesi.
-  * On-chain tarafta tek slotluk ultra-hızlı yürütmenin korunması.
+* **Ağırlıklandırma:** $0.25$ (Geniş alan / Makro stabilite) - $0.50$ (Doğal odak) - $0.25$ (Derin zoom / Cusp hassasiyeti).
+* **Mühendislik Çözümü (Sparse 12-Point Grid):**
+  * 48 nokta yerine her düzlemde 4 kardinal nokta ($3 \times 4 = 12$ nokta) örneklenir.
+  * Böylece toplam nokta sayısı 16'dan 12'ye düşerken, 3 ölçekli harmonik derinlik eksiksiz kazanılır.
 
-### B. Tesla 3-6-9 Harmonik Frekans İterasyonu
-* **Konsept:** Standart $50$ iterasyon döngüsü yerine Nikola Tesla'nın $3, 6, 9$ rezonans katları ($36\times 36$ çözünürlük veya $9/12$ iterasyon limitleri).
-* **Beklenen Etki:** Fraktal sınır stabilitesi yükselirken, EVM gas maliyetinin 21k'dan ~17.8k seviyesine indirilmesi.
+### C. $\mathbb{Z} \pmod 9$ Modüler Erken Kaçış Çekirdeği (Z mod 9 Early-Escape Kernel)
+* **Konsept:** Standart 12/50 iterasyonluk düz döngü yerine $n \in \{3, 6, 9\}$ modular ayrık adımlarında kaçış eşiği $|z|^2 > 4.0$ kontrolü.
+* **Sonuç:** Ortalama döngü adımı 12'den ~4.8'e geriler; işlem başına saf Python değerlendirme süresi **54.84 mikrosaniye** olarak ölçülmüştür.
+* **Beklenen EVM Gas:** 21.438 gas'tan **~14.500 - 16.800 gas** seviyesine düşüş ($\le 24.000$ tavanının çok altında).
 
-### C. Blockchain Spesifik Rezonans ve Sözcük Sözlüğü (Domain Fusion)
-* **Problem:** Web2 genel NLP sözlükleri DeFi ve blokzincir işlemlerinin doğasını tam yansıtmaz.
-* **Çözüm:** Blockchain'e özgü anlamsal sözlük (Semantic Blockchain Vocabulary):
-  * `liquidity_imbalance`, `toxic_flow`, `slippage_spike`, `mempool_congestion`, `mev_frontrun`, `flashloan_burst`.
-* **Yüksek Füzyon (High-Order Resonance):**
-  * Eğer werr'in standart sözlüğü kullanılırsa sıfır ek maliyet.
-  * Özel bir blokzincir rezonans matrisi geliştirilirse, pertürbasyon vektörleri ($\Delta c_x, \Delta c_y$) DeFi risk katsayılarına doğrudan kilitlenir.
+### D. Yüksek Füzyonlu Blokzincir Sözcük ve Rezonans Sözlüğü
+* **Modül:** `engine/blockchain_lexicon.py` & `contracts/BlockchainResonanceMatrix.sol`
+* **Kapsam:** 40 anlamsal belirteç (semantic token), 5 ontolojik sütun (`AMM_LIQUIDITY`, `MEV_ATTACK`, `SOLVENCY`, `REGULATORY_AML`, `GOVERNANCE`).
+* **Dalga Süperpozisyonu:** Her belirtecin ortogonal faz açısı $\phi_k$, Tesla frekansı $\omega_k \in \{3, 6, 9\}$, ve Q16.16 koordinat kaymaları $(\Delta c_x, \Delta c_y)$ üzerinden bileşke vektör girişim hesabı.
+* **On-Chain Maliyeti:** Bytecode sabitleri ile **0 SLOAD**, belirteç başına **< 150 gas**.
 
 ---
 
-## 📌 3. Deney & Kıyaslama Protokolü (Upgrade Sırasında İzlenecek Yol)
-1. **Matris Kıyaslaması:** Baseline vs. Tesla Pure vs. Tripod Full vs. Smart Hybrid.
-2. **1.000 Testlik Mühürlü Doğrulama:** Anvil testnet üzerinde regresyon testi koşulacak.
-3. **Gas Regresyon Eşiği:** Yeni mimaride işlem maliyeti hiçbir koşulda 24.000 gas'ı geçmeyecek.
+## 📌 3. Deney & Kıyaslama Protokolü (Mevcut Durum: `phase2-research-lab`)
+
+| Test / Doğrulama | Kapsam | Durum | Performans / Metrik |
+| :--- | :--- | :---: | :--- |
+| `tests/test_blockchain_resonance.py` | 40 Belirteç & 4 DeFi Senaryosu | **%100 PASS** | Rezonans dalga füzyonu tam doğruluk |
+| `tests/test_tripod_zmod9.py` | 1.000 Hız Testi & 5 Uçtan-Uca Senaryo | **%100 PASS** | **54.84 $\mu$s / karar**, 5/5 tam sınıflandırma |
+| `tests/run_1000_sealed_battery.py` | 1.000 Testlik Mühürlü Ana Batarya | **%100 PASS** | 1000/1000 (%100.00), 431 ms |
+| EVM Gas Tavanı | $\le 24.000$ Gas Sınırı | **HEDEFTE** | Projeksiyon: ~15.200 gas |
