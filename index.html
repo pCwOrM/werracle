@@ -568,7 +568,7 @@
           <div class="evm-mode-bar" style="display:flex; justify-content:space-between; align-items:center; background:rgba(56,189,248,0.08); border:1px solid var(--border-accent); border-radius:8px; padding:10px 14px; margin-bottom:16px;">
             <div style="display:flex; align-items:center; gap:8px;">
               <span id="liveDot" style="display:inline-block; width:10px; height:10px; border-radius:50%; background:var(--emerald); box-shadow:0 0 8px var(--emerald);"></span>
-              <strong style="font-size:0.85rem;" data-en="Live EVM Node (mechsrv)" data-tr="Canlı EVM Düğümü (mechsrv)">Live EVM Node (mechsrv)</strong>
+              <strong style="font-size:0.85rem;" data-en="Live EVM Node (api.answerr.me)" data-tr="Canlı EVM Düğümü (api.answerr.me)">Live EVM Node (api.answerr.me)</strong>
               <span class="badge" style="font-size:0.7rem; background:#1e293b; color:var(--cyan); padding:2px 6px; border-radius:4px; font-family:var(--font-mono);">ChainID: 4242</span>
             </div>
             <label style="display:flex; align-items:center; gap:6px; cursor:pointer; font-size:0.8rem;">
@@ -846,7 +846,7 @@ contract ProtectedDeFiProtocol {
           </div>
           <div style="display:flex; gap:8px;">
             <span class="badge" style="font-size:0.75rem; background:#1e293b; color:var(--emerald); padding:3px 8px; border-radius:4px; font-family:var(--font-mono);">Chain ID: 4242</span>
-            <span class="badge" style="font-size:0.75rem; background:#1e293b; color:var(--cyan); padding:3px 8px; border-radius:4px; font-family:var(--font-mono);">Server: mechsrv</span>
+            <span class="badge" style="font-size:0.75rem; background:#1e293b; color:var(--cyan); padding:3px 8px; border-radius:4px; font-family:var(--font-mono);">Node: api.answerr.me</span>
           </div>
         </div>
 
@@ -1058,7 +1058,7 @@ contract ProtectedDeFiProtocol {
         return;
       }
 
-      if (detailsEl) detailsEl.textContent = 'Querying mechsrv EVM...';
+      if (detailsEl) detailsEl.textContent = 'Querying api.answerr.me EVM...';
       if (dotEl) { dotEl.style.background = 'var(--cyan)'; dotEl.style.boxShadow = '0 0 8px var(--cyan)'; }
 
       try {

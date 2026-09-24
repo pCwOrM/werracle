@@ -2,7 +2,7 @@
 
 [![Zenodo DOI: 10.5281/zenodo.22942598](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.22942598-blue.svg)](https://doi.org/10.5281/zenodo.22942598)
 [![Paper: Zenodo v1.0](https://img.shields.io/badge/Preprint-Zenodo%20Record%2022942599-10b981.svg)](https://zenodo.org/records/22942599)
-[![EVM Devnet: Chain ID 4242](https://img.shields.io/badge/EVM%20Devnet-Chain%20ID%204242%20(mechsrv)-38bdf8.svg)](https://api.answerr.me:4431/werracle/status)
+[![EVM Devnet: Chain ID 4242](https://img.shields.io/badge/EVM%20Devnet-Chain%20ID%204242%20(api.answerr.me)-38bdf8.svg)](https://api.answerr.me:4431/werracle/status)
 [![API Docs: Live](https://img.shields.io/badge/API%20Docs-Live%20Interactive-10b981.svg)](https://pcworm.github.io/werracle/apidocs.html)
 [![Latency: < 12ms](https://img.shields.io/badge/Latency-%3C12ms%20RPC-brightgreen.svg)]()
 [![License: BSL 1.1](https://img.shields.io/badge/License-BSL%201.1-blue.svg)](./LICENSE)
@@ -61,9 +61,9 @@ In contemporary blockchain architectures, running artificial intelligence native
 
 ---
 
-## ⚡ Live EVM Testnet & Deployed On-Chain Contracts (`mechsrv`)
+## ⚡ Live EVM Testnet & Deployed On-Chain Contracts (`api.answerr.me`)
 
-Werracle is actively running live on our high-performance dedicated hardware node (`mechsrv`, Ubuntu 24.04 LTS) on a customized private EVM devnet sandbox:
+Werracle is actively running live on our high-performance dedicated hardware node (`api.answerr.me`, Ubuntu 24.04 LTS) on a customized private EVM devnet sandbox:
 
 * **Network Name:** Werracle Devnet (Anvil EVM Sandbox)
 * **Chain ID:** `4242` &bull; **Block Time:** `1.0s`

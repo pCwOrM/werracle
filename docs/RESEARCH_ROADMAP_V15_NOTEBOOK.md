@@ -5,7 +5,7 @@ Bu defter, **Werracle**'ın canlıdaki (v1.0-prod) durumunun ardından gelen **v
 ---
 
 ## 🌟 1. Mevcut Yayınlanan Mimari (v1.0 - Prod / arXiv & Zenodo Baseline)
-* **Durum:** Canlı, kararlı ve doğrulanmış (Chain ID `4242` @ `mechsrv`).
+* **Durum:** Canlı, kararlı ve doğrulanmış (Chain ID `4242` @ `api.answerr.me`).
 * **Çekirdek:** 24-bayt evrensel koordinat tohumu $\Theta = (c_x, c_y, \text{zoom})$ tek bir `bytes32` slotunda.
 * **Aritmetik:** Q16.16 fixed-point saf EVM bytecode matematiği (`WerrMath.sol`).
 * **Ölçüm:** **21.438 gas**, 1.000 testlik mühürlü deterministik denetim (%100 PASS), <1ms blok-içi refleks.
@@ -48,5 +48,5 @@ Bu defter, **Werracle**'ın canlıdaki (v1.0-prod) durumunun ardından gelen **v
 | :--- | :--- | :---: | :--- |
 | `tests/test_blockchain_resonance.py` | 40 Belirteç & 4 DeFi Senaryosu | **%100 PASS** | Rezonans dalga füzyonu tam doğruluk |
 | `tests/test_tripod_zmod9.py` | 1.000 Hız Testi & 5 Uçtan-Uca Senaryo | **%100 PASS** | **54.84 $\mu$s / karar**, 5/5 tam sınıflandırma |
-| `tests/run_1000_sealed_battery.py` | 1.000 Testlik Mühürlü Ana Batarya | **%100 PASS** | 1000/1000 (%100.00), 431 ms |
-| EVM Gas Tavanı | $\le 24.000$ Gas Sınırı | **HEDEFTE** | Projeksiyon: ~15.200 gas |
+| `tests/run_1000_sealed_battery.py` | 1.000 Testlik Mühürlü Ana Batarya | **%100 PASS** | 1000/1000 (%100.00), 162.7 ms |
+| EVM Gas Tavanı | $\le 24.000$ Gas Sınırı | **%100 PASS** | **22.557 gas ort. (Max: 22.568 gas)** |
