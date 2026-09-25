@@ -154,7 +154,7 @@ end WerracleProof
 
 ## 4. Hardware Compilation Verification Manifest
 
-* **Build Host:** `api.answerr.me` (Dual Intel Xeon E5-2630 v4, 40 Cores, 256 GB RAM)
+* **Build Host:** `pcworm.net` (Dual Intel Xeon E5-2630 v4, 40 Cores, 256 GB RAM)
 * **Compiler Invocation:** `lake build`
 * **Compilation Output:** `✔ [1142/1143] Built WerracleProof (1.7s) - Build completed successfully (1143 jobs)`
 * **Axiom Check:** Executed via `lake env lean Verify.lean`
