@@ -98,6 +98,13 @@ curl -s -X POST https://api.answerr.me:4431/werracle/hook/fee \
   -d '{"imbalance_ratio": 0.35}'
 ```
 
+### ⚡ Dedicated 40-Core Bare-Metal Reflex Engine (`pcworm.net`):
+Powered by our Dual Intel Xeon E5-2630 v4 compute node (256 GB ECC RAM, 20 worker NUMA service):
+```bash
+# Ingest live reflex decision (< 8ms latency, 0 VRAM footprint):
+curl -s http://pcworm.net:8560/v1/health
+```
+
 ---
 
 ## 🚀 Werracle v2.0: Sparse Multi-Scale Harmonic Tripod & $\mathbb{Z} \pmod 9$ Resonance
