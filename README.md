@@ -22,6 +22,9 @@
 [![Ecosystem: answerr](https://img.shields.io/badge/Platform-answerr-8b5cf6.svg)](https://github.com/pCwOrM/answerr)
 [![Ecosystem: Research](https://img.shields.io/badge/Research-Mandelbrot%20Synthesis-blue.svg)](https://github.com/pCwOrM/mandelbrot-fractal-neural-synthesis)
 [![arXiv: 2609.25498](https://img.shields.io/badge/arXiv-2609.25498-b31b1b.svg)](https://arxiv.org/abs/2609.25498)
+[![arXiv: 2609.30115](https://img.shields.io/badge/arXiv-2609.30115-b31b1b.svg)](https://arxiv.org/abs/2609.30115)
+[![Formal Verification: Lean 4](https://img.shields.io/badge/Formal%20Verification-Lean%204%20(Zero%20Sorry)-9333ea.svg)](formal_proofs/WerracleProof.lean)
+[![Formal Certificate](https://img.shields.io/badge/Certificate-Lean%204%20Machine--Verified-blue.svg)](docs/WERRACLE_LEAN4_FORMAL_VERIFICATION_CERTIFICATE.md)
 [![Zenodo DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.22939253-024dad.svg)](https://doi.org/10.5281/zenodo.22939253)
 [![Paper: Camera-Ready PDF](https://img.shields.io/badge/Paper%20v2.0-Camera--Ready-emerald.svg)](https://github.com/pCwOrM/werr/blob/main/paper/Universal_Fractal_Natural_Language_Decision_Map_CameraReady.pdf)
 
@@ -126,7 +129,8 @@ Tested under EIP-150 / EIP-2929 / EIP-3860 rules with `solc 0.8.20 (runs: 200)` 
 | **4-Token Composite Fusion** | N/A | **7,443 gas** | Pure Bytecode | 0 SLOAD | Instant |
 | **Uniswap v4 Dynamic Fee Hook** | N/A | **36,739 gas** | End-to-end | Volatility-tied | Sub-block |
 
-> 🛡️ **Formal Invariant Verification**: Full empirical audit report available at [`docs/EVM_GAS_IDEAL_BENCHMARK_REPORT.md`](docs/EVM_GAS_IDEAL_BENCHMARK_REPORT.md) and raw data at [`tests/results/evm_gas_ideal_benchmark.json`](tests/results/evm_gas_ideal_benchmark.json).
+> 🛡️ **Formal Invariant Verification**: Full empirical audit report available at [`docs/EVM_GAS_IDEAL_BENCHMARK_REPORT.md`](docs/EVM_GAS_IDEAL_BENCHMARK_REPORT.md) and raw data at [`tests/results/evm_gas_ideal_benchmark.json`](tests/results/evm_gas_ideal_benchmark.json).  
+> 📜 **Machine-Verified Lean 4 Proof**: Formally verified in **Lean 4 (v4.34.1)** with **ZERO `sorry` axioms** (Halting Invariant, 108-step complexity ceiling, and $\le 24,000$ gas bound). Full proof source at [`formal_proofs/WerracleProof.lean`](formal_proofs/WerracleProof.lean) &bull; Audit Certificate at [`docs/WERRACLE_LEAN4_FORMAL_VERIFICATION_CERTIFICATE.md`](docs/WERRACLE_LEAN4_FORMAL_VERIFICATION_CERTIFICATE.md).
 
 ---
 
