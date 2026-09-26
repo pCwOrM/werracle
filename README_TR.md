@@ -20,6 +20,8 @@
 [![Ekosistem: answerr](https://img.shields.io/badge/Platform-answerr-8b5cf6.svg)](https://github.com/pCwOrM/answerr)
 [![Ekosistem: Araştırma](https://img.shields.io/badge/Ara%C5%9Ft%C4%B1rma-Mandelbrot%20Sentezi-blue.svg)](https://github.com/pCwOrM/mandelbrot-fractal-neural-synthesis)
 [![arXiv: 2609.25498](https://img.shields.io/badge/arXiv-2609.25498-b31b1b.svg)](https://arxiv.org/abs/2609.25498)
+[![Lean 4 Formel İspat: Zenodo 22974544](https://img.shields.io/badge/Paper%205%20DOI-10.5281%2Fzenodo.22974544-024dad.svg)](https://doi.org/10.5281/zenodo.22974544)
+[![Formel Doğrulama: Lean 4 (0 Sorry)](https://img.shields.io/badge/Formel%20Doğrulama-Lean%204%20(0%20Sorry)-9333ea.svg)](formal_proofs/WerracleProof.lean)
 [![Zenodo DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.22939253-024dad.svg)](https://doi.org/10.5281/zenodo.22939253)
 [![Makale: Kamera-Hazır PDF](https://img.shields.io/badge/Makale%20v2.0-Kamera--Haz%C4%B1r-emerald.svg)](https://github.com/pCwOrM/werr/blob/main/paper/Universal_Fractal_Natural_Language_Decision_Map_CameraReady.pdf)
 
@@ -237,6 +239,17 @@ Werracle'ı veya temelindeki WERR fraktal Sistem-1 karar motorunu Web3 araştır
   year          = {2026},
   url           = {https://github.com/pCwOrM/werracle},
   doi           = {10.5281/zenodo.22939253}
+}
+
+@article{dagli2026lean4_oed,
+  title        = {Zero-Storage Procedural Neural Synthesis via Boundary Dynamics: Formal Verification in Lean 4 and Bare-Metal Gauntlet Validation},
+  author       = {Da{\u{g}}l{\i}, Volkan and Da{\u{g}}l{\i}, Zerrin and Da{\u{g}}l{\i}, Da{\u{g}}han},
+  journal      = {Zenodo Open Science Archive},
+  year         = {2026},
+  month        = {September},
+  doi          = {10.5281/zenodo.22974544},
+  url          = {https://doi.org/10.5281/zenodo.22974544},
+  note         = {Formally verified in Lean 4 (Mathlib4, 0 sorry). 40-core bare-metal gauntlet benchmark verified. TÜRKPATENT Priority: TR 2026/016285.}
 }
 ```
 

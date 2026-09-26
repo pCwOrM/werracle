@@ -45,8 +45,10 @@ def load_mail_credentials():
 
 SMTP_SERVER, SMTP_PORT, AUTH_USER, AUTH_PASS = load_mail_credentials()
 
-SENDER_DISPLAY = "Werracle Autonomous Core <ask@answerr.me>"
-REPLY_TO = "ask@answerr.me, pcworm@pcworm.net"
+from email.utils import formataddr
+
+SENDER_DISPLAY = formataddr(("Volkan Dagli (ITouch Systems)", AUTH_USER))
+REPLY_TO = "ask@answerr.me, vdagli@itouch.com.tr, pcworm@pcworm.net"
 
 # -----------------------------------------------------------------------------
 # ANTI-SPAM & BOUNCE SUPPRESSION REGISTRY (AUDITED FROM IMAP LIVE SCAN)
@@ -57,8 +59,14 @@ BOUNCE_SUPPRESSION_LIST = {
     "build@base.org",              # Inactive desk
     "contact@alphasignal.ai",      # Undeliverable
     "contact@tinyml.org",          # User unknown
+    "editor@weekinethereumnews.com", # Relay access denied
+    "editorial@banklesshq.com",    # Mailbox does not exist
     "grants@near.foundation",      # Mailbox unavailable
+    "grants@uniswapfoundation.org", # Google group closed to public
     "noreply@answerr.me",
+    "pcworm@gmail.com",            # Not author address / bounce
+    "pcworm@itouchsystems.com",    # Inactive domain alias
+    "solidityweekly@gmail.com",    # Mailbox does not exist
     "tips@coindesk.com",           # Proofpoint reject
     "tips@decrypt.co",             # Undeliverable
 }
