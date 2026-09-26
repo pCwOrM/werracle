@@ -63,6 +63,10 @@ BOUNCE_SUPPRESSION_LIST = {
     "editorial@banklesshq.com",    # Mailbox does not exist
     "grants@near.foundation",      # Mailbox unavailable
     "grants@uniswapfoundation.org", # Google group closed to public
+    "info@qosf.org",               # Address does not exist
+    "jack@importai.net",           # Mail server unreachable / expired
+    "news@dlnews.com",             # Mail server unreachable / expired
+    "newsletter@thesequence.io",   # Mail server unreachable / expired
     "noreply@answerr.me",
     "pcworm@gmail.com",            # Not author address / bounce
     "pcworm@itouchsystems.com",    # Inactive domain alias
