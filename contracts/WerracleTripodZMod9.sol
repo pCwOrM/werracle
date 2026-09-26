@@ -55,6 +55,11 @@ contract WerracleTripodZMod9 is IWerracle {
         _;
     }
 
+    // --- Calibrated 40-Core Dual Xeon Seahorse Valley Golden Seeds ---
+    PackedSeed public constant SEED_ETH_USDC  = PackedSeed({cx: -49058, cy: 6422, zoom: 2949120, nonce: 1, threshold: 5000, defaultMode: 1, activeFlag: 1});
+    PackedSeed public constant SEED_WBTC_USDC = PackedSeed({cx: -49058, cy: 6422, zoom: 2949120, nonce: 1, threshold: 5000, defaultMode: 1, activeFlag: 1});
+    PackedSeed public constant SEED_UNI_ETH   = PackedSeed({cx: -49058, cy: 6422, zoom: 2949120, nonce: 1, threshold: 5000, defaultMode: 1, activeFlag: 1});
+
     constructor(
         address initialFeeRecipient,
         uint256 initialProtocolFee
@@ -63,16 +68,8 @@ contract WerracleTripodZMod9 is IWerracle {
         feeRecipient = initialFeeRecipient != address(0) ? initialFeeRecipient : msg.sender;
         protocolFee = initialProtocolFee;
 
-        // Initialize with default Seahorse Valley Seed (Q16.16)
-        seed = PackedSeed({
-            cx: -48735,
-            cy: 8639,
-            zoom: 3276800,
-            nonce: 1,
-            threshold: 5000,
-            defaultMode: 0,
-            activeFlag: 1
-        });
+        // Initialize with 40-Core Dual Xeon Calibrated Seahorse Valley Golden Seed
+        seed = SEED_ETH_USDC;
     }
 
     // --- Core Oracle Functions ---
