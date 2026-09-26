@@ -35,6 +35,10 @@
 > **The first production-grade On-Chain AI Decision Oracle capable of intra-block, sub-millisecond execution inside EVM smart contracts.**  
 > *Powered by WERR procedural Mandelbrot escape dynamics. Zero neural tensor matrices. 1000x faster and 15x cheaper than ZK-ML.*
 
+<p align="center">
+  <img src="assets/twitter_lean4_tesla_gauntlet.png" alt="Werracle Lean 4 Machine Verification & Tesla 3-6-9 Harmonics" width="100%">
+</p>
+
 ---
 
 ## 🌟 Executive Overview
