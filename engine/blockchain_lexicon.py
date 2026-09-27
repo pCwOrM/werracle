@@ -343,13 +343,16 @@ class BlockchainResonanceMatrix:
         text_or_data: str,
         base_cx: float = -0.7436438870371587,
         base_cy: float = 0.13182590420531197,
-        base_zoom: float = 50.0
+        base_zoom: float = 50.0,
+        enable_lexical: bool = True,
+        enable_resonance: bool = True
     ) -> Dict[str, Any]:
         """
         Computes the High-Fusion Fractal Resonance Vector from input text.
         Superposes token frequencies with Tesla 3-6-9 harmonic scaling.
+        Respects orthogonal parameter flags (enable_lexical, enable_resonance).
         """
-        matches = cls.match_tokens(text_or_data)
+        matches = cls.match_tokens(text_or_data) if enable_lexical else []
         
         if not matches:
             # Default to benign routine flow
@@ -386,7 +389,7 @@ class BlockchainResonanceMatrix:
             pillar_energies[token.pillar] += w
 
         # Normalize displacement
-        if total_weight > 0:
+        if enable_resonance and total_weight > 0:
             eff_dx = sum_dx / math.sqrt(max(1.0, len(matches)))
             eff_dy = sum_dy / math.sqrt(max(1.0, len(matches)))
         else:
@@ -403,11 +406,15 @@ class BlockchainResonanceMatrix:
 
         final_risk = max(0.01, min(1.0, final_risk))
 
-        # Target Coordinates
-        target_cx = base_cx + eff_dx
-        target_cy = base_cy + eff_dy
-        # Zoom increases with threat severity to resolve fine fractal filaments
-        target_zoom = base_zoom * (1.0 + final_risk * 0.8)
+        # Target Coordinates (Only displaced if resonance enabled)
+        if enable_resonance:
+            target_cx = base_cx + eff_dx
+            target_cy = base_cy + eff_dy
+            target_zoom = base_zoom * (1.0 + final_risk * 0.8)
+        else:
+            target_cx = base_cx
+            target_cy = base_cy
+            target_zoom = base_zoom
 
         # Dominant Pillar
         dominant_pillar = max(pillar_energies.items(), key=lambda x: x[1])[0]

@@ -63,13 +63,17 @@ class TripodZMod9Oracle:
         base_cx: float = -0.7436438870371587,
         base_cy: float = 0.13182590420531197,
         base_zoom: float = 50.0,
-        decision_threshold: float = 0.50
+        decision_threshold: float = 0.50,
+        enable_lexical: bool = True,
+        enable_resonance: bool = True
     ):
         assert not TELEMETRY_ENABLED, "Invariant: Telemetry must be False"
         self.base_cx = base_cx
         self.base_cy = base_cy
         self.base_zoom = base_zoom
         self.threshold_bps = int(decision_threshold * 10000)
+        self.enable_lexical = enable_lexical
+        self.enable_resonance = enable_resonance
 
     def evaluate_sparse_tripod(
         self,
@@ -163,7 +167,9 @@ class TripodZMod9Oracle:
             transaction_text,
             base_cx=self.base_cx,
             base_cy=self.base_cy,
-            base_zoom=self.base_zoom
+            base_zoom=self.base_zoom,
+            enable_lexical=self.enable_lexical,
+            enable_resonance=self.enable_resonance
         )
 
         cx_fp = float_to_fp(fused["target_cx"])

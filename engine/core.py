@@ -230,6 +230,18 @@ class WerracleCoreEngine:
     Standalone Werracle Fractal Reflex Engine.
     Aligned with WERR Core v0.5.1 specifications.
     Executes typed System-1 decisions natively with 0 Bytes stored weight tensors.
+
+    Orthogonal 8-State Parameter Architecture (2 x 2 x 2):
+      - enable_domain    in {False ('none'), True ('multi')}
+      - enable_lexical   in {False, True}  (Discrete Keyword & Criteria Index)
+      - enable_resonance in {False, True}  (Spectral Pole & Stem Resonance)
+
+    Optimal Auto-Guard Rules:
+      1. When enable_domain=False (domain_mode='none'), domain dictionaries are locked OFF (Universal Cusp).
+      2. When enable_domain=True (domain_mode='multi') and both dictionaries are OFF ([1,0,0]),
+         auto-guards to Universal Cusp so uncalibrated coordinate shifts never degrade accuracy.
+      3. When enable_domain=True and at least one dictionary is ON ([1,1,0], [1,0,1], [1,1,1]),
+         routes genuine domain telemetry states to their specialized DomainGate while keeping OOD tasks on the Universal Cusp.
     """
     def __init__(
         self,
@@ -238,14 +250,102 @@ class WerracleCoreEngine:
         base_zoom: float = 50.0,
         resolution: int = 32,
         max_iter: int = 30,
-        mode: str = "hybrid"
+        mode: Optional[str] = None,
+        domain_mode: Optional[str] = None,
+        enable_domain: Optional[bool] = None,
+        enable_lexical: Optional[bool] = None,
+        enable_resonance: Optional[bool] = None,
+        tripod: bool = True,
+        cadence_lambda: float = 0.10,
+        cadence_beta: float = 0.15,
+        cadence_alpha: float = 0.50,
+        temp_choice: float = 1.25,
+        cx: Optional[float] = None,
+        cy: Optional[float] = None,
+        zoom: Optional[float] = None
     ):
-        self.cx = base_cx
-        self.cy = base_cy
-        self.zoom = base_zoom
+        self.universal_cx = cx if cx is not None else base_cx
+        self.universal_cy = cy if cy is not None else base_cy
+        self.universal_zoom = zoom if zoom is not None else base_zoom
+        self.cx = self.universal_cx
+        self.cy = self.universal_cy
+        self.zoom = self.universal_zoom
         self.resolution = resolution
         self.max_iter = max_iter
-        self.mode = mode
+
+        # 1. Resolve Domain switch (enable_domain / domain_mode)
+        if enable_domain is not None:
+            self.enable_domain = bool(enable_domain)
+            self.domain_mode = "multi" if self.enable_domain else "none"
+        elif domain_mode is not None:
+            self.domain_mode = str(domain_mode).lower()
+            self.enable_domain = (self.domain_mode == "multi")
+        else:
+            self.domain_mode = "none"
+            self.enable_domain = False
+
+        # 2. Resolve Dictionary switches (enable_lexical, enable_resonance, mode)
+        if enable_lexical is not None or enable_resonance is not None:
+            raw_lex = bool(enable_lexical) if enable_lexical is not None else False
+            raw_res = bool(enable_resonance) if enable_resonance is not None else False
+            if raw_lex and raw_res:
+                self.mode = "hybrid"
+            elif raw_res:
+                self.mode = "resonance"
+            elif raw_lex:
+                self.mode = "lexical"
+            else:
+                self.mode = "pure_fractal"
+        elif mode is not None:
+            m_str = str(mode).lower()
+            if m_str in ("hybrid", "both") or (m_str == "production" and self.enable_domain):
+                raw_lex = True
+                raw_res = True
+                self.mode = "hybrid" if self.enable_domain else "pure_fractal"
+            elif m_str in ("lexical", "production"):
+                raw_lex = True
+                raw_res = False
+                self.mode = "lexical" if self.enable_domain else "pure_fractal"
+            elif m_str == "resonance":
+                raw_lex = False
+                raw_res = True
+                self.mode = "resonance" if self.enable_domain else "pure_fractal"
+            else:
+                raw_lex = False
+                raw_res = False
+                self.mode = "pure_fractal"
+        else:
+            # Conflict-free purpose-aligned defaults:
+            # - When Domain is ON ('multi'): Hybrid [1,1,1] (Lexical + Resonance active)
+            # - When Domain is OFF ('none'): Pure Fractal [0,0,0] (Universal Cusp safety preserved)
+            if self.enable_domain:
+                raw_lex = True
+                raw_res = True
+                self.mode = "hybrid"
+            else:
+                raw_lex = False
+                raw_res = False
+                self.mode = "pure_fractal"
+
+        self.raw_enable_lexical = raw_lex
+        self.raw_enable_resonance = raw_res
+
+        # 3. Enforce Optimal Auto-Guard Rules:
+        # Rule 1: If Domain is OFF ('none'), domain dictionaries are locked OFF.
+        self.enable_lexical = raw_lex if self.enable_domain else False
+        self.enable_resonance = raw_res if self.enable_domain else False
+
+        # Rule 2: If Domain is ON ('multi') and BOTH dictionaries are OFF ([1,0,0]), auto-guard to Universal Cusp.
+        if self.enable_domain and (not self.enable_lexical and not self.enable_resonance):
+            self.effective_domain_active = False
+        else:
+            self.effective_domain_active = self.enable_domain
+
+        self.tripod = tripod
+        self.cadence_lambda = cadence_lambda
+        self.cadence_beta = cadence_beta
+        self.cadence_alpha = cadence_alpha
+        self.temp_choice = temp_choice
 
     def decide_noul(
         self,
@@ -303,7 +403,12 @@ class WerracleCoreEngine:
         scores = [weights[i % 4] + context_bias * (i + 1) * 0.1 for i in range(num_choices)]
         
         # Apply WERR v0.5.1 Cadence Bifurcation
-        bif_scores = apply_cadence_bifurcation(scores)
+        bif_scores = apply_cadence_bifurcation(
+            scores,
+            lambda_param=self.cadence_lambda,
+            alpha=self.cadence_alpha,
+            beta=self.cadence_beta
+        )
         return int(np.argmax(bif_scores))
 
     def decide_score(

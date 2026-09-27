@@ -169,14 +169,22 @@ class OntologicalDomain:
         base_cy: float,
         base_zoom: float,
         intent_data: Dict[str, Any],
-        threat_score: float
+        threat_score: float,
+        enable_lexical: bool = True,
+        enable_resonance: bool = True
     ) -> Tuple[float, float, float]:
         """
         Synthesizes a deterministic Mandelbrot coordinate perturbation from ontological features.
         Zero parameters stored in VRAM. Pure mathematical projection.
+        Respects orthogonal switches (enable_lexical, enable_resonance).
         """
+        if not enable_resonance:
+            # Pure fixed seed without harmonic coordinate perturbation
+            return base_cx, base_cy, base_zoom
+
         # Semantic hash from intent name and matched tokens
-        seed_str = f"{intent_data['intent']}:{threat_score:.4f}"
+        intent_label = intent_data.get("intent", "DYNAMIC_SWAP") if enable_lexical else "UNIVERSAL_INTENT"
+        seed_str = f"{intent_label}:{threat_score:.4f}"
         h = int(hashlib.sha256(seed_str.encode('utf-8')).hexdigest()[:8], 16)
         
         # Micro-perturbation scaled by zoom to ensure boundary stability
