@@ -11,3 +11,6 @@ __pycache__/
 # OS files
 .DS_Store
 Thumbs.db
+
+# Safety Backups
+contracts_v1_backup/
