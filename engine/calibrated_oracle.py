@@ -37,6 +37,7 @@ def fp_mul(a: int, b: int) -> int:
 class CalibratedWerracleOracle:
     """
     Calibrated Werracle Oracle with domain ontology and strict zero-telemetry invariant.
+    Supports WERR v0.5.1 Orthogonal 8-State Parameter Architecture.
     """
     def __init__(
         self,
@@ -44,7 +45,18 @@ class CalibratedWerracleOracle:
         base_cy: float = 0.13182590420531197,
         base_zoom: float = 50.0,
         temperature: float = 1.05,
-        decision_threshold: float = 0.50
+        decision_threshold: float = 0.50,
+        mode: Optional[str] = None,
+        domain_mode: Optional[str] = None,
+        enable_domain: Optional[bool] = None,
+        enable_lexical: Optional[bool] = None,
+        enable_resonance: Optional[bool] = None,
+        cadence_lambda: float = 0.10,
+        cadence_beta: float = 0.15,
+        cadence_alpha: float = 0.50,
+        temp_choice: float = 1.25,
+        resolution: int = 32,
+        max_iter: int = 30
     ):
         # Strict privacy invariant
         if TELEMETRY_ENABLED:
@@ -56,8 +68,29 @@ class CalibratedWerracleOracle:
         self.temperature = max(0.1, temperature)
         self.decision_threshold = decision_threshold
         self.core = WerracleCoreEngine(
-            base_cx=base_cx, base_cy=base_cy, base_zoom=base_zoom
+            base_cx=base_cx,
+            base_cy=base_cy,
+            base_zoom=base_zoom,
+            resolution=resolution,
+            max_iter=max_iter,
+            mode=mode,
+            domain_mode=domain_mode,
+            enable_domain=enable_domain,
+            enable_lexical=enable_lexical,
+            enable_resonance=enable_resonance,
+            cadence_lambda=cadence_lambda,
+            cadence_beta=cadence_beta,
+            cadence_alpha=cadence_alpha,
+            temp_choice=temp_choice
         )
+        self.enable_domain = self.core.enable_domain
+        self.enable_lexical = self.core.enable_lexical
+        self.enable_resonance = self.core.enable_resonance
+        self.effective_domain_active = self.core.effective_domain_active
+        self.cadence_lambda = self.core.cadence_lambda
+        self.cadence_beta = self.core.cadence_beta
+        self.cadence_alpha = self.core.cadence_alpha
+        self.temp_choice = self.core.temp_choice
         self.ontology = OntologicalDomain()
 
     def evaluate_mandelbrot_fixed_point_microgrid(
@@ -156,10 +189,20 @@ class CalibratedWerracleOracle:
 
         threat_score = min(1.0, max(0.0, threat_score))
 
-        # 4. Ontological Seed Derivation
-        target_cx, target_cy, target_zoom = self.ontology.derive_ontological_seed(
-            self.cx, self.cy, self.zoom, intent_info, threat_score
-        )
+        # 4. Ontological Seed Derivation (Auto-Guard Enforced)
+        if self.effective_domain_active:
+            target_cx, target_cy, target_zoom = self.ontology.derive_ontological_seed(
+                self.cx,
+                self.cy,
+                self.zoom,
+                intent_info,
+                threat_score,
+                enable_lexical=self.enable_lexical,
+                enable_resonance=self.enable_resonance
+            )
+        else:
+            # Rule 1 & Rule 2: Domainless / Auto-Guarded to Universal Cusp
+            target_cx, target_cy, target_zoom = self.cx, self.cy, self.zoom
 
         # 5. Fixed-Point Microgrid Execution
         cx_fp = float_to_fp(target_cx)

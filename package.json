@@ -8,6 +8,7 @@
   },
   "scripts": {
     "test": "python tests/run_1000_sealed_battery.py",
+    "test:params": "python tests/test_orthogonal_parameters.py",
     "test:phase2": "python tests/test_tripod_zmod9.py && python tests/test_blockchain_resonance.py",
     "benchmark:gas": "node scripts/ideal_evm_gas_benchmark.js",
     "compile": "node scripts/compile_and_profile_gas.js",
