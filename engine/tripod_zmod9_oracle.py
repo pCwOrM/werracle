@@ -6,14 +6,18 @@ Experimental Phase 2 Decision Engine:
    evaluated across 12 sparse cardinal points.
 2. Z mod 9 Modular Escape Dynamics: Formal Lean 4 specification (ZMod 9)
    checking harmonic convergence milestones up to n = 9.
-3. High-Fusion Blockchain Lexicon Coupling: Integrates BlockchainResonanceMatrix.
+3. Lean 4 GAP-0331 Algebraic Bridge (`ZModnZObj.isUnit_iff`):
+   Partitions Z/9Z into:
+   - Resonant Sub-Ideal I_3 = {0, 3, 6} (Unique Maximal Ideal of Non-Units)
+   - Non-Dissipative Error-Kernel K_error = {1, 2, 4, 5, 7, 8} (Coprime Unit Group (Z/9Z)^x)
+4. High-Fusion Blockchain Lexicon Coupling: Integrates BlockchainResonanceMatrix.
 
 Invariant: Zero Telemetry (TELEMETRY_ENABLED = False).
 Formal Mathematical Nomenclature: Z mod 9 / Lean 4 Modular Resonance.
 """
 
 import math
-from typing import Dict, List, Tuple, Any
+from typing import Dict, List, Tuple, Any, Optional
 
 from .blockchain_lexicon import (
     BlockchainVocabulary,
@@ -28,6 +32,53 @@ from .blockchain_lexicon import (
 
 # 4.0 in Q16.16
 ESCAPE_LIMIT = 4 * FP_ONE
+
+# Formal Z/9Z Algebraic Constants (Lean 4 WerracleProof & GAP-0331 ZModnZObj.isUnit_iff)
+ZMOD9_RESONANT_IDEAL_I3 = frozenset({0, 3, 6})
+ZMOD9_COPRIME_UNIT_KERNEL = frozenset({1, 2, 4, 5, 7, 8})
+ZMOD9_UNIT_INVERSES: Dict[int, int] = {
+    1: 1,  # 1 * 1 = 1 (mod 9)
+    2: 5,  # 2 * 5 = 10 = 1 (mod 9)
+    4: 7,  # 4 * 7 = 28 = 1 (mod 9)
+    5: 2,  # 5 * 2 = 10 = 1 (mod 9)
+    7: 4,  # 7 * 4 = 28 = 1 (mod 9)
+    8: 8,  # 8 * 8 = 64 = 1 (mod 9)
+}
+
+
+def is_zmod9_resonant_ideal(escape_step: int) -> bool:
+    """
+    Lean 4 Theorem 1A/1B/1E (`IsResonantSubIdeal`):
+    Returns True iff `escape_step mod 9` belongs to the unique maximal ideal of non-units I_3 = {0, 3, 6}.
+    """
+    return (int(escape_step) % 9) in ZMOD9_RESONANT_IDEAL_I3
+
+
+def is_zmod9_coprime_unit(escape_step: int) -> bool:
+    """
+    Lean 4 Theorem 1E/1F (`zmod9_error_kernel_iff_coprime_unit` / GAP-0331 `ZModnZObj.isUnit_iff`):
+    Returns True iff `escape_step mod 9` is coprime to 9, i.e., belongs to the invertible unit group
+    K_error = (Z/9Z)^x = {1, 2, 4, 5, 7, 8}.
+    """
+    return (int(escape_step) % 9) in ZMOD9_COPRIME_UNIT_KERNEL
+
+
+def classify_zmod9_state(escape_step: int) -> Dict[str, Any]:
+    """
+    Exhaustive algebraic classification of any escape count into Z/9Z (GAP-0331 Bridge).
+    """
+    r = int(escape_step) % 9
+    is_unit = r in ZMOD9_COPRIME_UNIT_KERNEL
+    inv: Optional[int] = ZMOD9_UNIT_INVERSES.get(r, None)
+    return {
+        "residue_mod9": r,
+        "is_coprime_unit": is_unit,
+        "is_resonant_ideal": not is_unit,
+        "algebraic_class": "K_ERROR_COPRIME_UNIT" if is_unit else "I3_RESONANT_IDEAL",
+        "multiplicative_inverse_mod9": inv,
+        "euler_totient_invariant": ((r ** 6) % 9 == 1) if is_unit else False,
+        "triadic_projection_mod9": (3 * r) % 9,
+    }
 
 
 def iterate_escape_zmod9(cx_fp: int, cy_fp: int) -> int:
@@ -55,7 +106,7 @@ def iterate_escape_zmod9(cx_fp: int, cy_fp: int) -> int:
 
 class TripodZMod9Oracle:
     """
-    Multi-Scale Harmonic Tripod Oracle with Z mod 9 Modular Dynamics.
+    Multi-Scale Harmonic Tripod Oracle with Z mod 9 Modular Dynamics & GAP-0331 Unit/Ideal Bridge.
     """
 
     def __init__(
@@ -91,45 +142,44 @@ class TripodZMod9Oracle:
             composite_ratio_bps (int): [0 .. 10000]
             synthesized_noul (int): [0 .. 255]
             normalized_score (float): [0.0 .. 1.0]
-            diagnostics (dict): per-plane escape statistics
+            diagnostics (dict): per-plane escape statistics & GAP-0331 Z/9Z partition
         """
-        # Plane scales in Q16.16
-        # Wide: 0.60x -> (zoom * 60) // 100
-        # Deep: 1.60x -> (zoom * 160) // 100
         z_wide = max(FP_ONE, (zoom_fp * 60) // 100)
         z_focus = max(FP_ONE, zoom_fp)
         z_deep = max(FP_ONE, (zoom_fp * 160) // 100)
 
-        # Delta steps = FP_ONE / zoom (approx)
         step_wide = (FP_ONE << FP_SHIFT) // z_wide
         step_focus = (FP_ONE << FP_SHIFT) // z_focus
         step_deep = (FP_ONE << FP_SHIFT) // z_deep
 
         # 1. Wide Plane (0.60x) - 4 cardinal points
-        esc_wide = (
-            iterate_escape_zmod9(cx_fp + step_wide, cy_fp) +
-            iterate_escape_zmod9(cx_fp - step_wide, cy_fp) +
-            iterate_escape_zmod9(cx_fp, cy_fp + step_wide) +
-            iterate_escape_zmod9(cx_fp, cy_fp - step_wide)
-        )
-        ratio_wide_bps = (esc_wide * 10000) // 36  # 4 * 9 = 36 max
+        wide_pts = [
+            iterate_escape_zmod9(cx_fp + step_wide, cy_fp),
+            iterate_escape_zmod9(cx_fp - step_wide, cy_fp),
+            iterate_escape_zmod9(cx_fp, cy_fp + step_wide),
+            iterate_escape_zmod9(cx_fp, cy_fp - step_wide),
+        ]
+        esc_wide = sum(wide_pts)
+        ratio_wide_bps = (esc_wide * 10000) // 36
 
         # 2. Focus Plane (1.00x) - 4 cardinal points
-        esc_focus = (
-            iterate_escape_zmod9(cx_fp + step_focus, cy_fp) +
-            iterate_escape_zmod9(cx_fp - step_focus, cy_fp) +
-            iterate_escape_zmod9(cx_fp, cy_fp + step_focus) +
-            iterate_escape_zmod9(cx_fp, cy_fp - step_focus)
-        )
+        focus_pts = [
+            iterate_escape_zmod9(cx_fp + step_focus, cy_fp),
+            iterate_escape_zmod9(cx_fp - step_focus, cy_fp),
+            iterate_escape_zmod9(cx_fp, cy_fp + step_focus),
+            iterate_escape_zmod9(cx_fp, cy_fp - step_focus),
+        ]
+        esc_focus = sum(focus_pts)
         ratio_focus_bps = (esc_focus * 10000) // 36
 
         # 3. Deep Plane (1.60x) - 4 cardinal points
-        esc_deep = (
-            iterate_escape_zmod9(cx_fp + step_deep, cy_fp) +
-            iterate_escape_zmod9(cx_fp - step_deep, cy_fp) +
-            iterate_escape_zmod9(cx_fp, cy_fp + step_deep) +
-            iterate_escape_zmod9(cx_fp, cy_fp - step_deep)
-        )
+        deep_pts = [
+            iterate_escape_zmod9(cx_fp + step_deep, cy_fp),
+            iterate_escape_zmod9(cx_fp - step_deep, cy_fp),
+            iterate_escape_zmod9(cx_fp, cy_fp + step_deep),
+            iterate_escape_zmod9(cx_fp, cy_fp - step_deep),
+        ]
+        esc_deep = sum(deep_pts)
         ratio_deep_bps = (esc_deep * 10000) // 36
 
         # Weighted Harmonic Fusion: 0.25 Wide + 0.50 Focus + 0.25 Deep
@@ -138,6 +188,11 @@ class TripodZMod9Oracle:
         # Synthesized Noul Byte (0..255)
         synthesized_noul = (composite_boundedness_bps * 255) // 10000
         normalized_score = composite_boundedness_bps / 10000.0
+
+        # GAP-0331 Z/9Z Algebraic Partition across all 12 Tripod Points
+        all_12_pts = wide_pts + focus_pts + deep_pts
+        ideal_i3_count = sum(1 for p in all_12_pts if is_zmod9_resonant_ideal(p))
+        unit_kernel_count = 12 - ideal_i3_count
 
         diagnostics = {
             "plane_escapes": {
@@ -151,7 +206,16 @@ class TripodZMod9Oracle:
                 "focus": ratio_focus_bps,
                 "deep": ratio_deep_bps
             },
-            "composite_boundedness_bps": composite_boundedness_bps
+            "composite_boundedness_bps": composite_boundedness_bps,
+            "zmod9_gap0331_partition": {
+                "resonant_ideal_i3_pts": ideal_i3_count,
+                "coprime_unit_k_error_pts": unit_kernel_count,
+                "ideal_ratio_bps": (ideal_i3_count * 10000) // 12,
+                "unit_ratio_bps": (unit_kernel_count * 10000) // 12,
+                "dominant_algebraic_phase": (
+                    "I3_RESONANT_IDEAL" if ideal_i3_count >= unit_kernel_count else "K_ERROR_COPRIME_UNIT"
+                )
+            }
         }
 
         return composite_boundedness_bps, synthesized_noul, normalized_score, diagnostics
