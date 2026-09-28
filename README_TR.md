@@ -22,17 +22,20 @@
 [![Ekosistem: WerrSoma Konnektom](https://img.shields.io/badge/Konnektom-WerrSoma%20158K%20N%C3%B6ron-00f0ff.svg)](https://github.com/Lexovian/WerrSoma)
 [![Konnektom DOI](https://img.shields.io/badge/WerrSoma%20DOI-10.5281%2Fzenodo.22996626-024dad.svg)](https://doi.org/10.5281/zenodo.22996626)
 [![WerrSoma Portalı](https://img.shields.io/badge/WerrSoma%20Portal-lexovian.pcworm.net-00f0ff.svg)](https://lexovian.pcworm.net/)
-[![arXiv: 2609.25498](https://img.shields.io/badge/arXiv-2609.25498-b31b1b.svg)](https://arxiv.org/abs/2609.25498)
+[![arXiv: 2609.30719 (Werracle)](https://img.shields.io/badge/arXiv-2609.30719%20%5Bcs.CR%5D-b31b1b.svg)](https://arxiv.org/abs/2609.30719)
+[![arXiv DOI: 10.48550/arXiv.2609.30719](https://img.shields.io/badge/arXiv%20DOI-10.48550%2FarXiv.2609.30719-b31b1b.svg)](https://doi.org/10.48550/arXiv.2609.30719)
+[![arXiv: 2609.25498 (WERR)](https://img.shields.io/badge/arXiv-2609.25498%20%5Bcs.AI%5D-b31b1b.svg)](https://arxiv.org/abs/2609.25498)
 [![Lean 4 Formel İspat: Zenodo 22974544](https://img.shields.io/badge/Paper%205%20DOI-10.5281%2Fzenodo.22974544-024dad.svg)](https://doi.org/10.5281/zenodo.22974544)
 [![Formel Doğrulama: Lean 4 (0 Sorry)](https://img.shields.io/badge/Formel%20Doğrulama-Lean%204%20(0%20Sorry)-9333ea.svg)](formal_proofs/WerracleProof.lean)
-[![Zenodo DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.22939253-024dad.svg)](https://doi.org/10.5281/zenodo.22939253)
-[![Makale: Kamera-Hazır PDF](https://img.shields.io/badge/Makale%20v2.0-Kamera--Haz%C4%B1r-emerald.svg)](https://github.com/pCwOrM/werr/blob/main/paper/Universal_Fractal_Natural_Language_Decision_Map_CameraReady.pdf)
+[![Zenodo DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.22942598-024dad.svg)](https://doi.org/10.5281/zenodo.22942598)
+[![Makale: Kamera-Hazır PDF](https://img.shields.io/badge/Makale%20v2.0-Kamera--Haz%C4%B1r-emerald.svg)](https://arxiv.org/pdf/2609.30719)
 
 > 🌐 **Dil Seçici / Language Switcher:**  
-> **Türkçe (Varsayılan)** | [🇬🇧 English Documentation (README.md)](README.md) &bull; 🌐 [**Etkileşimli Web Simülatörü**](https://pcworm.github.io/werracle/) &bull; ⚡ [**Etkileşimli API Dokümanı**](https://pcworm.github.io/werracle/apidocs.html) &bull; 🎓 [**LEARN.md Eğitim Kılavuzu**](LEARN.md) &bull; 🛡️ [**1.000 Test Mühürlü Denetim Raporu**](docs/TEST_1000_AUDIT_REPORT.md) &bull; 📢 [**Hibe ve Duyuru Rehberi**](docs/WEB3_GRANT_AND_ANNOUNCEMENT_PLAYBOOK.md)
+> **Türkçe (Varsayılan)** | [🇬🇧 English Documentation (README.md)](README.md) &bull; 📄 [**Resmi arXiv Makalesi (2609.30719)**](https://arxiv.org/abs/2609.30719) &bull; 🌐 [**Etkileşimli Web Simülatörü**](https://pcworm.github.io/werracle/) &bull; ⚡ [**Etkileşimli API Dokümanı**](https://pcworm.github.io/werracle/apidocs.html) &bull; 🎓 [**LEARN.md Eğitim Kılavuzu**](LEARN.md) &bull; 🛡️ [**1.000 Test Mühürlü Denetim Raporu**](docs/TEST_1000_AUDIT_REPORT.md) &bull; 📢 [**Hibe ve Duyuru Rehberi**](docs/WEB3_GRANT_AND_ANNOUNCEMENT_PLAYBOOK.md)
 
 > **Ethereum Sanal Makinesi (EVM) içinde blok-içi (intra-block) düzeyde ve milisaniye-altı hızda çalışabilen ilk üretime hazır On-Chain AI Karar Oracle'ı.**  
-> *WERR prosedürel Mandelbrot kaçış dinamiği ile güçlendirilmiştir. Sıfır tensör matrisi. ZK-ML'den 1000 kat daha hızlı ve 15 kat daha ucuz.*
+> *WERR prosedürel Mandelbrot kaçış dinamiği ile güçlendirilmiştir. Sıfır tensör matrisi. ZK-ML'den 1000 kat daha hızlı ve 15 kat daha ucuz.*  
+> 📄 **Resmi Yayın:** *"Werracle: Sub-Cent Intra-Block AI Reflex Oracles and Flash-Loan Circuit Breakers for EVM Smart Contracts"* — [**arXiv:2609.30719 [cs.CR, cs.AI, cs.DC]**](https://arxiv.org/abs/2609.30719) | DOI: [`10.48550/arXiv.2609.30719`](https://doi.org/10.48550/arXiv.2609.30719) | Zenodo: [`10.5281/zenodo.22942598`](https://doi.org/10.5281/zenodo.22942598)
 
 <p align="center">
   <img src="assets/twitter_lean4_tesla_gauntlet.png" alt="Werracle Lean 4 Formel Doğrulama & Tesla 3-6-9 Harmonikleri" width="100%">
@@ -231,6 +234,19 @@ node -e "const solc=require('solc'); /* tüm kontratları derler */"
 Werracle'ı veya temelindeki WERR fraktal Sistem-1 karar motorunu Web3 araştırmalarınızda, dApp'lerinizde veya akademik yayınlarınızda kullanıyorsanız lütfen şu şekilde atıfta bulununuz:
 
 ```bibtex
+@article{dagli2026werracle_arxiv,
+  author        = {Volkan Da{\u{g}}l{\i} and Zerrin Da{\u{g}}l{\i} and Da{\u{g}}han Da{\u{g}}l{\i}},
+  title         = {Werracle: Sub-Cent Intra-Block AI Reflex Oracles and Flash-Loan Circuit Breakers for EVM Smart Contracts},
+  journal       = {arXiv preprint arXiv:2609.30719 [cs.CR, cs.AI, cs.DC]},
+  year          = {2026},
+  eprint        = {2609.30719},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR},
+  url           = {https://arxiv.org/abs/2609.30719},
+  doi           = {10.48550/arXiv.2609.30719},
+  note          = {Zenodo Archive: 10.5281/zenodo.22942598. TÜRKPATENT Priority: TR 2026/016285}
+}
+
 @article{dagli2026fractalmap,
   author        = {Volkan Dağlı and Zerrin Dağlı and Dağhan Dağlı},
   title         = {Universal Fractal Natural Language Decision Map: Real-Time Edge Triage Across Heterogeneous Domains},

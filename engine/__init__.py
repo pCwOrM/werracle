@@ -56,19 +56,6 @@ from .presets import (
     create_pure_fractal_reflex,
     create_tripod_zmod9_guardian
 )
-from .living_cell import (
-    WerracleLivingCell,
-    LivingGenomeState,
-    pack_living_genome,
-    unpack_living_genome,
-    verify_proof_of_horizon,
-    evaluate_living_tripod,
-    STATE_HIBERNATION,
-    STATE_HOMEOSTASIS,
-    STATE_HYPER_IMMUNE,
-    STATE_PLASTICITY,
-    STATE_NAMES,
-)
 
 __all__ = [
     "WerracleCoreEngine",
@@ -108,16 +95,6 @@ __all__ = [
     "create_oracle_risk_evaluator",
     "create_pure_fractal_reflex",
     "create_tripod_zmod9_guardian",
-    "WerracleLivingCell",
-    "LivingGenomeState",
-    "pack_living_genome",
-    "unpack_living_genome",
-    "verify_proof_of_horizon",
-    "evaluate_living_tripod",
-    "STATE_HIBERNATION",
-    "STATE_HOMEOSTASIS",
-    "STATE_HYPER_IMMUNE",
-    "STATE_PLASTICITY",
-    "STATE_NAMES",
 ]
+
 

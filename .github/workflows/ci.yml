@@ -35,11 +35,11 @@ jobs:
         run: |
           python tests/run_1000_sealed_battery.py
 
-      - name: Run Orthogonal Parameter, All-States Lean 4 Bridge & Living Cell Verification
+      - name: Run Orthogonal Parameter & All-States Lean 4 Bridge Verification
         run: |
           python tests/test_orthogonal_parameters.py
           python tests/test_all_states_and_lean4_bridge.py
-          python tests/test_living_cell_step1.py
           python tests/test_tripod_zmod9.py
           python tests/test_blockchain_resonance.py
+
 
