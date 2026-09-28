@@ -13,6 +13,7 @@ Features synchronized with WERR Core v0.5.1:
 """
 
 import math
+import time
 import hashlib
 from typing import Dict, List, Any, Optional, Tuple, Union
 import numpy as np
@@ -354,8 +355,9 @@ class WerracleCoreEngine:
     ) -> Dict[str, Any]:
         """
         Noul Boolean Decision:
-        Returns {'allowed': bool, 'probability': float, 'confidence': float}
+        Returns {'allowed': bool, 'probability': float, 'confidence': float, 'black_ratio': float, 'fractal_bias': float, 'latency_us': float}
         """
+        t0 = time.perf_counter()
         h = int(hashlib.md5(context_name.encode('utf-8')).hexdigest()[:6], 16)
         delta = (h / 16777215.0 - 0.5) * (0.1 / self.zoom)
 
@@ -376,13 +378,15 @@ class WerracleCoreEngine:
 
         allowed = prob >= 0.5
         confidence = prob if allowed else (1.0 - prob)
+        latency_us = (time.perf_counter() - t0) * 1e6
 
         return {
             "allowed": allowed,
             "probability": round(prob, 4),
             "confidence": round(confidence, 4),
             "black_ratio": round(black_ratio, 4),
-            "fractal_bias": round(fractal_bias, 4)
+            "fractal_bias": round(fractal_bias, 4),
+            "latency_us": round(latency_us, 2)
         }
 
     def decide_choice(
