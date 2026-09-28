@@ -14,3 +14,20 @@ Thumbs.db
 
 # Safety Backups
 contracts_v1_backup/
+
+# Sensitive credentials, private keys, and environment files (STRICT EXCLUSION)
+*.key
+*.pem
+*.env*
+*.secret
+*credential*
+*keystore*
+*token*
+*.ppk
+*id_rsa*
+*id_ed25519*
+private_archive*/
+_isolated_test_vault/
+scratch/
+logs/
+*.log
