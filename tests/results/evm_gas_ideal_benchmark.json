@@ -1,21 +1,21 @@
 {
-  "timestamp": "2026-09-24T20:26:45.469Z",
+  "timestamp": "2026-09-28T00:50:19.812Z",
   "evmEnvironment": "Ganache In-Memory EVM (Solidity 0.8.20 / EIP-150 / EIP-2929 / EIP-3860)",
   "contracts": {
     "Werracle_v1": {
-      "address": "0xBd2e54F034ff0BB0754741b5d5db3061643C8381",
+      "address": "0x688c92b26038fc3E54d0a9d960995140830388f6",
       "bytecodeSize": 6418,
       "deploymentGas": 1533883
     },
     "WerracleTripodZMod9_Phase2": {
-      "address": "0x4c5d2Af9C98110EDe8fF44D2c51e175d05123241",
-      "bytecodeSize": 7466,
-      "deploymentGas": 1760779
+      "address": "0x292f97ef7e8a1456732889822b15e2de98e403fF",
+      "bytecodeSize": 8557,
+      "deploymentGas": 2001570
     },
     "WerracleFeeHook": {
-      "address": "0xE3B7855877E00885B43e5bA1a15fB509f332F1DB",
-      "bytecodeSize": 1016,
-      "deploymentGas": 275177
+      "address": "0xf9Eb239af7a9f1e14a3F06DB81115239f6f35C1E",
+      "bytecodeSize": 1917,
+      "deploymentGas": 469924
     }
   },
   "pureForwardEngine": {
@@ -26,9 +26,9 @@
         "netForwardGas": 226314
       },
       "p2": {
-        "totalEstimate": 44628,
+        "totalEstimate": 39062,
         "calldataGas": 1076,
-        "netForwardGas": 22552
+        "netForwardGas": 16986
       }
     },
     "shock": {
@@ -38,9 +38,9 @@
         "netForwardGas": 226416
       },
       "p2": {
-        "totalEstimate": 44296,
+        "totalEstimate": 38730,
         "calldataGas": 728,
-        "netForwardGas": 22568
+        "netForwardGas": 17002
       }
     },
     "edgeOfChaos": {
@@ -50,9 +50,9 @@
         "netForwardGas": 226314
       },
       "p2": {
-        "totalEstimate": 44256,
+        "totalEstimate": 38690,
         "calldataGas": 704,
-        "netForwardGas": 22552
+        "netForwardGas": 16986
       }
     }
   },
@@ -66,9 +66,9 @@
       },
       "p2": {
         "description": "Warm Normal Phase 2",
-        "totalGas": 83262,
+        "totalGas": 77629,
         "calldataGas": 1076,
-        "netExecutionGas": 61186
+        "netExecutionGas": 55553
       }
     },
     "warmShock": {
@@ -80,9 +80,9 @@
       },
       "p2": {
         "description": "Warm Shock Phase 2",
-        "totalGas": 65830,
+        "totalGas": 60197,
         "calldataGas": 728,
-        "netExecutionGas": 44102
+        "netExecutionGas": 38469
       }
     },
     "choices": {
@@ -95,9 +95,9 @@
         },
         "p2": {
           "description": "2 Choices Phase 2",
-          "totalGas": 65570,
+          "totalGas": 59926,
           "calldataGas": 844,
-          "netExecutionGas": 43726
+          "netExecutionGas": 38082
         }
       },
       "choice4": {
@@ -109,9 +109,9 @@
         },
         "p2": {
           "description": "4 Choices Phase 2",
-          "totalGas": 65888,
+          "totalGas": 60244,
           "calldataGas": 844,
-          "netExecutionGas": 44044
+          "netExecutionGas": 38400
         }
       },
       "choice8": {
@@ -123,29 +123,29 @@
         },
         "p2": {
           "description": "8 Choices Phase 2",
-          "totalGas": 66524,
+          "totalGas": 60880,
           "calldataGas": 844,
-          "netExecutionGas": 44680
+          "netExecutionGas": 39036
         }
       }
     },
     "resonanceMatrixLookup": {
-      "res1": 3821,
-      "res2": 4715,
-      "res4": 7443
+      "res1": 3843,
+      "res2": 4737,
+      "res4": 7465
     },
     "dynamicFeeHook": {
       "calm": {
         "description": "Fee Hook Calm Market",
-        "totalGas": 58443,
+        "totalGas": 58577,
         "calldataGas": 704,
-        "netExecutionGas": 36739
+        "netExecutionGas": 36873
       },
       "shock": {
         "description": "Fee Hook Volatility Shock",
-        "totalGas": 58468,
+        "totalGas": 58602,
         "calldataGas": 716,
-        "netExecutionGas": 36752
+        "netExecutionGas": 36886
       }
     }
   },
@@ -158,20 +158,20 @@
       "stdDev": 50.95918366693094
     },
     "p2": {
-      "mean": 22557.12,
-      "median": 22552,
-      "min": 22552,
-      "max": 22568,
-      "stdDev": 7.463618425401985
+      "mean": 16993.04,
+      "median": 16986,
+      "min": 16986,
+      "max": 17002,
+      "stdDev": 7.9421911334341475
     },
-    "savingsMean": 203805.84,
-    "savingsPct": 90.03497745390854
+    "savingsMean": 209369.91999999998,
+    "savingsPct": 92.49301210763457
   },
   "invariant": {
     "targetCeiling": 24000,
-    "phase2MaxEngineGas": 22568,
-    "headroomGas": 1432,
-    "headroomPct": 6,
+    "phase2MaxEngineGas": 17002,
+    "headroomGas": 6998,
+    "headroomPct": 29.2,
     "satisfied": true
   }
 }

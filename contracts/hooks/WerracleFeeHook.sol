@@ -18,6 +18,35 @@ contract WerracleFeeHook {
     uint24 public constant MIN_FEE = 500;
     uint24 public constant MAX_FEE = 5000;
 
+    // --- 40-Core Dual Xeon v2.1 Mined Golden Seeds for Major DeFi Pools ---
+    struct GoldenPoolSeed {
+        int64 cx;
+        int64 cy;
+        uint64 zoom;
+    }
+
+    bytes32 public constant POOL_ETH_USDC  = keccak256("pool:ETH-USDC");
+    bytes32 public constant POOL_WBTC_USDC = keccak256("pool:WBTC-USDC");
+    bytes32 public constant POOL_UNI_ETH   = keccak256("pool:UNI-ETH");
+    bytes32 public constant POOL_ARB_USDC  = keccak256("pool:ARB-USDC");
+    bytes32 public constant POOL_SOL_USDC  = keccak256("pool:SOL-USDC");
+    bytes32 public constant POOL_AAVE_ETH  = keccak256("pool:AAVE-ETH");
+
+    function getGoldenPoolSeed(bytes32 poolId) public pure returns (GoldenPoolSeed memory) {
+        if (poolId == POOL_WBTC_USDC) {
+            return GoldenPoolSeed({cx: 23592, cy: 44564, zoom: 524288});
+        } else if (poolId == POOL_UNI_ETH) {
+            return GoldenPoolSeed({cx: -93061, cy: 10704, zoom: 2949120});
+        } else if (poolId == POOL_SOL_USDC) {
+            return GoldenPoolSeed({cx: 21907, cy: 44564, zoom: 786432});
+        } else if (poolId == POOL_AAVE_ETH) {
+            return GoldenPoolSeed({cx: 20222, cy: 44564, zoom: 1638400});
+        } else {
+            // Default flagship seed (ETH/USDC & ARB/USDC Myrberg-Feigenbaum Horizon)
+            return GoldenPoolSeed({cx: -93061, cy: 14417, zoom: 2949120});
+        }
+    }
+
     event DynamicFeeCalculated(bytes32 indexed poolId, uint24 dynamicFeePips);
 
     constructor(address oracleAddress) {

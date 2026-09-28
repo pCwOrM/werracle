@@ -9,7 +9,9 @@
   "scripts": {
     "test": "python tests/run_1000_sealed_battery.py",
     "test:params": "python tests/test_orthogonal_parameters.py",
+    "test:all-states": "python tests/test_all_states_and_lean4_bridge.py",
     "test:phase2": "python tests/test_tripod_zmod9.py && python tests/test_blockchain_resonance.py",
+    "test:all": "python tests/run_1000_sealed_battery.py && python tests/test_orthogonal_parameters.py && python tests/test_all_states_and_lean4_bridge.py && python tests/test_tripod_zmod9.py && python tests/test_blockchain_resonance.py && python sim/test_cross_validation.py && node scripts/compile_and_profile_gas.js",
     "benchmark:gas": "node scripts/ideal_evm_gas_benchmark.js",
     "compile": "node scripts/compile_and_profile_gas.js",
     "sim": "python sim/test_cross_validation.py"

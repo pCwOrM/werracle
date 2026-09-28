@@ -55,15 +55,51 @@ contract WerracleTripodZMod9 is IWerracle {
         _;
     }
 
-    // --- Calibrated 40-Core Dual Xeon Seahorse Valley Golden Seeds ---
+    // --- Calibrated 40-Core Dual Xeon v2.1 Mined Golden Seeds (6 DeFi Pools) ---
     function getSeedEthUsdc() public pure returns (PackedSeed memory) {
-        return PackedSeed({cx: -49058, cy: 6422, zoom: 2949120, nonce: 1, threshold: 5000, defaultMode: 1, activeFlag: 1});
+        // Myrberg-Feigenbaum Horizon (K_ERROR_COPRIME_UNIT, LVR Protection: 49.89%, Sensitivity: 5.48x)
+        return PackedSeed({cx: -93061, cy: 14417, zoom: 2949120, nonce: 1, threshold: 5000, defaultMode: 1, activeFlag: 1});
     }
     function getSeedWbtcUsdc() public pure returns (PackedSeed memory) {
-        return PackedSeed({cx: -49058, cy: 6422, zoom: 2949120, nonce: 1, threshold: 5000, defaultMode: 1, activeFlag: 1});
+        // Observer Horizon North (I3_RESONANT_IDEAL, LVR Protection: 46.06%, Sensitivity: 5.13x)
+        return PackedSeed({cx: 23592, cy: 44564, zoom: 524288, nonce: 1, threshold: 5000, defaultMode: 1, activeFlag: 1});
     }
     function getSeedUniEth() public pure returns (PackedSeed memory) {
+        // Myrberg-Feigenbaum Horizon (I3_RESONANT_IDEAL, LVR Protection: 53.72%, Sensitivity: 5.81x)
+        return PackedSeed({cx: -93061, cy: 10704, zoom: 2949120, nonce: 1, threshold: 5000, defaultMode: 1, activeFlag: 1});
+    }
+    function getSeedArbUsdc() public pure returns (PackedSeed memory) {
+        // Myrberg-Feigenbaum Horizon (K_ERROR_COPRIME_UNIT, LVR Protection: 50.56%, Sensitivity: 5.55x)
+        return PackedSeed({cx: -93061, cy: 14417, zoom: 2949120, nonce: 1, threshold: 5000, defaultMode: 1, activeFlag: 1});
+    }
+    function getSeedSolUsdc() public pure returns (PackedSeed memory) {
+        // Observer Horizon North (K_ERROR_COPRIME_UNIT, LVR Protection: 57.83%, Sensitivity: 6.14x)
+        return PackedSeed({cx: 21907, cy: 44564, zoom: 786432, nonce: 1, threshold: 5000, defaultMode: 1, activeFlag: 1});
+    }
+    function getSeedAaveEth() public pure returns (PackedSeed memory) {
+        // Observer Horizon North (K_ERROR_COPRIME_UNIT, LVR Protection: 55.11%, Sensitivity: 5.95x)
+        return PackedSeed({cx: 20222, cy: 44564, zoom: 1638400, nonce: 1, threshold: 5000, defaultMode: 1, activeFlag: 1});
+    }
+    function getSeedSeahorseLegacy() public pure returns (PackedSeed memory) {
         return PackedSeed({cx: -49058, cy: 6422, zoom: 2949120, nonce: 1, threshold: 5000, defaultMode: 1, activeFlag: 1});
+    }
+
+    /**
+     * @notice Lean 4 GAP-0331 Bridge (`ZModnZObj.isUnit_iff`):
+     *         Returns true iff `esc mod 9` belongs to the Resonant Sub-Ideal I_3 = {0, 3, 6}.
+     */
+    function isZMod9ResonantIdeal(uint256 esc) public pure returns (bool) {
+        uint256 r = esc % 9;
+        return (r == 0 || r == 3 || r == 6);
+    }
+
+    /**
+     * @notice Lean 4 GAP-0331 Bridge (`ZModnZObj.isUnit_iff`):
+     *         Returns true iff `esc mod 9` is coprime to 9, i.e., in K_error = (Z/9Z)^x = {1, 2, 4, 5, 7, 8}.
+     */
+    function isZMod9CoprimeUnit(uint256 esc) public pure returns (bool) {
+        uint256 r = esc % 9;
+        return (r != 0 && r != 3 && r != 6);
     }
 
     constructor(
@@ -74,7 +110,7 @@ contract WerracleTripodZMod9 is IWerracle {
         feeRecipient = initialFeeRecipient != address(0) ? initialFeeRecipient : msg.sender;
         protocolFee = initialProtocolFee;
 
-        // Initialize with 40-Core Dual Xeon Calibrated Seahorse Valley Golden Seed
+        // Initialize with 40-Core Dual Xeon Calibrated Golden Seed
         seed = getSeedEthUsdc();
     }
 

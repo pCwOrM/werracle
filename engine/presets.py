@@ -1,16 +1,162 @@
 """
 werracle.engine.presets
 =======================
-Pre-calibrated Oracle and Reflex Gate presets aligned with WERR Core v0.5.1 specifications.
+Pre-calibrated Oracle and Reflex Gate presets aligned with WERR Core v0.5.1 specifications
+and 40-Core Dual Xeon Mined Golden Coordinate Seeds (v2.1).
 Optimized for on-chain decision gates, Uniswap v4 dynamic fee hooks, and EVM gas efficiency.
 
 Zero VRAM, Zero Weights, 100% Deterministic execution.
 Privacy: Telemetry is PERMANENTLY DISABLED.
 """
 
+from typing import Dict, Any
 from .calibrated_oracle import CalibratedWerracleOracle
 from .tripod_zmod9_oracle import TripodZMod9Oracle
 from .core import WerracleCoreEngine
+
+
+# 40-Core Dual Xeon Mined Golden Coordinates (Q16.16 & Float) across 6 DeFi / Web3 Pools
+GOLDEN_PAIR_SEEDS: Dict[str, Dict[str, Any]] = {
+    "ETH/USDC": {
+        "cx": -1.420000,
+        "cy": 0.220000,
+        "zoom": 45.0,
+        "cx_q16": -93061,
+        "cy_q16": 14417,
+        "zoom_q16": 2949120,
+        "region": "Myrberg-Feigenbaum Horizon",
+        "zmod9_class": "K_ERROR_COPRIME_UNIT",
+        "tripod_boundedness_bps": 6111,
+        "lvr_protection_pct": 49.89,
+        "sensitivity_ratio": 5.48,
+    },
+    "WBTC/USDC": {
+        "cx": 0.360000,
+        "cy": 0.680000,
+        "zoom": 8.0,
+        "cx_q16": 23592,
+        "cy_q16": 44564,
+        "zoom_q16": 524288,
+        "region": "Observer Horizon North",
+        "zmod9_class": "I3_RESONANT_IDEAL",
+        "tripod_boundedness_bps": 6874,
+        "lvr_protection_pct": 46.06,
+        "sensitivity_ratio": 5.13,
+    },
+    "UNI/ETH": {
+        "cx": -1.420000,
+        "cy": 0.163333,
+        "zoom": 45.0,
+        "cx_q16": -93061,
+        "cy_q16": 10704,
+        "zoom_q16": 2949120,
+        "region": "Myrberg-Feigenbaum Horizon",
+        "zmod9_class": "I3_RESONANT_IDEAL",
+        "tripod_boundedness_bps": 8194,
+        "lvr_protection_pct": 53.72,
+        "sensitivity_ratio": 5.81,
+    },
+    "ARB/USDC": {
+        "cx": -1.420000,
+        "cy": 0.220000,
+        "zoom": 45.0,
+        "cx_q16": -93061,
+        "cy_q16": 14417,
+        "zoom_q16": 2949120,
+        "region": "Myrberg-Feigenbaum Horizon",
+        "zmod9_class": "K_ERROR_COPRIME_UNIT",
+        "tripod_boundedness_bps": 6111,
+        "lvr_protection_pct": 50.56,
+        "sensitivity_ratio": 5.55,
+    },
+    "SOL/USDC": {
+        "cx": 0.334286,
+        "cy": 0.680000,
+        "zoom": 12.0,
+        "cx_q16": 21907,
+        "cy_q16": 44564,
+        "zoom_q16": 786432,
+        "region": "Observer Horizon North",
+        "zmod9_class": "K_ERROR_COPRIME_UNIT",
+        "tripod_boundedness_bps": 7291,
+        "lvr_protection_pct": 57.83,
+        "sensitivity_ratio": 6.14,
+    },
+    "AAVE/ETH": {
+        "cx": 0.308571,
+        "cy": 0.680000,
+        "zoom": 25.0,
+        "cx_q16": 20222,
+        "cy_q16": 44564,
+        "zoom_q16": 1638400,
+        "region": "Observer Horizon North",
+        "zmod9_class": "K_ERROR_COPRIME_UNIT",
+        "tripod_boundedness_bps": 8402,
+        "lvr_protection_pct": 55.11,
+        "sensitivity_ratio": 5.95,
+    },
+}
+
+
+def get_golden_pair_seed(pair_name: str) -> Dict[str, Any]:
+    """
+    Returns the 40-Core Dual Xeon Mined Golden Seed metadata for the given DeFi pool.
+    Normalizes separators (e.g. 'ETH-USDC', 'eth_usdc', 'ETH/USDC').
+    """
+    norm = pair_name.strip().upper().replace("-", "/").replace("_", "/")
+    if norm not in GOLDEN_PAIR_SEEDS:
+        raise KeyError(f"Unknown pool pair '{pair_name}'. Available pools: {list(GOLDEN_PAIR_SEEDS.keys())}")
+    return dict(GOLDEN_PAIR_SEEDS[norm])
+
+
+def create_golden_pair_oracle(
+    pair_name: str = "ETH/USDC",
+    resolution: int = 36,
+    max_iter: int = 36,
+    enable_domain: bool = True,
+    enable_lexical: bool = True,
+    enable_resonance: bool = True,
+) -> CalibratedWerracleOracle:
+    """
+    Instantiates a CalibratedWerracleOracle initialized at the 40-Core Mined Golden Seed
+    for the specified liquidity pool (`ETH/USDC`, `WBTC/USDC`, `UNI/ETH`, `ARB/USDC`, `SOL/USDC`, `AAVE/ETH`).
+    """
+    seed = get_golden_pair_seed(pair_name)
+    return CalibratedWerracleOracle(
+        base_cx=seed["cx"],
+        base_cy=seed["cy"],
+        base_zoom=seed["zoom"],
+        resolution=resolution,
+        max_iter=max_iter,
+        enable_domain=enable_domain,
+        enable_lexical=enable_lexical,
+        enable_resonance=enable_resonance,
+        cadence_lambda=0.10,
+        cadence_beta=0.15,
+        cadence_alpha=0.50,
+        temp_choice=1.25,
+    )
+
+
+def create_golden_pair_tripod(
+    pair_name: str = "ETH/USDC",
+    decision_threshold: float = 0.50,
+    enable_lexical: bool = True,
+    enable_resonance: bool = True,
+) -> TripodZMod9Oracle:
+    """
+    Instantiates a TripodZMod9Oracle initialized at the 40-Core Mined Golden Seed
+    for the specified liquidity pool (`ETH/USDC`, `WBTC/USDC`, `UNI/ETH`, `ARB/USDC`, `SOL/USDC`, `AAVE/ETH`).
+    """
+    seed = get_golden_pair_seed(pair_name)
+    return TripodZMod9Oracle(
+        base_cx=seed["cx"],
+        base_cy=seed["cy"],
+        base_zoom=seed["zoom"],
+        decision_threshold=decision_threshold,
+        enable_lexical=enable_lexical,
+        enable_resonance=enable_resonance,
+    )
 
 
 def create_oracle_security_guard(
