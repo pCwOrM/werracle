@@ -9,39 +9,61 @@ Features synchronized with WERR Core v0.5.1:
 - 4-Quadrant Boundary Density Estimation (arXiv:1810.11107)
 - Supercritical Pitchfork Cadence Bifurcation Operator for deadlock elimination
 - Sparse Multi-Scale Harmonic Tripod (Z mod 9) support
-- Pure Python and NumPy execution with zero stored neural weight tensors
+- Pure Python stdlib AND accelerated NumPy execution with zero stored neural weight tensors
 """
 
 import math
 import time
 import hashlib
 from typing import Dict, List, Any, Optional, Tuple, Union
-import numpy as np
+
+try:
+    import numpy as np
+    HAS_NUMPY = True
+except ImportError:
+    np = None  # type: ignore
+    HAS_NUMPY = False
 
 
-def sigmoid(x: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
+def sigmoid(x: Any) -> Any:
     """Numerically stable bounded logistic sigmoid function."""
-    if isinstance(x, np.ndarray):
+    if HAS_NUMPY and isinstance(x, np.ndarray):
         return 1.0 / (1.0 + np.exp(-np.clip(x, -50.0, 50.0)))
-    if x < -50.0:
+    if isinstance(x, (list, tuple)):
+        return [sigmoid(float(v)) for v in x]
+    val = float(x)
+    if val < -50.0:
         return 0.0
-    if x > 50.0:
+    if val > 50.0:
         return 1.0
-    return 1.0 / (1.0 + math.exp(-x))
+    return 1.0 / (1.0 + math.exp(-val))
 
 
 # =========================================================================
 # Bounded Domain Density Estimation (WERR v0.5.1 / arXiv:1810.11107)
 # =========================================================================
 
-def _vec_erf(x: np.ndarray) -> np.ndarray:
+def _scalar_erf(x: float) -> float:
+    """Scalar error function approximation (Abramowitz & Stegun 7.1.26)."""
+    sign = -1.0 if x < 0.0 else (1.0 if x > 0.0 else 0.0)
+    x_abs = abs(x)
+    t = 1.0 / (1.0 + 0.3275911 * x_abs)
+    poly = (((((1.061405429 * t - 1.453152027) * t + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t)
+    return sign * (1.0 - poly * math.exp(-x_abs * x_abs))
+
+
+def _vec_erf(x: Any) -> Any:
     """
     Vectorized error function approximation (Abramowitz & Stegun 7.1.26).
-    Maximum absolute error: < 1.5e-7. Pure NumPy, zero external dependencies.
+    Maximum absolute error: < 1.5e-7. Supports both NumPy and pure Python stdlib.
     """
-    x = np.asarray(x, dtype=np.float64)
-    sign = np.sign(x)
-    x_abs = np.abs(x)
+    if not HAS_NUMPY:
+        if isinstance(x, (int, float)):
+            return _scalar_erf(float(x))
+        return [_vec_erf(v) for v in x]
+    arr = np.asarray(x, dtype=np.float64)
+    sign = np.sign(arr)
+    x_abs = np.abs(arr)
     a1 = 0.254829592
     a2 = -0.284496736
     a3 = 1.421413741
@@ -54,17 +76,30 @@ def _vec_erf(x: np.ndarray) -> np.ndarray:
     return sign * y
 
 
-def normal_cdf(z: np.ndarray) -> np.ndarray:
+def normal_cdf(z: Any) -> Any:
     """Standard normal cumulative distribution function Phi(z)."""
-    return 0.5 * (1.0 + _vec_erf(z / np.sqrt(2.0)))
+    inv_sqrt2 = 1.0 / math.sqrt(2.0)
+    if not HAS_NUMPY:
+        if isinstance(z, (int, float)):
+            return 0.5 * (1.0 + _scalar_erf(float(z) * inv_sqrt2))
+        return [normal_cdf(v) for v in z]
+    return 0.5 * (1.0 + _vec_erf(np.asarray(z, dtype=np.float64) * inv_sqrt2))
 
 
-def compute_boundary_correction_weights(u: np.ndarray, bandwidth: float = 0.12) -> np.ndarray:
+def compute_boundary_correction_weights(u: Any, bandwidth: float = 0.12) -> Any:
     """
     Computes boundary weight inverse W(u, h) = 1 / omega(u, h) on [0, 1] (arXiv:1810.11107).
     """
-    u_clamped = np.clip(u, 0.0, 1.0)
     h = max(1e-4, bandwidth)
+    if not HAS_NUMPY:
+        if isinstance(u, (int, float)):
+            uc = min(1.0, max(0.0, float(u)))
+            phi_l = normal_cdf(uc / h)
+            phi_r = normal_cdf((1.0 - uc) / h)
+            omega = min(1.0, max(0.45, phi_l + phi_r - 1.0))
+            return 1.0 / omega
+        return [compute_boundary_correction_weights(v, bandwidth=bandwidth) for v in u]
+    u_clamped = np.clip(u, 0.0, 1.0)
     phi_left = normal_cdf(u_clamped / h)
     phi_right = normal_cdf((1.0 - u_clamped) / h)
     omega = np.clip(phi_left + phi_right - 1.0, 0.45, 1.0)
@@ -72,7 +107,7 @@ def compute_boundary_correction_weights(u: np.ndarray, bandwidth: float = 0.12) 
 
 
 def extract_bounded_quadrant_weights(
-    escape_iters: np.ndarray,
+    escape_iters: Any,
     max_iter: int = 36,
     bandwidth: float = 0.12
 ) -> Tuple[float, float, float, float, List[float]]:
@@ -80,28 +115,67 @@ def extract_bounded_quadrant_weights(
     Boundary-corrected quadrant weight extraction (WERR v0.5.1 / arXiv:1810.11107).
     Partitions escape matrix into 4 quadrants, compensating for boundary truncation on [0, 1].
     """
-    h, w = escape_iters.shape
+    if HAS_NUMPY:
+        arr = np.asarray(escape_iters, dtype=np.float64)
+        h, w = arr.shape
+        mid_h, mid_w = h // 2, w // 2
+        quads = [
+            arr[:mid_h, mid_w:],  # top-right
+            arr[:mid_h, :mid_w],  # top-left
+            arr[mid_h:, :mid_w],  # bottom-left
+            arr[mid_h:, mid_w:],  # bottom-right
+        ]
+        weights = []
+        ratios = []
+        for q in quads:
+            u = q / float(max_iter)
+            weights_corr = compute_boundary_correction_weights(u, bandwidth=bandwidth)
+            cusp_mask = (u >= 0.90).astype(np.float64)
+            w_sum = max(1e-9, float(np.sum(weights_corr)))
+            boundary_corrected_ratio = float(np.sum(weights_corr * cusp_mask)) / w_sum
+            avg_energy = float(np.sum(weights_corr * u)) / w_sum
+            composite_ratio = 0.65 * boundary_corrected_ratio + 0.35 * avg_energy
+            ratios.append(float(composite_ratio))
+            weights.append(float((composite_ratio - 0.5) * 6.0))
+        return weights[0], weights[1], weights[2], weights[3], ratios
+
+    # Pure Python stdlib fallback
+    grid = escape_iters
+    h = len(grid)
+    w = len(grid[0]) if h > 0 else 0
     mid_h, mid_w = h // 2, w // 2
+    q_lists: List[List[float]] = [[], [], [], []]
+    for r in range(h):
+        for c in range(w):
+            val = float(grid[r][c])
+            if r < mid_h and c >= mid_w:
+                q_lists[0].append(val)
+            elif r < mid_h and c < mid_w:
+                q_lists[1].append(val)
+            elif r >= mid_h and c < mid_w:
+                q_lists[2].append(val)
+            else:
+                q_lists[3].append(val)
 
-    q1 = escape_iters[:mid_h, mid_w:]  # top-right
-    q2 = escape_iters[:mid_h, :mid_w]  # top-left
-    q3 = escape_iters[mid_h:, :mid_w]  # bottom-left
-    q4 = escape_iters[mid_h:, mid_w:]  # bottom-right
-
-    quads = [q1, q2, q3, q4]
     weights = []
     ratios = []
-
-    for q in quads:
-        u = q.astype(np.float64) / float(max_iter)
-        weights_corr = compute_boundary_correction_weights(u, bandwidth=bandwidth)
-        cusp_mask = (u >= 0.90).astype(np.float64)
-        boundary_corrected_ratio = np.sum(weights_corr * cusp_mask) / max(1e-9, np.sum(weights_corr))
-        avg_energy = np.sum(weights_corr * u) / max(1e-9, np.sum(weights_corr))
-        composite_ratio = 0.65 * boundary_corrected_ratio + 0.35 * avg_energy
-        ratios.append(float(composite_ratio))
-        w_val = float((composite_ratio - 0.5) * 6.0)
-        weights.append(w_val)
+    for q_vals in q_lists:
+        sum_wc = 0.0
+        sum_cusp = 0.0
+        sum_energy = 0.0
+        for v in q_vals:
+            u_val = v / float(max_iter)
+            wc = float(compute_boundary_correction_weights(u_val, bandwidth=bandwidth))
+            sum_wc += wc
+            if u_val >= 0.90:
+                sum_cusp += wc
+            sum_energy += wc * u_val
+        denom = max(1e-9, sum_wc)
+        bc_ratio = sum_cusp / denom
+        avg_e = sum_energy / denom
+        comp = 0.65 * bc_ratio + 0.35 * avg_e
+        ratios.append(comp)
+        weights.append((comp - 0.5) * 6.0)
 
     return weights[0], weights[1], weights[2], weights[3], ratios
 
@@ -111,36 +185,56 @@ def extract_bounded_quadrant_weights(
 # =========================================================================
 
 def apply_cadence_bifurcation(
-    scores: Union[List[float], np.ndarray],
+    scores: Any,
     lambda_param: float = 0.20,
     alpha: float = 0.50,
     beta: float = 0.25,
-    fractal_fields: Optional[Union[List[float], np.ndarray]] = None,
+    fractal_fields: Optional[Any] = None,
     deadlock_threshold: float = 0.85
-) -> np.ndarray:
+) -> Any:
     """
     Applies coupled pitchfork bifurcation to break destructive nodal deadlocks
     between competing decision candidates (WERR v0.5.1).
     """
-    s = np.array(scores, dtype=np.float64)
-    K = len(s)
-    if K <= 1:
+    if HAS_NUMPY:
+        s = np.array(scores, dtype=np.float64)
+        K = len(s)
+        if K <= 1:
+            return s
+        sorted_s = np.sort(s)
+        top_gap = sorted_s[-1] - sorted_s[-2]
+        if top_gap < deadlock_threshold:
+            diff_matrix = s[:, np.newaxis] - s[np.newaxis, :]
+            bif_force = np.sum(np.sign(diff_matrix) * (np.abs(diff_matrix) ** alpha), axis=1)
+            if fractal_fields is not None and len(fractal_fields) == K:
+                h_arr = np.array(fractal_fields, dtype=np.float64)
+                bif_force += beta * (h_arr - np.mean(h_arr))
+            s = s + lambda_param * bif_force
         return s
 
-    sorted_s = np.sort(s)
+    # Pure Python stdlib fallback
+    s_list = [float(v) for v in scores]
+    K = len(s_list)
+    if K <= 1:
+        return s_list
+    sorted_s = sorted(s_list)
     top_gap = sorted_s[-1] - sorted_s[-2]
-
     if top_gap < deadlock_threshold:
-        diff_matrix = s[:, np.newaxis] - s[np.newaxis, :]
-        bif_force = np.sum(np.sign(diff_matrix) * (np.abs(diff_matrix) ** alpha), axis=1)
-
+        bif_force = [0.0] * K
+        for i in range(K):
+            force_i = 0.0
+            for j in range(K):
+                diff = s_list[i] - s_list[j]
+                sgn = 1.0 if diff > 0.0 else (-1.0 if diff < 0.0 else 0.0)
+                force_i += sgn * (abs(diff) ** alpha)
+            bif_force[i] = force_i
         if fractal_fields is not None and len(fractal_fields) == K:
-            h_arr = np.array(fractal_fields, dtype=np.float64)
-            bif_force += beta * (h_arr - np.mean(h_arr))
-
-        s = s + lambda_param * bif_force
-
-    return s
+            h_list = [float(v) for v in fractal_fields]
+            h_mean = sum(h_list) / float(K)
+            for i in range(K):
+                bif_force[i] += beta * (h_list[i] - h_mean)
+        s_list = [s_list[i] + lambda_param * bif_force[i] for i in range(K)]
+    return s_list
 
 
 # =========================================================================
@@ -316,9 +410,6 @@ class WerracleCoreEngine:
                 raw_res = False
                 self.mode = "pure_fractal"
         else:
-            # Conflict-free purpose-aligned defaults:
-            # - When Domain is ON ('multi'): Hybrid [1,1,1] (Lexical + Resonance active)
-            # - When Domain is OFF ('none'): Pure Fractal [0,0,0] (Universal Cusp safety preserved)
             if self.enable_domain:
                 raw_lex = True
                 raw_res = True
@@ -332,11 +423,9 @@ class WerracleCoreEngine:
         self.raw_enable_resonance = raw_res
 
         # 3. Enforce Optimal Auto-Guard Rules:
-        # Rule 1: If Domain is OFF ('none'), domain dictionaries are locked OFF.
         self.enable_lexical = raw_lex if self.enable_domain else False
         self.enable_resonance = raw_res if self.enable_domain else False
 
-        # Rule 2: If Domain is ON ('multi') and BOTH dictionaries are OFF ([1,0,0]), auto-guard to Universal Cusp.
         if self.enable_domain and (not self.enable_lexical and not self.enable_resonance):
             self.effective_domain_active = False
         else:
@@ -366,8 +455,7 @@ class WerracleCoreEngine:
         )
 
         if self.mode == "hybrid":
-            grid_np = np.array(grid, dtype=np.int32)
-            w1, w2, w3, b, _ = extract_bounded_quadrant_weights(grid_np, self.max_iter)
+            w1, w2, w3, b, _ = extract_bounded_quadrant_weights(grid, self.max_iter)
             fractal_bias = (w1 + w2 - w3 - b) * 0.15
         else:
             w1, w2, w3, b, _ = extract_quadrant_weights(grid, self.max_iter)
@@ -406,14 +494,21 @@ class WerracleCoreEngine:
 
         scores = [weights[i % 4] + context_bias * (i + 1) * 0.1 for i in range(num_choices)]
         
-        # Apply WERR v0.5.1 Cadence Bifurcation
         bif_scores = apply_cadence_bifurcation(
             scores,
             lambda_param=self.cadence_lambda,
             alpha=self.cadence_alpha,
             beta=self.cadence_beta
         )
-        return int(np.argmax(bif_scores))
+        if HAS_NUMPY:
+            return int(np.argmax(bif_scores))
+        best_idx = 0
+        best_val = bif_scores[0]
+        for idx, val in enumerate(bif_scores):
+            if val > best_val:
+                best_val = val
+                best_idx = idx
+        return best_idx
 
     def decide_score(
         self,

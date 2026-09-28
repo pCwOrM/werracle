@@ -18,6 +18,11 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy
+
       - name: Run Mathematical Cross-Validation
         run: |
           python sim/test_cross_validation.py
@@ -30,3 +35,9 @@ jobs:
         run: |
           python tests/run_1000_sealed_battery.py
 
+      - name: Run Orthogonal Parameter & All-States Lean 4 Bridge Verification
+        run: |
+          python tests/test_orthogonal_parameters.py
+          python tests/test_all_states_and_lean4_bridge.py
+          python tests/test_tripod_zmod9.py
+          python tests/test_blockchain_resonance.py
