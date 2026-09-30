@@ -25,7 +25,7 @@
 [![Ecosystem: Research](https://img.shields.io/badge/Research-Mandelbrot%20Synthesis-blue.svg)](https://github.com/pCwOrM/mandelbrot-fractal-neural-synthesis)
 [![Ecosystem: WerrSoma Connectome](https://img.shields.io/badge/Connectome-WerrSoma%20158K%20Neurons-00f0ff.svg)](https://github.com/Lexovian/WerrSoma)
 [![Connectome DOI](https://img.shields.io/badge/WerrSoma%20DOI-10.5281%2Fzenodo.22996626-024dad.svg)](https://doi.org/10.5281/zenodo.22996626)
-[![WerrSoma Portal](https://img.shields.io/badge/WerrSoma%20Portal-lexovian.pcworm.net-00f0ff.svg)](https://lexovian.pcworm.net/)
+[![WerrSoma Portal](https://img.shields.io/badge/WerrSoma%20Portal-werrsoma.answerr.me-00f0ff.svg)](https://werrsoma.answerr.me/)
 [![Formal Verification: Lean 4](https://img.shields.io/badge/Formal%20Verification-Lean%204%20(Zero%20Sorry)-9333ea.svg)](formal_proofs/WerracleProof.lean)
 [![Formal Certificate](https://img.shields.io/badge/Certificate-Lean%204%20Machine--Verified-blue.svg)](docs/WERRACLE_LEAN4_FORMAL_VERIFICATION_CERTIFICATE.md)
 [![Formal Paper: arXiv 2609.33066](https://img.shields.io/badge/Formal%20Paper-arXiv%3A2609.33066%20(Lean4)-b31b1b.svg)](https://arxiv.org/abs/2609.33066)
@@ -310,7 +310,7 @@ If you utilize Werracle or the underlying WERR fractal System-One decision engin
   month        = {September},
   doi          = {10.5281/zenodo.22996626},
   url          = {https://doi.org/10.5281/zenodo.22996626},
-  note         = {158,169 neurons, 3.99M synapses. Sub-4ms latency, zero VRAM. TÜRKPATENT Priority: TR 2026/016633. Live 3D Portal: https://lexovian.pcworm.net/}
+  note         = {158,169 neurons, 3.99M synapses. Sub-4ms latency, zero VRAM. TÜRKPATENT Priority: TR 2026/016633. Live 3D Portal: https://werrsoma.answerr.me/}
 }
 ```
 
