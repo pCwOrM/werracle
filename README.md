@@ -24,7 +24,7 @@
 [![Ecosystem: answerr](https://img.shields.io/badge/Platform-answerr-8b5cf6.svg)](https://github.com/pCwOrM/answerr)
 [![Ecosystem: Research](https://img.shields.io/badge/Research-Mandelbrot%20Synthesis-blue.svg)](https://github.com/pCwOrM/mandelbrot-fractal-neural-synthesis)
 [![Ecosystem: WerrSoma Connectome](https://img.shields.io/badge/Connectome-WerrSoma%20158K%20Neurons-00f0ff.svg)](https://github.com/Lexovian/WerrSoma)
-[![Connectome DOI](https://img.shields.io/badge/WerrSoma%20DOI-10.5281%2Fzenodo.22996626-024dad.svg)](https://doi.org/10.5281/zenodo.22996626)
+[![Connectome DOI](https://img.shields.io/badge/WerrSoma%20DOI-10.5281%2Fzenodo.22996625-024dad.svg)](https://doi.org/10.5281/zenodo.22996625)
 [![WerrSoma Portal](https://img.shields.io/badge/WerrSoma%20Portal-werrsoma.answerr.me-00f0ff.svg)](https://werrsoma.answerr.me/)
 [![Formal Verification: Lean 4](https://img.shields.io/badge/Formal%20Verification-Lean%204%20(Zero%20Sorry)-9333ea.svg)](formal_proofs/WerracleProof.lean)
 [![Formal Certificate](https://img.shields.io/badge/Certificate-Lean%204%20Machine--Verified-blue.svg)](docs/WERRACLE_LEAN4_FORMAL_VERIFICATION_CERTIFICATE.md)
@@ -320,14 +320,14 @@ If you utilize Werracle or the underlying WERR fractal System-One decision engin
 }
 
 @article{dagli2026werrsoma,
-  title        = {Bio-Synthetic Neuromorphic Interfacing: In Silico Integration of the Princeton FlyWire Drosophila Whole-Brain Connectome (158K Neurons) with a Zero-Memory Fractal System-One Decision Engine (WERR)},
+  title        = {Bio-Synthetic Neuromorphic Interfacing: Integration of a Zero-Memory Fractal Decision Engine with the Whole-Brain Drosophila Melanogaster Connectome},
   author       = {Da{\u{g}}l{\i}, Da{\u{g}}han and Da{\u{g}}l{\i}, Volkan and Da{\u{g}}l{\i}, Zerrin},
   journal      = {Zenodo Open Science Archive},
   year         = {2026},
-  month        = {September},
-  doi          = {10.5281/zenodo.22996626},
-  url          = {https://doi.org/10.5281/zenodo.22996626},
-  note         = {158,169 neurons, 3.99M synapses. Sub-4ms latency, zero VRAM. TÜRKPATENT Priority: TR 2026/016633. Live 3D Portal: https://werrsoma.answerr.me/}
+  month        = {October},
+  doi          = {10.5281/zenodo.23072929},
+  url          = {https://doi.org/10.5281/zenodo.23072929},
+  note         = {158,262 neurons, 3.99M synapses. Sub-4ms latency, zero VRAM. TÜRKPATENT Priority: TR 2026/016633. Concept DOI: 10.5281/zenodo.22996625. Live 3D Portal: https://werrsoma.answerr.me/}
 }
 ```
 

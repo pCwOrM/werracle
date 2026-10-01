@@ -20,7 +20,7 @@
 [![Ekosistem: answerr](https://img.shields.io/badge/Platform-answerr-8b5cf6.svg)](https://github.com/pCwOrM/answerr)
 [![Ekosistem: Araştırma](https://img.shields.io/badge/Ara%C5%9Ft%C4%B1rma-Mandelbrot%20Sentezi-blue.svg)](https://github.com/pCwOrM/mandelbrot-fractal-neural-synthesis)
 [![Ekosistem: WerrSoma Konnektom](https://img.shields.io/badge/Konnektom-WerrSoma%20158K%20N%C3%B6ron-00f0ff.svg)](https://github.com/Lexovian/WerrSoma)
-[![Konnektom DOI](https://img.shields.io/badge/WerrSoma%20DOI-10.5281%2Fzenodo.22996626-024dad.svg)](https://doi.org/10.5281/zenodo.22996626)
+[![Konnektom DOI](https://img.shields.io/badge/WerrSoma%20DOI-10.5281%2Fzenodo.22996625-024dad.svg)](https://doi.org/10.5281/zenodo.22996625)
 [![WerrSoma Portalı](https://img.shields.io/badge/WerrSoma%20Portal-werrsoma.answerr.me-00f0ff.svg)](https://werrsoma.answerr.me/)
 [![arXiv: 2609.30719 (Werracle)](https://img.shields.io/badge/arXiv-2609.30719%20%5Bcs.CR%5D-b31b1b.svg)](https://arxiv.org/abs/2609.30719)
 [![arXiv DOI: 10.48550/arXiv.2609.30719](https://img.shields.io/badge/arXiv%20DOI-10.48550%2FarXiv.2609.30719-b31b1b.svg)](https://doi.org/10.48550/arXiv.2609.30719)
@@ -277,14 +277,14 @@ Werracle'ı veya temelindeki WERR fraktal Sistem-1 karar motorunu Web3 araştır
 }
 
 @article{dagli2026werrsoma,
-  title        = {Bio-Synthetic Neuromorphic Interfacing: In Silico Integration of the Princeton FlyWire Drosophila Whole-Brain Connectome (158K Neurons) with a Zero-Memory Fractal System-One Decision Engine (WERR)},
+  title        = {Bio-Synthetic Neuromorphic Interfacing: Integration of a Zero-Memory Fractal Decision Engine with the Whole-Brain Drosophila Melanogaster Connectome},
   author       = {Da{\u{g}}l{\i}, Da{\u{g}}han and Da{\u{g}}l{\i}, Volkan and Da{\u{g}}l{\i}, Zerrin},
   journal      = {Zenodo Open Science Archive},
   year         = {2026},
-  month        = {September},
-  doi          = {10.5281/zenodo.22996626},
-  url          = {https://doi.org/10.5281/zenodo.22996626},
-  note         = {158.169 nöron, 3.99M sinaps. Sub-4ms refleks gecikmesi, 0 VRAM. TÜRKPATENT Başvuru: TR 2026/016633. Canlı 3D Portal: https://werrsoma.answerr.me/}
+  month        = {October},
+  doi          = {10.5281/zenodo.23072929},
+  url          = {https://doi.org/10.5281/zenodo.23072929},
+  note         = {158.262 nöron, 3.99M sinaps. Sub-4ms refleks gecikmesi, 0 VRAM. TÜRKPATENT Başvuru: TR 2026/016633. Çatı DOI: 10.5281/zenodo.22996625. Canlı 3D Portal: https://werrsoma.answerr.me/}
 }
 ```
 
