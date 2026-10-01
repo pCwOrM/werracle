@@ -294,12 +294,29 @@ If you utilize Werracle or the underlying WERR fractal System-One decision engin
 @article{dagli2026lean4_oed,
   title        = {Zero-Storage Procedural Neural Synthesis via Boundary Dynamics: Formal Verification in Lean 4 and Bare-Metal Gauntlet Validation},
   author       = {Da{\u{g}}l{\i}, Volkan and Da{\u{g}}l{\i}, Zerrin and Da{\u{g}}l{\i}, Da{\u{g}}han},
-  journal      = {Zenodo Open Science Archive},
+  journal      = {arXiv preprint arXiv:2609.33066 [cs.LG, cs.AI, cs.LO]},
   year         = {2026},
   month        = {September},
-  doi          = {10.5281/zenodo.22974544},
-  url          = {https://doi.org/10.5281/zenodo.22974544},
-  note         = {Formally verified in Lean 4 (Mathlib4, 0 sorry). 40-core bare-metal gauntlet benchmark verified. TÜRKPATENT Priority: TR 2026/016285.}
+  eprint       = {2609.33066},
+  archivePrefix = {arXiv},
+  primaryClass = {cs.LG},
+  doi          = {10.48550/arXiv.2609.33066},
+  url          = {https://arxiv.org/abs/2609.33066},
+  note         = {Zenodo DOI: 10.5281/zenodo.22974544; Formally verified in Lean 4 (Mathlib4, 0 sorry). 40-core bare-metal gauntlet benchmark verified. TÜRKPATENT Priority: TR 2026/016285.}
+}
+
+@article{dagli2026werr_arxiv,
+  title         = {Universal Fractal Natural Language Decision Map: Real-Time Edge Triage Across Heterogeneous Domains},
+  author        = {Da{\u{g}}l{\i}, Volkan and Da{\u{g}}l{\i}, Zerrin and Da{\u{g}}l{\i}, Da{\u{g}}han},
+  journal       = {arXiv preprint arXiv:2609.25498 [cs.NE]},
+  year          = {2026},
+  month         = {September},
+  eprint        = {2609.25498},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.NE},
+  doi           = {10.48550/arXiv.2609.25498},
+  url           = {https://arxiv.org/abs/2609.25498},
+  note          = {Zenodo DOI: 10.5281/zenodo.22939253; Sub-0.5ms Zero-VRAM edge triage engine.}
 }
 
 @article{dagli2026werrsoma,
