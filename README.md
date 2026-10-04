@@ -333,7 +333,7 @@ If you utilize Werracle or the underlying WERR fractal System-One decision engin
 
 @misc{werredur2026package,
   author       = {Da{\u{g}}l{\i}, Zerrin and Da{\u{g}}l{\i}, Volkan and Da{\u{g}}l{\i}, Da{\u{g}}han},
-  title        = {{WerreduR}: Procedural Fractal Pedagogy ({PFP}) Client-Side Engine and Replication Suite (Version 3.0)},
+  title        = "{WerreduR}: Procedural Fractal Pedagogy ({PFP}) Client-Side Engine and Replication Suite (Version 3.0)",
   year         = {2026},
   publisher    = {Zenodo},
   doi          = {10.5281/zenodo.23034488},
