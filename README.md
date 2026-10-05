@@ -29,6 +29,7 @@
 [![Ecosystem: WerreduR](https://img.shields.io/badge/Ecosystem-WerreduR%20Pedagogy-blue.svg)](https://github.com/jesmaat/WerreduR)
 [![Formal Verification: Lean 4](https://img.shields.io/badge/Formal%20Verification-Lean%204%20(Zero%20Sorry)-9333ea.svg)](formal_proofs/WerracleProof.lean)
 [![Formal Certificate](https://img.shields.io/badge/Certificate-Lean%204%20Machine--Verified-blue.svg)](docs/WERRACLE_LEAN4_FORMAL_VERIFICATION_CERTIFICATE.md)
+[![Lean 4 Master Suite: 40 Theorems](https://img.shields.io/badge/Master%20Suite-40%20Theorems%20(Rungs%201--6)-brightgreen.svg)](formal_proofs/CERTIFICATE.md)
 [![Formal Paper: arXiv 2609.33066](https://img.shields.io/badge/Formal%20Paper-arXiv%3A2609.33066%20(Lean4)-b31b1b.svg)](https://arxiv.org/abs/2609.33066)
 [![Lean 4 Paper: Zenodo 22974544](https://img.shields.io/badge/Paper%205%20DOI-10.5281%2Fzenodo.22974544-024dad.svg)](https://doi.org/10.5281/zenodo.22974544)
 [![Zenodo DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.22939253-024dad.svg)](https://doi.org/10.5281/zenodo.22939253)
@@ -152,7 +153,7 @@ Tested under EIP-150 / EIP-2929 / EIP-3860 rules with `solc 0.8.20 (runs: 200)` 
 | **Uniswap v4 Dynamic Fee Hook** | N/A | **36,739 gas** | End-to-end | Volatility-tied | Sub-block |
 
 > 🛡️ **Formal Invariant Verification**: Full empirical audit report available at [`docs/EVM_GAS_IDEAL_BENCHMARK_REPORT.md`](docs/EVM_GAS_IDEAL_BENCHMARK_REPORT.md) and raw data at [`tests/results/evm_gas_ideal_benchmark.json`](tests/results/evm_gas_ideal_benchmark.json).  
-> 📜 **Machine-Verified Lean 4 Proof**: Formally verified in **Lean 4 (v4.34.1)** with **ZERO `sorry` axioms** (Halting Invariant, 108-step complexity ceiling, and $\le 24,000$ gas bound). Full proof source at [`formal_proofs/WerracleProof.lean`](formal_proofs/WerracleProof.lean) &bull; Audit Certificate at [`docs/WERRACLE_LEAN4_FORMAL_VERIFICATION_CERTIFICATE.md`](docs/WERRACLE_LEAN4_FORMAL_VERIFICATION_CERTIFICATE.md).
+> 📜 **Machine-Verified Lean 4 Proof Suite**: Formally verified in **Lean 4 (v4.34.1)** with **ZERO `sorry` axioms** across Rungs 1 to 6 (40 Theorems Cumulative Master Suite: Halting Invariant, Connectome Homeostasis, ATP Conservation, Evolutionary Window, GAP Schreier Chains, and Dynamic Leaky Turnover $\le 49,200$ gas). Full proof suite at [`formal_proofs/`](formal_proofs/) &bull; Master Certificate at [`formal_proofs/CERTIFICATE.md`](formal_proofs/CERTIFICATE.md) &bull; Baseline Proof at [`formal_proofs/WerracleProof.lean`](formal_proofs/WerracleProof.lean).
 
 ---
 
