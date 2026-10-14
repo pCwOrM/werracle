@@ -1,0 +1,18 @@
+[package]
+name = "werracle_starknet"
+version = "2.1.0"
+edition = "2024_07"
+authors = ["Volkan Dağlı <pcworm@pcworm.net>", "Zerrin Dağlı", "Dağhan Dağlı"]
+description = "Werracle: Zero-Storage STARK-Native On-Chain AI Reflex Oracle, Sparse Multi-Scale Harmonic Tripod (Z mod 9), and Ekubo Protocol Dynamic LVR Fee Extension for Starknet (Cairo 2 / Sierra)"
+license-file = "../LICENSE"
+repository = "https://github.com/pCwOrM/werracle"
+
+[dependencies]
+starknet = ">=2.8.0"
+
+[[target.starknet-contract]]
+sierra = true
+casm = true
+
+[dev-dependencies]
+cairo_test = ">=2.8.0"
