@@ -16,9 +16,12 @@
 [![CI / Verification](https://github.com/pCwOrM/werracle/actions/workflows/ci.yml/badge.svg)](https://github.com/pCwOrM/werracle/actions/workflows/ci.yml)
 [![Telemetry: Permanently Disabled](https://img.shields.io/badge/Telemetry-Permanently%20Disabled-10b981.svg)]()
 [![Solidity: ^0.8.20](https://img.shields.io/badge/Solidity-%5E0.8.20-363636.svg?logo=solidity)](https://soliditylang.org/)
+[![Cairo: 2.8+ (Sierra)](https://img.shields.io/badge/Starknet-Cairo%202.8%2B%20(Sierra)-ec796b.svg)](cairo/)
+[![Starknet Steps: ~1,420](https://img.shields.io/badge/CairoVM-~1%2C420%20Steps%20(STARK--Native)-ec796b.svg)](docs/STARKNET_ARCHITECTURE_AND_SEED_GRANT_ROADMAP.md)
+[![Starknet DeFi: Ekubo Extension](https://img.shields.io/badge/Starknet%20DeFi-Ekubo%20LVR%20Extension-blueviolet.svg)](cairo/src/ekubo_werracle_extension.cairo)
 [![EVM Gas: ~20k](https://img.shields.io/badge/EVM%20Gas-~20k%20(Sub--Cent)-brightgreen.svg)](https://pcworm.github.io/werracle/#simulator)
 [![Model Size: 0 Bytes](https://img.shields.io/badge/Model%20Size-0%20Bytes%20VRAM-10b981.svg)]()
-[![Seed: Single bytes32](https://img.shields.io/badge/Storage%20Slot-Single%20bytes32-purple.svg)](https://pcworm.github.io/werracle/#storage-slot)
+[![Seed: Single bytes32 / felt252](https://img.shields.io/badge/Storage%20Slot-Single%20bytes32%20%7C%20felt252-purple.svg)](https://pcworm.github.io/werracle/#storage-slot)
 [![Patent Pending](https://img.shields.io/badge/Patent%20Pending-TR%202026%2F016285-red.svg)](https://epats.turkpatent.gov.tr)
 [![Ecosystem: WERR](https://img.shields.io/badge/Engine-WERR%20Core-emerald.svg)](https://github.com/pCwOrM/werr)
 [![Ecosystem: answerr](https://img.shields.io/badge/Platform-answerr-8b5cf6.svg)](https://github.com/pCwOrM/answerr)
@@ -46,11 +49,11 @@
 > *Authors:* Volkan Dağlı, Zerrin Dağlı, Dağhan Dağlı &bull; *Zenodo Concept DOI:* [10.5281/zenodo.22942598](https://doi.org/10.5281/zenodo.22942598)
 
 > 🌐 **Language Switcher / Dil Seçici:**  
-> **English (Default)** | [🇹🇷 Türkçe Dokümantasyon (README_TR.md)](README_TR.md) &bull; 🌐 [**Interactive Web Simulator**](https://pcworm.github.io/werracle/) &bull; ⚡ [**Interactive API Docs**](https://pcworm.github.io/werracle/apidocs.html) &bull; 🎓 [**LEARN.md Guide**](LEARN.md) &bull; 🛡️ [**1,000-Test Sealed Audit Report**](docs/TEST_1000_AUDIT_REPORT.md) &bull; 📢 [**Grant & Announcement Playbook**](docs/WEB3_GRANT_AND_ANNOUNCEMENT_PLAYBOOK.md)
+> **English (Default)** | [🇹🇷 Türkçe Dokümantasyon (README_TR.md)](README_TR.md) &bull; 🐺 [**Starknet (Cairo 2 / Sierra) Architecture & Roadmap**](docs/STARKNET_ARCHITECTURE_AND_SEED_GRANT_ROADMAP.md) &bull; 🌐 [**Interactive Web Simulator**](https://pcworm.github.io/werracle/) &bull; ⚡ [**Interactive API Docs**](https://pcworm.github.io/werracle/apidocs.html) &bull; 🎓 [**LEARN.md Guide**](LEARN.md) &bull; 🛡️ [**1,000-Test Sealed Audit Report**](docs/TEST_1000_AUDIT_REPORT.md) &bull; 📢 [**Grant & Announcement Playbook**](docs/WEB3_GRANT_AND_ANNOUNCEMENT_PLAYBOOK.md)
 
 
-> **The first production-grade On-Chain AI Decision Oracle capable of intra-block, sub-millisecond execution inside EVM smart contracts.**  
-> *Powered by WERR procedural Mandelbrot escape dynamics. Zero neural tensor matrices. 1000x faster and 15x cheaper than ZK-ML.*
+> **The first production-grade On-Chain AI Decision Oracle capable of intra-block, sub-millisecond execution inside both EVM (`Solidity`) and Starknet (`Cairo 2.x / Sierra`) smart contracts.**  
+> *Powered by WERR procedural Mandelbrot escape dynamics. Zero neural tensor matrices. 1000x faster and 15x cheaper than ZK-ML — with 100% native STARK validity on Starknet.*
 
 <p align="center">
   <img src="assets/twitter_lean4_tesla_gauntlet.png" alt="Werracle Lean 4 Machine Verification & Tesla 3-6-9 Harmonics" width="100%">
@@ -163,7 +166,20 @@ Tested under EIP-150 / EIP-2929 / EIP-3860 rules with `solc 0.8.20 (runs: 200)` 
 
 ---
 
-## 🧩 The 32-Byte Storage Slot Layout
+## 🐺 Starknet Native Architecture (`Cairo 2.x / Sierra`) & Ekubo Protocol Integration
+
+While off-chain ZK-ML provers (EZKL, Giza) require 10–300 seconds to generate proofs, **Starknet's CairoVM (Sierra $\rightarrow$ CASM)** natively STARK-proves every transaction inside the sequencer. By eliminating neural weight matrices in favor of our **24-byte WERR coordinate seed packed inside a single `felt252` (< $2^{251}$)** and **Sierra-safe bounded recursion ($\le 9$ steps/point, 108 global cycles)**, Werracle delivers **100% STARK-proven intra-block AI reflexes** in **~1,420 Cairo steps (~$0.00004 in STRK)**.
+
+* 📦 **Starknet Scarb Package:** [`cairo/Scarb.toml`](cairo/Scarb.toml)
+* 🧮 **Cairo $\mathbb{Q}_{16.16}$ & $\mathbb{Z} \pmod 9$ Tripod Math:** [`cairo/src/werr_math.cairo`](cairo/src/werr_math.cairo)
+* 🧠 **Core Starknet AI Oracle Contract:** [`cairo/src/werracle_tripod_zmod9.cairo`](cairo/src/werracle_tripod_zmod9.cairo) (`decide_noul`, `decide_choice`, `decide_score`)
+* 🦄 **Ekubo Protocol v2 Dynamic LVR Fee & Circuit Breaker Extension:** [`cairo/src/ekubo_werracle_extension.cairo`](cairo/src/ekubo_werracle_extension.cairo) (`before_swap_dynamic_fee` across `STRK/USDC`, `ETH/USDC`, `WBTC/USDC`, `EKUBO/ETH` with **$0 multi-block routing blackout**)
+* 🎮 **Dojo Autonomous Worlds Compatibility:** Enables thousands of on-chain NPCs and autonomous agents to store unique behavioral brains in a single `felt252` seed and execute 4-way/8-way `decide_choice` reflexes in < 1,500 Cairo steps.
+* 📄 **Complete Starknet Screening Technical Dossier:** [`docs/STARKNET_ARCHITECTURE_AND_SEED_GRANT_ROADMAP.md`](docs/STARKNET_ARCHITECTURE_AND_SEED_GRANT_ROADMAP.md)
+
+---
+
+## 🧩 The 32-Byte (`bytes32`) & Single-`felt252` Storage Slot Layout
 
 ```text
  0                   1                   2                   3
@@ -236,10 +252,18 @@ python sim/test_cross_validation.py
 ```
 *Outputs 100.0% accuracy correlation against original WerrEngine ground truth.*
 
-### 2. Compile Solidity Smart Contracts
+### 2. Run Starknet Cairo 2.x / Sierra & Ekubo Extension Parity Suite
+```bash
+python tests/test_starknet_cairo_parity.py
+```
+*Verifies single-`felt252` lossless seed packing, Lean 4 $\mathbb{Z} \pmod 9$ ideal/unit partition, and Ekubo `before_swap` dynamic fee tiers (500–5,000 pips).*
+
+### 3. Compile Solidity & Cairo Smart Contracts
 ```bash
 npm install
 node -e "const solc=require('solc'); /* compiles all contracts cleanly */"
+# For Starknet Cairo 2.x (requires Scarb >= 2.8.0):
+cd cairo && scarb build
 ```
 
 ---

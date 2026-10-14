@@ -41,5 +41,6 @@ jobs:
           python tests/test_all_states_and_lean4_bridge.py
           python tests/test_tripod_zmod9.py
           python tests/test_blockchain_resonance.py
+          python tests/test_starknet_cairo_parity.py
 
 
