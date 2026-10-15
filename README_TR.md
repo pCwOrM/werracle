@@ -25,6 +25,7 @@
 [![Ekosistem: WerrSoma Konnektom](https://img.shields.io/badge/Konnektom-WerrSoma%20158K%20N%C3%B6ron-00f0ff.svg)](https://github.com/Lexovian/WerrSoma)
 [![Konnektom DOI](https://img.shields.io/badge/WerrSoma%20DOI-10.5281%2Fzenodo.22996625-024dad.svg)](https://doi.org/10.5281/zenodo.22996625)
 [![WerrSoma Portalı](https://img.shields.io/badge/WerrSoma%20Portal-werrsoma.answerr.me-00f0ff.svg)](https://werrsoma.answerr.me/)
+[![Ekosistem: WERRobotics](https://img.shields.io/badge/WERRobotics-Arduino%20%26%20Edge%20AI-ff9100.svg?logo=arduino&logoColor=white)](https://github.com/pCwOrM/WERRobotics)
 [![arXiv: 2609.30719 (Werracle)](https://img.shields.io/badge/arXiv-2609.30719%20%5Bcs.CR%5D-b31b1b.svg)](https://arxiv.org/abs/2609.30719)
 [![arXiv DOI: 10.48550/arXiv.2609.30719](https://img.shields.io/badge/arXiv%20DOI-10.48550%2FarXiv.2609.30719-b31b1b.svg)](https://doi.org/10.48550/arXiv.2609.30719)
 [![arXiv: 2609.25498 (WERR)](https://img.shields.io/badge/arXiv-2609.25498%20%5Bcs.AI%5D-b31b1b.svg)](https://arxiv.org/abs/2609.25498)
