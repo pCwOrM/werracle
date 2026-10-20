@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="../assets/werracle_logo_oracle.svg" alt="Werracle Logo Emblem" width="140" height="140" />
+</p>
+
 # ⚡ Werracle for NEAR Protocol: Intra-Block AI Shield for NEAR Intents & Chain Signatures
 
 [![NEAR Protocol](https://img.shields.io/badge/NEAR%20Protocol-Intents%20%26%20Chain%20Signatures-00EC97.svg?logo=near&logoColor=black)](https://near.org)
