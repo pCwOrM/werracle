@@ -4,11 +4,11 @@
 
 # ⚡ Werracle: Sıfır-Bellekli On-Chain Yapay Zekâ ve Karar Oracle'ı
 
-[![EVM Devnet: Chain ID 4242](https://img.shields.io/badge/EVM%20Devnet-Chain%20ID%204242%20(api.answerr.me)-38bdf8.svg)](https://api.answerr.me:4431/werracle/status)
-[![API Dokümantasyonu](https://img.shields.io/badge/API%20Belgeleri-Canl%C4%B1%20Etkile%C5%9Fimli-10b981.svg)](https://pcworm.github.io/werracle/apidocs.html)
+[![EVM Devnet: Chain ID 4242](https://img.shields.io/badge/EVM%20Devnet-Chain%20ID%204242%20(api.answerr.me)-38bdf8.svg)](https://api.answerr.me/werracle/status)
+[![API Dokümantasyonu](https://img.shields.io/badge/API%20Belgeleri-Canl%C4%B1%20Etkile%C5%9Fimli-10b981.svg)](https://werracle.io/apidocs.html)
 [![Gecikme: < 12ms](https://img.shields.io/badge/Gecikme-%3C12ms%20RPC-brightgreen.svg)]()
 [![Lisans: BSL 1.1](https://img.shields.io/badge/Lisans-BSL%201.1-blue.svg)](./LICENSE)
-[![Canlı Portal: GitHub Pages](https://img.shields.io/badge/Canl%C4%B1%20Portal-GitHub%20Pages-38bdf8.svg?logo=github)](https://pcworm.github.io/werracle/)
+[![Canlı Portal: GitHub Pages](https://img.shields.io/badge/Canl%C4%B1%20Portal-GitHub%20Pages-38bdf8.svg?logo=github)](https://werracle.io/)
 [![1.000 Mühürlü Test: %100 Başarı](https://img.shields.io/badge/1.000%20Test-%25100%20M%C3%BCh%C3%BCrl%C3%BC%20ve%20Do%C4%9Frulanm%C4%B1%C5%9F-brightgreen.svg)](docs/TEST_1000_AUDIT_REPORT.md)
 [![Denetim: SHA--256 Mühürlü](https://img.shields.io/badge/Denetim-SHA--256%20M%C3%BCh%C3%BCrl%C3%BC-blueviolet.svg)](tests/sealed/SEAL_MANIFEST.json)
 [![GitHub Education: Community Exchange](https://img.shields.io/badge/GitHub%20Education-Community%20Exchange-2ea44f?logo=github&logoColor=white)](https://education.github.com/globalcampus/exchange)
@@ -19,9 +19,9 @@
 [![Cairo: 2.8+ (Sierra)](https://img.shields.io/badge/Starknet-Cairo%202.8%2B%20(Sierra)-ec796b.svg)](cairo/)
 [![Starknet Adım: ~1.420](https://img.shields.io/badge/CairoVM-~1.420%20Ad%C4%B1m%20(STARK--Native)-ec796b.svg)](docs/STARKNET_ARCHITECTURE_AND_SEED_GRANT_ROADMAP.md)
 [![Starknet DeFi: Ekubo Eklentisi](https://img.shields.io/badge/Starknet%20DeFi-Ekubo%20LVR%20Extension-blueviolet.svg)](cairo/src/ekubo_werracle_extension.cairo)
-[![EVM Gas: ~20k](https://img.shields.io/badge/EVM%20Gas-~20k%20(Kuru%C5%9F%20Mertebesinde)-brightgreen.svg)](https://pcworm.github.io/werracle/#simulator)
+[![EVM Gas: ~20k](https://img.shields.io/badge/EVM%20Gas-~20k%20(Kuru%C5%9F%20Mertebesinde)-brightgreen.svg)](https://werracle.io/#simulator)
 [![Model Boyutu: 0 Bayt](https://img.shields.io/badge/Model%20Boyutu-0%20Bayt%20VRAM-10b981.svg)]()
-[![Depolama: Tek bytes32 / felt252](https://img.shields.io/badge/Storage%20Slotu-Tek%20bytes32%20%7C%20felt252-purple.svg)](https://pcworm.github.io/werracle/#storage-slot)
+[![Depolama: Tek bytes32 / felt252](https://img.shields.io/badge/Storage%20Slotu-Tek%20bytes32%20%7C%20felt252-purple.svg)](https://werracle.io/#storage-slot)
 [![Patent Başvurusu](https://img.shields.io/badge/Patent%20Ba%C5%9Fvurusu-TR%202026%2F016285-red.svg)](https://epats.turkpatent.gov.tr)
 [![Ekosistem: WERR](https://img.shields.io/badge/Motor-WERR%20%C3%87ekirdek-emerald.svg)](https://github.com/pCwOrM/werr)
 [![Ekosistem: answerr](https://img.shields.io/badge/Platform-answerr-8b5cf6.svg)](https://github.com/pCwOrM/answerr)
@@ -43,7 +43,7 @@
 [![Makale: Kamera-Hazır PDF](https://img.shields.io/badge/Makale%20v2.0-Kamera--Haz%C4%B1r-emerald.svg)](https://arxiv.org/pdf/2609.30719)
 
 > 🌐 **Dil Seçici / Language Switcher:**  
-> **Türkçe (Varsayılan)** | [🇬🇧 English Documentation (README.md)](README.md) &bull; 🐺 [**Starknet (Cairo 2 / Sierra) Mimarisi ve Yol Haritası**](docs/STARKNET_ARCHITECTURE_AND_SEED_GRANT_ROADMAP.md) &bull; 🟢 [**NEAR Intents ve Aurora Mimarisi**](near/README.md) &bull; 📄 [**Resmi arXiv Makalesi (2609.30719)**](https://arxiv.org/abs/2609.30719) &bull; 🌐 [**Etkileşimli Web Simülatörü**](https://pcworm.github.io/werracle/) &bull; ⚡ [**Etkileşimli API Dokümanı**](https://pcworm.github.io/werracle/apidocs.html) &bull; 🎓 [**LEARN.md Eğitim Kılavuzu**](LEARN.md) &bull; 🛡️ [**1.000 Test Mühürlü Denetim Raporu**](docs/TEST_1000_AUDIT_REPORT.md) &bull; 📢 [**Hibe ve Duyuru Rehberi**](docs/WEB3_GRANT_AND_ANNOUNCEMENT_PLAYBOOK.md)
+> **Türkçe (Varsayılan)** | [🇬🇧 English Documentation (README.md)](README.md) &bull; 🐺 [**Starknet (Cairo 2 / Sierra) Mimarisi ve Yol Haritası**](docs/STARKNET_ARCHITECTURE_AND_SEED_GRANT_ROADMAP.md) &bull; 🟢 [**NEAR Intents ve Aurora Mimarisi**](near/README.md) &bull; 📄 [**Resmi arXiv Makalesi (2609.30719)**](https://arxiv.org/abs/2609.30719) &bull; 🌐 [**Etkileşimli Web Simülatörü**](https://werracle.io/) &bull; ⚡ [**Etkileşimli API Dokümanı**](https://werracle.io/apidocs.html) &bull; 🎓 [**LEARN.md Eğitim Kılavuzu**](LEARN.md) &bull; 🛡️ [**1.000 Test Mühürlü Denetim Raporu**](docs/TEST_1000_AUDIT_REPORT.md) &bull; 📢 [**Hibe ve Duyuru Rehberi**](docs/WEB3_GRANT_AND_ANNOUNCEMENT_PLAYBOOK.md)
 
 > **Hem Ethereum Sanal Makinesi (`EVM / Solidity`) hem de Starknet (`Cairo 2.x / Sierra`) içinde blok-içi (intra-block) düzeyde ve milisaniye-altı hızda çalışabilen ilk üretime hazır On-Chain AI Karar Oracle'ı.**  
 > *WERR prosedürel Mandelbrot kaçış dinamiği ile güçlendirilmiştir. Sıfır tensör matrisi. ZK-ML'den 1000 kat daha hızlı ve 15 kat daha ucuz — Starknet üzerinde %100 doğal STARK kanıt geçerliliği ile.*  
@@ -89,30 +89,30 @@ Werracle, yüksek performanslı özel donanım düğümümüz (`api.answerr.me`,
 
 * **Ağ Adı:** Werracle Devnet (Anvil EVM Sandbox)
 * **Chain ID:** `4242` &bull; **Blok Süresi:** `1.0s`
-* **Genel HTTPS JSON-RPC:** `https://api.answerr.me:4431/werracle/rpc`
-* **Gerçek Zamanlı REST Ağ Geçidi:** `https://api.answerr.me:4431/werracle/status`
-* **Canlı Etkileşimli Dokümantasyon:** [https://pcworm.github.io/werracle/apidocs.html](https://pcworm.github.io/werracle/apidocs.html)
+* **Genel HTTPS JSON-RPC:** `https://api.answerr.me/werracle/rpc`
+* **Gerçek Zamanlı REST Ağ Geçidi:** `https://api.answerr.me/werracle/status`
+* **Canlı Etkileşimli Dokümantasyon:** [https://werracle.io/apidocs.html](https://werracle.io/apidocs.html)
 
 ### Dağıtılmış Kontrat Kaydı (v2.0 ve v1.0 Tabanı):
 | Kontrat Adı | Bayt Kodu Adresi | Gas Kıyaslaması | Açıklama |
 | :--- | :--- | :--- | :--- |
-| **`WerracleTripodZMod9.sol`** | [`0x0a95887dBa2783E1E445bB4D3A9a1f7cB3152d04`](https://api.answerr.me:4431/werracle/status) | **22.557 gas** | **v2.0 Amiral Gemisi Çekirdeği**: Seyreltilmiş Çok Ölçekli Tripod ve $\mathbb{Z} \pmod 9$ Erken Kaçış |
+| **`WerracleTripodZMod9.sol`** | [`0x0a95887dBa2783E1E445bB4D3A9a1f7cB3152d04`](https://api.answerr.me/werracle/status) | **22.557 gas** | **v2.0 Amiral Gemisi Çekirdeği**: Seyreltilmiş Çok Ölçekli Tripod ve $\mathbb{Z} \pmod 9$ Erken Kaçış |
 | **`BlockchainResonanceMatrix.sol`** | Gömülü Baytkodu Kütüphanesi | **3.821 gas** | **v2.0 Anlamsal Matris**: 5 Sütunda 40 On-Chain Belirteç (0 SLOAD) |
-| **`Werracle.sol`** | [`0x5FbDB2315678afecb367f032d93F642f64180aa3`](https://api.answerr.me:4431/werracle/status) | **21.438 gas** | **v1.0 Kanonik Tabanı**: 16-noktalı Pareto mikro-ızgarası (arXiv / Zenodo referansı) |
-| **`WerracleFeeHook.sol`** | [`0xdef5Ad647Af159D27cd111007e4CCD1fDE9d4006`](https://api.answerr.me:4431/werracle/status) | **36.739 gas** | Uniswap v4 Dinamik Volatilite Ücret Kancası (Hook) |
+| **`Werracle.sol`** | [`0x5FbDB2315678afecb367f032d93F642f64180aa3`](https://api.answerr.me/werracle/status) | **21.438 gas** | **v1.0 Kanonik Tabanı**: 16-noktalı Pareto mikro-ızgarası (arXiv / Zenodo referansı) |
+| **`WerracleFeeHook.sol`** | [`0xdef5Ad647Af159D27cd111007e4CCD1fDE9d4006`](https://api.answerr.me/werracle/status) | **36.739 gas** | Uniswap v4 Dinamik Volatilite Ücret Kancası (Hook) |
 
 ### Canlı On-Chain Kararları Sorgulayın (15ms Altı):
 ```bash
 # 1. Devnet Durumunu ve Blok Yüksekliğini İnceleyin
-curl -s https://api.answerr.me:4431/werracle/status
+curl -s https://api.answerr.me/werracle/status
 
 # 2. Canlı On-Chain Oracle Refleksini (noul) Sorgulayın
-curl -s -X POST https://api.answerr.me:4431/werracle/oracle/noul \
+curl -s -X POST https://api.answerr.me/werracle/oracle/noul \
   -H "Content-Type: application/json" \
   -d '{"risk_score": 0.15}'
 
 # 3. Uniswap v4 Dinamik Ücret Kancasını (Hook) Sorgulayın
-curl -s -X POST https://api.answerr.me:4431/werracle/hook/fee \
+curl -s -X POST https://api.answerr.me/werracle/hook/fee \
   -H "Content-Type: application/json" \
   -d '{"imbalance_ratio": 0.35}'
 ```

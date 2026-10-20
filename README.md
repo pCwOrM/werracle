@@ -9,11 +9,11 @@
 [![SSRN: 7626279](https://img.shields.io/badge/SSRN-7626279-002f6c.svg?logo=elsevier)](https://ssrn.com/abstract=7626279)
 [![Zenodo DOI: 10.5281/zenodo.22942598](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.22942598-blue.svg)](https://doi.org/10.5281/zenodo.22942598)
 [![Paper: Zenodo v1.0](https://img.shields.io/badge/Preprint-Zenodo%20Record%2022942599-10b981.svg)](https://zenodo.org/records/22942599)
-[![EVM Devnet: Chain ID 4242](https://img.shields.io/badge/EVM%20Devnet-Chain%20ID%204242%20(api.answerr.me)-38bdf8.svg)](https://api.answerr.me:4431/werracle/status)
-[![API Docs: Live](https://img.shields.io/badge/API%20Docs-Live%20Interactive-10b981.svg)](https://pcworm.github.io/werracle/apidocs.html)
+[![EVM Devnet: Chain ID 4242](https://img.shields.io/badge/EVM%20Devnet-Chain%20ID%204242%20(api.answerr.me)-38bdf8.svg)](https://api.answerr.me/werracle/status)
+[![API Docs: Live](https://img.shields.io/badge/API%20Docs-Live%20Interactive-10b981.svg)](https://werracle.io/apidocs.html)
 [![Latency: < 12ms](https://img.shields.io/badge/Latency-%3C12ms%20RPC-brightgreen.svg)]()
 [![License: BSL 1.1](https://img.shields.io/badge/License-BSL%201.1-blue.svg)](./LICENSE)
-[![Live Portal: GitHub Pages](https://img.shields.io/badge/Live%20Portal-GitHub%20Pages-38bdf8.svg?logo=github)](https://pcworm.github.io/werracle/)
+[![Live Portal: GitHub Pages](https://img.shields.io/badge/Live%20Portal-GitHub%20Pages-38bdf8.svg?logo=github)](https://werracle.io/)
 [![1,000 Sealed Tests: 100% Pass](https://img.shields.io/badge/1%2C000%20Tests-100%25%20Sealed%20%26%20Verified-brightgreen.svg)](docs/TEST_1000_AUDIT_REPORT.md)
 [![Audit: SHA--256 Sealed](https://img.shields.io/badge/Audit-SHA--256%20Sealed-blueviolet.svg)](tests/sealed/SEAL_MANIFEST.json)
 [![GitHub Education: Community Exchange](https://img.shields.io/badge/GitHub%20Education-Community%20Exchange-2ea44f?logo=github&logoColor=white)](https://education.github.com/globalcampus/exchange)
@@ -26,9 +26,9 @@
 [![Aurora EVM](https://img.shields.io/badge/Aurora%20EVM-Chain%20ID%201313161555-78D64B.svg)](near/README.md)
 [![Starknet Steps: ~1,420](https://img.shields.io/badge/CairoVM-~1%2C420%20Steps%20(STARK--Native)-ec796b.svg)](docs/STARKNET_ARCHITECTURE_AND_SEED_GRANT_ROADMAP.md)
 [![Starknet DeFi: Ekubo Extension](https://img.shields.io/badge/Starknet%20DeFi-Ekubo%20LVR%20Extension-blueviolet.svg)](cairo/src/ekubo_werracle_extension.cairo)
-[![EVM Gas: ~20k](https://img.shields.io/badge/EVM%20Gas-~20k%20(Sub--Cent)-brightgreen.svg)](https://pcworm.github.io/werracle/#simulator)
+[![EVM Gas: ~20k](https://img.shields.io/badge/EVM%20Gas-~20k%20(Sub--Cent)-brightgreen.svg)](https://werracle.io/#simulator)
 [![Model Size: 0 Bytes](https://img.shields.io/badge/Model%20Size-0%20Bytes%20VRAM-10b981.svg)]()
-[![Seed: Single bytes32 / felt252](https://img.shields.io/badge/Storage%20Slot-Single%20bytes32%20%7C%20felt252-purple.svg)](https://pcworm.github.io/werracle/#storage-slot)
+[![Seed: Single bytes32 / felt252](https://img.shields.io/badge/Storage%20Slot-Single%20bytes32%20%7C%20felt252-purple.svg)](https://werracle.io/#storage-slot)
 [![Patent Pending](https://img.shields.io/badge/Patent%20Pending-TR%202026%2F016285-red.svg)](https://epats.turkpatent.gov.tr)
 [![Ecosystem: WERR](https://img.shields.io/badge/Engine-WERR%20Core-emerald.svg)](https://github.com/pCwOrM/werr)
 [![Ecosystem: answerr](https://img.shields.io/badge/Platform-answerr-8b5cf6.svg)](https://github.com/pCwOrM/answerr)
@@ -57,7 +57,7 @@
 > *Authors:* Volkan Dağlı, Dr. Zerrin Dağlı, Dağhan Dağlı &bull; *Zenodo Concept DOI:* [10.5281/zenodo.22942598](https://doi.org/10.5281/zenodo.22942598)
 
 > 🌐 **Language Switcher / Dil Seçici:**  
-> **English (Default)** | [🇹🇷 Türkçe Dokümantasyon (README_TR.md)](README_TR.md) &bull; 🐺 [**Starknet (Cairo 2 / Sierra) Architecture & Roadmap**](docs/STARKNET_ARCHITECTURE_AND_SEED_GRANT_ROADMAP.md) &bull; 🟢 [**NEAR Intents & Aurora Integration**](near/README.md) &bull; 🌐 [**Interactive Web Simulator**](https://pcworm.github.io/werracle/) &bull; ⚡ [**Interactive API Docs**](https://pcworm.github.io/werracle/apidocs.html) &bull; 🎓 [**LEARN.md Guide**](LEARN.md) &bull; 🛡️ [**1,000-Test Sealed Audit Report**](docs/TEST_1000_AUDIT_REPORT.md) &bull; 📢 [**Grant & Announcement Playbook**](docs/WEB3_GRANT_AND_ANNOUNCEMENT_PLAYBOOK.md)
+> **English (Default)** | [🇹🇷 Türkçe Dokümantasyon (README_TR.md)](README_TR.md) &bull; 🐺 [**Starknet (Cairo 2 / Sierra) Architecture & Roadmap**](docs/STARKNET_ARCHITECTURE_AND_SEED_GRANT_ROADMAP.md) &bull; 🟢 [**NEAR Intents & Aurora Integration**](near/README.md) &bull; 🌐 [**Interactive Web Simulator**](https://werracle.io/) &bull; ⚡ [**Interactive API Docs**](https://werracle.io/apidocs.html) &bull; 🎓 [**LEARN.md Guide**](LEARN.md) &bull; 🛡️ [**1,000-Test Sealed Audit Report**](docs/TEST_1000_AUDIT_REPORT.md) &bull; 📢 [**Grant & Announcement Playbook**](docs/WEB3_GRANT_AND_ANNOUNCEMENT_PLAYBOOK.md)
 
 
 > **The first production-grade On-Chain AI Decision Oracle capable of intra-block, sub-millisecond execution inside both EVM (`Solidity`) and Starknet (`Cairo 2.x / Sierra`) smart contracts.**  
@@ -103,30 +103,30 @@ Werracle is actively running live on our high-performance dedicated hardware nod
 
 * **Network Name:** Werracle Devnet (Anvil EVM Sandbox)
 * **Chain ID:** `4242` &bull; **Block Time:** `1.0s`
-* **Public HTTPS JSON-RPC:** `https://api.answerr.me:4431/werracle/rpc`
-* **Real-Time REST Gateway:** `https://api.answerr.me:4431/werracle/status`
-* **Live Interactive Documentation:** [https://pcworm.github.io/werracle/apidocs.html](https://pcworm.github.io/werracle/apidocs.html)
+* **Public HTTPS JSON-RPC:** `https://api.answerr.me/werracle/rpc`
+* **Real-Time REST Gateway:** `https://api.answerr.me/werracle/status`
+* **Live Interactive Documentation:** [https://werracle.io/apidocs.html](https://werracle.io/apidocs.html)
 
 ### Deployed Contract Registry (v2.0 & v1.0 Baseline):
 | Contract Name | Bytecode Address | Gas Benchmark | Description |
 | :--- | :--- | :--- | :--- |
-| **`WerracleTripodZMod9.sol`** | [`0x0a95887dBa2783E1E445bB4D3A9a1f7cB3152d04`](https://api.answerr.me:4431/werracle/status) | **22,557 gas** | **v2.0 Flagship Core**: Sparse Multi-Scale Harmonic Tripod & $\mathbb{Z} \pmod 9$ Early Escape |
+| **`WerracleTripodZMod9.sol`** | [`0x0a95887dBa2783E1E445bB4D3A9a1f7cB3152d04`](https://api.answerr.me/werracle/status) | **22,557 gas** | **v2.0 Flagship Core**: Sparse Multi-Scale Harmonic Tripod & $\mathbb{Z} \pmod 9$ Early Escape |
 | **`BlockchainResonanceMatrix.sol`** | Embedded Bytecode Library | **3,821 gas** | **v2.0 Semantic Matrix**: 40 On-Chain Tokens across 5 Pillars (0 SLOAD) |
-| **`Werracle.sol`** | [`0x5FbDB2315678afecb367f032d93F642f64180aa3`](https://api.answerr.me:4431/werracle/status) | **21,438 gas** | **v1.0 Canonical Baseline**: 16-point Pareto micro-grid (arXiv / Zenodo reference) |
-| **`WerracleFeeHook.sol`** | [`0xdef5Ad647Af159D27cd111007e4CCD1fDE9d4006`](https://api.answerr.me:4431/werracle/status) | **36,739 gas** | Uniswap v4 Dynamic Volatility Fee Governor Hook |
+| **`Werracle.sol`** | [`0x5FbDB2315678afecb367f032d93F642f64180aa3`](https://api.answerr.me/werracle/status) | **21,438 gas** | **v1.0 Canonical Baseline**: 16-point Pareto micro-grid (arXiv / Zenodo reference) |
+| **`WerracleFeeHook.sol`** | [`0xdef5Ad647Af159D27cd111007e4CCD1fDE9d4006`](https://api.answerr.me/werracle/status) | **36,739 gas** | Uniswap v4 Dynamic Volatility Fee Governor Hook |
 
 ### Query On-Chain Decisions Live (Sub-15ms):
 ```bash
 # 1. Inspect Devnet Status & Block Height
-curl -s https://api.answerr.me:4431/werracle/status
+curl -s https://api.answerr.me/werracle/status
 
 # 2. Query Live On-Chain Oracle Reflex (noul)
-curl -s -X POST https://api.answerr.me:4431/werracle/oracle/noul \
+curl -s -X POST https://api.answerr.me/werracle/oracle/noul \
   -H "Content-Type: application/json" \
   -d '{"risk_score": 0.15}'
 
 # 3. Query Uniswap v4 Dynamic Fee Hook
-curl -s -X POST https://api.answerr.me:4431/werracle/hook/fee \
+curl -s -X POST https://api.answerr.me/werracle/hook/fee \
   -H "Content-Type: application/json" \
   -d '{"imbalance_ratio": 0.35}'
 ```
