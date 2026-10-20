@@ -2,6 +2,7 @@
 
 [![arXiv: 2609.30719](https://img.shields.io/badge/arXiv-2609.30719-b31b1b.svg)](https://arxiv.org/abs/2609.30719)
 [![arXiv DOI: 10.48550/arXiv.2609.30719](https://img.shields.io/badge/DOI-10.48550%2FarXiv.2609.30719-b31b1b.svg)](https://doi.org/10.48550/arXiv.2609.30719)
+[![SSRN: 7626279](https://img.shields.io/badge/SSRN-7626279-002f6c.svg?logo=elsevier)](https://ssrn.com/abstract=7626279)
 [![Zenodo DOI: 10.5281/zenodo.22942598](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.22942598-blue.svg)](https://doi.org/10.5281/zenodo.22942598)
 [![Paper: Zenodo v1.0](https://img.shields.io/badge/Preprint-Zenodo%20Record%2022942599-10b981.svg)](https://zenodo.org/records/22942599)
 [![EVM Devnet: Chain ID 4242](https://img.shields.io/badge/EVM%20Devnet-Chain%20ID%204242%20(api.answerr.me)-38bdf8.svg)](https://api.answerr.me:4431/werracle/status)
@@ -45,9 +46,9 @@
 [![Zenodo DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.22939253-024dad.svg)](https://doi.org/10.5281/zenodo.22939253)
 [![Paper: Camera-Ready PDF](https://img.shields.io/badge/Paper%20v2.0-Camera--Ready-emerald.svg)](https://github.com/pCwOrM/werr/blob/main/paper/Universal_Fractal_Natural_Language_Decision_Map_CameraReady.pdf)
 
-> 📄 **Official Published arXiv Paper:** [arXiv:2609.30719 [cs.CR, cs.AI, cs.DC]](https://arxiv.org/abs/2609.30719) │ [Direct PDF](https://arxiv.org/pdf/2609.30719) │ DOI: [10.48550/arXiv.2609.30719](https://doi.org/10.48550/arXiv.2609.30719)  
+> 📄 **Official Published Paper:** [arXiv:2609.30719 [cs.CR, cs.AI, cs.DC]](https://arxiv.org/abs/2609.30719) │ [SSRN: 7626279 (Elsevier)](https://ssrn.com/abstract=7626279) │ [Direct PDF](https://arxiv.org/pdf/2609.30719) │ DOI: [10.48550/arXiv.2609.30719](https://doi.org/10.48550/arXiv.2609.30719)  
 > *Title:* "Werracle: Sub-Cent Intra-Block AI Reflex Oracles and Flash-Loan Circuit Breakers for EVM Smart Contracts"  
-> *Authors:* Volkan Dağlı, Zerrin Dağlı, Dağhan Dağlı &bull; *Zenodo Concept DOI:* [10.5281/zenodo.22942598](https://doi.org/10.5281/zenodo.22942598)
+> *Authors:* Volkan Dağlı, Dr. Zerrin Dağlı, Dağhan Dağlı &bull; *Zenodo Concept DOI:* [10.5281/zenodo.22942598](https://doi.org/10.5281/zenodo.22942598)
 
 > 🌐 **Language Switcher / Dil Seçici:**  
 > **English (Default)** | [🇹🇷 Türkçe Dokümantasyon (README_TR.md)](README_TR.md) &bull; 🐺 [**Starknet (Cairo 2 / Sierra) Architecture & Roadmap**](docs/STARKNET_ARCHITECTURE_AND_SEED_GRANT_ROADMAP.md) &bull; 🌐 [**Interactive Web Simulator**](https://pcworm.github.io/werracle/) &bull; ⚡ [**Interactive API Docs**](https://pcworm.github.io/werracle/apidocs.html) &bull; 🎓 [**LEARN.md Guide**](LEARN.md) &bull; 🛡️ [**1,000-Test Sealed Audit Report**](docs/TEST_1000_AUDIT_REPORT.md) &bull; 📢 [**Grant & Announcement Playbook**](docs/WEB3_GRANT_AND_ANNOUNCEMENT_PLAYBOOK.md)
@@ -316,6 +317,16 @@ If you utilize Werracle or the underlying WERR fractal System-One decision engin
   note          = {CERN Zenodo: 10.5281/zenodo.22942598. TÜRKPATENT Priority: TR 2026/016285.}
 }
 
+
+@article{dagli2026werracle_ssrn,
+  title         = {Werracle: Sub-Cent Intra-Block AI Reflex Oracles and Flash-Loan Circuit Breakers for EVM Smart Contracts},
+  author        = {Da{\u{g}}l{\i}, Volkan and Da{\u{g}}l{\i}, Zerrin and Da{\u{g}}l{\i}, Da{\u{g}}han},
+  journal       = {Elsevier SSRN Electronic Journal},
+  year          = {2026},
+  month         = {October},
+  note          = {SSRN Abstract ID: 7626279},
+  url           = {https://ssrn.com/abstract=7626279}
+}
 @software{werracle2026,
   author        = {Volkan Dağlı},
   title         = {Werracle: Zero-Storage On-Chain AI Decision Oracle for EVM Smart Contracts},

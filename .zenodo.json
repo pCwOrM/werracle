@@ -66,6 +66,12 @@
       "scheme": "url"
     },
     {
+      "identifier": "https://ssrn.com/abstract=7626279",
+      "relation": "isIdenticalTo",
+      "resource_type": "publication-preprint",
+      "scheme": "url"
+    },
+    {
       "identifier": "https://github.com/pCwOrM/werr",
       "relation": "isSupplementedBy",
       "resource_type": "software",

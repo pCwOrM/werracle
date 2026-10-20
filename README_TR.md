@@ -27,6 +27,7 @@
 [![WerrSoma Portalı](https://img.shields.io/badge/WerrSoma%20Portal-werrsoma.answerr.me-00f0ff.svg)](https://werrsoma.answerr.me/)
 [![Ekosistem: WERRobotics](https://img.shields.io/badge/WERRobotics-Arduino%20%26%20Edge%20AI-ff9100.svg?logo=arduino&logoColor=white)](https://github.com/pCwOrM/WERRobotics)
 [![arXiv: 2609.30719 (Werracle)](https://img.shields.io/badge/arXiv-2609.30719%20%5Bcs.CR%5D-b31b1b.svg)](https://arxiv.org/abs/2609.30719)
+[![SSRN: 7626279](https://img.shields.io/badge/SSRN-7626279-002f6c.svg?logo=elsevier)](https://ssrn.com/abstract=7626279)
 [![arXiv DOI: 10.48550/arXiv.2609.30719](https://img.shields.io/badge/arXiv%20DOI-10.48550%2FarXiv.2609.30719-b31b1b.svg)](https://doi.org/10.48550/arXiv.2609.30719)
 [![arXiv: 2609.25498 (WERR)](https://img.shields.io/badge/arXiv-2609.25498%20%5Bcs.AI%5D-b31b1b.svg)](https://arxiv.org/abs/2609.25498)
 [![Lean 4 Formel İspat: Zenodo 22974544](https://img.shields.io/badge/Paper%205%20DOI-10.5281%2Fzenodo.22974544-024dad.svg)](https://doi.org/10.5281/zenodo.22974544)
@@ -40,7 +41,7 @@
 
 > **Hem Ethereum Sanal Makinesi (`EVM / Solidity`) hem de Starknet (`Cairo 2.x / Sierra`) içinde blok-içi (intra-block) düzeyde ve milisaniye-altı hızda çalışabilen ilk üretime hazır On-Chain AI Karar Oracle'ı.**  
 > *WERR prosedürel Mandelbrot kaçış dinamiği ile güçlendirilmiştir. Sıfır tensör matrisi. ZK-ML'den 1000 kat daha hızlı ve 15 kat daha ucuz — Starknet üzerinde %100 doğal STARK kanıt geçerliliği ile.*  
-> 📄 **Resmi Yayın:** *"Werracle: Sub-Cent Intra-Block AI Reflex Oracles and Flash-Loan Circuit Breakers for EVM Smart Contracts"* — [**arXiv:2609.30719 [cs.CR, cs.AI, cs.DC]**](https://arxiv.org/abs/2609.30719) | DOI: [`10.48550/arXiv.2609.30719`](https://doi.org/10.48550/arXiv.2609.30719) | Zenodo: [`10.5281/zenodo.22942598`](https://doi.org/10.5281/zenodo.22942598)
+> 📄 **Resmi Yayın:** *"Werracle: Sub-Cent Intra-Block AI Reflex Oracles and Flash-Loan Circuit Breakers for EVM Smart Contracts"* — [**arXiv:2609.30719 [cs.CR, cs.AI, cs.DC]**](https://arxiv.org/abs/2609.30719) │ [**SSRN: 7626279 (Elsevier)**](https://ssrn.com/abstract=7626279) | DOI: [`10.48550/arXiv.2609.30719`](https://doi.org/10.48550/arXiv.2609.30719) | Zenodo: [`10.5281/zenodo.22942598`](https://doi.org/10.5281/zenodo.22942598)
 
 <p align="center">
   <img src="assets/twitter_lean4_tesla_gauntlet.png" alt="Werracle Lean 4 Formel Doğrulama & Tesla 3-6-9 Harmonikleri" width="100%">
@@ -252,6 +253,16 @@ Werracle'ı veya temelindeki WERR fraktal Sistem-1 karar motorunu Web3 araştır
   note          = {Zenodo Archive: 10.5281/zenodo.22942598. TÜRKPATENT Priority: TR 2026/016285}
 }
 
+
+@article{dagli2026werracle_ssrn,
+  title         = {Werracle: Sub-Cent Intra-Block AI Reflex Oracles and Flash-Loan Circuit Breakers for EVM Smart Contracts},
+  author        = {Da{\u{g}}l{\i}, Volkan and Da{\u{g}}l{\i}, Zerrin and Da{\u{g}}l{\i}, Da{\u{g}}han},
+  journal       = {Elsevier SSRN Electronic Journal},
+  year          = {2026},
+  month         = {October},
+  note          = {SSRN Abstract ID: 7626279},
+  url           = {https://ssrn.com/abstract=7626279}
+}
 @article{dagli2026fractalmap,
   author        = {Volkan Dağlı and Zerrin Dağlı and Dağhan Dağlı},
   title         = {Universal Fractal Natural Language Decision Map: Real-Time Edge Triage Across Heterogeneous Domains},
