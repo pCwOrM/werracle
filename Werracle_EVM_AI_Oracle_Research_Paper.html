@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Werracle: Sub-Cent Intra-Block AI Reflex Oracles and Flash-Loan Circuit Breakers for EVM Smart Contracts</title>
 <script>
 window.MathJax = {
@@ -175,6 +176,23 @@ window.MathJax = {
   ol.refs li {
     margin-bottom: 3.5px;
     text-align: justify;
+  }
+
+  /* screen-only reading layout (print/PDF layout above is unchanged) */
+  @media screen {
+    body { max-width: 980px; margin: 0 auto; padding: 24px 28px; box-sizing: border-box; }
+  }
+  @media screen and (max-width: 760px) {
+    body { font-size: 15.5px; line-height: 1.6; padding: 16px; }
+    h1.title { font-size: 22px; line-height: 1.25; }
+    .columns { column-count: 1; }
+    .abstract-box { font-size: 15px; }
+    table.data-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 13px; }
+    img, figure img { max-width: 100%; height: auto; }
+    mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; max-width: 100%; }
+    pre, code { white-space: pre-wrap; word-break: break-word; }
+    mjx-container { max-width: 100%; overflow-x: auto; overflow-y: hidden; vertical-align: middle; }
+    mjx-container:not([display="true"]) { display: inline-block; }
   }
 </style>
 </head>

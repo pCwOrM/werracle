@@ -12,7 +12,7 @@ Günümüz DeFi protokolleri ve otonom yapay zekâ ajanları çözümsüz bir ik
 - **ZK-ML (Sıfır Bilgi Kanıtlı ML):** Zincir dışında kanıt üretmek 10 ila 300 saniye sürer ve zincirde doğrulaması ~350.000 gaza mal olur. Kanıt zincire ulaştığında flash-loan saldırganı havuzu çoktan boşaltmıştır.
 - **Zincir Dışı Kâhinler (Chainlink/API):** Merkezi hata noktalarıdır; gecikme arbitrajına ve önden koşmaya (front-running) açıktır.
 
-**Çözüm:** **Werracle**, tescilli ve patentli **WERR™ Çekirdeği** ile tüm bir karar modelini **tek bir 32 baytlık EVM depolama hücresine** sıkıştırır. Milisaniyenin altında, soruyu soran aynı işlem içinde **~19.400 gaz** ile (ZK-ML'den %99,8 daha ucuz, basit bir token transferinden daha tasarruflu) karar üretir. **Harici sunucu yok, dış anahtar yok, veri sızıntısı yok.**
+**Çözüm:** **Werracle**, tescilli ve patent başvurusu yapılmış **WERR™ Çekirdeği** ile tüm bir karar modelini **tek bir 32 baytlık EVM depolama hücresine** sıkıştırır. Milisaniyenin altında, soruyu soran aynı işlem içinde **~19.400 gaz** ile (ZK-ML doğrulamasından yaklaşık 18 kat az gaz, kabaca bir ERC-20 transferi kadar) karar üretir. **Harici sunucu yok, dış anahtar yok, veri sızıntısı yok.**
 
 ---
 
@@ -26,7 +26,7 @@ Tıpkı Coca-Cola'nın gizli formülü veya bir Intel işlemci gibi, Werracle pr
 | **Flash-Loan Savunması** | ❌ İmkânsız (Geç gelir) | ❌ İspat çok geç gelir | **✅ İşlem İçinde Atomik Revert** |
 | **Zincir Üstü Ayak İzi** | Harici RPC Düğümleri | Kilobaytlarca ispat anahtarı | **Tek 32 Baytlık Slot** |
 | **Biçimsel Doğrulama** | Yok | Yalnızca devre | **40 Lean 4 Teoremi (0 Sorry)** |
-| **Gizlilik / Telemetri** | Yüksek sızıntı (API logları) | Ara durumlar sızar | **%100 Yalıtılmış Sıfır Sızıntı** |
+| **Gizlilik / Telemetri** | Yüksek sızıntı (API logları) | Ara durumlar sızar | **Zincir dışı çağrı ya da API logu yok** |
 
 ---
 
