@@ -26,6 +26,9 @@ identifiers:
   - type: doi
     value: "10.5281/zenodo.22942598"
     description: "The CERN Zenodo replication archive DOI"
+  - type: url
+    value: "https://ssrn.com/abstract=7626279"
+    description: "The Elsevier SSRN eLibrary Paper (SSRN Abstract 7626279)"
 keywords:
   - "on-chain ai"
   - "evm smart contracts"

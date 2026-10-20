@@ -6,7 +6,7 @@
 ## 1. Project Overview
 * **Project Name:** Werracle (Zero-Storage STARK-Native & EVM On-Chain AI Decision Oracle)
 * **Lead Applicant:** Volkan Dağlı (ORCID: [0009-0000-1587-8703](https://orcid.org/0009-0000-1587-8703), GitHub: [`@pCwOrM`](https://github.com/pCwOrM))
-* **Co-Researchers:** Zerrin Dağlı (ORCID: [0000-0001-9490-6425](https://orcid.org/0000-0001-9490-6425)), Dağhan Dağlı (ORCID: [0009-0003-2492-8313](https://orcid.org/0009-0003-2492-8313))
+* **Co-Researchers:** Dr. Zerrin Dağlı (ORCID: [0000-0001-9490-6425](https://orcid.org/0000-0001-9490-6425)), Dağhan Dağlı (ORCID: [0009-0003-2492-8313](https://orcid.org/0009-0003-2492-8313))
 * **Repository:** `https://github.com/pCwOrM/werracle`
 * **Starknet Architecture Dossier:** [`docs/STARKNET_ARCHITECTURE_AND_SEED_GRANT_ROADMAP.md`](STARKNET_ARCHITECTURE_AND_SEED_GRANT_ROADMAP.md)
 * **Requested Amount:** $25,000 – $50,000 (Equity-Free Development Grant)
