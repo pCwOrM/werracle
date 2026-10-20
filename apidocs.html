@@ -284,11 +284,11 @@
     <div class="endpoint-card">
       <div class="endpoint-header">
         <span class="badge badge-get">GET</span>
-        <span class="endpoint-url">https://api.answerr.me:4431/werracle/status</span>
+        <span class="endpoint-url">https://api.answerr.me/werracle/status</span>
       </div>
       <p style="color:var(--text-muted); font-size:0.9rem;">Returns real-time status of the Anvil EVM node, current block number, active contract addresses, and gas benchmark metrics.</p>
 
-      <pre><code>curl -s https://api.answerr.me:4431/werracle/status</code></pre>
+      <pre><code>curl -s https://api.answerr.me/werracle/status</code></pre>
 
       <div class="try-box">
         <button class="btn-try" onclick="testEndpoint('status')">⚡ Execute Live Test</button>
@@ -300,11 +300,11 @@
     <div class="endpoint-card">
       <div class="endpoint-header">
         <span class="badge badge-post">POST</span>
-        <span class="endpoint-url">https://api.answerr.me:4431/werracle/oracle/noul</span>
+        <span class="endpoint-url">https://api.answerr.me/werracle/oracle/noul</span>
       </div>
       <p style="color:var(--text-muted); font-size:0.9rem;">Invokes the <code>decideNoul(bytes32 stateHash, int64 riskScoreFP)</code> function directly on the deployed <code>Werracle.sol</code> contract via intra-block EVM simulation. Returns permission boolean, basis points confidence, gas consumed (~21k gas), and block height.</p>
 
-      <pre><code>curl -s -X POST https://api.answerr.me:4431/werracle/oracle/noul \
+      <pre><code>curl -s -X POST https://api.answerr.me/werracle/oracle/noul \
   -H "Content-Type: application/json" \
   -d '{"risk_score": -0.25}'</code></pre>
 
@@ -322,11 +322,11 @@
     <div class="endpoint-card">
       <div class="endpoint-header">
         <span class="badge badge-post">POST</span>
-        <span class="endpoint-url">https://api.answerr.me:4431/werracle/hook/fee</span>
+        <span class="endpoint-url">https://api.answerr.me/werracle/hook/fee</span>
       </div>
       <p style="color:var(--text-muted); font-size:0.9rem;">Calls <code>calculateDynamicFee(bytes32 poolId, int64 imbalanceSignalFP)</code> on <code>WerracleFeeHook.sol</code> to calculate dynamic LP fee pips (500 to 5000 pips) based on pool volatility.</p>
 
-      <pre><code>curl -s -X POST https://api.answerr.me:4431/werracle/hook/fee \
+      <pre><code>curl -s -X POST https://api.answerr.me/werracle/hook/fee \
   -H "Content-Type: application/json" \
   -d '{"imbalance_ratio": 0.35}'</code></pre>
 
@@ -340,11 +340,11 @@
     <div class="endpoint-card">
       <div class="endpoint-header">
         <span class="badge badge-post">POST</span>
-        <span class="endpoint-url">https://api.answerr.me:4431/werracle/rpc</span>
+        <span class="endpoint-url">https://api.answerr.me/werracle/rpc</span>
       </div>
       <p style="color:var(--text-muted); font-size:0.9rem;">Standard Ethereum JSON-RPC pass-through endpoint. Compatible with Ethers.js, Web3.py, Foundry cast, and MetaMask.</p>
 
-      <pre><code>curl -s -X POST https://api.answerr.me:4431/werracle/rpc \
+      <pre><code>curl -s -X POST https://api.answerr.me/werracle/rpc \
   -H "Content-Type: application/json" \
   -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}'</code></pre>
     </div>
@@ -387,9 +387,9 @@
       if (type === 'status') {
         const el = document.getElementById('res-status');
         el.style.display = 'block';
-        el.textContent = 'Querying https://api.answerr.me:4431/werracle/status...';
+        el.textContent = 'Querying https://api.answerr.me/werracle/status...';
         try {
-          const res = await fetch('https://api.answerr.me:4431/werracle/status', {
+          const res = await fetch('https://api.answerr.me/werracle/status', {
             headers: token ? { 'X-Recaptcha-Token': token } : {}
           });
           const data = await res.json();
@@ -403,7 +403,7 @@
         const risk = parseFloat(document.getElementById('inputRisk').value);
         el.textContent = 'Calling decideNoul on-chain...';
         try {
-          const res = await fetch('https://api.answerr.me:4431/werracle/oracle/noul', {
+          const res = await fetch('https://api.answerr.me/werracle/oracle/noul', {
             method: 'POST',
             headers: headers,
             body: JSON.stringify({risk_score: risk})
@@ -418,7 +418,7 @@
         el.style.display = 'block';
         el.textContent = 'Calling calculateDynamicFee on-chain...';
         try {
-          const res = await fetch('https://api.answerr.me:4431/werracle/hook/fee', {
+          const res = await fetch('https://api.answerr.me/werracle/hook/fee', {
             method: 'POST',
             headers: headers,
             body: JSON.stringify({imbalance_ratio: 0.35})

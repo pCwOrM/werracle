@@ -71,5 +71,5 @@ require(allowed, "Werracle: Dusmanca islem deseni engellendi");
 ### 6. İletişim ve Araştırma Kayıtları
 - **Baş Geliştirici:** pcworm.near / Volkan Dağlı (`pcworm@pcworm.net`, `vdagli@itouch.com.tr`)
 - **Kurum:** ITOUCH Bilişim Sistemleri Ltd. Şti. (Çukurova Teknokent, Adana, Türkiye)
-- **Resmi Web Sitesi:** [https://pcworm.github.io/werracle/](https://pcworm.github.io/werracle/)
+- **Resmi Web Sitesi:** [https://werracle.io/](https://werracle.io/)
 - **Akademik Kayıtlar:** arXiv:2609.30719 | SSRN:7626279 | Zenodo DOI: 10.5281/zenodo.22942598 | Hugging Face: papers/2609.30719

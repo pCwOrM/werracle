@@ -71,5 +71,5 @@ require(allowed, "Werracle: Hostile transaction pattern vetoed");
 ### 6. Contact & Research Records
 - **Lead Builder:** pcworm.near / Volkan Dagli (`pcworm@pcworm.net`, `vdagli@itouch.com.tr`)
 - **Institution:** ITOUCH Bilişim Sistemleri Ltd. Şti. (Çukurova Teknokent, Adana, Türkiye)
-- **Official Portal:** [https://pcworm.github.io/werracle/](https://pcworm.github.io/werracle/)
+- **Official Portal:** [https://werracle.io/](https://werracle.io/)
 - **Academic Records:** arXiv:2609.30719 | SSRN:7626279 | Zenodo DOI: 10.5281/zenodo.22942598 | Hugging Face: papers/2609.30719
