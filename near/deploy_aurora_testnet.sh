@@ -20,16 +20,22 @@ if [ -z "$AURORA_PRIVATE_KEY" ]; then
     exit 0
 fi
 
+RECIPIENT_ADDR=${AURORA_FEE_RECIPIENT:-"0x89D689A469210ef708420294B332b586d00371aF"}
+
 echo "🚀 Broadcasting Werracle.sol deployment..."
 forge create contracts/Werracle.sol:Werracle \
     --rpc-url "$AURORA_TESTNET_RPC" \
     --private-key "$AURORA_PRIVATE_KEY" \
-    --legacy
+    --legacy \
+    --broadcast \
+    --constructor-args "$RECIPIENT_ADDR" 0
 
 echo "🚀 Broadcasting WerracleTripodZMod9.sol deployment..."
 forge create contracts/WerracleTripodZMod9.sol:WerracleTripodZMod9 \
     --rpc-url "$AURORA_TESTNET_RPC" \
     --private-key "$AURORA_PRIVATE_KEY" \
-    --legacy
+    --legacy \
+    --broadcast \
+    --constructor-args "$RECIPIENT_ADDR" 0
 
 echo "✅ Aurora Testnet Deployment Complete!"

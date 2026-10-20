@@ -60,11 +60,14 @@ However, cross-chain execution creates a catastrophic vulnerability: **Intra-Blo
 * **Network:** Aurora Testnet (Chain ID `1313161555`)
 * **RPC Endpoint:** `https://testnet.aurora.dev`
 * **Explorer:** [https://explorer.testnet.aurora.dev](https://explorer.testnet.aurora.dev)
-* **Lead Builder & NEAR Account:** `pcworm.near`
-* **Core Contracts:**
-  * `Werracle.sol` (v1.0 Canonical 16-point Pareto Baseline)
-  * `WerracleTripodZMod9.sol` (v2.0 Sparse Harmonic Tripod with \(Z/9Z\) early escape)
-  * `WerracleFeeHook.sol` (Uniswap v4 chaos-adaptive dynamic volatility fee governor)
+* **Lead Builder & Sovereign NEAR Account:** `pcworm.near`
+* **Deployer EVM Address:** [`0x89D689A469210ef708420294B332b586d00371aF`](https://explorer.testnet.aurora.dev/address/0x89D689A469210ef708420294B332b586d00371aF)
+
+### 📜 Verified On-Chain Deployments:
+| Contract | Description | Aurora Testnet Contract Address | Deployment Tx Hash |
+| :--- | :--- | :--- | :--- |
+| **`Werracle.sol`** | Canonical v1.0 Pareto Oracle (16-point) | [`0x4085673F1e45bf26682CA704b2d09C03d1212cd4`](https://explorer.testnet.aurora.dev/address/0x4085673F1e45bf26682CA704b2d09C03d1212cd4) | [`0xe5e6c64...`](https://explorer.testnet.aurora.dev/tx/0xe5e6c64208f874d7a71271dec17ff9ed33dc79cce5f6c856584ed6ef15f895c9) |
+| **`WerracleTripodZMod9.sol`** | Multi-Scale Sparse Tripod with $\mathbb{Z}/9\mathbb{Z}$ Lean 4 Dynamics | [`0x1d7Ae9E1dDDA805539d9e225425804Ef8B9caBaF`](https://explorer.testnet.aurora.dev/address/0x1d7Ae9E1dDDA805539d9e225425804Ef8B9caBaF) | [`0x67ccad9...`](https://explorer.testnet.aurora.dev/tx/0x67ccad988e467cd5257d0c83d9e9606cd112f86c83a6d4d710fd05a415eaea13) |
 
 ---
 
