@@ -69,7 +69,7 @@
     /* Header Nav */
     header {
       border-bottom: 1px solid var(--border-color);
-      background: rgba(6, 9, 19, 0.92);
+      background: rgba(6, 9, 19, 0.94);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       position: sticky;
@@ -83,6 +83,7 @@
       justify-content: space-between;
       align-items: center;
       height: 100%;
+      gap: 16px;
     }
     .logo {
       display: flex;
@@ -105,25 +106,121 @@
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
-    .nav-right-group {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
     .nav-links {
       display: flex;
-      gap: 18px;
+      gap: 8px;
       align-items: center;
     }
     .nav-link {
       color: var(--text-muted);
       text-decoration: none;
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       font-weight: 500;
-      transition: color 0.2s;
+      padding: 6px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
       white-space: nowrap;
     }
-    .nav-link:hover { color: var(--cyan); }
+    .nav-link:hover {
+      color: var(--cyan);
+      background: rgba(56, 189, 248, 0.08);
+    }
+    .nav-link.nav-link-near {
+      background: rgba(0, 236, 151, 0.12);
+      border: 1px solid rgba(0, 236, 151, 0.4);
+      color: var(--near-green) !important;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-weight: 600;
+    }
+    .nav-link.nav-link-near:hover {
+      background: rgba(0, 236, 151, 0.22);
+      box-shadow: 0 0 12px rgba(0, 236, 151, 0.3);
+    }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    /* Desktop Research Dropdown */
+    .nav-dropdown {
+      position: relative;
+    }
+    .btn-dropdown {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      min-height: 36px;
+    }
+    .nav-dropdown:hover .btn-dropdown, .btn-dropdown:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+    }
+    .dropdown-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      background: rgba(12, 18, 34, 0.98);
+      border: 1px solid var(--border-accent);
+      border-radius: 12px;
+      padding: 8px;
+      min-width: 250px;
+      box-shadow: 0 14px 35px rgba(0,0,0,0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      z-index: 120;
+    }
+    .nav-dropdown:hover .dropdown-menu, .nav-dropdown:focus-within .dropdown-menu, .nav-dropdown.active .dropdown-menu {
+      display: flex;
+      animation: fadeInMenu 0.18s ease-out forwards;
+    }
+    .dropdown-item {
+      padding: 10px 14px;
+      border-radius: 8px;
+      color: var(--text-main);
+      text-decoration: none;
+      font-size: 0.85rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      transition: background 0.15s;
+    }
+    .dropdown-item:hover {
+      background: rgba(56, 189, 248, 0.12);
+    }
+    .btn-icon-gh {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+    .btn-icon-gh:hover {
+      color: #fff;
+      border-color: var(--cyan);
+      background: rgba(56, 189, 248, 0.1);
+    }
+
     .btn-lang {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
@@ -135,7 +232,7 @@
       font-family: var(--font-mono);
       font-weight: 600;
       transition: all 0.2s;
-      min-height: 38px;
+      min-height: 36px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -151,8 +248,8 @@
       background: var(--bg-card);
       border: 1px solid var(--border-color);
       border-radius: 8px;
-      width: 42px;
-      height: 42px;
+      width: 40px;
+      height: 40px;
       cursor: pointer;
       padding: 8px;
       flex-direction: column;
@@ -179,10 +276,12 @@
       transform: translateY(-7px) rotate(-45deg);
     }
 
-    /* Mobile Menu Drawer */
-    @media (max-width: 960px) {
+    /* Mobile/Tablet Drawer (Activated on <= 1140px to prevent any clipping) */
+    @media (max-width: 1140px) {
       header { height: 64px; }
       .nav-toggle { display: flex; }
+      .nav-dropdown { display: none; }
+      .btn-icon-gh { display: none; }
       .nav-links {
         display: none;
         position: fixed;
@@ -195,7 +294,7 @@
         -webkit-backdrop-filter: blur(20px);
         flex-direction: column;
         align-items: flex-start;
-        padding: 24px 24px 40px;
+        padding: 24px 20px 40px;
         gap: 0;
         overflow-y: auto;
         border-top: 1px solid var(--border-color);
@@ -207,13 +306,23 @@
       }
       .nav-link {
         font-size: 1.05rem;
-        padding: 16px 0;
+        padding: 16px 8px;
         width: 100%;
         border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         display: flex;
         align-items: center;
         justify-content: space-between;
+        border-radius: 0;
       }
+      .mobile-only-links {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin-top: 12px;
+      }
+    }
+    @media (min-width: 1141px) {
+      .mobile-only-links { display: none; }
     }
     @keyframes fadeInMenu {
       from { opacity: 0; transform: translateY(-8px); }
@@ -794,32 +903,64 @@
   <header>
     <div class="container nav-inner">
       <a href="#" class="logo">
-        <img src="assets/werracle_logo_oracle_trans.svg" alt="Werracle Logo" width="34" height="34" style="filter: drop-shadow(0 0 10px rgba(56,189,248,0.5));" />
+        <img src="assets/werracle_logo_oracle.png" alt="Werracle Logo" width="34" height="34" style="filter: drop-shadow(0 0 10px rgba(56,189,248,0.5)); border-radius: 6px;" />
         <span>Werracle</span>
         <span class="logo-badge">EVM AI</span>
       </a>
 
-      <div class="nav-right-group">
+      <!-- Center Desktop Navigation -->
+      <nav class="nav-links" id="navMenu">
+        <a href="#simulator" class="nav-link" data-en="⚡ Simulator" data-tr="⚡ Simülatör">⚡ Simulator</a>
+        <a href="#benchmark" class="nav-link" data-en="📊 Benchmarks" data-tr="📊 Kıyaslama">📊 Benchmarks</a>
+        <a href="#storage-slot" class="nav-link" data-en="🧩 32-Byte Slot" data-tr="🧩 32-Bayt Slot">🧩 32-Byte Slot</a>
+        <a href="#defi-defense" class="nav-link" data-en="🛡️ DeFi Defense" data-tr="🛡️ DeFi Savunması">🛡️ DeFi Defense</a>
+        <a href="#near-aurora" class="nav-link nav-link-near" data-en="🟢 NEAR & Aurora" data-tr="🟢 NEAR ve Aurora">🟢 NEAR & Aurora</a>
+        <a href="#contracts" class="nav-link" data-en="📄 Contracts" data-tr="📄 Kontratlar">📄 Contracts</a>
+
+        <!-- Visible only in Mobile Drawer -->
+        <div class="mobile-only-links">
+          <a href="https://arxiv.org/abs/2609.30719" target="_blank" class="nav-link" style="color:#f43f5e;">📄 arXiv:2609.30719 [cs.CR] ↗</a>
+          <a href="https://ssrn.com/abstract=7626279" target="_blank" class="nav-link" style="color:#38bdf8;">📄 SSRN:7626279 (Elsevier) ↗</a>
+          <a href="apidocs.html" class="nav-link" data-en="📚 API Documentation" data-tr="📚 API Dokümantasyonu">📚 API Documentation</a>
+          <a href="https://github.com/pCwOrM/werracle" target="_blank" class="nav-link">⭐ GitHub Repository ↗</a>
+        </div>
+      </nav>
+
+      <!-- Right Action Group -->
+      <div class="nav-actions">
+        <!-- Desktop Research Dropdown -->
+        <div class="nav-dropdown" id="researchDropdown">
+          <button class="btn-dropdown" aria-haspopup="true">
+            <span data-en="Research ▾" data-tr="Araştırma ▾">Research ▾</span>
+          </button>
+          <div class="dropdown-menu">
+            <a href="https://arxiv.org/abs/2609.30719" target="_blank" class="dropdown-item">
+              <span style="color:#f43f5e; font-weight:700;">📄 arXiv:2609.30719 ↗</span>
+              <small style="color:var(--text-muted); font-size:0.75rem;">cs.CR, cs.AI, cs.DC Preprint</small>
+            </a>
+            <a href="https://ssrn.com/abstract=7626279" target="_blank" class="dropdown-item">
+              <span style="color:#38bdf8; font-weight:700;">📄 SSRN:7626279 ↗</span>
+              <small style="color:var(--text-muted); font-size:0.75rem;">Elsevier Journal Record</small>
+            </a>
+            <a href="apidocs.html" class="dropdown-item">
+              <span style="color:var(--emerald); font-weight:700;" data-en="📚 API Documentation" data-tr="📚 API Belgeleri">📚 API Documentation</span>
+              <small style="color:var(--text-muted); font-size:0.75rem;">Interactive Swagger & REST Node</small>
+            </a>
+          </div>
+        </div>
+
+        <a href="https://github.com/pCwOrM/werracle" target="_blank" class="btn-icon-gh" title="GitHub Repository">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        </a>
+
         <button id="langToggle" class="btn-lang" title="Toggle Language">TR</button>
+
         <button class="nav-toggle" id="navToggle" aria-label="Toggle Navigation Menu">
           <span></span>
           <span></span>
           <span></span>
         </button>
       </div>
-
-      <nav class="nav-links" id="navMenu">
-        <a href="#simulator" class="nav-link" data-en="⚡ Simulator" data-tr="⚡ Simülatör">⚡ Simulator</a>
-        <a href="#benchmark" class="nav-link" data-en="📊 Benchmarks" data-tr="📊 Karşılaştırma">📊 Benchmarks</a>
-        <a href="#storage-slot" class="nav-link" data-en="🧩 32-Byte Slot" data-tr="🧩 32-Bayt Slot">🧩 32-Byte Slot</a>
-        <a href="#defi-defense" class="nav-link" data-en="🛡️ DeFi Defense" data-tr="🛡️ DeFi Savunması">🛡️ DeFi Defense</a>
-        <a href="#near-aurora" class="nav-link" style="color:var(--near-green); font-weight:700;" data-en="🟢 NEAR & Aurora" data-tr="🟢 NEAR ve Aurora">🟢 NEAR & Aurora</a>
-        <a href="#contracts" class="nav-link" data-en="📄 Contracts" data-tr="📄 Kontratlar">📄 Contracts</a>
-        <a href="apidocs.html" class="nav-link" data-en="API Docs" data-tr="API Belgeleri">API Docs</a>
-        <a href="https://arxiv.org/abs/2609.30719" target="_blank" class="nav-link" style="color:#f43f5e; font-weight:600;">arXiv:2609.30719 ↗</a>
-        <a href="https://ssrn.com/abstract=7626279" target="_blank" class="nav-link" style="color:#38bdf8; font-weight:600;">SSRN:7626279 ↗</a>
-        <a href="https://github.com/pCwOrM/werracle" target="_blank" class="nav-link" style="font-weight:600;">GitHub ↗</a>
-      </nav>
     </div>
   </header>
 
@@ -1429,6 +1570,19 @@ contract ProtectedDeFiProtocol {
           navToggle.classList.remove('active');
           navMenu.classList.remove('open');
         });
+      });
+    }
+
+    // Touch support for Research Dropdown
+    const researchDropdown = document.getElementById('researchDropdown');
+    const researchBtn = document.querySelector('.btn-dropdown');
+    if (researchDropdown && researchBtn) {
+      researchBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        researchDropdown.classList.toggle('active');
+      });
+      document.addEventListener('click', () => {
+        researchDropdown.classList.remove('active');
       });
     }
 

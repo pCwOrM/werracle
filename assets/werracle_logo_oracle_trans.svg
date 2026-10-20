@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="100%" height="100%">
   <defs>
-    <!-- Glowing Filters -->
-    <filter id="bloom-heavy" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="16" result="b1" />
-      <feGaussianBlur stdDeviation="32" result="b2" />
+    <!-- Deep Cosmic Obsidian Background Radial -->
+    <radialGradient id="bg-werracle" cx="50%" cy="46%" r="68%">
+      <stop offset="0%" stop-color="#0f1936" />
+      <stop offset="35%" stop-color="#080e1f" />
+      <stop offset="70%" stop-color="#04060d" />
+      <stop offset="100%" stop-color="#010205" />
+    </radialGradient>
+
+    <!-- Volumetric Bloom & Glow Filters -->
+    <filter id="bloom-hyper" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="24" result="b1" />
+      <feGaussianBlur stdDeviation="48" result="b2" />
       <feMerge>
         <feMergeNode in="b2" />
         <feMergeNode in="b1" />
@@ -12,166 +20,269 @@
       </feMerge>
     </filter>
 
-    <filter id="bloom-fine" x="-30%" y="-30%" width="160%" height="160%">
-      <feGaussianBlur stdDeviation="4" result="bf" />
+    <filter id="bloom-mid" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="10" result="bm1" />
+      <feGaussianBlur stdDeviation="20" result="bm2" />
       <feMerge>
-        <feMergeNode in="bf" />
+        <feMergeNode in="bm2" />
+        <feMergeNode in="bm1" />
         <feMergeNode in="SourceGraphic" />
       </feMerge>
     </filter>
 
-    <filter id="star-sparkle" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="4.5" result="bs" />
+    <filter id="bloom-sharp" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur stdDeviation="3.5" result="bs" />
       <feMerge>
         <feMergeNode in="bs" />
         <feMergeNode in="SourceGraphic" />
       </feMerge>
     </filter>
 
-    <!-- Cyan Facets (Left Half - WERR Wave Dynamics) -->
-    <linearGradient id="c-crest" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#bae6fd" />
-      <stop offset="100%" stop-color="#0284c7" />
-    </linearGradient>
-    <linearGradient id="c-spine" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#38bdf8" />
-      <stop offset="100%" stop-color="#0369a1" />
-    </linearGradient>
-    <linearGradient id="c-dark" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0284c7" />
+    <!-- Electric Cyan Prismatic Facets (Left Wing) -->
+    <linearGradient id="cyan-facet-outer-high" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e0f2fe" />
+      <stop offset="30%" stop-color="#38bdf8" />
+      <stop offset="70%" stop-color="#0284c7" />
       <stop offset="100%" stop-color="#082f49" />
     </linearGradient>
-    <linearGradient id="c-wing" x1="0%" y1="0%" x2="100%" y2="100%">
+
+    <linearGradient id="cyan-facet-deep-bevel" x1="100%" y1="0%" x2="0%" y2="100%">
       <stop offset="0%" stop-color="#38bdf8" />
-      <stop offset="100%" stop-color="#0c4a6e" />
+      <stop offset="40%" stop-color="#0369a1" />
+      <stop offset="85%" stop-color="#082f49" />
+      <stop offset="100%" stop-color="#021526" />
     </linearGradient>
 
-    <!-- Gold Facets (Right Half - Protocol Value & Sovereign Reserves) -->
-    <linearGradient id="g-crest" x1="100%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#fef08a" />
-      <stop offset="100%" stop-color="#d97706" />
+    <linearGradient id="cyan-facet-specular" x1="0%" y1="0%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95" />
+      <stop offset="35%" stop-color="#bae6fd" stop-opacity="0.75" />
+      <stop offset="70%" stop-color="#38bdf8" stop-opacity="0.2" />
+      <stop offset="100%" stop-color="#0284c7" stop-opacity="0.05" />
     </linearGradient>
-    <linearGradient id="g-spine" x1="100%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#fbbf24" />
-      <stop offset="100%" stop-color="#b45309" />
+
+    <linearGradient id="cyan-facet-inner-core" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#7dd3fc" />
+      <stop offset="50%" stop-color="#0284c7" />
+      <stop offset="100%" stop-color="#0c2340" />
     </linearGradient>
-    <linearGradient id="g-dark" x1="100%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#d97706" />
-      <stop offset="100%" stop-color="#451a03" />
-    </linearGradient>
-    <linearGradient id="g-wing" x1="100%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#fbbf24" />
+
+    <!-- Imperial Gold & Molten Amber Prismatic Facets (Right Wing) -->
+    <linearGradient id="gold-facet-outer-high" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fef9c3" />
+      <stop offset="30%" stop-color="#fbbf24" />
+      <stop offset="70%" stop-color="#d97706" />
       <stop offset="100%" stop-color="#78350f" />
     </linearGradient>
 
-    <!-- NEAR Green Consensus Orbital Halo Gradient -->
-    <linearGradient id="near-halo" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#00EC97" />
-      <stop offset="50%" stop-color="#10b981" />
-      <stop offset="100%" stop-color="#059669" />
+    <linearGradient id="gold-facet-deep-bevel" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24" />
+      <stop offset="40%" stop-color="#b45309" />
+      <stop offset="85%" stop-color="#451a03" />
+      <stop offset="100%" stop-color="#1f0901" />
     </linearGradient>
 
-    <!-- Oracle Iris Portal Gradients -->
-    <radialGradient id="oracle-core" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#ffffff" />
-      <stop offset="25%" stop-color="#38bdf8" />
-      <stop offset="60%" stop-color="#0c1a3a" />
-      <stop offset="100%" stop-color="#030712" />
-    </radialGradient>
-    <linearGradient id="oracle-plasma" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="gold-facet-specular" x1="100%" y1="0%" x2="0%" y2="50%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95" />
+      <stop offset="35%" stop-color="#fef08a" stop-opacity="0.75" />
+      <stop offset="70%" stop-color="#fbbf24" stop-opacity="0.2" />
+      <stop offset="100%" stop-color="#d97706" stop-opacity="0.05" />
+    </linearGradient>
+
+    <linearGradient id="gold-facet-inner-core" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#fde047" />
+      <stop offset="50%" stop-color="#d97706" />
+      <stop offset="100%" stop-color="#451a03" />
+    </linearGradient>
+
+    <!-- NEAR Green Consensus Halo Gradients -->
+    <linearGradient id="near-glow-grad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#00EC97" />
-      <stop offset="35%" stop-color="#38bdf8" />
-      <stop offset="70%" stop-color="#a855f7" />
-      <stop offset="100%" stop-color="#00EC97" />
+      <stop offset="50%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#047857" />
+    </linearGradient>
+
+    <!-- Oracle Iris Core Gradients (Deep Multidimensional Portal) -->
+    <radialGradient id="portal-abyss" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="15%" stop-color="#38bdf8" />
+      <stop offset="40%" stop-color="#6366f1" />
+      <stop offset="65%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#02040a" />
+    </radialGradient>
+
+    <radialGradient id="portal-ring-plasma" cx="50%" cy="50%" r="50%">
+      <stop offset="65%" stop-color="#00EC97" stop-opacity="0" />
+      <stop offset="80%" stop-color="#00EC97" stop-opacity="0.9" />
+      <stop offset="90%" stop-color="#38bdf8" stop-opacity="0.95" />
+      <stop offset="96%" stop-color="#ffffff" stop-opacity="1" />
+      <stop offset="100%" stop-color="#a855f7" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Specular Bevel Line Shaders -->
+    <linearGradient id="bevel-white-cyan" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95" />
+      <stop offset="50%" stop-color="#7dd3fc" stop-opacity="0.6" />
+      <stop offset="100%" stop-color="#0284c7" stop-opacity="0" />
+    </linearGradient>
+
+    <linearGradient id="bevel-white-gold" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95" />
+      <stop offset="50%" stop-color="#fde047" stop-opacity="0.6" />
+      <stop offset="100%" stop-color="#d97706" stop-opacity="0" />
     </linearGradient>
   </defs>
 
-  <!-- Ambient Energy Halos -->
-  <circle cx="310" cy="380" r="190" fill="#0284c7" opacity="0.18" filter="url(#bloom-heavy)" />
-  <circle cx="490" cy="380" r="190" fill="#d97706" opacity="0.18" filter="url(#bloom-heavy)" />
-  <circle cx="400" cy="380" r="160" fill="#00EC97" opacity="0.14" filter="url(#bloom-heavy)" />
+  <!-- 2. Volumetric Ambient Glow Clouds -->
+  <circle cx="380" cy="480" r="240" fill="#0284c7" opacity="0.22" filter="url(#bloom-hyper)" />
+  <circle cx="620" cy="480" r="240" fill="#d97706" opacity="0.2" filter="url(#bloom-hyper)" />
+  <circle cx="500" cy="480" r="200" fill="#00EC97" opacity="0.18" filter="url(#bloom-hyper)" />
+  <circle cx="500" cy="480" r="130" fill="#6366f1" opacity="0.25" filter="url(#bloom-mid)" />
 
-  <!-- Technical Orbital Coordinate Rings (Z mod 9 & Fixed Point Triad) -->
-  <g stroke="#1e293b" fill="none" opacity="0.6">
-    <circle cx="400" cy="380" r="260" stroke-width="1" stroke-dasharray="4 8" />
-    <circle cx="400" cy="380" r="220" stroke="url(#near-halo)" stroke-width="1.8" stroke-dasharray="2 12" opacity="0.75" filter="url(#bloom-fine)" />
-    <circle cx="400" cy="380" r="170" stroke-width="1" stroke-dasharray="6 6" />
-    <line x1="120" y1="380" x2="680" y2="380" stroke-width="0.8" stroke-dasharray="2 6" />
-    <line x1="400" y1="100" x2="400" y2="660" stroke-width="0.8" stroke-dasharray="2 6" />
+  <!-- 3. Technical Coordinate Gauges & Radar Grid (Z mod 9 & Triad Resonances) -->
+  <g stroke="#1e293b" fill="none" opacity="0.65">
+    <!-- Outer Orbit Ring (1.60x) -->
+    <circle cx="500" cy="480" r="330" stroke-width="1.2" stroke-dasharray="4 8" />
+    <!-- Chronometer Tick Ring -->
+    <circle cx="500" cy="480" r="290" stroke="url(#near-glow-grad)" stroke-width="2" stroke-dasharray="2 10" opacity="0.8" filter="url(#bloom-sharp)" />
+    <!-- Inner Sub-Ideal Orbit (0.60x) -->
+    <circle cx="500" cy="480" r="225" stroke-width="1" stroke-dasharray="6 6" opacity="0.5" />
+    <!-- Fine Aperture Ring -->
+    <circle cx="500" cy="480" r="145" stroke="#38bdf8" stroke-width="0.8" stroke-dasharray="3 7" opacity="0.45" />
+
+    <!-- Crosshair Coordinates -->
+    <line x1="120" y1="480" x2="880" y2="480" stroke-width="0.9" stroke-dasharray="2 6" opacity="0.4" />
+    <line x1="500" y1="120" x2="500" y2="840" stroke-width="0.9" stroke-dasharray="2 6" opacity="0.4" />
   </g>
 
-  <!-- Orbital Ticks & Nodes -->
-  <g fill="#00EC97" opacity="0.8">
-    <circle cx="180" cy="380" r="3.5" filter="url(#bloom-fine)" />
-    <circle cx="620" cy="380" r="3.5" filter="url(#bloom-fine)" />
-    <circle cx="400" cy="160" r="3.5" filter="url(#bloom-fine)" />
-    <circle cx="400" cy="600" r="3.5" filter="url(#bloom-fine)" />
-    <circle cx="245" cy="225" r="2.5" />
-    <circle cx="555" cy="225" r="2.5" />
-    <circle cx="245" cy="535" r="2.5" />
-    <circle cx="555" cy="535" r="2.5" />
+  <!-- Glowing Sensor Nodes (NEAR Mint Consensus Orbs) -->
+  <g fill="#00EC97">
+    <circle cx="210" cy="480" r="4.5" filter="url(#bloom-sharp)" />
+    <circle cx="790" cy="480" r="4.5" filter="url(#bloom-sharp)" />
+    <circle cx="500" cy="190" r="4.5" filter="url(#bloom-sharp)" />
+    <circle cx="500" cy="770" r="4.5" filter="url(#bloom-sharp)" />
+    <circle cx="295" cy="275" r="3" opacity="0.85" />
+    <circle cx="705" cy="275" r="3" opacity="0.85" />
+    <circle cx="295" cy="685" r="3" opacity="0.85" />
+    <circle cx="705" cy="685" r="3" opacity="0.85" />
   </g>
 
-  <!-- ================= THE ALL-SEEING ORACLE IRIS ================= -->
-  <g id="oracle-portal-core">
-    <circle cx="400" cy="380" r="95" fill="none" stroke="url(#oracle-plasma)" stroke-width="6" opacity="0.85" filter="url(#bloom-heavy)" />
-    <circle cx="400" cy="380" r="95" fill="none" stroke="#ffffff" stroke-width="1.5" opacity="0.9" filter="url(#bloom-fine)" />
-    <circle cx="400" cy="380" r="90" fill="url(#oracle-core)" />
-    <polygon points="400,315 456,347 456,412 400,445 344,412 344,347" fill="none" stroke="url(#near-halo)" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.6" />
-    <polygon points="400,330 443,355 443,405 400,430 357,405 357,355" fill="#040817" opacity="0.8" stroke="#38bdf8" stroke-width="0.8" />
-    <circle cx="400" cy="380" r="8" fill="#ffffff" filter="url(#bloom-heavy)" />
-    <circle cx="400" cy="380" r="4" fill="#ffffff" />
+  <!-- 4. Luminous Holographic Plasma Torus (The Portal Horizon) -->
+  <circle cx="500" cy="480" r="126" fill="url(#portal-ring-plasma)" filter="url(#bloom-mid)" />
+  <circle cx="500" cy="480" r="122" fill="none" stroke="#ffffff" stroke-width="2.5" opacity="0.85" filter="url(#bloom-sharp)" />
+  <circle cx="500" cy="480" r="115" fill="url(#portal-abyss)" />
+
+  <!-- Radial Light Beams from Singular Apex Core -->
+  <g stroke="#ffffff" stroke-width="1.2" opacity="0.65" filter="url(#bloom-sharp)">
+    <line x1="500" y1="480" x2="430" y2="390" />
+    <line x1="500" y1="480" x2="570" y2="390" />
+    <line x1="500" y1="480" x2="410" y2="480" />
+    <line x1="500" y1="480" x2="590" y2="480" />
+    <line x1="500" y1="480" x2="445" y2="555" />
+    <line x1="500" y1="480" x2="555" y2="555" />
   </g>
 
-  <!-- ================= WERR CRYSTALLINE CHEVRONS ================= -->
-  <g id="werracle-left-cyan">
-    <polygon points="160,250 115,365 240,435" fill="url(#c-wing)" stroke="#38bdf8" stroke-width="0.8" />
-    <polygon points="160,250 240,435 295,395" fill="url(#c-crest)" stroke="#a5f3fc" stroke-width="0.8" />
-    <polygon points="115,365 185,510 240,435" fill="url(#c-dark)" stroke="#0284c7" stroke-width="0.8" />
-    <polygon points="185,510 320,620 240,435" fill="url(#c-spine)" stroke="#38bdf8" stroke-width="0.8" />
-    <polygon points="295,395 240,435 320,620" fill="url(#c-crest)" stroke="#38bdf8" stroke-width="0.8" />
-    <polygon points="295,395 320,620 355,490" fill="url(#c-spine)" stroke="#38bdf8" stroke-width="0.8" />
-    <polygon points="295,395 355,490 400,345" fill="url(#c-dark)" stroke="#0369a1" stroke-width="0.8" />
-    <polygon points="295,395 400,345 400,165" fill="url(#c-crest)" stroke="#a5f3fc" stroke-width="0.8" />
-    <polygon points="400,165 400,345 355,490" fill="url(#c-crest)" opacity="0.9" stroke="#e0f2fe" stroke-width="0.6" />
-    <polygon points="355,490 320,620 400,495" fill="url(#c-spine)" stroke="#38bdf8" stroke-width="0.8" />
+  <!-- Concentric 32-Byte Hash Cryptographic Inscription Rings -->
+  <polygon points="500,390 578,435 578,525 500,570 422,525 422,435" fill="none" stroke="url(#near-glow-grad)" stroke-width="1.8" stroke-dasharray="6 4" opacity="0.8" filter="url(#bloom-sharp)" />
+  <polygon points="500,410 560,445 560,515 500,550 440,515 440,445" fill="#030712" fill-opacity="0.8" stroke="#38bdf8" stroke-width="1" />
+
+  <!-- Central Supernova Singularity Point -->
+  <circle cx="500" cy="480" r="12" fill="#ffffff" filter="url(#bloom-hyper)" />
+  <circle cx="500" cy="480" r="6" fill="#ffffff" />
+
+  <!-- ================= 5. THE 3D FACETED "W" CRYSTALLINE CHEVRON ================= -->
+  
+  <!-- LEFT WING: Multi-layered Electric Cyan Glass Prisms -->
+  <g id="werracle-left-wing">
+    <!-- Deep Base Shadow Facets -->
+    <polygon points="190,320 135,465 295,555" fill="url(#cyan-facet-deep-bevel)" />
+    <polygon points="135,465 220,645 295,555" fill="#041b2d" stroke="#0284c7" stroke-width="0.8" />
+    <polygon points="220,645 390,780 295,555" fill="url(#cyan-facet-outer-high)" stroke="#38bdf8" stroke-width="0.8" />
+    
+    <!-- Midtone Luminous Facets -->
+    <polygon points="190,320 295,555 365,505" fill="url(#cyan-facet-outer-high)" stroke="#7dd3fc" stroke-width="0.8" />
+    <polygon points="365,505 295,555 390,780" fill="url(#cyan-facet-inner-core)" stroke="#38bdf8" stroke-width="0.8" />
+    <polygon points="365,505 390,780 445,620" fill="url(#cyan-facet-outer-high)" stroke="#bae6fd" stroke-width="0.8" />
+    
+    <!-- Inner Ascending Ridge to Crown -->
+    <polygon points="365,505 445,620 500,435" fill="url(#cyan-facet-deep-bevel)" stroke="#0369a1" stroke-width="0.8" />
+    <polygon points="365,505 500,435 500,210" fill="url(#cyan-facet-outer-high)" stroke="#e0f2fe" stroke-width="0.8" />
+    
+    <!-- Specular Glass Highlights (Glint Ribs) -->
+    <polygon points="190,320 365,505 500,210" fill="url(#cyan-facet-specular)" />
+    <polygon points="500,210 500,435 445,620" fill="url(#cyan-facet-specular)" />
+    
+    <!-- Crisp Ridge Bevel Lines -->
+    <line x1="190" y1="320" x2="365" y2="505" stroke="url(#bevel-white-cyan)" stroke-width="2.2" filter="url(#bloom-sharp)" />
+    <line x1="365" y1="505" x2="500" y2="210" stroke="#ffffff" stroke-width="2.5" filter="url(#bloom-sharp)" />
+    <line x1="365" y1="505" x2="390" y2="780" stroke="url(#bevel-white-cyan)" stroke-width="2.2" />
   </g>
 
-  <g id="werracle-right-gold">
-    <polygon points="640,250 685,365 560,435" fill="url(#g-wing)" stroke="#fbbf24" stroke-width="0.8" />
-    <polygon points="640,250 560,435 505,395" fill="url(#g-crest)" stroke="#fef08a" stroke-width="0.8" />
-    <polygon points="685,365 615,510 560,435" fill="url(#g-dark)" stroke="#d97706" stroke-width="0.8" />
-    <polygon points="615,510 480,620 560,435" fill="url(#g-spine)" stroke="#fbbf24" stroke-width="0.8" />
-    <polygon points="505,395 560,435 480,620" fill="url(#g-crest)" stroke="#fbbf24" stroke-width="0.8" />
-    <polygon points="505,395 480,620 445,490" fill="url(#g-spine)" stroke="#fbbf24" stroke-width="0.8" />
-    <polygon points="505,395 445,490 400,345" fill="url(#g-dark)" stroke="#b45309" stroke-width="0.8" />
-    <polygon points="505,395 400,345 400,165" fill="url(#g-crest)" stroke="#fef08a" stroke-width="0.8" />
-    <polygon points="400,165 400,345 445,490" fill="url(#g-crest)" opacity="0.9" stroke="#fef9c3" stroke-width="0.6" />
-    <polygon points="445,490 480,620 400,495" fill="url(#g-spine)" stroke="#fbbf24" stroke-width="0.8" />
+  <!-- RIGHT WING: Multi-layered Radiant Imperial Gold Prisms -->
+  <g id="werracle-right-wing">
+    <!-- Deep Base Shadow Facets -->
+    <polygon points="810,320 865,465 705,555" fill="url(#gold-facet-deep-bevel)" />
+    <polygon points="865,465 780,645 705,555" fill="#240c03" stroke="#b45309" stroke-width="0.8" />
+    <polygon points="780,645 610,780 705,555" fill="url(#gold-facet-outer-high)" stroke="#fbbf24" stroke-width="0.8" />
+    
+    <!-- Midtone Luminous Facets -->
+    <polygon points="810,320 705,555 635,505" fill="url(#gold-facet-outer-high)" stroke="#fde047" stroke-width="0.8" />
+    <polygon points="635,505 705,555 610,780" fill="url(#gold-facet-inner-core)" stroke="#fbbf24" stroke-width="0.8" />
+    <polygon points="635,505 610,780 555,620" fill="url(#gold-facet-outer-high)" stroke="#fef08a" stroke-width="0.8" />
+    
+    <!-- Inner Ascending Ridge to Crown -->
+    <polygon points="635,505 555,620 500,435" fill="url(#gold-facet-deep-bevel)" stroke="#78350f" stroke-width="0.8" />
+    <polygon points="635,505 500,435 500,210" fill="url(#gold-facet-outer-high)" stroke="#fef9c3" stroke-width="0.8" />
+    
+    <!-- Specular Glass Highlights (Glint Ribs) -->
+    <polygon points="810,320 635,505 500,210" fill="url(#gold-facet-specular)" />
+    <polygon points="500,210 500,435 555,620" fill="url(#gold-facet-specular)" />
+    
+    <!-- Crisp Ridge Bevel Lines -->
+    <line x1="810" y1="320" x2="635" y2="505" stroke="url(#bevel-white-gold)" stroke-width="2.2" filter="url(#bloom-sharp)" />
+    <line x1="635" y1="505" x2="500" y2="210" stroke="#ffffff" stroke-width="2.5" filter="url(#bloom-sharp)" />
+    <line x1="635" y1="505" x2="610" y2="780" stroke="url(#bevel-white-gold)" stroke-width="2.2" />
   </g>
 
-  <line x1="400" y1="165" x2="400" y2="495" stroke="#ffffff" stroke-width="2.5" filter="url(#bloom-fine)" />
+  <!-- Central Chisel Fault Line (White-Hot Vertical Anchor) -->
+  <line x1="500" y1="210" x2="500" y2="620" stroke="#ffffff" stroke-width="3" filter="url(#bloom-sharp)" />
 
-  <path d="M 160 250 L 115 365 L 185 510 L 320 620 L 400 495" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linejoin="round" filter="url(#bloom-heavy)" opacity="0.8" />
-  <path d="M 640 250 L 685 365 L 615 510 L 480 620 L 400 495" fill="none" stroke="#fbbf24" stroke-width="2.5" stroke-linejoin="round" filter="url(#bloom-heavy)" opacity="0.8" />
-  <path d="M 160 250 L 295 395 L 400 165 L 505 395 L 640 250" fill="none" stroke="#ffffff" stroke-width="2.0" stroke-linejoin="round" filter="url(#bloom-fine)" />
+  <!-- Outer Holographic Contour Light Ribbons -->
+  <path d="M 190 320 L 135 465 L 220 645 L 390 780 L 500 620" fill="none" stroke="#38bdf8" stroke-width="3" stroke-linejoin="round" filter="url(#bloom-mid)" opacity="0.85" />
+  <path d="M 810 320 L 865 465 L 780 645 L 610 780 L 500 620" fill="none" stroke="#fbbf24" stroke-width="3" stroke-linejoin="round" filter="url(#bloom-mid)" opacity="0.85" />
+  <path d="M 190 320 L 365 505 L 500 210 L 635 505 L 810 320" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linejoin="round" filter="url(#bloom-sharp)" />
 
-  <!-- Diamond Flares -->
-  <g transform="translate(400, 165)" filter="url(#star-sparkle)">
+  <!-- ================= 6. DIAMOND STARBURST & ANAMORPHIC FLARES ================= -->
+  
+  <!-- Apex Diamond Flare (Focal Oracle Truth) -->
+  <g transform="translate(500, 210)" filter="url(#bloom-mid)">
+    <!-- Anamorphic Horizontal Glint -->
+    <ellipse cx="0" cy="0" rx="90" ry="2.5" fill="#ffffff" opacity="0.9" />
+    <ellipse cx="0" cy="0" rx="45" ry="5" fill="#38bdf8" opacity="0.75" />
+    <!-- 4-Point Diamond Flare -->
+    <polygon points="0,-32 6,-6 32,0 6,6 0,32 -6,6 -32,0 -6,-6" fill="#ffffff" />
+    <polygon points="0,-18 3,-3 18,0 3,3 0,18 -3,3 -18,0 -3,-3" fill="#00EC97" />
+    <circle cx="0" cy="0" r="7" fill="#ffffff" />
+  </g>
+
+  <!-- Left Cyan Wing Apex Flare -->
+  <g transform="translate(190, 320)" filter="url(#bloom-sharp)">
+    <ellipse cx="0" cy="0" rx="50" ry="2" fill="#38bdf8" opacity="0.8" />
+    <polygon points="0,-20 4,-4 20,0 4,4 0,20 -4,4 -20,0 -4,-4" fill="#ffffff" />
+    <polygon points="0,-12 2,-2 12,0 2,2 0,12 -2,2 -12,0 -2,-2" fill="#38bdf8" />
     <circle cx="0" cy="0" r="5" fill="#ffffff" />
-    <polygon points="0,-22 4,-4 22,0 4,4 0,22 -4,4 -22,0 -4,-4" fill="#ffffff" />
-    <polygon points="0,-12 2,-2 12,0 2,2 0,12 -2,2 -12,0 -2,-2" fill="#00EC97" />
   </g>
-  <g transform="translate(160, 250)" filter="url(#star-sparkle)">
-    <circle cx="0" cy="0" r="4.5" fill="#ffffff" />
-    <polygon points="0,-15 3,-3 15,0 3,3 0,15 -3,3 -15,0 -3,-3" fill="#38bdf8" />
+
+  <!-- Right Gold Wing Apex Flare -->
+  <g transform="translate(810, 320)" filter="url(#bloom-sharp)">
+    <ellipse cx="0" cy="0" rx="50" ry="2" fill="#fbbf24" opacity="0.8" />
+    <polygon points="0,-20 4,-4 20,0 4,4 0,20 -4,4 -20,0 -4,-4" fill="#ffffff" />
+    <polygon points="0,-12 2,-2 12,0 2,2 0,12 -2,2 -12,0 -2,-2" fill="#fbbf24" />
+    <circle cx="0" cy="0" r="5" fill="#ffffff" />
   </g>
-  <g transform="translate(640, 250)" filter="url(#star-sparkle)">
-    <circle cx="0" cy="0" r="4.5" fill="#ffffff" />
-    <polygon points="0,-15 3,-3 15,0 3,3 0,15 -3,3 -15,0 -3,-3" fill="#fbbf24" />
-  </g>
-  <g transform="translate(400, 495)" filter="url(#star-sparkle)">
+
+  <!-- Lower Anchor Flare (NEAR Mint Consensus) -->
+  <g transform="translate(500, 620)" filter="url(#bloom-sharp)">
+    <polygon points="0,-16 3,-3 16,0 3,3 0,16 -3,3 -16,0 -3,-3" fill="#00EC97" />
     <circle cx="0" cy="0" r="4" fill="#ffffff" />
-    <polygon points="0,-14 2.5,-2.5 14,0 2.5,2.5 0,14 -2.5,2.5 -14,0 -2.5,-2.5" fill="#00EC97" />
   </g>
 </svg>
