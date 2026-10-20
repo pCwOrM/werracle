@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/werracle_logo_oracle.svg" alt="Werracle Logo Emblem" width="160" height="160" />
+</p>
+
 # ⚡ Werracle: Zero-Storage On-Chain AI Decision Oracle
 
 [![arXiv: 2609.30719](https://img.shields.io/badge/arXiv-2609.30719-b31b1b.svg)](https://arxiv.org/abs/2609.30719)

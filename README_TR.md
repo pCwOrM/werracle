@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/werracle_logo_oracle.svg" alt="Werracle Logo Amblemi" width="160" height="160" />
+</p>
+
 # ⚡ Werracle: Sıfır-Bellekli On-Chain Yapay Zekâ ve Karar Oracle'ı
 
 [![EVM Devnet: Chain ID 4242](https://img.shields.io/badge/EVM%20Devnet-Chain%20ID%204242%20(api.answerr.me)-38bdf8.svg)](https://api.answerr.me:4431/werracle/status)
