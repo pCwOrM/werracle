@@ -1,1902 +1,1329 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-  <title>Werracle | Zero-Memory On-Chain AI Decision Oracle (EVM 32-Byte Slot)</title>
-  <meta name="description" content="Sub-millisecond intra-block on-chain AI decision oracle for EVM smart contracts. Powered by WERR procedural Mandelbrot dynamics. 0 Bytes VRAM, 20k gas.">
-  <meta name="theme-color" content="#060913">
-  <link rel="icon" type="image/svg+xml" href="assets/werracle_logo_oracle_trans.svg">
-  <link rel="apple-touch-icon" href="assets/werracle_logo_oracle.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <!-- Google reCAPTCHA v3 API & Telemetry Protection -->
-  <script src="https://www.google.com/recaptcha/api.js?render=6LdP-JgqAAAAAJLdy_W8uowqstSa4XKlJTOkVAux" async defer></script>
-  <style>
-    :root {
-      --bg-main: #060913;
-      --bg-card: #0c1222;
-      --bg-card-hover: #121b33;
-      --border-color: #1a2744;
-      --border-accent: rgba(56, 189, 248, 0.35);
-      --cyan: #38bdf8;
-      --cyan-glow: rgba(56, 189, 248, 0.25);
-      --emerald: #10b981;
-      --emerald-glow: rgba(16, 185, 129, 0.25);
-      --amber: #f59e0b;
-      --amber-glow: rgba(245, 158, 11, 0.25);
-      --purple: #a855f7;
-      --purple-glow: rgba(168, 85, 247, 0.25);
-      --rose: #f43f5e;
-      --near-green: #00EC97;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      --font-mono: 'Fira Code', monospace;
-    }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Werracle — the whole model is 32 bytes</title>
+<meta name="description" content="Werracle is an on-chain AI decision oracle for the EVM. No stored weights: decisions are derived from one point on the Mandelbrot boundary, packed into a single 32-byte storage slot. ~19.4k gas, same-transaction, 40 Lean 4 theorems.">
+<meta name="theme-color" content="#07061a">
+<meta property="og:title" content="Werracle — the whole model is 32 bytes">
+<meta property="og:description" content="On-chain AI decisions inside one EVM storage slot. ~19.4k gas, same transaction, machine-checked in Lean 4.">
+<meta property="og:image" content="https://pcworm.github.io/werracle/assets/werracle_logo_oracle.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="assets/werracle_logo_oracle_trans.svg">
+<link rel="apple-touch-icon" href="assets/werracle_logo_oracle.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;500;700&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#07061a;        /* the set's interior */
+  --ink-2:#0f0d2b;
+  --ink-3:#1a1840;
+  --line:#2a2760;
+  --nacre:#efeaff;      /* text */
+  --mist:#a7a2cf;       /* secondary text */
+  --blue:#4a5cff;       /* escape band */
+  --ice:#9fe8ff;        /* outer band */
+  --gold:#ffc857;       /* the boundary */
+  --permit:#7cf5c4;
+  --revert:#ff5d73;
+  --f-display:"Unbounded",system-ui,sans-serif;
+  --f-body:"Instrument Sans",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,monospace;
+  --gut:clamp(16px,4vw,56px);
+  --max:1240px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--ink);color:var(--nacre);font:400 17px/1.6 var(--f-body);overflow-x:hidden}
+a{color:inherit}
+img{max-width:100%;display:block}
+::selection{background:var(--gold);color:var(--ink)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gut)}
+h1,h2,h3{font-family:var(--f-display);font-weight:500;letter-spacing:-.02em;margin:0}
+h2{font-size:clamp(30px,4.6vw,58px);line-height:1.05;max-width:16ch}
+h3{font-size:clamp(18px,1.6vw,22px);line-height:1.25}
+p{margin:0}
+.lede{color:var(--mist);font-size:clamp(17px,1.4vw,19px);max-width:62ch;margin-top:20px}
+.mono{font-family:var(--f-mono)}
+section{position:relative}
+.sec{padding:clamp(88px,12vw,160px) 0}
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      background-color: var(--bg-main);
-      color: var(--text-main);
-      font-family: var(--font-sans);
-      line-height: 1.6;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
+/* ---------- nav ---------- */
+.nav{position:fixed;inset:0 0 auto 0;z-index:50;transition:background .3s,backdrop-filter .3s}
+.nav.solid{background:rgba(7,6,26,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(42,39,96,.6)}
+.nav .wrap{display:flex;align-items:center;gap:28px;height:68px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--f-display);font-weight:500;font-size:17px}
+.brand img{width:34px;height:34px}
+.nav ul{display:flex;gap:22px;list-style:none;margin:0 0 0 auto;padding:0;font-size:15px}
+.nav ul a{text-decoration:none;color:var(--mist)}
+.nav ul a:hover{color:var(--nacre)}
+.nav .tools{display:flex;gap:10px;align-items:center}
+.pill{border:1px solid var(--line);background:transparent;color:var(--nacre);font:500 14px var(--f-body);padding:7px 14px;border-radius:999px;cursor:pointer;text-decoration:none;white-space:nowrap}
+.pill:hover{border-color:var(--mist)}
+.menu-btn{display:none}
+@media (max-width:980px){
+  .nav ul{position:fixed;inset:68px 0 auto 0;flex-direction:column;gap:0;background:var(--ink-2);border-bottom:1px solid var(--line);padding:8px var(--gut) 20px;transform:translateY(-120%);transition:transform .35s ease;margin:0}
+  .nav ul.open{transform:none}
+  .nav ul a{display:block;padding:12px 0;font-size:17px;border-bottom:1px solid var(--ink-3)}
+  .menu-btn{display:inline-block;margin-left:auto}
+  .nav .tools .gh{display:none}
+}
 
-    /* Ambient background grid */
-    .bg-grid {
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      background-image: linear-gradient(rgba(56, 189, 248, 0.03) 1px, transparent 1px),
-                        linear-gradient(90deg, rgba(56, 189, 248, 0.03) 1px, transparent 1px);
-      background-size: 40px 40px;
-      pointer-events: none;
-      z-index: 0;
-    }
+/* ---------- hero ---------- */
+.hero{min-height:100svh;display:flex;align-items:flex-end;padding:120px 0 56px;overflow:hidden}
+#fractal{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(90deg,rgba(7,6,26,.92) 0%,rgba(7,6,26,.62) 42%,rgba(7,6,26,0) 75%),linear-gradient(0deg,var(--ink) 0%,rgba(7,6,26,0) 30%)}
+.hero .wrap{position:relative;z-index:2;width:100%}
+.hero h1{font-size:clamp(44px,8.4vw,118px);line-height:.95;font-weight:700;letter-spacing:-.035em;max-width:11ch}
+.hero h1 .thin{font-weight:300;display:block}
+.hero .lede{color:#cfc9f3;margin-top:28px;max-width:52ch}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.btn{display:inline-flex;align-items:center;gap:10px;font:600 16px var(--f-body);padding:14px 22px;border-radius:12px;text-decoration:none;border:1px solid transparent;cursor:pointer}
+.btn.primary{background:var(--gold);color:var(--ink)}
+.btn.primary:hover{background:#ffd47c}
+.btn.ghost{border-color:rgba(239,234,255,.3);color:var(--nacre);background:rgba(7,6,26,.35)}
+.btn.ghost:hover{border-color:var(--nacre)}
 
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 24px;
-      position: relative;
-      z-index: 1;
-    }
+.slot{margin-top:52px;max-width:780px}
+.slot-cap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:14px;color:var(--mist);margin-bottom:10px}
+.slot-cap b{color:var(--nacre);font-weight:600}
+.bytes{display:grid;grid-template-columns:repeat(32,1fr);gap:3px}
+.byte{font:600 clamp(9px,1.05vw,13px)/1 var(--f-mono);text-align:center;padding:10px 0;border-radius:4px;background:rgba(15,13,43,.72);border:1px solid var(--line);color:var(--nacre);cursor:default;transition:transform .2s,background .2s,border-color .2s}
+.byte[data-f="active"]{border-color:#6b5f2a}
+.byte[data-f="mode"]{border-color:#6b5f2a}
+.byte[data-f="threshold"]{border-color:#7a3b47}
+.byte[data-f="nonce"]{border-color:#3e3a7a}
+.byte[data-f="zoom"]{border-color:#2f6a80}
+.byte[data-f="cy"]{border-color:#3a4ac0}
+.byte[data-f="cx"]{border-color:#5a49d6}
+.bytes.hl .byte{opacity:.35}
+.bytes.hl .byte.on{opacity:1;transform:translateY(-3px);background:var(--ink-3)}
+.fields{display:grid;grid-template-columns:repeat(32,1fr);gap:3px;margin-top:6px;font-size:12px;color:var(--mist)}
+.fields span{text-align:center;border-top:1px solid var(--line);padding-top:6px;white-space:nowrap;overflow:hidden;text-overflow:clip;cursor:default}
+.fields span:hover{color:var(--nacre)}
+.field-note{min-height:3.2em;margin-top:12px;font-size:15px;color:#cfc9f3;max-width:62ch}
+@media (max-width:640px){
+  .bytes{grid-template-columns:repeat(16,1fr)}
+  .fields{display:none}
+  .byte{padding:9px 0;font-size:11px}
+}
+.facts{display:flex;flex-wrap:wrap;gap:12px 36px;margin-top:40px;font-size:15px;color:var(--mist)}
+.facts strong{display:block;font-family:var(--f-display);font-weight:500;font-size:22px;color:var(--nacre);letter-spacing:-.01em}
+.coord{position:absolute;right:var(--gut);bottom:22px;z-index:2;font:400 12px var(--f-mono);color:rgba(239,234,255,.55);text-align:right}
+@media (max-width:820px){.coord{display:none}}
 
-    /* Header Nav */
-    header {
-      border-bottom: 1px solid var(--border-color);
-      background: rgba(6, 9, 19, 0.94);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      height: 70px;
-      transition: height 0.2s ease;
-    }
-    .nav-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      height: 100%;
-      gap: 16px;
-    }
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      color: #fff;
-      font-weight: 800;
-      font-size: 1.25rem;
-      letter-spacing: -0.5px;
-      flex-shrink: 0;
-    }
-    .logo-badge {
-      background: linear-gradient(135deg, #0284c7, #38bdf8);
-      color: #000;
-      font-size: 0.7rem;
-      font-weight: 800;
-      padding: 2px 8px;
-      border-radius: 9999px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    .nav-links {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
-    .nav-link {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 0.86rem;
-      font-weight: 500;
-      padding: 6px 10px;
-      border-radius: 6px;
-      transition: all 0.2s;
-      white-space: nowrap;
-    }
-    .nav-link:hover {
-      color: var(--cyan);
-      background: rgba(56, 189, 248, 0.08);
-    }
-    .nav-link.nav-link-near {
-      background: rgba(0, 236, 151, 0.12);
-      border: 1px solid rgba(0, 236, 151, 0.4);
-      color: var(--near-green) !important;
-      padding: 4px 12px;
-      border-radius: 9999px;
-      font-weight: 600;
-    }
-    .nav-link.nav-link-near:hover {
-      background: rgba(0, 236, 151, 0.22);
-      box-shadow: 0 0 12px rgba(0, 236, 151, 0.3);
-    }
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-shrink: 0;
-    }
+/* ---------- compression story ---------- */
+.story{height:330vh}
+.story .stick{position:sticky;top:0;height:100svh;display:grid;grid-template-columns:minmax(300px,5fr) 7fr;align-items:center;gap:40px;max-width:var(--max);margin:0 auto;padding:0 var(--gut)}
+.story canvas{width:100%;height:min(70vh,620px);display:block}
+.steps{position:relative;min-height:320px}
+.step{position:absolute;inset:0 0 auto 0;opacity:0;transform:translateY(16px);transition:opacity .5s,transform .5s}
+.step.on{opacity:1;transform:none}
+.step .big{font-family:var(--f-display);font-size:clamp(42px,6vw,84px);font-weight:700;letter-spacing:-.03em;line-height:1}
+.step .big small{font-size:.38em;font-weight:300;letter-spacing:0;color:var(--mist);margin-left:.3em}
+.step h3{margin:18px 0 10px;font-weight:500}
+.step p{color:var(--mist);max-width:42ch}
+.step.s3 .big{color:var(--gold)}
+.progress{display:flex;gap:6px;margin-top:28px}
+.progress i{height:3px;flex:1;background:var(--ink-3);border-radius:3px;overflow:hidden;position:relative}
+.progress i b{position:absolute;inset:0;background:var(--gold);transform-origin:left;transform:scaleX(0)}
+@media (max-width:860px){
+  .story .stick{grid-template-columns:1fr;grid-template-rows:auto 1fr;align-content:center;gap:12px;padding-top:80px}
+  .steps{min-height:230px}
+  .story canvas{height:46svh}
+}
 
-    /* Desktop Research Dropdown */
-    .nav-dropdown {
-      position: relative;
-    }
-    .btn-dropdown {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      padding: 6px 12px;
-      border-radius: 8px;
-      font-size: 0.82rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      min-height: 36px;
-    }
-    .nav-dropdown:hover .btn-dropdown, .btn-dropdown:hover {
-      border-color: var(--cyan);
-      color: var(--cyan);
-    }
-    .dropdown-menu {
-      position: absolute;
-      top: calc(100% + 8px);
-      right: 0;
-      background: rgba(12, 18, 34, 0.98);
-      border: 1px solid var(--border-accent);
-      border-radius: 12px;
-      padding: 8px;
-      min-width: 250px;
-      box-shadow: 0 14px 35px rgba(0,0,0,0.7);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      display: none;
-      flex-direction: column;
-      gap: 4px;
-      z-index: 120;
-    }
-    .nav-dropdown:hover .dropdown-menu, .nav-dropdown:focus-within .dropdown-menu, .nav-dropdown.active .dropdown-menu {
-      display: flex;
-      animation: fadeInMenu 0.18s ease-out forwards;
-    }
-    .dropdown-item {
-      padding: 10px 14px;
-      border-radius: 8px;
-      color: var(--text-main);
-      text-decoration: none;
-      font-size: 0.85rem;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      transition: background 0.15s;
-    }
-    .dropdown-item:hover {
-      background: rgba(56, 189, 248, 0.12);
-    }
-    .btn-icon-gh {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      color: var(--text-muted);
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s;
-      text-decoration: none;
-    }
-    .btn-icon-gh:hover {
-      color: #fff;
-      border-color: var(--cyan);
-      background: rgba(56, 189, 248, 0.1);
-    }
+/* ---------- simulator ---------- */
+.sim-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:28px;margin-top:56px}
+@media (max-width:960px){.sim-grid{grid-template-columns:1fr}}
+.panel{background:var(--ink-2);border:1px solid var(--line);border-radius:20px;padding:22px}
+.maps{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.maps figure{margin:0}
+.maps canvas{width:100%;aspect-ratio:1;border-radius:12px;display:block;background:#05040f;touch-action:none}
+.maps .wide{grid-column:1 / -1}
+.maps .wide canvas{aspect-ratio:2.2;cursor:crosshair}
+figcaption{font-size:13px;color:var(--mist);margin-top:8px}
+.ctrl{display:grid;gap:18px}
+.ctrl label{display:grid;grid-template-columns:1fr auto;gap:6px 12px;font-size:14px;color:var(--mist)}
+.ctrl label output{font:600 14px var(--f-mono);color:var(--nacre)}
+.ctrl input[type=range]{grid-column:1 / -1;width:100%;accent-color:var(--gold);height:28px}
+.presets{display:flex;flex-wrap:wrap;gap:8px}
+.presets button{border:1px solid var(--line);background:transparent;color:var(--mist);font:500 14px var(--f-body);padding:8px 13px;border-radius:999px;cursor:pointer}
+.presets button[aria-pressed=true]{color:var(--ink);background:var(--nacre);border-color:var(--nacre)}
+.verdict{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px;border-radius:16px;margin-top:22px;border:1px solid;transition:background .35s,border-color .35s}
+.verdict.ok{background:rgba(124,245,196,.08);border-color:rgba(124,245,196,.45)}
+.verdict.no{background:rgba(255,93,115,.08);border-color:rgba(255,93,115,.5)}
+.verdict .word{font:700 clamp(30px,4vw,44px)/1 var(--f-display);letter-spacing:-.02em}
+.verdict.ok .word{color:var(--permit)}
+.verdict.no .word{color:var(--revert)}
+.verdict .word.pop{animation:pop .4s ease}
+@keyframes pop{0%{transform:scale(.92);opacity:.4}100%{transform:none;opacity:1}}
+.verdict .sub{font-size:14px;color:var(--mist);text-align:right}
+.verdict .sub b{display:block;font:600 22px var(--f-mono);color:var(--nacre)}
+.readout{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.readout div{background:var(--ink);border:1px solid var(--line);border-radius:12px;padding:12px}
+.readout span{display:block;font-size:13px;color:var(--mist)}
+.readout b{font:600 16px var(--f-mono)}
+.quads{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
+.quad{background:var(--ink);border:1px solid var(--line);border-radius:12px;padding:10px 10px 12px;font-size:13px;color:var(--mist)}
+.quad .bar{height:46px;position:relative;margin:8px 0 6px;border-left:1px solid var(--line)}
+.quad .bar::before{content:"";position:absolute;left:0;right:0;top:50%;border-top:1px dashed var(--line)}
+.quad .bar i{position:absolute;left:6px;right:6px;border-radius:3px;transition:all .35s}
+.quad b{font:600 13px var(--f-mono);color:var(--nacre)}
+.live{display:flex;align-items:center;gap:10px;margin-top:16px;font-size:14px;color:var(--mist);flex-wrap:wrap}
+.live .dot{width:9px;height:9px;border-radius:50%;background:#6d6896}
+.switch{display:inline-flex;gap:8px;align-items:center;cursor:pointer}
+.note{font-size:14px;color:var(--mist);margin-top:14px}
+.note code,.lede code,p code{font-family:var(--f-mono);font-size:.9em;color:var(--nacre);background:var(--ink-3);padding:1px 6px;border-radius:5px}
+@media (max-width:520px){.readout b{font-size:13px}.readout span{font-size:12px}.quads{grid-template-columns:1fr 1fr}.verdict .word{font-size:26px}}
 
-    .btn-lang {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      color: var(--cyan);
-      padding: 6px 14px;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      cursor: pointer;
-      font-family: var(--font-mono);
-      font-weight: 600;
-      transition: all 0.2s;
-      min-height: 36px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .btn-lang:hover {
-      border-color: var(--cyan);
-      box-shadow: 0 0 10px var(--cyan-glow);
-    }
+/* ---------- flash-loan ---------- */
+.flash{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;margin-top:56px}
+@media (max-width:900px){.flash{grid-template-columns:1fr}}
+.block{border:1px solid var(--line);border-radius:20px;background:var(--ink-2);padding:22px;overflow:hidden}
+.block-head{display:flex;justify-content:space-between;font-size:14px;color:var(--mist);margin-bottom:16px}
+.tx{display:grid;gap:8px;position:relative}
+.op{display:grid;grid-template-columns:28px 1fr auto;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;background:var(--ink);border:1px solid var(--line);font-size:15px;opacity:.35;transition:opacity .3s,border-color .3s,background .3s}
+.op .n{font:600 13px var(--f-mono);color:var(--mist)}
+.op em{font-style:normal;font:500 13px var(--f-mono);color:var(--mist)}
+.op.lit{opacity:1}
+.op.guard.lit{border-color:var(--gold);background:rgba(255,200,87,.07)}
+.op.dead{opacity:.25;text-decoration:line-through}
+.op.okay.lit{border-color:rgba(124,245,196,.5)}
+.outcome{margin-top:14px;padding:14px;border-radius:12px;font:600 15px var(--f-mono);border:1px dashed var(--line);color:var(--mist);min-height:52px}
+.outcome.no{color:var(--revert);border-color:rgba(255,93,115,.6)}
+.outcome.ok{color:var(--permit);border-color:rgba(124,245,196,.5)}
+.outcome.warn{color:var(--gold);border-color:rgba(255,200,87,.55)}
+.fees{margin-top:30px;display:grid;gap:10px}
+.fee{display:grid;grid-template-columns:1fr auto;gap:4px 14px;font-size:15px}
+.fee span{color:var(--mist)}
+.fee i{grid-column:1/-1;height:6px;border-radius:6px;background:linear-gradient(90deg,var(--blue),var(--gold));transform-origin:left}
 
-    /* Mobile Hamburger Button */
-    .nav-toggle {
-      display: none;
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      width: 40px;
-      height: 40px;
-      cursor: pointer;
-      padding: 8px;
-      flex-direction: column;
-      justify-content: space-around;
-      align-items: center;
-      z-index: 102;
-      transition: all 0.2s;
-    }
-    .nav-toggle span {
-      display: block;
-      width: 22px;
-      height: 2px;
-      background: var(--text-main);
-      border-radius: 2px;
-      transition: transform 0.25s ease, opacity 0.25s ease;
-    }
-    .nav-toggle.active span:nth-child(1) {
-      transform: translateY(7px) rotate(45deg);
-    }
-    .nav-toggle.active span:nth-child(2) {
-      opacity: 0;
-    }
-    .nav-toggle.active span:nth-child(3) {
-      transform: translateY(-7px) rotate(-45deg);
-    }
+/* ---------- benchmarks ---------- */
+.bench{margin-top:56px;display:grid;gap:26px}
+.brow{display:grid;grid-template-columns:200px 1fr;gap:20px;align-items:center}
+.brow .who{font-size:16px}
+.brow .who small{display:block;color:var(--mist);font-size:13px}
+.track{position:relative;height:44px;border-radius:10px;background:var(--ink-2);border:1px solid var(--line);overflow:hidden}
+.track i{position:absolute;inset:0 auto 0 0;width:0;border-radius:10px;transition:width 1.6s cubic-bezier(.2,.8,.2,1)}
+.track b{position:absolute;right:12px;top:50%;transform:translateY(-50%);font:600 15px var(--f-mono)}
+.brow.w .track i{background:var(--gold)}
+.brow.z .track i{background:var(--blue)}
+.brow.t .track i{background:linear-gradient(90deg,#3a2c5e,var(--revert))}
+.axis{display:grid;grid-template-columns:200px 1fr;gap:20px;font:400 12px var(--f-mono);color:var(--mist)}
+.axis div{display:flex;justify-content:space-between}
+@media (max-width:640px){.brow,.axis{grid-template-columns:1fr;gap:8px}.axis>span{display:none}}
+table{width:100%;min-width:640px;border-collapse:collapse;margin-top:56px;font-size:15px}
+.tbl{overflow-x:auto;-webkit-overflow-scrolling:touch}
+th,td{text-align:left;padding:14px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:600;color:var(--mist);font-size:14px}
+td:last-child,th:last-child{color:var(--gold)}
+tbody th{color:var(--nacre);font-weight:500}
 
-    /* Mobile/Tablet Drawer (Activated on <= 1140px to prevent any clipping) */
-    @media (max-width: 1140px) {
-      header { height: 64px; }
-      .nav-toggle { display: flex; }
-      .nav-dropdown { display: none; }
-      .btn-icon-gh { display: none; }
-      .nav-links {
-        display: none;
-        position: fixed;
-        top: 64px;
-        left: 0;
-        width: 100vw;
-        height: calc(100vh - 64px);
-        background: rgba(6, 9, 19, 0.98);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 24px 20px 40px;
-        gap: 0;
-        overflow-y: auto;
-        border-top: 1px solid var(--border-color);
-        z-index: 99;
-      }
-      .nav-links.open {
-        display: flex;
-        animation: fadeInMenu 0.2s ease-out forwards;
-      }
-      .nav-link {
-        font-size: 1.05rem;
-        padding: 16px 8px;
-        width: 100%;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        border-radius: 0;
-      }
-      .mobile-only-links {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        margin-top: 12px;
-      }
-    }
-    @media (min-width: 1141px) {
-      .mobile-only-links { display: none; }
-    }
-    @keyframes fadeInMenu {
-      from { opacity: 0; transform: translateY(-8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+/* ---------- near ---------- */
+.near{background:radial-gradient(1200px 500px at 80% 0%,rgba(74,92,255,.18),transparent 60%)}
+.stream{position:relative;height:250px;margin-top:56px;border:1px solid var(--line);border-radius:20px;background:var(--ink-2);overflow:hidden}
+.gate{position:absolute;left:50%;top:0;bottom:0;width:2px;background:var(--gold);box-shadow:0 0 24px 4px rgba(255,200,87,.5)}
+.gate span{position:absolute;top:14px;left:12px;white-space:nowrap;font:600 13px var(--f-mono);color:var(--gold)}
+.lane-label{position:absolute;bottom:12px;font-size:13px;color:var(--mist)}
+.chip{position:absolute;left:0;padding:9px 13px;border-radius:10px;font:500 13px var(--f-mono);white-space:nowrap;background:var(--ink-3);border:1px solid var(--line);will-change:transform}
+.chip.ok{border-color:rgba(124,245,196,.6);color:var(--permit)}
+.chip.no{border-color:rgba(255,93,115,.7);color:var(--revert)}
+.near-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:28px}
+@media (max-width:900px){.near-grid{grid-template-columns:1fr}}
+.case{padding:20px 0;border-top:1px solid var(--line)}
+.case .tag{font:600 14px var(--f-mono)}
+.case.ok .tag{color:var(--permit)}.case.no .tag{color:var(--revert)}
+.case p{color:var(--mist);font-size:15px;margin-top:8px}
+.deploy{margin-top:48px;display:grid;gap:12px}
+.addr{display:grid;grid-template-columns:240px 1fr auto;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);font-size:15px}
+.addr code{font:400 14px var(--f-mono);overflow-wrap:anywhere;color:var(--nacre)}
+.addr a{font-size:14px;color:var(--ice)}
+@media (max-width:760px){.addr{grid-template-columns:1fr}}
+.cmd{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-top:20px;background:#05040f;border:1px solid var(--line);border-radius:12px;padding:14px 16px;font:400 14px var(--f-mono);overflow-x:auto}
+.cmd code{white-space:nowrap}
+.copy{flex:none;border:1px solid var(--line);background:var(--ink-3);color:var(--nacre);font:500 13px var(--f-body);padding:6px 12px;border-radius:8px;cursor:pointer}
+.copy:hover{border-color:var(--mist)}
 
-    /* Hero Section */
-    .hero {
-      padding: 60px 0 45px;
-      text-align: center;
-    }
-    .pill-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(56, 189, 248, 0.08);
-      border: 1px solid var(--border-accent);
-      padding: 8px 18px;
-      border-radius: 9999px;
-      font-size: 0.85rem;
-      color: var(--cyan);
-      font-weight: 600;
-      margin-bottom: 24px;
-      max-width: 100%;
-      line-height: 1.4;
-      text-align: left;
-    }
-    .hero h1 {
-      font-size: clamp(2.1rem, 5vw, 4.2rem);
-      font-weight: 800;
-      letter-spacing: -1.2px;
-      line-height: 1.15;
-      margin-bottom: 20px;
-      background: linear-gradient(135deg, #ffffff 40%, var(--cyan) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .hero p {
-      font-size: clamp(1rem, 2vw, 1.15rem);
-      color: var(--text-muted);
-      max-width: 820px;
-      margin: 0 auto 36px;
-    }
+/* ---------- proofs ---------- */
+.proof{display:grid;grid-template-columns:5fr 7fr;gap:48px;align-items:start}
+@media (max-width:900px){.proof{grid-template-columns:1fr}}
+.term{background:#05040f;border:1px solid var(--line);border-radius:16px;font:400 13px/1.75 var(--f-mono);height:460px;overflow:hidden;position:relative}
+.term .bar{display:flex;gap:6px;padding:12px 14px;border-bottom:1px solid var(--line)}
+.term .bar i{width:10px;height:10px;border-radius:50%;background:var(--ink-3)}
+.term pre{margin:0;padding:14px 18px;white-space:pre-wrap;word-break:break-all;color:#cfc9f3;height:calc(100% - 35px);overflow:hidden}
+.term .ok{color:var(--permit)}.term .k{color:var(--gold)}.term .d{color:var(--mist)}
+.proof-facts{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:36px}
+.proof-facts div{border-top:1px solid var(--line);padding-top:14px}
+.proof-facts strong{display:block;font:500 30px var(--f-display);letter-spacing:-.02em}
+.proof-facts span{color:var(--mist);font-size:15px}
+.links{margin-top:28px;display:flex;flex-wrap:wrap;gap:10px}
 
-    /* Metric Badges Grid */
-    .hero-stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 16px;
-      margin-bottom: 40px;
-    }
-    .stat-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      padding: 20px;
-      border-radius: 12px;
-      text-align: left;
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.2s ease, border-color 0.2s ease;
-    }
-    .stat-card:hover {
-      transform: translateY(-2px);
-      border-color: var(--border-accent);
-    }
-    .stat-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; width: 4px; height: 100%;
-      background: var(--stat-color, var(--cyan));
-    }
-    .stat-val {
-      font-size: 1.75rem;
-      font-weight: 800;
-      font-family: var(--font-mono);
-      color: #fff;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      line-height: 1.2;
-    }
-    .stat-lbl {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-top: 6px;
-      line-height: 1.35;
-    }
+/* ---------- integrate ---------- */
+.code{background:#05040f;border:1px solid var(--line);border-radius:16px;margin-top:40px;overflow:hidden}
+.code-head{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid var(--line);font-size:14px;color:var(--mist)}
+.code pre{margin:0;padding:20px;overflow-x:auto;font:400 14px/1.7 var(--f-mono);color:#d8d3ff}
+.code .c{color:#6f6a9c}.code .kw{color:#9fb0ff}.code .s{color:var(--permit)}.code .fn{color:var(--gold)}
 
-    /* Buttons */
-    .hero-actions {
-      display: flex;
-      justify-content: center;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-    .btn {
-      padding: 12px 24px;
-      min-height: 44px;
-      border-radius: 10px;
-      font-weight: 600;
-      font-size: 0.92rem;
-      text-decoration: none;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      text-align: center;
-      touch-action: manipulation;
-    }
-    .btn-primary {
-      background: linear-gradient(135deg, #0284c7, #06b6d4);
-      color: #000;
-      font-weight: 700;
-      border: none;
-      box-shadow: 0 4px 18px var(--cyan-glow);
-    }
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 26px var(--cyan-glow);
-    }
-    .btn-secondary {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      color: #fff;
-    }
-    .btn-secondary:hover {
-      border-color: var(--cyan);
-      transform: translateY(-2px);
-    }
+/* ---------- research ---------- */
+.refs{margin-top:48px;border-top:1px solid var(--line)}
+.ref{display:grid;grid-template-columns:220px 1fr auto;gap:20px;align-items:baseline;padding:22px 0;border-bottom:1px solid var(--line);text-decoration:none}
+.ref:hover .t{color:var(--gold)}
+.ref .k{font:500 15px var(--f-display);color:var(--mist)}
+.ref .t{font-size:19px;transition:color .2s}
+.ref .t small{display:block;color:var(--mist);font-size:15px}
+.ref .id{font:400 14px var(--f-mono);color:var(--mist)}
+@media (max-width:760px){.ref{grid-template-columns:1fr;gap:4px}}
+.support{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:80px;padding-top:56px;border-top:1px solid var(--line)}
+@media (max-width:900px){.support{grid-template-columns:1fr}}
+.wallet{background:var(--ink-2);border:1px solid var(--line);border-radius:16px;padding:20px}
+.wallet span{display:block;font-size:14px;color:var(--mist);margin-bottom:10px}
+.wallet .row{display:flex;gap:12px;align-items:center;justify-content:space-between}
+.wallet code{font:600 15px var(--f-mono);overflow-wrap:anywhere}
+.org{color:var(--mist);font-size:15px;line-height:1.8}
+.org b{color:var(--nacre);font-weight:500}
 
-    /* Section Wrapper */
-    .section-wrap {
-      padding: 65px 0;
-      border-top: 1px solid var(--border-color);
-    }
-    .section-header {
-      margin-bottom: 34px;
-    }
-    .section-header h2 {
-      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
-      font-weight: 700;
-      letter-spacing: -0.5px;
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-      line-height: 1.25;
-    }
-    .section-header p {
-      color: var(--text-muted);
-      font-size: 1rem;
-      max-width: 850px;
-      line-height: 1.5;
-    }
+footer{border-top:1px solid var(--line);padding:40px 0 56px;color:var(--mist);font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:16px 32px;justify-content:space-between}
+footer nav{display:flex;flex-wrap:wrap;gap:18px}
+footer a{text-decoration:none}
+footer a:hover{color:var(--nacre)}
 
-    /* Live Interactive EVM Simulator */
-    .sim-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-    }
-    @media (max-width: 900px) {
-      .sim-grid { grid-template-columns: 1fr; }
-    }
-    .card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
-      padding: 26px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-    }
-    .form-group {
-      margin-bottom: 18px;
-    }
-    .form-group label {
-      display: block;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      margin-bottom: 8px;
-      font-family: var(--font-mono);
-    }
-    .input-range-wrap {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    
-    /* Touch Ergonomic Range Inputs */
-    input[type=range] {
-      flex: 1;
-      -webkit-appearance: none;
-      appearance: none;
-      height: 8px;
-      border-radius: 4px;
-      background: #1e293b;
-      outline: none;
-      cursor: pointer;
-    }
-    input[type=range]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      background: var(--cyan);
-      box-shadow: 0 0 10px var(--cyan-glow);
-      border: 2px solid #ffffff;
-      cursor: grab;
-      transition: transform 0.1s ease;
-    }
-    input[type=range]::-webkit-slider-thumb:active {
-      transform: scale(1.15);
-      cursor: grabbing;
-    }
-    input[type=range]::-moz-range-thumb {
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      background: var(--cyan);
-      box-shadow: 0 0 10px var(--cyan-glow);
-      border: 2px solid #ffffff;
-      cursor: grab;
-    }
-    .val-badge {
-      font-family: var(--font-mono);
-      font-size: 0.85rem;
-      color: var(--cyan);
-      background: rgba(56, 189, 248, 0.1);
-      padding: 6px 10px;
-      border-radius: 6px;
-      min-width: 95px;
-      text-align: right;
-      font-weight: 600;
-      flex-shrink: 0;
-    }
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,120px);background:var(--nacre);color:var(--ink);font:600 14px var(--f-body);padding:12px 18px;border-radius:12px;z-index:80;transition:transform .3s}
+.toast.show{transform:translate(-50%,0)}
+.preview-flag{position:fixed;left:14px;bottom:14px;z-index:60;font:500 12px var(--f-body);color:var(--mist);background:rgba(15,13,43,.85);border:1px solid var(--line);padding:6px 10px;border-radius:8px}
+.preview-flag a{color:var(--ice)}
 
-    .preset-btns {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 20px;
-    }
-    .btn-preset {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      font-size: 0.82rem;
-      padding: 8px 14px;
-      min-height: 40px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      touch-action: manipulation;
-    }
-    .btn-preset:hover, .btn-preset.active {
-      background: rgba(56, 189, 248, 0.15);
-      border-color: var(--cyan);
-      color: var(--cyan);
-    }
-    .btn-preset.near-active {
-      background: rgba(0, 236, 151, 0.15);
-      border-color: var(--near-green);
-      color: var(--near-green);
-    }
+@media (prefers-reduced-motion:reduce){
+  *{scroll-behavior:auto!important;transition:none!important;animation:none!important}
+}
 
-    /* Output Console */
-    .console-out {
-      background: #050811;
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      padding: 18px;
-      font-family: var(--font-mono);
-      font-size: 0.85rem;
-      margin-top: 20px;
-    }
-    .console-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 8px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-    }
-    .console-row:last-child { border: none; margin: 0; padding: 0; }
-    .text-emerald { color: var(--emerald); font-weight: 700; }
-    .text-rose { color: var(--rose); font-weight: 700; }
-    .text-amber { color: var(--amber); font-weight: 700; }
-    .text-cyan { color: var(--cyan); font-weight: 700; }
-
-    /* Microgrid visualizer */
-    .microgrid-canvas-wrap {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-    }
-    #paretoCanvas {
-      background: #04060c;
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      box-shadow: 0 0 25px rgba(56, 189, 248, 0.1);
-      max-width: 100%;
-      height: auto;
-      aspect-ratio: 1 / 1;
-    }
-
-    /* Responsive Scroll Containers */
-    .slot-table-wrap, .code-wrap {
-      width: 100%;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      margin: 16px 0;
-      border-radius: 8px;
-    }
-
-    /* 32-Byte Slot Diagram */
-    .slot-table {
-      width: 100%;
-      min-width: 580px;
-      border-collapse: collapse;
-      font-family: var(--font-mono);
-      font-size: 0.82rem;
-      border-radius: 8px;
-      overflow: hidden;
-    }
-    .slot-table th, .slot-table td {
-      border: 1px solid var(--border-color);
-      padding: 12px 14px;
-      text-align: left;
-    }
-    .slot-table th {
-      background: #090e1d;
-      color: var(--cyan);
-      font-weight: 700;
-    }
-    .slot-table tr:nth-child(even) { background: rgba(255,255,255,0.02); }
-
-    /* Comparison Matrix Table */
-    .comp-table {
-      width: 100%;
-      min-width: 600px;
-      border-collapse: collapse;
-      font-size: 0.88rem;
-    }
-    .comp-table th, .comp-table td {
-      border: 1px solid var(--border-color);
-      padding: 14px 16px;
-      text-align: left;
-    }
-    .comp-table th {
-      background: #0c1428;
-      color: #fff;
-      font-weight: 700;
-    }
-    .comp-table tr.highlight {
-      background: rgba(56, 189, 248, 0.08);
-      border-left: 3px solid var(--cyan);
-    }
-
-    /* Code Snippet Box */
-    .code-box {
-      background: #050811;
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 20px;
-      font-family: var(--font-mono);
-      font-size: 0.85rem;
-      color: #e2e8f0;
-      line-height: 1.55;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      white-space: pre;
-    }
-
-    /* Quick Snippet Box with Copy Button */
-    .quick-snippet {
-      position: relative;
-      background: #040712;
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 12px 48px 12px 14px;
-      font-family: var(--font-mono);
-      font-size: 0.82rem;
-      color: var(--cyan);
-      overflow-x: auto;
-      margin: 10px 0;
-      white-space: nowrap;
-    }
-    .btn-snippet-copy {
-      position: absolute;
-      right: 8px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      color: var(--cyan);
-      padding: 4px 8px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 0.72rem;
-      font-family: var(--font-sans);
-      font-weight: 600;
-      transition: all 0.2s;
-    }
-    .btn-snippet-copy:hover {
-      border-color: var(--cyan);
-      background: rgba(56, 189, 248, 0.15);
-    }
-
-    /* Wallet Support Card */
-    .wallet-card {
-      background: linear-gradient(135deg, rgba(12, 18, 34, 0.95), rgba(18, 27, 51, 0.95));
-      border: 1px solid var(--border-accent);
-      border-radius: 16px;
-      padding: 28px;
-      margin-top: 30px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    }
-    .wallet-addr {
-      background: #050811;
-      border: 1px solid var(--border-color);
-      padding: 10px 16px;
-      border-radius: 8px;
-      font-family: var(--font-mono);
-      font-size: 0.88rem;
-      color: var(--amber);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 10px 0;
-      word-break: break-all;
-      gap: 10px;
-    }
-    .btn-copy {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      color: var(--cyan);
-      padding: 6px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 0.75rem;
-      font-weight: 600;
-      transition: all 0.2s;
-      flex-shrink: 0;
-      min-height: 34px;
-    }
-    .btn-copy:hover { border-color: var(--cyan); color: #fff; }
-
-    /* Toast Notification */
-    #toast {
-      position: fixed;
-      bottom: 24px;
-      left: 50%;
-      transform: translateX(-50%) translateY(100px);
-      background: #0f172a;
-      border: 1px solid var(--cyan);
-      color: #fff;
-      padding: 12px 24px;
-      border-radius: 9999px;
-      font-size: 0.88rem;
-      font-weight: 600;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-      opacity: 0;
-      pointer-events: none;
-      transition: transform 0.25s ease, opacity 0.25s ease;
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      white-space: nowrap;
-    }
-    #toast.show {
-      transform: translateX(-50%) translateY(0);
-      opacity: 1;
-    }
-
-    /* Floating Back to Top Button */
-    #backToTop {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: var(--bg-card);
-      border: 1px solid var(--border-accent);
-      color: var(--cyan);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.25s ease;
-      z-index: 90;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-    }
-    #backToTop.visible {
-      opacity: 1;
-      visibility: visible;
-    }
-    #backToTop:hover {
-      transform: translateY(-3px);
-      border-color: var(--cyan);
-      box-shadow: 0 0 15px var(--cyan-glow);
-    }
-
-    /* Footer */
-    footer {
-      border-top: 1px solid var(--border-color);
-      padding: 40px 0;
-      background: #04060c;
-      color: var(--text-muted);
-      font-size: 0.85rem;
-    }
-    .footer-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-    .footer-links {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-    .footer-links a {
-      color: var(--text-muted);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .footer-links a:hover { color: var(--cyan); }
-
-    /* Mobile Responsive Optimizations */
-    @media (max-width: 768px) {
-      .container { padding: 0 16px; }
-      .hero { padding: 36px 0 28px; }
-      .hero h1 { font-size: 2.1rem; letter-spacing: -0.8px; }
-      .hero p { font-size: 0.98rem; margin-bottom: 26px; }
-      .hero-stats { grid-template-columns: 1fr; gap: 12px; }
-      .hero-actions .btn { width: 100%; }
-      .card { padding: 18px; border-radius: 14px; }
-      .wallet-card { padding: 20px; border-radius: 14px; }
-      .wallet-addr {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-      }
-      .btn-copy { width: 100%; }
-      .code-box {
-        font-size: 0.78rem;
-        padding: 14px;
-      }
-      .footer-inner {
-        flex-direction: column;
-        text-align: center;
-        gap: 16px;
-      }
-      .footer-links { justify-content: center; }
-    }
-  </style>
+/* ---------- nav dropdown ---------- */
+.nav-dropdown{position:relative}
+.dropdown-menu{position:absolute;top:calc(100% + 14px);right:0;background:rgba(15,13,43,.96);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--line);border-radius:14px;padding:8px;min-width:240px;display:none;flex-direction:column;gap:4px;z-index:100;box-shadow:0 14px 35px rgba(0,0,0,.7)}
+.nav-dropdown:hover .dropdown-menu,.nav-dropdown:focus-within .dropdown-menu{display:flex}
+.dropdown-item{display:flex;flex-direction:column;gap:2px;padding:8px 12px;border-radius:8px;text-decoration:none;font-size:13px;color:var(--nacre);transition:background .2s,color .2s}
+.dropdown-item:hover{background:var(--ink-3)}
+.dropdown-item span{font-family:var(--f-body);font-weight:600;font-size:13px}
+.dropdown-item small{color:var(--mist);font-size:11px}
+@media (max-width:980px){
+  .nav-dropdown .dropdown-menu{position:static;display:flex;background:transparent;border:none;box-shadow:none;padding:4px 0 8px 16px}
+  .nav-dropdown .dropdown-menu a{border-bottom:none;padding:6px 0;font-size:14px}
+}
+</style>
 </head>
 <body>
-  <div class="bg-grid"></div>
 
-  <!-- Header -->
-  <header>
-    <div class="container nav-inner">
-      <a href="#" class="logo">
-        <img src="assets/werracle_logo_oracle_trans.png" alt="Werracle Logo" width="34" height="34" style="filter: drop-shadow(0 0 10px rgba(0,236,151,0.6));" />
-        <span>Werracle</span>
-        <span class="logo-badge">EVM AI</span>
-      </a>
-
-      <!-- Center Desktop Navigation -->
-      <nav class="nav-links" id="navMenu">
-        <a href="#simulator" class="nav-link" data-en="⚡ Simulator" data-tr="⚡ Simülatör">⚡ Simulator</a>
-        <a href="#benchmark" class="nav-link" data-en="📊 Benchmarks" data-tr="📊 Kıyaslama">📊 Benchmarks</a>
-        <a href="#storage-slot" class="nav-link" data-en="🧩 32-Byte Slot" data-tr="🧩 32-Bayt Slot">🧩 32-Byte Slot</a>
-        <a href="#defi-defense" class="nav-link" data-en="🛡️ DeFi Defense" data-tr="🛡️ DeFi Savunması">🛡️ DeFi Defense</a>
-        <a href="#near-aurora" class="nav-link nav-link-near" data-en="🟢 NEAR & Aurora" data-tr="🟢 NEAR ve Aurora">🟢 NEAR & Aurora</a>
-        <a href="#contracts" class="nav-link" data-en="📄 Contracts" data-tr="📄 Kontratlar">📄 Contracts</a>
-
-        <!-- Visible only in Mobile Drawer -->
-        <div class="mobile-only-links">
-          <a href="https://arxiv.org/abs/2609.30719" target="_blank" class="nav-link" style="color:#f43f5e;">📄 arXiv:2609.30719 [cs.CR] ↗</a>
-          <a href="https://ssrn.com/abstract=7626279" target="_blank" class="nav-link" style="color:#38bdf8;">📄 SSRN:7626279 (Elsevier) ↗</a>
-          <a href="https://doi.org/10.5281/zenodo.22942598" target="_blank" class="nav-link" style="color:#10b981;">🏛️ Zenodo: 10.5281/zenodo.22942598 ↗</a>
-          <a href="https://huggingface.co/papers/2609.30719" target="_blank" class="nav-link" style="color:#fbbf24;">🤗 Hugging Face: Werracle ↗</a>
-          <a href="apidocs.html" class="nav-link" data-en="📚 API Documentation" data-tr="📚 API Dokümantasyonu">📚 API Documentation</a>
-          <a href="https://github.com/pCwOrM/werracle" target="_blank" class="nav-link">⭐ GitHub Repository ↗</a>
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Werracle home"><img src="assets/werracle_logo_oracle_trans.png" alt="Werracle Logo" width="34" height="34" style="filter:drop-shadow(0 0 10px rgba(0,236,151,.5))">Werracle</a>
+    <ul id="menu">
+      <li><a href="#how" data-i18n="nav.how">How it works</a></li>
+      <li><a href="#simulator" data-i18n="nav.sim">Simulator</a></li>
+      <li><a href="#flash" data-i18n="nav.defense">Defense</a></li>
+      <li><a href="#near" data-i18n="nav.near">NEAR</a></li>
+      <li><a href="#proofs" data-i18n="nav.proofs">Proofs</a></li>
+      <li><a href="#integrate" data-i18n="nav.build">Build</a></li>
+      <li class="nav-dropdown">
+        <a href="#research" data-i18n="nav.research">Research ▾</a>
+        <div class="dropdown-menu">
+          <a href="https://arxiv.org/abs/2609.30719" target="_blank" rel="noopener" class="dropdown-item">
+            <span style="color:#f43f5e">📄 arXiv:2609.30719 ↗</span>
+            <small>cs.CR, cs.AI, cs.DC Preprint</small>
+          </a>
+          <a href="https://ssrn.com/abstract=7626279" target="_blank" rel="noopener" class="dropdown-item">
+            <span style="color:#38bdf8">📄 SSRN:7626279 ↗</span>
+            <small>Elsevier SSRN Record</small>
+          </a>
+          <a href="https://doi.org/10.5281/zenodo.22942598" target="_blank" rel="noopener" class="dropdown-item">
+            <span style="color:#10b981">🏛️ Zenodo (CERN) ↗</span>
+            <small>DOI: 10.5281/zenodo.22942598</small>
+          </a>
+          <a href="https://huggingface.co/papers/2609.30719" target="_blank" rel="noopener" class="dropdown-item">
+            <span style="color:#fbbf24">🤗 Hugging Face ↗</span>
+            <small>Paper, Models & Datasets</small>
+          </a>
+          <a href="apidocs.html" class="dropdown-item">
+            <span style="color:#9fe8ff">📚 API Documentation</span>
+            <small>Interactive Swagger & Node</small>
+          </a>
+          <a href="#research" class="dropdown-item" style="border-top:1px solid var(--line);margin-top:4px;padding-top:6px;">
+            <span style="color:var(--gold)" data-i18n="nav.res_overview">Section Overview ▾</span>
+          </a>
         </div>
-      </nav>
-
-      <!-- Right Action Group -->
-      <div class="nav-actions">
-        <!-- Desktop Research Dropdown -->
-        <div class="nav-dropdown" id="researchDropdown">
-          <button class="btn-dropdown" aria-haspopup="true">
-            <span data-en="Research ▾" data-tr="Araştırma ▾">Research ▾</span>
-          </button>
-          <div class="dropdown-menu">
-            <a href="https://arxiv.org/abs/2609.30719" target="_blank" class="dropdown-item">
-              <span style="color:#f43f5e; font-weight:700;">📄 arXiv:2609.30719 ↗</span>
-              <small style="color:var(--text-muted); font-size:0.75rem;">cs.CR, cs.AI, cs.DC Preprint</small>
-            </a>
-            <a href="https://ssrn.com/abstract=7626279" target="_blank" class="dropdown-item">
-              <span style="color:#38bdf8; font-weight:700;">📄 SSRN:7626279 ↗</span>
-              <small style="color:var(--text-muted); font-size:0.75rem;">Elsevier Journal Record</small>
-            </a>
-            <a href="https://doi.org/10.5281/zenodo.22942598" target="_blank" class="dropdown-item">
-              <span style="color:#10b981; font-weight:700;">🏛️ Zenodo (CERN) ↗</span>
-              <small style="color:var(--text-muted); font-size:0.75rem;">DOI: 10.5281/zenodo.22942598</small>
-            </a>
-            <a href="https://huggingface.co/papers/2609.30719" target="_blank" class="dropdown-item">
-              <span style="color:#fbbf24; font-weight:700;">🤗 Hugging Face ↗</span>
-              <small style="color:var(--text-muted); font-size:0.75rem;">Paper, Models & Datasets</small>
-            </a>
-            <a href="apidocs.html" class="dropdown-item">
-              <span style="color:var(--cyan); font-weight:700;" data-en="📚 API Documentation" data-tr="📚 API Belgeleri">📚 API Documentation</span>
-              <small style="color:var(--text-muted); font-size:0.75rem;">Interactive Swagger & REST Node</small>
-            </a>
-          </div>
-        </div>
-
-        <a href="https://github.com/pCwOrM/werracle" target="_blank" class="btn-icon-gh" title="GitHub Repository">
-          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-        </a>
-
-        <button id="langToggle" class="btn-lang" title="Toggle Language">TR</button>
-
-        <button class="nav-toggle" id="navToggle" aria-label="Toggle Navigation Menu">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-      </div>
+      </li>
+    </ul>
+    <div class="tools">
+      <button class="pill" id="lang" aria-label="Switch language">TR</button>
+      <a class="pill gh" href="https://github.com/pCwOrM/werracle">GitHub</a>
+      <button class="pill menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menu" data-i18n="nav.menu">Menu</button>
     </div>
-  </header>
-
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="container">
-      <div class="pill-tag">
-        <span style="color:var(--emerald);">●</span>
-        <span data-en="Published on arXiv: 2609.30719 & SSRN: 7626279 (Elsevier) • Production EVM AI Oracle" data-tr="arXiv: 2609.30719 & SSRN: 7626279 (Elsevier) Yayınlandı • Üretim EVM Yapay Zeka Orakılı">Published on arXiv: 2609.30719 [cs.CR, cs.AI, cs.DC] • Production EVM AI Oracle</span>
-      </div>
-      <h1 data-en="On-Chain AI Decision Oracle Inside a Single 32-Byte Slot" data-tr="Tek Bir 32-Bayt Slot İçinde On-Chain AI Karar Orakılı">On-Chain AI Decision Oracle Inside a Single 32-Byte Slot</h1>
-      <p data-en="Derive instant, deterministic, intra-block decision boundaries (noul, choice, score) natively inside EVM bytecode. Zero tensor matrices. 0 Bytes VRAM. ~19.4k gas." data-tr="EVM baytkodu içinde anlık, deterministik ve blok-içi karar sınırlarını (noul, choice, score) doğrudan üretin. Sıfır tensör matrisi. 0 Bayt VRAM. ~19.4k gas.">
-        Derive instant, deterministic, intra-block decision boundaries (noul, choice, score) natively inside EVM bytecode. Zero tensor matrices. 0 Bytes VRAM. ~19.4k gas.
-      </p>
-
-      <!-- Stats Grid -->
-      <div class="hero-stats">
-        <div class="stat-card" style="--stat-color: var(--cyan);">
-          <div class="stat-val">~19,400</div>
-          <div class="stat-lbl" data-en="EVM Gas per Inference (< $0.0001 on L2)" data-tr="Karar Başına Gas (< $0.0001 L2 üzerinde)">EVM Gas per Inference (&lt; $0.0001 on L2)</div>
-        </div>
-        <div class="stat-card" style="--stat-color: var(--emerald);">
-          <div class="stat-val">1,000 / 1,000</div>
-          <div class="stat-lbl" data-en="Sealed Tests (100.0% Pass Rate)" data-tr="Mühürlü Test (%100.0 Başarı Oranı)">Sealed Tests (100.0% Pass Rate)</div>
-        </div>
-        <div class="stat-card" style="--stat-color: var(--purple);">
-          <div class="stat-val">1 Slot</div>
-          <div class="stat-lbl" data-en="Single bytes32 EVM Storage Word" data-tr="Tek Bir bytes32 EVM Depolama Sözcüğü">Single bytes32 EVM Storage Word</div>
-        </div>
-        <div class="stat-card" style="--stat-color: var(--amber);">
-          <div class="stat-val">&lt; 1 ms</div>
-          <div class="stat-lbl" data-en="Intra-Block Flash-Loan Defense Latency" data-tr="Blok-İçi Flash-Loan Savunma Gecikmesi">Intra-Block Flash-Loan Defense Latency</div>
-        </div>
-        <div class="stat-card" style="--stat-color: var(--near-green);">
-          <div class="stat-val">40 Theorems</div>
-          <div class="stat-lbl" data-en="Machine-Certified Lean 4 (0 sorry, 0 axioms)" data-tr="Lean 4 Matematiksel Kanıt (0 sorry, 0 aksiyom)">Machine-Certified Lean 4 (0 sorry, 0 axioms)</div>
-        </div>
-      </div>
-
-      <div class="hero-actions">
-        <a href="#simulator" class="btn btn-primary" data-en="⚡ Launch Live Simulator" data-tr="⚡ Canlı Simülatörü Başlat">⚡ Launch Live Simulator</a>
-        <a href="#near-aurora" class="btn btn-secondary" style="border-color:var(--near-green); color:var(--near-green);" data-en="🟢 NEAR & Aurora Hackathon" data-tr="🟢 NEAR ve Aurora Hackathon">🟢 NEAR & Aurora Hackathon</a>
-        <a href="https://arxiv.org/abs/2609.30719" target="_blank" class="btn btn-secondary" style="border-color:#f43f5e; color:#f43f5e;">📄 arXiv:2609.30719 ↗</a>
-        <a href="https://github.com/pCwOrM/werracle" target="_blank" class="btn btn-secondary">
-          <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-          GitHub Repository
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Interactive EVM Simulator Section -->
-  <section class="section-wrap" id="simulator">
-    <div class="container">
-      <div class="section-header">
-        <h2 data-en="⚡ Interactive On-Chain Decision Simulator (Q16.16)" data-tr="⚡ Etkileşimli On-Chain Karar Simülatörü (Q16.16)">⚡ Interactive On-Chain Decision Simulator (Q16.16)</h2>
-        <p data-en="Direct browser execution of WerrMath.sol integer fixed-point arithmetic and 16-point Pareto microgrid dynamics matching the EVM bytecode." data-tr="WerrMath.sol sabit noktalı tam sayı matematiğinin ve 16 noktalı Pareto mikro-ızgarasının EVM baytkodu ile birebir eşleşen tarayıcı çalıştırması.">Direct browser execution of WerrMath.sol integer fixed-point arithmetic and 16-point Pareto microgrid dynamics matching the EVM bytecode.</p>
-      </div>
-
-      <div class="sim-grid">
-        <!-- Controls Column -->
-        <div class="card">
-          <!-- Live EVM Testnet Status Bar -->
-          <div class="evm-mode-bar" style="display:flex; justify-content:space-between; align-items:center; background:rgba(56,189,248,0.08); border:1px solid var(--border-accent); border-radius:8px; padding:10px 14px; margin-bottom:16px;">
-            <div style="display:flex; align-items:center; gap:8px;">
-              <span id="liveDot" style="display:inline-block; width:10px; height:10px; border-radius:50%; background:var(--emerald); box-shadow:0 0 8px var(--emerald);"></span>
-              <strong style="font-size:0.85rem;" data-en="Live EVM Node (api.answerr.me)" data-tr="Canlı EVM Düğümü (api.answerr.me)">Live EVM Node (api.answerr.me)</strong>
-              <span class="badge" style="font-size:0.7rem; background:#1e293b; color:var(--cyan); padding:2px 6px; border-radius:4px; font-family:var(--font-mono);">ChainID: 4242</span>
-            </div>
-            <label style="display:flex; align-items:center; gap:6px; cursor:pointer; font-size:0.8rem;">
-              <input type="checkbox" id="liveEvmToggle" checked style="accent-color:var(--cyan); cursor:pointer;">
-              <span data-en="Live On-Chain" data-tr="Canlı On-Chain">Live On-Chain</span>
-            </label>
-          </div>
-
-          <div class="preset-btns">
-            <span style="font-size:0.8rem; color:var(--text-muted); align-self:center; font-weight:600;" data-en="Presets:" data-tr="Hazır Ayarlar:">Presets:</span>
-            <button class="btn-preset active" onclick="applyPreset('default')">Standard Oracle</button>
-            <button class="btn-preset" onclick="applyPreset('flashloan')">Flash-Loan Defense</button>
-            <button class="btn-preset" onclick="applyPreset('nearintent')">🟢 NEAR Intent Guard</button>
-            <button class="btn-preset" onclick="applyPreset('dynamicfee')">Uniswap v4 Fee</button>
-            <button class="btn-preset" onclick="applyPreset('aml')">KYC / AML Gate</button>
-          </div>
-
-          <div class="form-group">
-            <label>c_x (Real Axis Coordinate / Q16.16)</label>
-            <div class="input-range-wrap">
-              <input type="range" id="cxRange" min="-2.0" max="0.5" step="0.001" value="-0.7436">
-              <span class="val-badge" id="cxVal">-0.7436</span>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label>c_y (Imaginary Axis Coordinate / Q16.16)</label>
-            <div class="input-range-wrap">
-              <input type="range" id="cyRange" min="-1.5" max="1.5" step="0.001" value="0.1318">
-              <span class="val-badge" id="cyVal">+0.1318</span>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label>Zoom (Resolution / Boundary Sensitivity)</label>
-            <div class="input-range-wrap">
-              <input type="range" id="zoomRange" min="1.0" max="100.0" step="0.5" value="50.0">
-              <span class="val-badge" id="zoomVal">50.0x</span>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label data-en="Protocol Action Threshold" data-tr="Protokol Aksiyon Eşiği">Protocol Action Threshold</label>
-            <div class="input-range-wrap">
-              <input type="range" id="threshRange" min="0.1" max="0.9" step="0.05" value="0.50">
-              <span class="val-badge" id="threshVal">0.50</span>
-            </div>
-          </div>
-
-          <div class="console-out">
-            <div class="console-row">
-              <span data-en="Synthesized Byte (noul):" data-tr="Sentezlenen Bayt (noul):">Synthesized Byte (noul):</span>
-              <span id="outNoul" class="text-cyan">0x2A (42)</span>
-            </div>
-            <div class="console-row">
-              <span data-en="Autonomous Action:" data-tr="Otonom Aksiyon:">Autonomous Action:</span>
-              <span id="outChoice" class="text-emerald">PERMIT / EXECUTE</span>
-            </div>
-            <div class="console-row">
-              <span data-en="Confidence Score:" data-tr="Güven Skoru:">Confidence Score:</span>
-              <span id="outScore" class="text-amber">0.684</span>
-            </div>
-            <div class="console-row">
-              <span data-en="Estimated Gas Cost:" data-tr="Tahmini Gas Maliyeti:">Estimated Gas Cost:</span>
-              <span id="outGas" class="text-cyan">19,420 gas ($0.0006)</span>
-            </div>
-            <div class="console-row" id="liveEvmRow" style="border-top:1px dashed #334155; padding-top:8px; margin-top:8px;">
-              <span style="color:var(--text-muted); font-size:0.8rem;" data-en="Live EVM Node (api.answerr.me):" data-tr="Canlı EVM Düğümü (api.answerr.me):">Live EVM Node (api.answerr.me):</span>
-              <span id="outLiveDetails" class="text-emerald" style="font-size:0.8rem; font-family:var(--font-mono);">Connecting...</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Visualizer Column -->
-        <div class="card microgrid-canvas-wrap">
-          <canvas id="paretoCanvas" width="360" height="360"></canvas>
-          <div style="font-size:0.82rem; color:var(--text-muted); margin-top:14px; text-align:center; line-height:1.4;" data-en="16-Point Pareto Micro-Grid along Mandelbrot Boundary ∂ℳ" data-tr="Mandelbrot Sınırı ∂ℳ Boyunca 16-Noktalı Pareto Mikro-Izgarası">
-            16-Point Pareto Micro-Grid along Mandelbrot Boundary ∂ℳ
-          </div>
-          <div style="display:flex; gap:10px; margin-top:12px; font-size:0.75rem; flex-wrap:wrap; justify-content:center;">
-            <span style="color:#38bdf8;">● High Escape (Safe / Calm)</span>
-            <span style="color:#f59e0b;">● Medium (Turbulence)</span>
-            <span style="color:#f43f5e;">● Trapped / Low (Hostile MEV)</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Architectural Benchmarks & Comparison Section -->
-  <section class="section-wrap" id="benchmark">
-    <div class="container">
-      <div class="section-header">
-        <h2 data-en="📊 Architecture Comparison: Werracle vs ZK-ML & Traditional ML" data-tr="📊 Mimari Karşılaştırma: Werracle vs ZK-ML ve Geleneksel ML">📊 Architecture Comparison: Werracle vs ZK-ML & Traditional ML</h2>
-        <p data-en="Why procedural fixed-point dynamical systems solve the EVM Von Neumann memory wall where deep neural networks fail." data-tr="Derin yapay sinir ağlarının başarısız olduğu yerde prosedürel sabit noktalı dinamik sistemlerin EVM Von Neumann bellek duvarını nasıl aştığı.">Why procedural fixed-point dynamical systems solve the EVM Von Neumann memory wall where deep neural networks fail.</p>
-      </div>
-
-      <div class="card">
-        <div class="slot-table-wrap">
-          <table class="comp-table">
-            <thead>
-              <tr>
-                <th data-en="Evaluation Dimension" data-tr="Değerlendirme Boyutu">Evaluation Dimension</th>
-                <th data-en="Traditional ML on EVM" data-tr="Geleneksel ML (EVM)">Traditional ML on EVM</th>
-                <th data-en="ZK-ML (Zero-Knowledge)" data-tr="ZK-ML (Sıfır Bilgi)">ZK-ML (Zero-Knowledge)</th>
-                <th style="color:var(--cyan);" data-en="⚡ Werracle (This Work)" data-tr="⚡ Werracle (Bizim Çalışma)">⚡ Werracle (This Work)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="highlight">
-                <td><strong>EVM Gas Cost per Inference</strong></td>
-                <td style="color:var(--rose);">> 15,000,000 gas (Exceeds block)</td>
-                <td>~350,000 gas (Verifier call)</td>
-                <td style="color:var(--emerald); font-weight:700;">~19,400 gas (&lt; $0.0001)</td>
-              </tr>
-              <tr class="highlight">
-                <td><strong>Inference Latency</strong></td>
-                <td style="color:var(--rose);">Cannot execute within block</td>
-                <td style="color:var(--amber);">10 – 300 seconds (Off-chain proof)</td>
-                <td style="color:var(--emerald); font-weight:700;">&lt; 1 millisecond (Intra-Block Reflex)</td>
-              </tr>
-              <tr>
-                <td><strong>On-Chain Storage Footprint</strong></td>
-                <td>Gigabytes (Tensor weights)</td>
-                <td>Kilobytes (Verification keys)</td>
-                <td style="color:var(--cyan); font-weight:700;">32 Bytes (Single <code>bytes32</code> Slot)</td>
-              </tr>
-              <tr>
-                <td><strong>Intra-Block Flash Loan Defense</strong></td>
-                <td style="color:var(--rose);">Impossible</td>
-                <td style="color:var(--rose);">Impossible (Proof too slow)</td>
-                <td style="color:var(--emerald); font-weight:700;">Native Atomic Revert (Same Tx)</td>
-              </tr>
-              <tr>
-                <td><strong>External Prover / Relayer Dependency</strong></td>
-                <td>Required</td>
-                <td style="color:var(--rose);">Mandatory Off-Chain Prover</td>
-                <td style="color:var(--emerald); font-weight:700;">Zero External Dependency (Air-Gapped)</td>
-              </tr>
-              <tr>
-                <td><strong>Formal Mathematical Verification</strong></td>
-                <td>Empirical / None</td>
-                <td>Circuit Verification Only</td>
-                <td style="color:var(--purple); font-weight:700;">40 Lean 4 Theorems (0 sorry)</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 32-Byte Slot Layout Section -->
-  <section class="section-wrap" id="storage-slot">
-    <div class="container">
-      <div class="section-header">
-        <h2 data-en="🧩 The 32-Byte Single Storage Slot Architecture" data-tr="🧩 32-Baytlık Tek Depolama Slotu Mimarisi">🧩 The 32-Byte Single Storage Slot Architecture</h2>
-        <p data-en="All decision coordinates, security nonces, and threshold parameters pack into a single bytes32 EVM storage word. A warm SLOAD costs only 100 gas." data-tr="Tüm karar koordinatları, güvenlik nonce değerleri ve eşik parametreleri tek bir bytes32 EVM slotuna sığar. Sıcak bir SLOAD yalnızca 100 gas harcar.">All decision coordinates, security nonces, and threshold parameters pack into a single bytes32 EVM storage word. A warm SLOAD costs only 100 gas.</p>
-      </div>
-
-      <div class="card">
-        <div class="slot-table-wrap">
-          <table class="slot-table">
-            <thead>
-              <tr>
-                <th>Field</th>
-                <th>Bytes</th>
-                <th>Type</th>
-                <th>Example Packed Value</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><code>c_x</code></td>
-                <td>00 – 07 (8B)</td>
-                <td><code>int64 (Q16.16)</code></td>
-                <td><code>-48735 (-0.7436)</code></td>
-                <td>Real component coordinate along Mandelbrot edge</td>
-              </tr>
-              <tr>
-                <td><code>c_y</code></td>
-                <td>08 – 15 (8B)</td>
-                <td><code>int64 (Q16.16)</code></td>
-                <td><code>+8639 (+0.1318)</code></td>
-                <td>Imaginary component coordinate along Mandelbrot edge</td>
-              </tr>
-              <tr>
-                <td><code>zoom</code></td>
-                <td>16 – 23 (8B)</td>
-                <td><code>uint64 (Q16.16)</code></td>
-                <td><code>3276800 (50.0x)</code></td>
-                <td>Resolution scaling and boundary sensitivity</td>
-              </tr>
-              <tr>
-                <td><code>nonce</code></td>
-                <td>24 – 27 (4B)</td>
-                <td><code>uint32</code></td>
-                <td><code>1048576</code></td>
-                <td>Anti-replay parameter update nonce</td>
-              </tr>
-              <tr>
-                <td><code>threshold</code></td>
-                <td>28 – 29 (2B)</td>
-                <td><code>uint16 (Q0.16)</code></td>
-                <td><code>32768 (0.500)</code></td>
-                <td>Normalized action trigger threshold</td>
-              </tr>
-              <tr>
-                <td><code>mode</code></td>
-                <td>30 (1B)</td>
-                <td><code>uint8</code></td>
-                <td><code>1 (DeFi Strict)</code></td>
-                <td>Governance operational policy flag</td>
-              </tr>
-              <tr>
-                <td><code>active</code></td>
-                <td>31 (1B)</td>
-                <td><code>uint8</code></td>
-                <td><code>1 (Active)</code></td>
-                <td>Emergency circuit-breaker state</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- DeFi Flash-Loan Defense & Uniswap Hook -->
-  <section class="section-wrap" id="defi-defense">
-    <div class="container">
-      <div class="section-header">
-        <h2 data-en="🛡️ Atomic Flash-Loan Defense & Uniswap v4 Dynamic Fees" data-tr="🛡️ Atomik Flash-Loan Savunması ve Uniswap v4 Dinamik Komisyonu">🛡️ Atomic Flash-Loan Defense & Uniswap v4 Dynamic Fees</h2>
-        <p data-en="Halts hostile liquidity drainage within the exact same transaction before block finalization." data-tr="Saldırgan likidite boşaltma işlemlerini blok kesinleşmeden önce tam aynı işlem içinde durdurur.">Halts hostile liquidity drainage within the exact same transaction before block finalization.</p>
-      </div>
-
-      <div class="sim-grid">
-        <div class="card">
-          <h3 style="margin-bottom:16px; color:var(--cyan);" data-en="Simulate Pool Attack" data-tr="Havuz Saldırısı Simüle Et">Simulate Pool Attack</h3>
-          <div class="form-group">
-            <label data-en="Pool Total Liquidity (ETH)" data-tr="Havuz Toplam Likiditesi (ETH)">Pool Total Liquidity (ETH)</label>
-            <div class="val-badge" style="width:100%; text-align:left;">10,000 ETH</div>
-          </div>
-          <div class="form-group">
-            <label data-en="Flash-Loan Borrow Amount (ETH)" data-tr="Flash-Loan Borçlanma Miktarı (ETH)">Flash-Loan Borrow Amount (ETH)</label>
-            <div class="input-range-wrap">
-              <input type="range" id="borrowRange" min="10" max="9500" step="50" value="450">
-              <span class="val-badge" id="borrowVal">450 ETH</span>
-            </div>
-          </div>
-          <div class="form-group">
-            <label data-en="Instantaneous Price Slippage" data-tr="Anlık Fiyat Kayması (Slippage)">Instantaneous Price Slippage</label>
-            <div class="input-range-wrap">
-              <input type="range" id="slipRange" min="0.1" max="40.0" step="0.5" value="1.2">
-              <span class="val-badge" id="slipVal">1.2%</span>
-            </div>
-          </div>
-          <div class="console-out">
-            <div class="console-row">
-              <span data-en="Borrow / Reserve Ratio:" data-tr="Borç / Rezerv Oranı:">Borrow / Reserve Ratio:</span>
-              <span id="outRatio" class="text-cyan">4.50%</span>
-            </div>
-            <div class="console-row">
-              <span data-en="Triage Status:" data-tr="Triyaj Durumu:">Triage Status:</span>
-              <span id="outTriage" class="text-emerald">SAFE_RESERVE</span>
-            </div>
-            <div class="console-row">
-              <span data-en="Smart Contract Action:" data-tr="Akıllı Kontrat Aksiyonu:">Smart Contract Action:</span>
-              <span id="outAction" class="text-emerald">EXECUTE_SWAP</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3 style="margin-bottom:16px; color:var(--amber);" data-en="Uniswap v4 Dynamic Fee Curve" data-tr="Uniswap v4 Dinamik Komisyon Eğrisi">Uniswap v4 Dynamic Fee Curve</h3>
-          <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:20px;" data-en="Werracle calculates real-time volatility without external oracles, adjusting pool LP fees dynamically between 0.05% and 0.50%." data-tr="Werracle harici orakıllara ihtiyaç duymadan gerçek zamanlı volatiliteyi hesaplar, havuz komisyonunu dinamik olarak %0.05 ile %0.50 arasında ayarlar.">
-            Werracle calculates real-time volatility without external oracles, adjusting pool LP fees dynamically between 0.05% and 0.50%.
-          </p>
-          <div class="console-out">
-            <div class="console-row">
-              <span>Deep Liquidity / Calm:</span>
-              <span class="text-cyan">0.05% – 0.15% (500–1500 pips)</span>
-            </div>
-            <div class="console-row">
-              <span>Normal Trading Volatility:</span>
-              <span class="text-emerald">0.25% – 0.30% (2500–3000 pips)</span>
-            </div>
-            <div class="console-row">
-              <span>Elevated Turbulence / MEV:</span>
-              <span class="text-amber">0.40% – 0.45% (4000–4500 pips)</span>
-            </div>
-            <div class="console-row">
-              <span>Extreme Flash Crash:</span>
-              <span class="text-rose">0.50% (5000 pips MAX_CAP)</span>
-            </div>
-          </div>
-          <div style="margin-top:20px;">
-            <a href="https://github.com/pCwOrM/werracle/blob/main/contracts/hooks/WerracleFeeHook.sol" target="_blank" class="btn btn-secondary" style="width:100%; justify-content:center;">
-              View WerracleFeeHook.sol ↗
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- NEAR Protocol & Aurora EVM Showcase Section -->
-  <section class="section-wrap" id="near-aurora" style="border-top:1px solid rgba(0,236,151,0.25); background:linear-gradient(180deg, rgba(0,236,151,0.04) 0%, rgba(10,15,30,0.85) 100%);">
-    <div class="container">
-      <div class="section-header">
-        <div class="pill-tag" style="border-color:rgba(0,236,151,0.4); color:var(--near-green);">
-          <span>●</span>
-          <span>NEAR Hackathon 2026 • Tracks: Unstoppable DeFi & AI Security</span>
-        </div>
-        <h2 data-en="🛡️ NEAR Protocol Intents & Aurora EVM Guard" data-tr="🛡️ NEAR Protokolü Niyetleri ve Aurora EVM Kalkanı">🛡️ NEAR Protocol Intents & Aurora EVM Guard</h2>
-        <p data-en="Defending cross-chain NEAR Intents and MPC Chain Signatures with intra-block procedural escape reflex gating (< 1ms, ~21k gas)." data-tr="Çapraz zincir NEAR niyetlerini ve MPC zincir imzalarını blok-içi prosedürel kaçış refleks kapısıyla koruyun (< 1ms, ~21k gas).">
-          Defending cross-chain NEAR Intents and MPC Chain Signatures with intra-block procedural escape reflex gating (&lt; 1ms, ~21k gas).
-        </p>
-      </div>
-
-      <div class="card" style="border-color:rgba(0,236,151,0.3); background:rgba(12,18,34,0.95);">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:16px;">
-          <div>
-            <h3 style="color:var(--near-green); font-size:1.15rem; margin:0;" data-en="⚡ Cross-Chain Intent & Chain Signature Verification Engine" data-tr="⚡ Çapraz Zincir Niyet & Zincir İmzası Doğrulama Motoru">⚡ Cross-Chain Intent & Chain Signature Verification Engine</h3>
-            <span style="font-size:0.85rem; color:var(--text-muted);" data-en="Pre-signing reflex triage suppresses toxic MEV and flash loans before target broadcast." data-tr="İmza öncesi refleks triyajı, hedef zincire yayından önce toksik MEV ve flaş kredileri durdurur.">Pre-signing reflex triage suppresses toxic MEV and flash loans before target broadcast.</span>
-          </div>
-          <div style="display:flex; gap:8px; flex-wrap:wrap;">
-            <span class="badge" style="background:#022c22; color:var(--near-green); border:1px solid var(--near-green); font-size:0.8rem; padding:4px 10px; border-radius:4px; font-family:var(--font-mono);">pcworm.near</span>
-            <span class="badge" style="background:#1e293b; color:#78D64B; font-size:0.8rem; padding:4px 10px; border-radius:4px; font-family:var(--font-mono);">Aurora Testnet: 1313161555</span>
-          </div>
-        </div>
-
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:14px; margin-bottom:18px;">
-          <div style="background:rgba(0,0,0,0.35); padding:16px; border-radius:8px; border:1px solid rgba(0,236,151,0.25);">
-            <div style="font-size:0.75rem; color:var(--near-green); font-weight:700; text-transform:uppercase;">Clean Intent (Swap)</div>
-            <div style="font-size:1.15rem; color:var(--emerald); font-weight:700; margin:6px 0;">NOUL = 1 (APPROVED)</div>
-            <div style="font-size:0.82rem; color:var(--text-muted);">Volatility: 25 bps &bull; Latency: 12.6 µs &bull; Gas: 21,438</div>
-            <div style="font-size:0.78rem; color:#38bdf8; margin-top:4px;">Action: Chain Signature broadcasted to Base/ETH</div>
-          </div>
-          <div style="background:rgba(0,0,0,0.35); padding:16px; border-radius:8px; border:1px solid rgba(244,63,94,0.4);">
-            <div style="font-size:0.75rem; color:#f43f5e; font-weight:700; text-transform:uppercase;">Predatory Sandwich MEV</div>
-            <div style="font-size:1.15rem; color:#f43f5e; font-weight:700; margin:6px 0;">NOUL = 0 (VETOED)</div>
-            <div style="font-size:0.82rem; color:var(--text-muted);">Risk: 75.0% &bull; Latency: 13.1 µs &bull; Gas: 21,438</div>
-            <div style="font-size:0.78rem; color:#fbbf24; margin-top:4px;">Action: Signature suppressed; 0 funds lost</div>
-          </div>
-          <div style="background:rgba(0,0,0,0.35); padding:16px; border-radius:8px; border:1px solid rgba(168,85,247,0.3);">
-            <div style="font-size:0.75rem; color:#c084fc; font-weight:700; text-transform:uppercase;">Agent Autonomous Commerce</div>
-            <div style="font-size:1.15rem; color:#38bdf8; font-weight:700; margin:6px 0;">NOUL = 1 (APPROVED)</div>
-            <div style="font-size:0.82rem; color:var(--text-muted);">Sub-Cent API Micropayment &bull; Latency: 6.1 µs</div>
-            <div style="font-size:0.78rem; color:var(--emerald); margin-top:4px;">Action: Instant agent-to-agent settlement</div>
-          </div>
-        </div>
-
-        <!-- Live Aurora Verified Deployments Box -->
-        <div style="background:rgba(0,0,0,0.45); padding:14px 18px; border-radius:8px; border:1px dashed rgba(0,236,151,0.35); margin-bottom:16px;">
-          <div style="font-size:0.85rem; color:var(--near-green); font-weight:700; margin-bottom:8px;">🟢 Live Verified Deployments on Aurora Testnet (Ethereum on NEAR):</div>
-          
-          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.05);">
-            <div>
-              <strong style="font-size:0.85rem; color:#fff;">Werracle.sol:</strong>
-              <code style="font-size:0.82rem; color:var(--cyan); margin-left:6px; word-break:break-all;">0x4085673F1e45bf26682CA704b2d09C03d1212cd4</code>
-            </div>
-            <a href="https://explorer.testnet.aurora.dev/address/0x4085673F1e45bf26682CA704b2d09C03d1212cd4" target="_blank" style="font-size:0.78rem; color:var(--near-green); text-decoration:none;">Aurora Explorer ↗</a>
-          </div>
-
-          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; padding:6px 0;">
-            <div>
-              <strong style="font-size:0.85rem; color:#fff;">WerracleTripodZMod9.sol:</strong>
-              <code style="font-size:0.82rem; color:#a78bfa; margin-left:6px; word-break:break-all;">0x1d7Ae9E1dDDA805539d9e225425804Ef8B9caBaF</code>
-            </div>
-            <a href="https://explorer.testnet.aurora.dev/address/0x1d7Ae9E1dDDA805539d9e225425804Ef8B9caBaF" target="_blank" style="font-size:0.78rem; color:var(--near-green); text-decoration:none;">Aurora Explorer ↗</a>
-          </div>
-        </div>
-
-        <!-- Quick Terminal Command Box -->
-        <div style="margin-bottom:16px;">
-          <div style="font-size:0.8rem; color:var(--text-muted); margin-bottom:4px;" data-en="Test on Aurora Testnet via Foundry Cast:" data-tr="Foundry Cast ile Aurora Testnet Üzerinde Sorgulayın:">Test on Aurora Testnet via Foundry Cast:</div>
-          <div class="quick-snippet">
-            <span id="castAuroraCmd">cast call 0x4085673F1e45bf26682CA704b2d09C03d1212cd4 "owner()(address)" --rpc-url https://testnet.aurora.dev</span>
-            <button class="btn-snippet-copy" onclick="copySnippet('castAuroraCmd')">Copy</button>
-          </div>
-        </div>
-
-        <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
-          <a href="https://github.com/pCwOrM/werracle/blob/main/near/README.md" target="_blank" class="btn btn-secondary" style="border-color:var(--near-green); color:var(--near-green);" data-en="📄 Read NEAR Architecture Spec" data-tr="📄 NEAR Mimari Belgesini Oku">📄 Read NEAR Architecture Spec</a>
-          <a href="https://explorer.testnet.aurora.dev/address/0x4085673F1e45bf26682CA704b2d09C03d1212cd4" target="_blank" class="btn btn-secondary" style="border-color:#78D64B; color:#78D64B;">View Explorer ↗</a>
-          <a href="https://nearhackathon.com" target="_blank" class="btn btn-secondary">NEAR Hackathon 2026 ↗</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contracts & Integration -->
-  <section class="section-wrap" id="contracts">
-    <div class="container">
-      <div class="section-header">
-        <h2 data-en="📄 Solidity Interface & Quickstart" data-tr="📄 Solidity Arayüzü ve Hızlı Başlangıç">📄 Solidity Interface & Quickstart</h2>
-        <p data-en="Integrate Werracle into any EVM protocol with 3 lines of Solidity." data-tr="Werracle'ı 3 satır Solidity kodu ile dilediğiniz EVM protokolüne entegre edin.">Integrate Werracle into any EVM protocol with 3 lines of Solidity.</p>
-      </div>
-
-      <div class="card">
-        <div class="quick-snippet" style="margin-bottom:14px;">
-          <span id="forgeInstallCmd">forge install pCwOrM/werracle</span>
-          <button class="btn-snippet-copy" onclick="copySnippet('forgeInstallCmd')">Copy</button>
-        </div>
-
-        <div class="code-wrap">
-          <pre class="code-box"><code>// SPDX-License-Identifier: BSL-1.1
-pragma solidity ^0.8.20;
-
-import "./IWerracle.sol";
-
-contract ProtectedDeFiProtocol {
-    IWerracle public immutable werracle;
-    
-    constructor(address _werracleAddress) {
-        werracle = IWerracle(_werracleAddress);
-    }
-
-    function executeSensitiveAction(bytes32 inputState) external payable {
-        // Instant intra-block AI triage (< 20,000 gas)
-        (bool isAllowed, uint256 score) = werracle.decideChoice{value: msg.value}(inputState);
-        
-        require(isAllowed, "WERRACLE_DEFENSE_REVERT: Hostile pattern detected");
-        
-        // Proceed with protected DeFi operation
-    }
-}</code></pre>
-        </div>
-      </div>
-
-      <!-- Live Deployed Devnet Card -->
-      <div class="card" style="margin-top:20px; border-color:var(--border-accent); background:linear-gradient(180deg, rgba(56,189,248,0.06) 0%, rgba(12,18,34,1) 100%);">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:10px;">
-          <div style="display:flex; align-items:center; gap:8px;">
-            <span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:var(--emerald); box-shadow:0 0 8px var(--emerald);"></span>
-            <h3 style="color:var(--cyan); font-size:1.1rem; margin:0;" data-en="Live Deployed Contracts on Werracle Devnet" data-tr="Werracle Devnet Üzerinde Canlı Dağıtılmış Kontratlar">Live Deployed Contracts on Werracle Devnet</h3>
-          </div>
-          <div style="display:flex; gap:8px; flex-wrap:wrap;">
-            <span class="badge" style="font-size:0.75rem; background:#1e293b; color:var(--emerald); padding:3px 8px; border-radius:4px; font-family:var(--font-mono);">Chain ID: 4242</span>
-            <span class="badge" style="font-size:0.75rem; background:#1e293b; color:var(--cyan); padding:3px 8px; border-radius:4px; font-family:var(--font-mono);">Node: api.answerr.me</span>
-          </div>
-        </div>
-
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:12px; margin-bottom:16px;">
-          <div style="background:rgba(0,0,0,0.3); padding:12px; border-radius:6px; border:1px solid rgba(16,185,129,0.4);">
-            <div style="font-size:0.75rem; color:var(--emerald); text-transform:uppercase; letter-spacing:0.5px;">WerracleTripodZMod9 (v2.0 Flagship Core - 22.5k Gas)</div>
-            <code style="color:var(--text-main); font-size:0.85rem; word-break:break-all;">0x0a95887dBa2783E1E445bB4D3A9a1f7cB3152d04</code>
-          </div>
-          <div style="background:rgba(0,0,0,0.3); padding:12px; border-radius:6px; border:1px solid var(--border-color);">
-            <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px;">BlockchainResonanceMatrix (0 SLOAD)</div>
-            <code style="color:var(--cyan); font-size:0.85rem; word-break:break-all;">Bytecode Matrix (40 Tokens, 5 Pillars)</code>
-          </div>
-          <div style="background:rgba(0,0,0,0.3); padding:12px; border-radius:6px; border:1px solid var(--border-color);">
-            <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px;">Werracle v1.0 Canonical Baseline</div>
-            <code style="color:var(--text-main); font-size:0.85rem; word-break:break-all;">0x5FbDB2315678afecb367f032d93F642f64180aa3</code>
-          </div>
-          <div style="background:rgba(0,0,0,0.3); padding:12px; border-radius:6px; border:1px solid var(--border-color);">
-            <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px;">WerracleFeeHook (Uniswap v4)</div>
-            <code style="color:var(--text-main); font-size:0.85rem; word-break:break-all;">0xdef5Ad647Af159D27cd111007e4CCD1fDE9d4006</code>
-          </div>
-        </div>
-
-        <div style="font-size:0.85rem; color:var(--text-muted); display:flex; gap:16px; flex-wrap:wrap;">
-          <span>🌐 <strong>Public RPC:</strong> <code style="color:var(--cyan);">https://api.answerr.me:4431/werracle/rpc</code></span>
-          <span>⚡ <strong>REST Status:</strong> <a href="https://api.answerr.me:4431/werracle/status" target="_blank" style="color:var(--cyan); text-decoration:none;">/werracle/status ↗</a></span>
-        </div>
-      </div>
-
-      <!-- Support & Grant Proposal Card -->
-      <div class="wallet-card">
-        <h3 style="color:var(--amber); margin-bottom:10px;" data-en="💎 Protocol Grants & Foundation Wallet" data-tr="💎 Protokol Hibeleri ve Destek Cüzdanı">💎 Protocol Grants & Foundation Wallet</h3>
-        <p style="color:var(--text-muted); font-size:0.9rem;" data-en="Official receiving address for Ethereum Foundation ESP, Base Ecosystem, NEAR Foundation, Arbitrum, and Web3 VC grants:" data-tr="Ethereum Foundation ESP, Base Ecosystem, NEAR Foundation, Arbitrum ve Web3 hibe destekleri için resmi cüzdan adresi:">
-          Official receiving address for Ethereum Foundation ESP, Base Ecosystem, NEAR Foundation, Arbitrum, and Web3 VC grants:
-        </p>
-
-        <div style="margin-top:16px;">
-          <div style="font-size:0.8rem; color:var(--text-muted);">Binance Wallet (USDT TRC20 / TRON Network):</div>
-          <div class="wallet-addr">
-            <span id="bnAddr">TLMhaDJTVYBHBSGJ9nCQGLvqnYFPSBgLJu</span>
-            <button class="btn-copy" onclick="copySnippet('bnAddr')">Copy</button>
-          </div>
-        </div>
-
-        <div style="font-size:0.85rem; color:var(--text-muted); margin-top:14px; line-height:1.5;">
-          <strong>Lead Builder:</strong> pcworm.near &bull; <strong>Corporate Entity:</strong> ITOUCH BİLİŞİM SİSTEMLERİ LTD. ŞTİ. (Çukurova Teknokent) &bull; <strong>Patent Pending:</strong> TR 2026/016285 &bull; <strong>Contact:</strong> vdagli@itouch.com.tr &bull; ask@answerr.me
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <div class="container footer-inner">
-      <div style="display:flex; align-items:center; gap:12px;">
-        <img src="assets/werracle_logo_oracle_trans.png" alt="Werracle Logo" width="32" height="32" style="filter: drop-shadow(0 0 8px rgba(0,236,151,0.5));" />
-        <div>
-          <strong>Werracle EVM Oracle</strong> &copy; 2026 ITOUCH BİLİŞİM SİSTEMLERİ LTD. ŞTİ.
-          <div style="font-size:0.8rem; color:var(--text-muted); margin-top:4px;">
-            Licensed under Business Source License 1.1 (BSL 1.1). Change Date: 2030-01-01 to Apache 2.0.
-          </div>
-        </div>
-      </div>
-      <div class="footer-links">
-        <a href="https://github.com/pCwOrM/werracle">Werracle Repo</a>
-        <a href="https://github.com/pCwOrM/werr">WERR Engine</a>
-        <a href="https://github.com/pCwOrM/answerr">Answerr Platform</a>
-        <a href="https://github.com/pCwOrM/mandelbrot-fractal-neural-synthesis">Fractal Research</a>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Toast Element -->
-  <div id="toast">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--emerald)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-    <span id="toastMsg">Copied to clipboard!</span>
   </div>
+</header>
 
-  <!-- Back To Top Button -->
-  <button id="backToTop" aria-label="Back to Top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
-  </button>
+<main id="top">
+<!-- ================= HERO ================= -->
+<section class="hero" aria-label="Introduction">
+  <canvas id="fractal" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <h1><span class="thin" data-i18n="hero.a">The whole model</span><span data-i18n="hero.b">is 32 bytes.</span></h1>
+    <p class="lede" data-i18n="hero.lede">Werracle is an AI decision oracle that runs inside the EVM. It stores no weights. It derives them from one point on the Mandelbrot boundary, then answers allow, route or score in about 19,400 gas, inside the same transaction that asked.</p>
+    <div class="cta">
+      <a class="btn primary" href="#simulator" data-i18n="hero.cta1">Run the simulator</a>
+      <a class="btn ghost" href="https://arxiv.org/abs/2609.30719" data-i18n="hero.cta2">Read the paper on arXiv</a>
+    </div>
 
-  <!-- Script for Interactive Simulator, Mobile Menu, & Language Toggle -->
-  <script>
-    // Mobile Nav Drawer Toggle
-    const navToggle = document.getElementById('navToggle');
-    const navMenu = document.getElementById('navMenu');
+    <div class="slot">
+      <div class="slot-cap"><span data-i18n="hero.slot">This storage word is the entire model. Point at a byte.</span><b class="mono">bytes32</b></div>
+      <div class="bytes" id="heroBytes" role="list" aria-label="Packed 32-byte seed"></div>
+      <div class="fields" id="heroFields" aria-hidden="true"></div>
+      <p class="field-note" id="fieldNote" aria-live="polite"></p>
+    </div>
 
-    if (navToggle && navMenu) {
-      navToggle.addEventListener('click', () => {
-        navToggle.classList.toggle('active');
-        navMenu.classList.toggle('open');
-      });
+    <div class="facts">
+      <div><strong>~19,400</strong><span data-i18n="fact.gas">gas per decision</span></div>
+      <div><strong>1,000 / 1,000</strong><span data-i18n="fact.tests">sealed tests passed</span></div>
+      <div><strong>40</strong><span data-i18n="fact.lean">Lean 4 theorems, 0 sorry</span></div>
+      <div><strong>Aurora</strong><span data-i18n="fact.aurora">live on testnet</span></div>
+    </div>
+  </div>
+  <div class="coord" id="coord">c = −0.743644 + 0.131826i<br><span data-i18n="hero.bg">background: the seed, rendered live</span></div>
+</section>
 
-      // Close menu when clicking on any nav link
-      navMenu.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-          navToggle.classList.remove('active');
-          navMenu.classList.remove('open');
-        });
-      });
+<!-- ================= STORY ================= -->
+<section class="story" id="how" aria-label="How Werracle compresses a model">
+  <div class="stick">
+    <div>
+      <div class="steps">
+        <div class="step s1 on">
+          <div class="big">GB<small data-i18n="s1.u">of weights</small></div>
+          <h3 data-i18n="s1.h">A neural network can't fit in a block.</h3>
+          <p data-i18n="s1.p">Millions of float weights would need more than 15 million gas for one inference. So today's AI stays off-chain, and contracts trust a signed message that arrives a block too late.</p>
+        </div>
+        <div class="step s2">
+          <div class="big">KB<small data-i18n="s2.u">of proofs</small></div>
+          <h3 data-i18n="s2.h">ZK-ML proves it, slowly.</h3>
+          <p data-i18n="s2.p">The model still runs off-chain. A prover spends 10 to 300 seconds, then the chain pays around 350,000 gas to verify. Correct, but never inside the attack's own transaction.</p>
+        </div>
+        <div class="step s3">
+          <div class="big">32<small data-i18n="s3.u">bytes</small></div>
+          <h3 data-i18n="s3.h">Werracle stores a coordinate, not a model.</h3>
+          <p data-i18n="s3.p">Weights are recomputed on demand from the escape dynamics of z → z² + c, in Q16.16 integers. One SLOAD reads the whole brain for 100 gas. Nothing leaves the chain.</p>
+        </div>
+      </div>
+      <div class="progress" aria-hidden="true"><i><b></b></i><i><b></b></i><i><b></b></i></div>
+    </div>
+    <canvas id="squeeze" aria-hidden="true"></canvas>
+  </div>
+</section>
+
+<!-- ================= SIMULATOR ================= -->
+<section class="sec" id="simulator" aria-labelledby="simH">
+  <div class="wrap">
+    <h2 id="simH" data-i18n="sim.h">Run the contract in your browser.</h2>
+    <p class="lede" data-i18n-html="sim.lede">A line-for-line port of <code>Werracle.previewDecision()</code> and <code>WerrMath.sol</code>: the same Q16.16 integers, the same floor shifts, the same 16-point micro-grid and piecewise sigmoid. Click the map to move the seed, then push the risk until the contract says no.</p>
+
+    <div class="sim-grid">
+      <div class="panel">
+        <div class="maps">
+          <figure class="wide">
+            <canvas id="overview" width="880" height="400" aria-label="Mandelbrot overview. Click or drag to choose the seed coordinate."></canvas>
+            <figcaption data-i18n="sim.map">The whole set. Click or drag to choose c.</figcaption>
+          </figure>
+          <figure>
+            <canvas id="detail" width="420" height="420" aria-label="Micro-grid around the seed"></canvas>
+            <figcaption data-i18n="sim.grid">The 16 sample points around c, shaded by how many of the 12 steps each survives. Tap one to trace it.</figcaption>
+          </figure>
+          <figure>
+            <canvas id="orbit" width="420" height="420" aria-label="Orbit of the selected sample point"></canvas>
+            <figcaption id="orbitCap"></figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="presets" id="presets" role="group" aria-label="Presets">
+          <button data-p="default" aria-pressed="true" data-i18n="p.default">Standard</button>
+          <button data-p="flash" aria-pressed="false" data-i18n="p.flash">Flash-loan defense</button>
+          <button data-p="near" aria-pressed="false" data-i18n="p.near">NEAR intent guard</button>
+          <button data-p="fee" aria-pressed="false" data-i18n="p.fee">Uniswap v4 fee</button>
+          <button data-p="aml" aria-pressed="false" data-i18n="p.aml">KYC / AML gate</button>
+        </div>
+        <div class="ctrl" style="margin-top:22px">
+          <label><span data-i18n="c.cx">Seed, real part c<sub>x</sub></span><output id="cxO"></output><input type="range" id="cx" min="-2" max="0.6" step="0.000001"></label>
+          <label><span data-i18n="c.cy">Seed, imaginary part c<sub>y</sub></span><output id="cyO"></output><input type="range" id="cy" min="-1.2" max="1.2" step="0.000001"></label>
+          <label><span data-i18n="c.zoom">Zoom (grid step = 1 / zoom)</span><output id="zoomO"></output><input type="range" id="zoom" min="2" max="200" step="0.5"></label>
+          <label><span data-i18n="c.risk">Risk score of the incoming call</span><output id="riskO"></output><input type="range" id="risk" min="-4" max="4" step="0.01"></label>
+          <label><span data-i18n="c.thr">Threshold</span><output id="thrO"></output><input type="range" id="thr" min="100" max="9900" step="50"></label>
+        </div>
+
+        <div class="verdict ok" id="verdict" aria-live="polite">
+          <div class="word" id="vWord">Allowed</div>
+          <div class="sub"><span data-i18n="v.conf">confidence</span><b id="vConf">—</b></div>
+        </div>
+        <div class="readout">
+          <div><span data-i18n="r.prob">probability</span><b id="rProb"></b></div>
+          <div><span data-i18n="r.bias">fractal bias</span><b id="rBias"></b></div>
+          <div><span data-i18n="r.iter">loop steps run</span><b id="rIter"></b></div>
+        </div>
+        <div class="quads" id="quads"></div>
+        <div class="live">
+          <label class="switch"><input type="checkbox" id="liveT"> <span data-i18n="live.t">Also ask the live node</span></label>
+          <span class="dot" id="liveDot"></span><span id="liveTxt" class="mono" style="font-size:13px"></span>
+        </div>
+        <p class="note" data-i18n="sim.note">Same inputs give the same answer on every node. No randomness, no floats, no external call.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FLASH LOAN ================= -->
+<section class="sec" id="flash" aria-labelledby="flashH" style="padding-top:0">
+  <div class="wrap">
+    <h2 id="flashH" data-i18n="f.h">It stops the attack inside the attack.</h2>
+    <p class="lede" data-i18n="f.lede">A flash loan borrows, manipulates and repays in one transaction. An oracle that answers next block is already too late. Werracle answers in the middle, and a revert undoes everything before it.</p>
+    <div class="flash">
+      <div>
+        <div class="ctrl">
+          <label><span data-i18n="f.borrow">Flash-loan size against a 10,000 ETH pool</span><output id="bO"></output><input type="range" id="borrow" min="10" max="8000" step="10" value="450"></label>
+          <label><span data-i18n="f.slip">Price impact inside the transaction</span><output id="sO"></output><input type="range" id="slip" min="0" max="25" step="0.1" value="1.2"></label>
+        </div>
+        <div class="fees">
+          <h3 style="margin-bottom:6px" data-i18n="f.feeh">Uniswap v4 dynamic fee hook</h3>
+          <div class="fee"><span data-i18n="f.fee1">Deep liquidity, calm</span><b class="mono">0.05–0.15%</b><i style="transform:scaleX(.25)"></i></div>
+          <div class="fee"><span data-i18n="f.fee2">Normal volatility</span><b class="mono">0.25–0.30%</b><i style="transform:scaleX(.55)"></i></div>
+          <div class="fee"><span data-i18n="f.fee3">Turbulence or MEV</span><b class="mono">0.40–0.45%</b><i style="transform:scaleX(.85)"></i></div>
+          <div class="fee"><span data-i18n="f.fee4">Flash crash, capped</span><b class="mono">0.50%</b><i style="transform:scaleX(1)"></i></div>
+          <p class="note"><a href="https://github.com/pCwOrM/werracle/blob/main/contracts/hooks/WerracleFeeHook.sol" style="color:var(--ice)">WerracleFeeHook.sol</a></p>
+        </div>
+      </div>
+      <div class="block" aria-live="polite">
+        <div class="block-head"><span data-i18n="f.one">One transaction</span><span class="mono" id="blockNo">block #—</span></div>
+        <div class="tx" id="tx">
+          <div class="op" data-s="0"><span class="n">1</span><span data-i18n="f.op1">Borrow from lending pool</span><em id="opBorrow"></em></div>
+          <div class="op" data-s="1"><span class="n">2</span><span data-i18n="f.op2">Swap to move the price</span><em id="opSlip"></em></div>
+          <div class="op guard" data-s="2"><span class="n">3</span><span data-i18n="f.op3">Protocol asks Werracle</span><em>~19.4k gas</em></div>
+          <div class="op okay" data-s="3"><span class="n">4</span><span data-i18n="f.op4">Liquidate, swap back, repay</span><em></em></div>
+        </div>
+        <div class="outcome" id="outcome"></div>
+        <p class="note" data-i18n="f.note">The size and impact thresholds here are an illustrative policy; on-chain, the verdict comes from decideNoul().</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BENCH ================= -->
+<section class="sec" id="bench" aria-labelledby="benchH" style="padding-top:0">
+  <div class="wrap">
+    <h2 id="benchH" data-i18n="b.h">Gas for one inference.</h2>
+    <p class="lede" data-i18n="b.lede">Log scale. Every extra step to the right costs ten times more.</p>
+    <div class="bench" id="benchBars">
+      <div class="brow t"><div class="who" data-i18n-html="b.t">Neural net on EVM<small>exceeds a block</small></div><div class="track"><i data-v="15000000"></i><b>&gt;15,000,000</b></div></div>
+      <div class="brow z"><div class="who" data-i18n-html="b.z">ZK-ML verifier<small>plus 10–300 s off-chain</small></div><div class="track"><i data-v="350000"></i><b>~350,000</b></div></div>
+      <div class="brow w"><div class="who" data-i18n-html="b.w">Werracle<small>same transaction</small></div><div class="track"><i data-v="19400"></i><b>~19,400</b></div></div>
+      <div class="axis"><span></span><div><span>10k</span><span>100k</span><span>1M</span><span>10M</span></div></div>
+    </div>
+    <div class="tbl">
+    <table>
+      <thead><tr><th></th><th data-i18n="t.h1">Traditional ML on EVM</th><th data-i18n="t.h2">ZK-ML</th><th>Werracle</th></tr></thead>
+      <tbody>
+        <tr><th data-i18n="t.r1">Latency</th><td data-i18n="t.r1a">Cannot run in a block</td><td data-i18n="t.r1b">10–300 s proof</td><td data-i18n="t.r1c">&lt; 1 ms, same transaction</td></tr>
+        <tr><th data-i18n="t.r2">On-chain footprint</th><td data-i18n="t.r2a">Gigabytes of tensors</td><td data-i18n="t.r2b">Kilobytes of keys</td><td data-i18n="t.r2c">One 32-byte slot</td></tr>
+        <tr><th data-i18n="t.r3">Flash-loan defense</th><td data-i18n="t.r3a">Impossible</td><td data-i18n="t.r3b">Proof arrives too late</td><td data-i18n="t.r3c">Atomic revert</td></tr>
+        <tr><th data-i18n="t.r4">External dependency</th><td data-i18n="t.r4a">Required</td><td data-i18n="t.r4b">Off-chain prover</td><td data-i18n="t.r4c">None</td></tr>
+        <tr><th data-i18n="t.r5">Formal verification</th><td data-i18n="t.r5a">None</td><td data-i18n="t.r5b">Circuit only</td><td data-i18n="t.r5c">40 Lean 4 theorems</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</section>
+
+<!-- ================= NEAR ================= -->
+<section class="sec near" id="near" aria-labelledby="nearH">
+  <div class="wrap">
+    <h2 id="nearH" data-i18n="n.h">Guarding NEAR Intents before they are signed.</h2>
+    <p class="lede" data-i18n="n.lede">Werracle sits in front of NEAR chain signatures as a pre-signing reflex. Clean intents pass through to Base or Ethereum; sandwich and flash-loan patterns are vetoed before a signature exists. Built for NEAR Hackathon 2026, tracks Unstoppable DeFi and AI Security.</p>
+    <div class="stream" id="stream" aria-hidden="true">
+      <div class="gate"><span>werracle.noul()</span></div>
+      <span class="lane-label" style="left:16px" data-i18n="n.in">intents from pcworm.near</span>
+      <span class="lane-label" style="right:16px" data-i18n="n.out">signed and broadcast</span>
+    </div>
+    <div class="near-grid">
+      <div class="case ok"><span class="tag">NOUL = 1</span><h3 data-i18n="n.c1">Clean swap intent</h3><p data-i18n="n.c1p">Volatility 25 bps. Approved in 12.6 µs and 21,438 gas; the chain signature is broadcast.</p></div>
+      <div class="case no"><span class="tag">NOUL = 0</span><h3 data-i18n="n.c2">Predatory sandwich</h3><p data-i18n="n.c2p">Risk 75%. Vetoed in 13.1 µs; the signature is never produced and no funds move.</p></div>
+      <div class="case ok"><span class="tag">NOUL = 1</span><h3 data-i18n="n.c3">Agent-to-agent payment</h3><p data-i18n="n.c3p">A sub-cent API micropayment between autonomous agents, approved in 6.1 µs.</p></div>
+    </div>
+    <div class="deploy">
+      <h3 data-i18n="n.dep">Deployed on Aurora testnet (chain 1313161555)</h3>
+      <div class="addr"><span>Werracle.sol</span><code>0x4085673F1e45bf26682CA704b2d09C03d1212cd4</code><a href="https://explorer.testnet.aurora.dev/address/0x4085673F1e45bf26682CA704b2d09C03d1212cd4" data-i18n="n.exp">Explorer</a></div>
+      <div class="addr"><span>WerracleTripodZMod9.sol</span><code>0x1d7Ae9E1dDDA805539d9e225425804Ef8B9caBaF</code><a href="https://explorer.testnet.aurora.dev/address/0x1d7Ae9E1dDDA805539d9e225425804Ef8B9caBaF" data-i18n="n.exp">Explorer</a></div>
+      <div class="cmd"><code id="castCmd">cast call 0x4085673F1e45bf26682CA704b2d09C03d1212cd4 "owner()(address)" --rpc-url https://testnet.aurora.dev</code><button class="copy" data-copy="castCmd" data-i18n="copy">Copy</button></div>
+      <div class="links"><a class="pill" href="https://github.com/pCwOrM/werracle/blob/main/near/README.md" data-i18n="n.spec">NEAR integration spec</a><a class="pill" href="https://github.com/pCwOrM/werracle/blob/main/docs/NEAR_INTENTS_AND_AURORA_INTEGRATION_SPEC.md" data-i18n="n.arch">Intents and Aurora architecture</a><a class="pill" href="https://nearhackathon.com">nearhackathon.com</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROOFS ================= -->
+<section class="sec" id="proofs" aria-labelledby="proofH">
+  <div class="wrap proof">
+    <div>
+      <h2 id="proofH" data-i18n="pr.h">Proved, not just tested.</h2>
+      <p class="lede" data-i18n="pr.lede">The Lean 4 kernel checks that every escape loop halts, that Q16.16 squares can never overflow int64, and that gas stays under a fixed ceiling. No sorry, and no axioms beyond Lean's standard three.</p>
+      <div class="proof-facts">
+        <div><strong>40</strong><span data-i18n="pr.f1">theorems, machine-checked</span></div>
+        <div><strong>0</strong><span data-i18n="pr.f2">sorry, 0 custom axioms</span></div>
+        <div><strong>1,000</strong><span data-i18n="pr.f3">sealed tests, 1,000 passed</span></div>
+        <div><strong>≤ 12</strong><span data-i18n="pr.f4">escape steps per point, proven</span></div>
+      </div>
+      <div class="links">
+        <a class="pill" href="https://github.com/pCwOrM/werracle/blob/main/formal_proofs/CERTIFICATE.md" data-i18n="pr.cert">Verification certificate</a>
+        <a class="pill" href="https://github.com/pCwOrM/werracle/tree/main/formal_proofs" data-i18n="pr.src">Lean sources</a>
+        <a class="pill" href="https://github.com/pCwOrM/werracle/blob/main/docs/TEST_1000_AUDIT_REPORT.md" data-i18n="pr.audit">1,000-test audit</a>
+      </div>
+    </div>
+    <div class="term" aria-label="Lean 4 build output">
+      <div class="bar"><i></i><i></i><i></i></div>
+      <pre id="lean"></pre>
+    </div>
+  </div>
+</section>
+
+<!-- ================= INTEGRATE ================= -->
+<section class="sec" id="integrate" aria-labelledby="intH" style="padding-top:0">
+  <div class="wrap">
+    <h2 id="intH" data-i18n="i.h">Add it to a contract.</h2>
+    <p class="lede" data-i18n="i.lede">One import, one call, one require. The guard runs before your sensitive logic, in the same transaction.</p>
+    <div class="cmd"><code id="forge">forge install pCwOrM/werracle</code><button class="copy" data-copy="forge" data-i18n="copy">Copy</button></div>
+    <div class="code">
+      <div class="code-head"><span>ProtectedVault.sol</span><button class="copy" data-copy="solsrc" data-i18n="copy">Copy</button></div>
+<pre id="solsrc"><span class="c">// SPDX-License-Identifier: BSL-1.1</span>
+<span class="kw">pragma solidity</span> ^0.8.20;
+
+<span class="kw">import</span> <span class="s">"werracle/contracts/IWerracle.sol"</span>;
+
+<span class="kw">contract</span> ProtectedVault {
+    IWerracle <span class="kw">public immutable</span> werracle;
+
+    <span class="kw">constructor</span>(<span class="kw">address</span> oracle) { werracle = IWerracle(oracle); }
+
+    <span class="kw">function</span> <span class="fn">withdraw</span>(<span class="kw">bytes32</span> state, <span class="kw">int64</span> riskQ16) <span class="kw">external payable</span> {
+        <span class="c">// same-transaction decision, ~19.4k gas</span>
+        (<span class="kw">bool</span> allowed, ) = werracle.<span class="fn">decideNoul</span>{value: msg.value}(state, riskQ16);
+        <span class="kw">require</span>(allowed, <span class="s">"Werracle: hostile pattern"</span>);
+        <span class="c">// ... protected logic</span>
     }
+}</pre>
+    </div>
+    <div class="deploy" style="margin-top:40px">
+      <h3 data-i18n="i.dev">Werracle devnet (chain 4242, api.answerr.me)</h3>
+      <div class="addr"><span>WerracleTripodZMod9 v2.0</span><code>0x0a95887dBa2783E1E445bB4D3A9a1f7cB3152d04</code><span class="mono" style="font-size:13px;color:var(--mist)">22.5k gas</span></div>
+      <div class="addr"><span>Werracle v1.0</span><code>0x5FbDB2315678afecb367f032d93F642f64180aa3</code><span></span></div>
+      <div class="addr"><span>WerracleFeeHook</span><code>0xdef5Ad647Af159D27cd111007e4CCD1fDE9d4006</code><span class="mono" style="font-size:13px;color:var(--mist)">Uniswap v4</span></div>
+      <div class="links"><a class="pill" href="apidocs.html" data-i18n="i.api">API documentation</a><a class="pill" href="https://api.answerr.me:4431/werracle/status" data-i18n="i.status">Node status</a><a class="pill" href="https://github.com/pCwOrM/werracle/blob/main/contracts/Werracle.sol">Werracle.sol</a></div>
+    </div>
+  </div>
+</section>
 
-    // Touch support for Research Dropdown
-    const researchDropdown = document.getElementById('researchDropdown');
-    const researchBtn = document.querySelector('.btn-dropdown');
-    if (researchDropdown && researchBtn) {
-      researchBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        researchDropdown.classList.toggle('active');
-      });
-      document.addEventListener('click', () => {
-        researchDropdown.classList.remove('active');
-      });
-    }
+<!-- ================= RESEARCH ================= -->
+<section class="sec" id="research" aria-labelledby="resH" style="padding-top:0">
+  <div class="wrap">
+    <h2 id="resH" data-i18n="re.h">Paper, data and code.</h2>
+    <div class="refs">
+      <a class="ref" href="https://arxiv.org/abs/2609.30719"><span class="k">arXiv</span><span class="t" data-i18n-html="re.a">Preprint<small>cs.CR, cs.AI, cs.DC</small></span><span class="id">2609.30719</span></a>
+      <a class="ref" href="https://ssrn.com/abstract=7626279"><span class="k">SSRN</span><span class="t" data-i18n-html="re.s">Elsevier SSRN record<small>Abstract and full text</small></span><span class="id">7626279</span></a>
+      <a class="ref" href="https://doi.org/10.5281/zenodo.22942598"><span class="k">Zenodo</span><span class="t" data-i18n-html="re.z">Archived research bundle<small>CERN, citable DOI</small></span><span class="id">10.5281/zenodo.22942598</span></a>
+      <a class="ref" href="https://huggingface.co/papers/2609.30719"><span class="k">Hugging Face</span><span class="t" data-i18n-html="re.h2">Paper page<small>Models and datasets</small></span><span class="id">papers/2609.30719</span></a>
+      <a class="ref" href="https://github.com/pCwOrM/werracle"><span class="k">GitHub</span><span class="t" data-i18n-html="re.g">Contracts, Cairo port, simulations<small>Solidity, Cairo, Python, Lean 4</small></span><span class="id">pCwOrM/werracle</span></a>
+    </div>
 
-    // Scroll listener for Back to Top Button
-    const backToTopBtn = document.getElementById('backToTop');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 350) {
-        backToTopBtn.classList.add('visible');
-      } else {
-        backToTopBtn.classList.remove('visible');
-      }
+    <div class="support">
+      <div>
+        <h3 style="font-size:clamp(22px,2.4vw,30px)" data-i18n="g.h">Support the research.</h3>
+        <p class="lede" data-i18n="g.p">Receiving address for Ethereum Foundation ESP, Base, NEAR Foundation, Arbitrum and other ecosystem grants.</p>
+        <div class="wallet" style="margin-top:22px">
+          <span data-i18n="g.w">USDT, TRC20 (TRON network)</span>
+          <div class="row"><code id="wallet">TLMhaDJTVYBHBSGJ9nCQGLvqnYFPSBgLJu</code><button class="copy" data-copy="wallet" data-i18n="copy">Copy</button></div>
+        </div>
+      </div>
+      <div class="org">
+        <p><b>ITOUCH Bilişim Sistemleri Ltd. Şti.</b><br>Çukurova Teknokent, Adana, Türkiye</p>
+        <p style="margin-top:14px"><span data-i18n="g.lead">Lead builder</span>: <b>pcworm.near</b><br><span data-i18n="g.patent">Patent pending</span>: TR 2026/016285 &amp; TR 2026/016633</p>
+        <p style="margin-top:14px"><a href="mailto:vdagli@itouch.com.tr">vdagli@itouch.com.tr</a><br><a href="mailto:pcworm@pcworm.net">pcworm@pcworm.net</a><br><a href="mailto:ask@answerr.me">ask@answerr.me</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 ITOUCH Bilişim Sistemleri Ltd. Şti. <span data-i18n="ft.rights">All rights reserved.</span></span>
+    <nav><a href="https://github.com/pCwOrM/werracle">Werracle</a><a href="https://github.com/pCwOrM/werr">WERR Engine</a><a href="https://github.com/pCwOrM/answerr">Answerr</a><a href="https://github.com/pCwOrM/mandelbrot-fractal-neural-synthesis">Fractal research</a><a href="v1_classic.html" data-i18n="ft.archive">Classic v1.0 Archive</a></nav>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status"></div>
+<div class="preview-flag"><span data-i18n="pv">Werracle v2.0</span> • <a href="v1_classic.html" data-i18n="pv.l">Classic v1.0 Archive</a></div>
+
+<script>
+(() => {
+"use strict";
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* =========================================================
+   i18n
+   ========================================================= */
+const TR = {
+ "nav.how":"Nasıl çalışır","nav.sim":"Simülatör","nav.defense":"Savunma","nav.near":"NEAR","nav.proofs":"İspatlar","nav.build":"Entegrasyon","nav.research":"Araştırma ▾","nav.res_overview":"Bölüm Özeti ▾","nav.menu":"Menü",
+ "hero.a":"Modelin tamamı","hero.b":"32 bayt.",
+ "hero.lede":"Werracle, EVM'in içinde çalışan bir yapay zekâ karar kâhinidir. Hiç ağırlık saklamaz. Ağırlıkları Mandelbrot sınırındaki tek bir noktadan türetir; izin ver, yönlendir ya da puanla kararını yaklaşık 19.400 gaz ile, soruyu soran işlemin içinde verir.",
+ "hero.cta1":"Simülatörü çalıştır","hero.cta2":"Makaleyi arXiv'de oku",
+ "hero.slot":"Bu depolama kelimesi modelin ta kendisi. Bir bayta gelin.","hero.bg":"arka plan: tohumun canlı görüntüsü",
+ "fact.gas":"karar başına gaz","fact.tests":"mühürlü test geçti","fact.lean":"Lean 4 teoremi, 0 sorry","fact.aurora":"testnet'te canlı",
+ "s1.u":"ağırlık","s1.h":"Bir sinir ağı bloğa sığmaz.","s1.p":"Milyonlarca kayan noktalı ağırlık, tek bir çıkarım için 15 milyon gazı aşar. Bu yüzden bugünün yapay zekâsı zincir dışında kalır ve sözleşmeler bir blok geç gelen imzalı bir mesaja güvenir.",
+ "s2.u":"ispat","s2.h":"ZK-ML kanıtlar ama yavaştır.","s2.p":"Model yine zincir dışında çalışır. İspatlayıcı 10 ila 300 saniye harcar, zincir doğrulama için yaklaşık 350.000 gaz öder. Doğrudur, ama asla saldırının kendi işleminin içinde değil.",
+ "s3.u":"bayt","s3.h":"Werracle model değil, bir koordinat saklar.","s3.p":"Ağırlıklar z → z² + c kaçış dinamiğinden, Q16.16 tamsayılarla, ihtiyaç anında yeniden hesaplanır. Tek bir SLOAD tüm beyni 100 gaza okur. Zincirden hiçbir şey çıkmaz.",
+ "sim.h":"Sözleşmeyi tarayıcında çalıştır.",
+ "sim.lede":"<code>Werracle.previewDecision()</code> ve <code>WerrMath.sol</code>'un satır satır kopyası: aynı Q16.16 tamsayılar, aynı aşağı yuvarlamalı kaydırmalar, aynı 16 noktalı mikro ızgara ve parçalı sigmoid. Tohumu taşımak için haritaya tıkla, sonra sözleşme hayır diyene kadar riski artır.",
+ "sim.map":"Kümenin tamamı. c'yi seçmek için tıkla ya da sürükle.","sim.grid":"c çevresindeki 16 örnek nokta; her birinin 12 adımın kaçında kaldığına göre renklendi. İzlemek için birine dokun.",
+ "p.default":"Standart","p.flash":"Flash-loan savunması","p.near":"NEAR niyet koruması","p.fee":"Uniswap v4 ücreti","p.aml":"KYC / AML kapısı",
+ "c.cx":"Tohum, reel kısım cₓ","c.cy":"Tohum, sanal kısım c_y","c.zoom":"Yakınlaştırma (ızgara adımı = 1 / zoom)","c.risk":"Gelen çağrının risk puanı","c.thr":"Eşik",
+ "v.conf":"güven","r.prob":"olasılık","r.bias":"fraktal sapma","r.iter":"çalışan döngü adımı","live.t":"Canlı düğüme de sor",
+ "sim.note":"Aynı girdiler her düğümde aynı cevabı verir. Rastgelelik yok, kayan nokta yok, dış çağrı yok.",
+ "f.h":"Saldırıyı saldırının içinde durdurur.","f.lede":"Flash loan tek bir işlemde borç alır, fiyatı oynatır ve geri öder. Bir sonraki blokta cevap veren kâhin zaten geç kalmıştır. Werracle tam ortada cevap verir ve bir revert, öncesindeki her şeyi geri alır.",
+ "f.borrow":"10.000 ETH'lik havuza karşı flash-loan büyüklüğü","f.slip":"İşlem içindeki fiyat etkisi","f.feeh":"Uniswap v4 dinamik ücret kancası",
+ "f.fee1":"Derin likidite, sakin","f.fee2":"Normal oynaklık","f.fee3":"Türbülans ya da MEV","f.fee4":"Ani çöküş, tavanlı",
+ "f.one":"Tek işlem","f.op1":"Borç havuzundan ödünç al","f.op2":"Fiyatı oynatmak için swap","f.op3":"Protokol Werracle'a sorar","f.op4":"Likide et, geri swap, öde",
+ "f.note":"Buradaki büyüklük ve etki eşikleri örnek bir politikadır; zincir üstünde karar decideNoul()'dan gelir.",
+ "b.h":"Tek çıkarım için gaz.","b.lede":"Logaritmik ölçek. Sağa doğru her adım on kat daha pahalı.",
+ "b.t":"EVM'de sinir ağı<small>bloğu aşar</small>","b.z":"ZK-ML doğrulayıcı<small>artı 10–300 sn zincir dışı</small>","b.w":"Werracle<small>aynı işlem</small>",
+ "t.h1":"EVM'de klasik ML","t.h2":"ZK-ML","t.r1":"Gecikme","t.r1a":"Blokta çalışamaz","t.r1b":"10–300 sn ispat","t.r1c":"< 1 ms, aynı işlem",
+ "t.r2":"Zincir üstü yer","t.r2a":"Gigabaytlarca tensör","t.r2b":"Kilobaytlarca anahtar","t.r2c":"Tek 32 baytlık slot",
+ "t.r3":"Flash-loan savunması","t.r3a":"İmkânsız","t.r3b":"İspat geç gelir","t.r3c":"Atomik revert",
+ "t.r4":"Dış bağımlılık","t.r4a":"Gerekli","t.r4b":"Zincir dışı ispatlayıcı","t.r4c":"Yok",
+ "t.r5":"Biçimsel doğrulama","t.r5a":"Yok","t.r5b":"Yalnızca devre","t.r5c":"40 Lean 4 teoremi",
+ "n.h":"NEAR Intents'i imzalanmadan önce korur.","n.lede":"Werracle, NEAR zincir imzalarının önünde imza öncesi bir refleks olarak durur. Temiz niyetler Base ya da Ethereum'a geçer; sandviç ve flash-loan desenleri imza oluşmadan veto edilir. NEAR Hackathon 2026 için, Unstoppable DeFi ve AI Security kategorilerinde.",
+ "n.in":"pcworm.near'dan gelen niyetler","n.out":"imzalandı ve yayınlandı",
+ "n.c1":"Temiz swap niyeti","n.c1p":"Oynaklık 25 bps. 12,6 µs ve 21.438 gazda onaylandı; zincir imzası yayınlandı.",
+ "n.c2":"Yağmacı sandviç","n.c2p":"Risk %75. 13,1 µs'de veto edildi; imza hiç üretilmez, hiçbir fon hareket etmez.",
+ "n.c3":"Ajandan ajana ödeme","n.c3p":"Otonom ajanlar arasında kuruşun altında bir API mikro ödemesi, 6,1 µs'de onaylandı.",
+ "n.dep":"Aurora testnet'te yayında (zincir 1313161555)","n.exp":"Gezgin","n.spec":"NEAR entegrasyon belgesi","n.arch":"Intents ve Aurora mimarisi",
+ "pr.h":"Test edilmekle kalmadı, ispatlandı.","pr.lede":"Lean 4 çekirdeği her kaçış döngüsünün durduğunu, Q16.16 karelerinin int64'ü asla taşmadığını ve gazın sabit bir tavanın altında kaldığını denetler. Hiç sorry yok, Lean'in standart üç aksiyomu dışında aksiyom yok.",
+ "pr.f1":"teorem, makine denetimli","pr.f2":"sorry, 0 özel aksiyom","pr.f3":"mühürlü test, 1.000'i geçti","pr.f4":"nokta başına kaçış adımı, ispatlı",
+ "pr.cert":"Doğrulama sertifikası","pr.src":"Lean kaynakları","pr.audit":"1.000 test denetimi",
+ "i.h":"Bir sözleşmeye ekle.","i.lede":"Bir import, bir çağrı, bir require. Koruma, hassas mantığından önce ve aynı işlem içinde çalışır.",
+ "i.dev":"Werracle devnet (zincir 4242, api.answerr.me)","i.api":"API belgeleri","i.status":"Düğüm durumu",
+ "re.h":"Makale, veri ve kod.","re.a":"Ön baskı<small>cs.CR, cs.AI, cs.DC</small>","re.s":"Elsevier SSRN kaydı<small>Özet ve tam metin</small>","re.z":"Arşivlenmiş araştırma paketi<small>CERN, atıf yapılabilir DOI</small>","re.h2":"Makale sayfası<small>Modeller ve veri setleri</small>","re.g":"Sözleşmeler, Cairo portu, simülasyonlar<small>Solidity, Cairo, Python, Lean 4</small>",
+ "g.h":"Araştırmayı destekle.","g.p":"Ethereum Foundation ESP, Base, NEAR Foundation, Arbitrum ve diğer ekosistem hibeleri için alıcı adres.","g.w":"USDT, TRC20 (TRON ağı)","g.lead":"Baş geliştirici","g.patent":"Patent başvurusu",
+ "ft.rights":"Tüm hakları saklıdır.","ft.archive":"Klasik v1.0 Arşivi","copy":"Kopyala","pv":"Werracle v2.0","pv.l":"Klasik v1.0 Arşivi"
+};
+const EN = {};
+$$("[data-i18n]").forEach(el => EN[el.dataset.i18n] = el.textContent);
+$$("[data-i18n-html]").forEach(el => EN[el.dataset.i18nHtml] = el.innerHTML);
+let lang = "en";
+const UI = {
+  en:{allowed:"Allowed",reverted:"Reverted",orbit:(q,k,e,n)=>`Orbit of point ${q}.${k}: ${e?`escapes after ${n} steps`:`stays bounded for all 12 steps`}`,copied:"Copied",
+      fieldTitle:{cx:"cx, bytes 24–31",cy:"cy, bytes 16–23",zoom:"zoom, bytes 8–15",nonce:"nonce, bytes 4–7",threshold:"threshold, bytes 2–3",mode:"mode, byte 1",active:"active, byte 0"},
+      field:{cx:"int64 in Q16.16. The real part of the seed point c on the Mandelbrot boundary.",cy:"int64 in Q16.16. The imaginary part of c.",zoom:"uint64 in Q16.16. Sets the micro-grid step, 1 / zoom: how finely the boundary is sampled.",nonce:"uint32. Increases on every seed update, so an old calibration can't be replayed.",threshold:"uint16 in basis points. The probability a call needs to be allowed.",mode:"uint8. Default primitive: 0 noul, 1 choice, 2 score.",active:"uint8. 1 is active, 0 is the emergency pause."},
+      hint:"Hover or tap any byte. Bytes are shown as cast storage prints them: the last struct field first.",
+      safe:"Low pressure. Werracle allows; the swap executes and the loan is repaid.",mev:"Sandwich pattern. Werracle allows with a surcharge: the fee hook raises the swap fee to 0.50%.",hostile:"Hostile. Werracle returns false, require() fails, and steps 1–3 are rolled back. Nothing was stolen; the attacker pays gas.",
+      live0:"browser only",live1:"asking api.answerr.me…",live2:(b,ms,g)=>`node block #${b}, ${ms} ms, ${g} gas`,live3:"node unreachable, browser result shown",
+      lean:["$ lake build WerracleProof_40Theorems_DynamicTurnover","Building with Lean 4 v4.34.1 and Mathlib4",""],leanEnd:["","40 theorems and 1 lemma checked by the kernel.","sorry: 0","axioms: propext, Quot.sound, Classical.choice"]},
+  tr:{allowed:"İzin verildi",reverted:"Geri alındı",orbit:(q,k,e,n)=>`${q}.${k} noktasının yörüngesi: ${e?`${n} adımda kaçıyor`:`12 adım boyunca sınırlı kalıyor`}`,copied:"Kopyalandı",
+      fieldTitle:{cx:"cx, bayt 24–31",cy:"cy, bayt 16–23",zoom:"zoom, bayt 8–15",nonce:"nonce, bayt 4–7",threshold:"eşik, bayt 2–3",mode:"mod, bayt 1",active:"aktif, bayt 0"},
+      field:{cx:"Q16.16 int64. Mandelbrot sınırındaki c tohum noktasının reel kısmı.",cy:"Q16.16 int64. c'nin sanal kısmı.",zoom:"Q16.16 uint64. Mikro ızgara adımını belirler, 1 / zoom: sınırın ne kadar ince örnekleneceği.",nonce:"uint32. Her tohum güncellemesinde artar; eski bir kalibrasyon yeniden oynatılamaz.",threshold:"Baz puan olarak uint16. Bir çağrıya izin verilmesi için gereken olasılık.",mode:"uint8. Varsayılan ilkel: 0 noul, 1 choice, 2 score.",active:"uint8. 1 aktif, 0 acil durdurma."},
+      hint:"Herhangi bir bayta gelin ya da dokunun. Baytlar cast storage'ın yazdığı gibi gösterilir: struct'ın son alanı önce.",
+      safe:"Düşük baskı. Werracle izin verir; swap gerçekleşir ve borç ödenir.",mev:"Sandviç deseni. Werracle ek ücretle izin verir: ücret kancası swap ücretini %0,50'ye çıkarır.",hostile:"Düşmanca. Werracle false döner, require() başarısız olur ve 1–3. adımlar geri alınır. Hiçbir şey çalınmaz; saldırgan gazı öder.",
+      live0:"yalnızca tarayıcı",live1:"api.answerr.me'ye soruluyor…",live2:(b,ms,g)=>`düğüm blok #${b}, ${ms} ms, ${g} gaz`,live3:"düğüme ulaşılamadı, tarayıcı sonucu gösteriliyor",
+      lean:["$ lake build WerracleProof_40Theorems_DynamicTurnover","Lean 4 v4.34.1 ve Mathlib4 ile derleniyor",""],leanEnd:["","40 teorem ve 1 lemma çekirdek tarafından denetlendi.","sorry: 0","aksiyomlar: propext, Quot.sound, Classical.choice"]}
+};
+const t = () => UI[lang];
+function applyLang(){
+  const d = lang === "tr" ? TR : EN;
+  $$("[data-i18n]").forEach(el => { const v = d[el.dataset.i18n]; if (v != null) el.textContent = v; });
+  $$("[data-i18n-html]").forEach(el => { const v = d[el.dataset.i18nHtml]; if (v != null) el.innerHTML = v; });
+  document.documentElement.lang = lang;
+  $("#lang").textContent = lang === "en" ? "TR" : "EN";
+  $("#fieldNote").textContent = t().hint;
+  sim.render(); flash.update(); orbitCaption();
+}
+$("#lang").addEventListener("click", () => { lang = lang === "en" ? "tr" : "en"; try{localStorage.setItem("werr-lang",lang)}catch(e){} applyLang(); });
+
+/* nav */
+const nav = $("#nav");
+addEventListener("scroll", () => nav.classList.toggle("solid", scrollY > 40), {passive:true});
+const menu = $("#menu"), menuBtn = $("#menuBtn");
+menuBtn.addEventListener("click", () => { const o = menu.classList.toggle("open"); menuBtn.setAttribute("aria-expanded", o); });
+$$("#menu a").forEach(a => a.addEventListener("click", () => { menu.classList.remove("open"); menuBtn.setAttribute("aria-expanded","false"); }));
+
+/* copy */
+const toast = $("#toast"); let tt;
+function say(m){ toast.textContent = m; toast.classList.add("show"); clearTimeout(tt); tt = setTimeout(() => toast.classList.remove("show"), 2200); }
+$$("[data-copy]").forEach(b => b.addEventListener("click", () => {
+  const txt = $("#" + b.dataset.copy).textContent.trim();
+  (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).then(() => say(t().copied + ": " + (txt.length > 34 ? txt.slice(0,34) + "…" : txt)), () => say(txt));
+}));
+
+/* =========================================================
+   Exact port of WerrMath.sol + Werracle._sampleQuadrants / previewDecision
+   Solidity signed >> rounds toward −∞, so Math.floor matches.
+   ========================================================= */
+const ONE = 65536, HALF = 32768, FOUR = 262144, MAX_ITER = 12;
+const sh16 = x => Math.floor(x / 65536);
+const sh15 = x => Math.floor(x / 32768);
+function iterateEscape(cx, cy, maxIter, orbit){
+  let zx = 0, zy = 0;
+  for (let i = 0; i < maxIter; i++){
+    const zx2 = sh16(zx * zx), zy2 = sh16(zy * zy);
+    if (zx2 + zy2 > FOUR) return i;
+    const nzx = zx2 - zy2 + cx;
+    const nzy = sh15(zx * zy) + cy;
+    zx = nzx; zy = nzy;
+    if (orbit) orbit.push([zx / ONE, zy / ONE]);
+  }
+  return maxIter;
+}
+function divFP(a, b){ return Math.trunc((a * 65536) / b); }
+function sigmoidBps(x){
+  if (x <= -FOUR) return 180;
+  if (x >= FOUR) return 9820;
+  const p = HALF + sh16(x * 7864);
+  const res = sh16(p * 10000);
+  if (res < 100) return 100;
+  if (res > 9900) return 9900;
+  return res;
+}
+// quadrant sample offsets in the order Werracle.sol evaluates them
+const Q_OFF = [
+  [[ .5, .5],[ 1, .5],[ .5, 1],[ 1, 1]],
+  [[-.5, .5],[-1, .5],[-.5, 1],[-1, 1]],
+  [[-.5,-.5],[-1,-.5],[-.5,-1],[-1,-1]],
+  [[ .5,-.5],[ 1,-.5],[ .5,-1],[ 1,-1]]
+];
+function sampleQuadrants(cx, cy, zoom){
+  const step = zoom > 0 ? divFP(ONE, zoom) : ONE;
+  const sub = step >> 1;
+  const pts = [], esc = [0,0,0,0];
+  for (let q = 0; q < 4; q++) for (let k = 0; k < 4; k++){
+    const [ox, oy] = Q_OFF[q][k];
+    const px = cx + (Math.abs(ox) === 1 ? Math.sign(ox) * step : Math.sign(ox) * sub);
+    const py = cy + (Math.abs(oy) === 1 ? Math.sign(oy) * step : Math.sign(oy) * sub);
+    const e = iterateEscape(px, py, MAX_ITER);
+    esc[q] += e; pts.push({q, k, px, py, e});
+  }
+  const weights = esc.map(s => Math.floor((s * ONE) / (4 * MAX_ITER)) - HALF);
+  return {weights, esc, pts, step};
+}
+function previewDecision(seed, riskFP){
+  const s = sampleQuadrants(seed.cx, seed.cy, seed.zoom);
+  const w = s.weights;
+  const bias = Math.floor((w[0] + w[1] - w[2] - w[3]) / 4);
+  const logit = -riskFP + bias;
+  const prob = sigmoidBps(logit);
+  const allowed = prob >= seed.threshold;
+  return {...s, bias, logit, prob, allowed, conf: allowed ? prob : 10000 - prob};
+}
+// Pack exactly as Solidity stores struct PackedSeed (first field = lowest-order bytes)
+function packSeed(seed){
+  const m = (v, bits) => BigInt.asUintN(bits, BigInt(v));
+  let w = m(seed.cx,64) | (m(seed.cy,64) << 64n) | (m(seed.zoom,64) << 128n) | (m(seed.nonce,32) << 192n) | (m(seed.threshold,16) << 224n) | (m(seed.mode,8) << 240n) | (m(seed.active,8) << 248n);
+  return w.toString(16).padStart(64, "0");
+}
+// byte index (big-endian, as printed) → field
+const FIELD_OF = i => i < 1 ? "active" : i < 2 ? "mode" : i < 4 ? "threshold" : i < 8 ? "nonce" : i < 16 ? "zoom" : i < 24 ? "cy" : "cx";
+const FIELD_SPANS = [["active",1],["mode",1],["threshold",2],["nonce",4],["zoom",8],["cy",8],["cx",8]];
+
+/* =========================================================
+   Shared palette (escape bands)
+   ========================================================= */
+const STOPS = [[13,11,46],[42,47,214],[74,92,255],[159,232,255],[255,200,87],[120,40,90],[13,11,46]];
+function pal(v){ v = ((v % 1) + 1) % 1; const n = STOPS.length - 1; const f = v * n, i = Math.floor(f), u = f - i; const a = STOPS[i], b = STOPS[i+1]; return [a[0]+(b[0]-a[0])*u, a[1]+(b[1]-a[1])*u, a[2]+(b[2]-a[2])*u]; }
+
+/* =========================================================
+   HERO: WebGL deep zoom into the seed coordinate
+   ========================================================= */
+const hero = (() => {
+  const cv = $("#fractal");
+  const gl = cv.getContext("webgl", {antialias:false, powerPreference:"high-performance"});
+  if (!gl){ cv.style.background = "radial-gradient(circle at 70% 40%,#2a2fd6,#07061a 60%)"; return {}; }
+  const vs = `attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}`;
+  const fs = `precision highp float;
+  uniform vec2 R;uniform vec2 C;uniform float S;uniform float T;uniform float SX;uniform float A;uniform int M;
+  vec3 st(int i){
+    if(i==0)return vec3(.051,.043,.18);if(i==1)return vec3(.165,.184,.84);if(i==2)return vec3(.29,.36,1.);
+    if(i==3)return vec3(.62,.91,1.);if(i==4)return vec3(1.,.784,.341);if(i==5)return vec3(.47,.157,.353);return vec3(.051,.043,.18);}
+  vec3 pal(float v){v=fract(v);float f=v*6.;int i=int(floor(f));float u=fract(f);
+    vec3 a=vec3(0.),b=vec3(0.);
+    for(int k=0;k<6;k++){if(k==i){a=st(k);b=st(k+1);}}
+    return mix(a,b,smoothstep(0.,1.,u));}
+  void main(){
+    vec2 uv=(gl_FragCoord.xy-.5*R)/R.y; uv.x-=SX;
+    float ca=cos(A),sa=sin(A); uv=mat2(ca,-sa,sa,ca)*uv;
+    vec2 c=C+uv*S; vec2 z=vec2(0.); float n=0.; float r2=0.;
+    for(int i=0;i<700;i++){ if(i>=M)break; z=vec2(z.x*z.x-z.y*z.y,2.*z.x*z.y)+c; r2=dot(z,z); if(r2>256.)break; n+=1.; }
+    vec3 ink=vec3(.027,.024,.102);
+    if(n>=float(M)){gl_FragColor=vec4(ink,1.);return;}
+    float sn=n-log2(log2(r2))+4.;
+    float v=sqrt(sn)*.16-T*.012;
+    vec3 col=pal(v);
+    float edge=clamp(sn/float(M)*3.,0.,1.);
+    col=mix(ink,col,.25+.75*edge);
+    gl_FragColor=vec4(col*.92,1.);
+  }`;
+  const sh = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) console.warn(gl.getShaderInfoLog(s)); return s; };
+  const pr = gl.createProgram(); gl.attachShader(pr, sh(gl.VERTEX_SHADER, vs)); gl.attachShader(pr, sh(gl.FRAGMENT_SHADER, fs)); gl.linkProgram(pr); gl.useProgram(pr);
+  const buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,3,-1,-1,3]), gl.STATIC_DRAW);
+  const loc = gl.getAttribLocation(pr, "p"); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+  const U = n => gl.getUniformLocation(pr, n);
+  const uR = U("R"), uC = U("C"), uS = U("S"), uT = U("T"), uSX = U("SX"), uA = U("A"), uM = U("M");
+  const TARGET = [-0.743643887, 0.131825904];
+  let w = 0, h = 0, visible = true, mx = 0, my = 0, smx = 0, smy = 0;
+  const mobile = matchMedia("(max-width:820px)").matches;
+  const dprCap = mobile ? 1 : 1.25;
+  function size(){ const d = Math.min(devicePixelRatio || 1, dprCap) * (mobile ? .8 : 1); w = cv.clientWidth; h = cv.clientHeight; cv.width = Math.round(w * d); cv.height = Math.round(h * d); gl.viewport(0, 0, cv.width, cv.height); }
+  size(); addEventListener("resize", size);
+  addEventListener("pointermove", e => { mx = e.clientX / innerWidth - .5; my = e.clientY / innerHeight - .5; }, {passive:true});
+  new IntersectionObserver(es => visible = es[0].isIntersecting).observe(cv);
+  const PERIOD = 46; // seconds for a full dive and return
+  const LMAX = Math.log(2.8), LMIN = Math.log(2.2e-4);
+  const coordEl = $("#coord");
+  function frame(ts){
+    const tsec = ts / 1000;
+    const ph = (tsec % PERIOD) / PERIOD;
+    const e = ph < .78 ? (1 - Math.cos(Math.PI * ph / .78)) / 2 : (1 + Math.cos(Math.PI * (ph - .78) / .22)) / 2;
+    const S = RM ? 0.012 : Math.exp(LMAX + (LMIN - LMAX) * e);
+    smx += (mx - smx) * .04; smy += (my - smy) * .04;
+    const iters = Math.round(Math.min(mobile ? 380 : 640, 90 + 70 * Math.log2(2.8 / S)));
+    gl.uniform2f(uR, cv.width, cv.height);
+    gl.uniform2f(uC, TARGET[0] + smx * S * .18, TARGET[1] - smy * S * .18);
+    gl.uniform1f(uS, S); gl.uniform1f(uT, RM ? 0 : tsec);
+    gl.uniform1f(uSX, innerWidth > 820 ? .32 * (w / h) * .5 : 0);
+    gl.uniform1f(uA, RM ? 0 : tsec * .015);
+    gl.uniform1i(uM, iters);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+    if (coordEl && !RM) coordEl.firstChild.nodeValue = `c = −0.743644 + 0.131826i   ×${(2.8 / S).toFixed(0)}`;
+  }
+  function loop(ts){ if (visible && !document.hidden) frame(ts); if (!RM) requestAnimationFrame(loop); }
+  requestAnimationFrame(loop);
+  return {};
+})();
+
+/* =========================================================
+   HERO byte strip
+   ========================================================= */
+const HERO_SEED = {cx:-48735, cy:8639, zoom:3276800, nonce:1, threshold:5000, mode:0, active:1};
+function buildBytes(container, fieldsEl, seed, scramble){
+  const hex = packSeed(seed);
+  container.innerHTML = "";
+  for (let i = 0; i < 32; i++){
+    const b = document.createElement("div");
+    b.className = "byte"; b.dataset.f = FIELD_OF(i); b.dataset.v = hex.substr(i*2, 2); b.setAttribute("role","listitem");
+    b.textContent = scramble ? "··" : b.dataset.v; b.tabIndex = 0;
+    container.appendChild(b);
+  }
+  if (fieldsEl){
+    fieldsEl.innerHTML = "";
+    FIELD_SPANS.forEach(([f, n]) => { const s = document.createElement("span"); s.style.gridColumn = `span ${n}`; s.textContent = n >= 2 ? (f === "threshold" ? "thr" : f) : (f === "active" ? "a" : "m"); s.dataset.f = f; fieldsEl.appendChild(s); });
+  }
+}
+buildBytes($("#heroBytes"), $("#heroFields"), HERO_SEED, !RM);
+(function heroInteract(){
+  const box = $("#heroBytes"), note = $("#fieldNote");
+  const on = f => { box.classList.add("hl"); $$(".byte", box).forEach(b => b.classList.toggle("on", b.dataset.f === f)); note.innerHTML = `<b class="mono" style="color:var(--gold)">${t().fieldTitle[f]}</b><br>${t().field[f]}`; };
+  const off = () => { box.classList.remove("hl"); $$(".byte", box).forEach(b => b.classList.remove("on")); note.textContent = t().hint; };
+  box.addEventListener("pointerover", e => { const b = e.target.closest(".byte"); if (b) on(b.dataset.f); });
+  box.addEventListener("focusin", e => { const b = e.target.closest(".byte"); if (b) on(b.dataset.f); });
+  box.addEventListener("pointerleave", off); box.addEventListener("focusout", off);
+  $("#heroFields").addEventListener("pointerover", e => { const s = e.target.closest("span"); if (s) on(s.dataset.f); });
+  $("#heroFields").addEventListener("pointerleave", off);
+  note.textContent = t().hint;
+  if (RM) return;
+  // one orchestrated load moment: bytes decode from the right (low-order) end
+  const bytes = $$(".byte", box), H = "0123456789abcdef";
+  const start = performance.now() + 500;
+  (function dec(now){
+    let done = true;
+    bytes.forEach((b, i) => {
+      const at = start + (31 - i) * 38;
+      if (now < at){ done = false; return; }
+      if (now < at + 260){ done = false; b.textContent = H[Math.random()*16|0] + H[Math.random()*16|0]; b.style.color = "var(--gold)"; }
+      else if (b.textContent !== b.dataset.v){ b.textContent = b.dataset.v; b.style.color = ""; }
     });
+    if (!done) requestAnimationFrame(dec);
+  })(performance.now());
+})();
 
-    // Sleek Toast Notification
-    let toastTimeout = null;
-    function showToast(msg) {
-      const toast = document.getElementById('toast');
-      const toastMsg = document.getElementById('toastMsg');
-      toastMsg.textContent = msg || 'Copied to clipboard!';
-      toast.classList.add('show');
-      if (toastTimeout) clearTimeout(toastTimeout);
-      toastTimeout = setTimeout(() => {
-        toast.classList.remove('show');
-      }, 2500);
+/* =========================================================
+   STORY: gigabytes → kilobytes → 32 bytes
+   ========================================================= */
+(function story(){
+  const sec = $(".story"), cv = $("#squeeze"), ctx = cv.getContext("2d");
+  const steps = $$(".step", sec), bars = $$(".progress b", sec);
+  const N = matchMedia("(max-width:820px)").matches ? 1536 : 3072;
+  const parts = [];
+  const hex = packSeed(HERO_SEED);
+  for (let i = 0; i < N; i++){
+    parts.push({
+      a: Math.random(), // matrix position later
+      v: Math.random() * 2 - 1,
+      ph: Math.random() * Math.PI * 2,
+      slot: i % 32,
+      j: Math.floor(i / 32)
+    });
+  }
+  let W = 0, Hh = 0, D = 1, p = 0, shown = false;
+  function size(){ D = Math.min(devicePixelRatio || 1, 2); W = cv.clientWidth; Hh = cv.clientHeight; cv.width = W * D; cv.height = Hh * D; ctx.setTransform(D,0,0,D,0,0); }
+  size(); addEventListener("resize", size);
+  new IntersectionObserver(es => shown = es[0].isIntersecting).observe(sec);
+  const ease = x => x < .5 ? 4*x*x*x : 1 - Math.pow(-2*x + 2, 3) / 2;
+  const clamp = x => Math.max(0, Math.min(1, x));
+  function layoutA(i){ // big weight matrix, 96 x 32 (or 48 x 32)
+    const cols = N / 32, rows = 32;
+    const c = i % cols, r = Math.floor(i / cols);
+    const cw = W * .94 / cols, ch = Hh * .86 / rows;
+    return [W*.03 + c*cw + cw/2, Hh*.07 + r*ch + ch/2, Math.max(1.4, Math.min(cw, ch) * .62)];
+  }
+  function layoutB(i){ // small dense block: proofs/keys
+    const side = Math.sqrt(N), c = i % 64, r = Math.floor(i / 64);
+    const s = Math.min(W, Hh) * .44 / 64;
+    return [W/2 - 32*s + c*s + s/2, Hh/2 - (N/64)/2*s + r*s + s/2, Math.max(.9, s*.7)];
+  }
+  function slotGeo(){ const per = W < 600 ? 16 : 32, cw = Math.min(W * .94 / per, 34); return {per, cw, x0:(W - per*cw)/2}; }
+  function slotXY(k){ const g = slotGeo(), row = Math.floor(k / g.per), col = k % g.per; const rows = 32 / g.per; return [g.x0 + col*g.cw, Hh/2 - (rows * g.cw * 2.6)/2 + row * g.cw * 2.6 + g.cw*.3, g.cw]; }
+  function layoutC(i){ // 32 slots
+    const slot = i % 32, [sx, sy, cw] = slotXY(slot), gap = cw * .12;
+    const k = Math.floor(i / 32), cols = 3, rr = Math.floor(k / cols) % 16, cc = k % cols;
+    return [sx + gap + (cc+.5) * (cw - 2*gap)/cols, sy + (rr+.5) * (cw*1.8)/16, .9];
+  }
+  function draw(time){
+    ctx.clearRect(0, 0, W, Hh);
+    const p1 = ease(clamp((p - .22) / .2)), p2 = ease(clamp((p - .58) / .2));
+    for (let i = 0; i < N; i++){
+      const q = parts[i];
+      const A = layoutA(i), B = layoutB(i), C = layoutC(i);
+      let x = A[0] + (B[0] - A[0]) * p1, y = A[1] + (B[1] - A[1]) * p1, s = A[2] + (B[2] - A[2]) * p1;
+      x += (C[0] - x) * p2; y += (C[1] - y) * p2; s += (C[2] - s) * p2;
+      const flick = RM ? 0 : Math.sin(time * .002 + q.ph) * .5 + .5;
+      let col;
+      if (p2 > .02){ const g = pal(.55 + q.slot / 80); col = `rgba(${g[0]|0},${g[1]|0},${g[2]|0},${.35 + .6 * p2})`; }
+      else { const g = q.v > 0 ? [74,92,255] : [255,93,115]; const al = .25 + Math.abs(q.v) * .55 * (.6 + .4 * flick); col = `rgba(${g[0]},${g[1]},${g[2]},${al})`; }
+      ctx.fillStyle = col; ctx.fillRect(x - s/2, y - s/2, s, s);
     }
-
-    function copySnippet(elementId) {
-      const el = document.getElementById(elementId);
-      if (!el) return;
-      const text = el.textContent || el.innerText;
-      navigator.clipboard.writeText(text.trim()).then(() => {
-        showToast('Copied: ' + (text.length > 30 ? text.substring(0, 30) + '...' : text));
-      }).catch(() => {
-        showToast('Copied to clipboard!');
-      });
-    }
-
-    // Q16.16 Fixed Point Mandelbrot Microgrid Implementation
-    const FP_SHIFT = 16;
-    const FP_ONE = 1 << FP_SHIFT;
-
-    function floatToFP(f) { return Math.round(f * FP_ONE); }
-    function fpToFloat(fp) { return fp / FP_ONE; }
-    function fpMul(a, b) { return Math.round((a * b) / FP_ONE); }
-
-    function mandelbrotEscape12(cxFP, cyFP) {
-      let zx = 0;
-      let zy = 0;
-      let count = 0;
-      const ESCAPE_LIMIT = 4 * FP_ONE;
-
-      for (let i = 0; i < 12; i++) {
-        let zx2 = fpMul(zx, zx);
-        let zy2 = fpMul(zy, zy);
-        if (zx2 + zy2 > ESCAPE_LIMIT) break;
-        let nextZy = 2 * fpMul(zx, zy) + cyFP;
-        let nextZx = zx2 - zy2 + cxFP;
-        zx = nextZx;
-        zy = nextZy;
-        count++;
+    if (p2 > .85){
+      const a = (p2 - .85) / .15;
+      for (let k = 0; k < 32; k++){
+        const [sx, sy, cw] = slotXY(k);
+        ctx.font = `600 ${Math.max(9, cw * .4)}px JetBrains Mono, monospace`; ctx.textAlign = "center";
+        ctx.strokeStyle = `rgba(255,200,87,${.8*a})`; ctx.lineWidth = 1;
+        ctx.strokeRect(sx + 1.5, sy - cw*.05, cw - 3, cw*1.9);
+        ctx.fillStyle = `rgba(239,234,255,${a})`; ctx.fillText(hex.substr(k*2,2), sx + cw/2, sy + cw*2.35);
       }
-      return count;
     }
+  }
+  function onScroll(){
+    const r = sec.getBoundingClientRect();
+    p = clamp(-r.top / (r.height - innerHeight));
+    const k = p < .36 ? 0 : p < .7 ? 1 : 2;
+    steps.forEach((s, i) => s.classList.toggle("on", i === k));
+    bars.forEach((b, i) => b.style.transform = `scaleX(${clamp(p * 3 - i)})`);
+  }
+  addEventListener("scroll", onScroll, {passive:true}); onScroll();
+  (function loop(ts){ if (shown) draw(ts); requestAnimationFrame(loop); })(0);
+})();
 
-    const canvas = document.getElementById('paretoCanvas');
-    const ctx = canvas.getContext('2d');
-
-    function updateSimulation() {
-      const cx = parseFloat(document.getElementById('cxRange').value);
-      const cy = parseFloat(document.getElementById('cyRange').value);
-      const zoom = parseFloat(document.getElementById('zoomRange').value);
-      const threshold = parseFloat(document.getElementById('threshRange').value);
-
-      document.getElementById('cxVal').textContent = (cx >= 0 ? '+' : '') + cx.toFixed(4);
-      document.getElementById('cyVal').textContent = (cy >= 0 ? '+' : '') + cy.toFixed(4);
-      document.getElementById('zoomVal').textContent = zoom.toFixed(1) + 'x';
-      document.getElementById('threshVal').textContent = threshold.toFixed(2);
-
-      const cxFP = floatToFP(cx);
-      const cyFP = floatToFP(cy);
-      const deltaFP = floatToFP(0.04 / (zoom / 10.0));
-
-      let totalEscapes = 0;
-
-      // Draw background
-      ctx.fillStyle = '#050811';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      // Draw coordinate crosshair
-      ctx.strokeStyle = '#1e293b';
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.moveTo(canvas.width / 2, 0); ctx.lineTo(canvas.width / 2, canvas.height);
-      ctx.moveTo(0, canvas.height / 2); ctx.lineTo(canvas.width, canvas.height / 2);
-      ctx.stroke();
-
-      const gridPoints = [-2, -1, 1, 2];
-      const stepPx = canvas.width / 6;
-
-      for (let ix = 0; ix < 4; ix++) {
-        for (let iy = 0; iy < 4; iy++) {
-          let dx = gridPoints[ix];
-          let dy = gridPoints[iy];
-          let ptCx = cxFP + dx * deltaFP;
-          let ptCy = cyFP + dy * deltaFP;
-          let esc = mandelbrotEscape12(ptCx, ptCy);
-          totalEscapes += esc;
-
-          // Draw microgrid dot
-          let px = canvas.width / 2 + dx * stepPx;
-          let py = canvas.height / 2 - dy * stepPx;
-          let intensity = esc / 12.0;
-
-          ctx.fillStyle = intensity > 0.8 ? '#38bdf8' : (intensity > 0.4 ? '#f59e0b' : '#f43f5e');
-          ctx.beginPath();
-          ctx.arc(px, py, 6 + intensity * 6, 0, Math.PI * 2);
-          ctx.fill();
-
-          ctx.strokeStyle = 'rgba(255,255,255,0.6)';
-          ctx.lineWidth = 1.5;
-          ctx.stroke();
-        }
-      }
-
-      // Compute metrics matching Solidity Werracle.sol
-      let noul = totalEscapes % 256;
-      let score = (totalEscapes / (16.0 * 12.0));
-      let isAllowed = score >= threshold;
-
-      document.getElementById('outNoul').textContent = '0x' + noul.toString(16).toUpperCase().padStart(2, '0') + ` (${noul})`;
-      
-      const choiceEl = document.getElementById('outChoice');
-      if (isAllowed) {
-        choiceEl.textContent = 'PERMIT / ALLOWED';
-        choiceEl.className = 'text-emerald';
-      } else {
-        choiceEl.textContent = 'REVERT / DENIED';
-        choiceEl.className = 'text-rose';
-      }
-
-      document.getElementById('outScore').textContent = score.toFixed(4);
-      let gas = 18000 + (totalEscapes * 12);
-      document.getElementById('outGas').textContent = `${gas.toLocaleString()} gas ($0.0006)`;
-
-      if (liveEvmTimer) clearTimeout(liveEvmTimer);
-      liveEvmTimer = setTimeout(() => queryLiveEvmNode(score), 150);
+/* =========================================================
+   SIMULATOR
+   ========================================================= */
+const sim = (() => {
+  const el = id => $("#" + id);
+  const inp = {cx:el("cx"), cy:el("cy"), zoom:el("zoom"), risk:el("risk"), thr:el("thr")};
+  const PRESETS = {
+    default:{cx:-0.743644, cy:0.131826, zoom:50, risk:0, thr:5000},
+    flash:{cx:-1.25, cy:0.02, zoom:85, risk:0.35, thr:6500},
+    near:{cx:-0.743644, cy:0.131826, zoom:50, risk:0.25, thr:5000},
+    fee:{cx:-0.1011, cy:0.9563, zoom:32, risk:0, thr:4000},
+    aml:{cx:-0.7269, cy:0.1889, zoom:60, risk:0.1, thr:5500}
+  };
+  let res = null, sel = 5, lastAllowed = null;
+  const ov = el("overview"), ovx = ov.getContext("2d");
+  const dt = el("detail"), dtx = dt.getContext("2d");
+  const ob = el("orbit"), obx = ob.getContext("2d");
+  const OV = {x0:-2.25, x1:0.75, y0:-1.0, y1:1.0};
+  OV.y0 = -((OV.x1 - OV.x0) * ov.height / ov.width) / 2; OV.y1 = -OV.y0;
+  // overview rendered once
+  const ovImg = (() => {
+    const img = ovx.createImageData(ov.width, ov.height), d = img.data;
+    for (let j = 0; j < ov.height; j++) for (let i = 0; i < ov.width; i++){
+      const cr = OV.x0 + (OV.x1 - OV.x0) * i / ov.width, ci = OV.y1 - (OV.y1 - OV.y0) * j / ov.height;
+      let x = 0, y = 0, n = 0; const M = 90;
+      while (n < M && x*x + y*y < 16){ const t2 = x*x - y*y + cr; y = 2*x*y + ci; x = t2; n++; }
+      const o = (j * ov.width + i) * 4;
+      if (n >= M){ d[o]=7; d[o+1]=6; d[o+2]=26; }
+      else { const g = pal(Math.sqrt(n) * .16), f = .35 + .65 * Math.min(1, n / 18); d[o]=7+(g[0]-7)*f; d[o+1]=6+(g[1]-6)*f; d[o+2]=26+(g[2]-26)*f; }
+      d[o+3] = 255;
     }
+    return img;
+  })();
+  function drawOverview(){
+    ovx.putImageData(ovImg, 0, 0);
+    const c = seedF();
+    const px = (c.cx - OV.x0) / (OV.x1 - OV.x0) * ov.width, py = (OV.y1 - c.cy) / (OV.y1 - OV.y0) * ov.height;
+    ovx.strokeStyle = "rgba(255,200,87,.9)"; ovx.lineWidth = 2;
+    ovx.beginPath(); ovx.arc(px, py, 14, 0, 7); ovx.stroke();
+    ovx.beginPath(); ovx.moveTo(px - 26, py); ovx.lineTo(px - 18, py); ovx.moveTo(px + 18, py); ovx.lineTo(px + 26, py); ovx.moveTo(px, py - 26); ovx.lineTo(px, py - 18); ovx.moveTo(px, py + 18); ovx.lineTo(px, py + 26); ovx.stroke();
+  }
+  function pickFrom(e){
+    const r = ov.getBoundingClientRect();
+    const cx = OV.x0 + (OV.x1 - OV.x0) * (e.clientX - r.left) / r.width;
+    const cy = OV.y1 - (OV.y1 - OV.y0) * (e.clientY - r.top) / r.height;
+    inp.cx.value = cx.toFixed(6); inp.cy.value = Math.max(-1.2, Math.min(1.2, cy)).toFixed(6);
+    clearPreset(); render();
+  }
+  let dragging = false;
+  ov.addEventListener("pointerdown", e => { dragging = true; ov.setPointerCapture(e.pointerId); pickFrom(e); });
+  ov.addEventListener("pointermove", e => { if (dragging) pickFrom(e); });
+  ov.addEventListener("pointerup", () => dragging = false);
 
-    let liveEvmTimer = null;
-    const RECAPTCHA_SITE_KEY = "6LdP-JgqAAAAAJLdy_W8uowqstSa4XKlJTOkVAux";
+  function seedF(){ return {cx:+inp.cx.value, cy:+inp.cy.value, zoom:+inp.zoom.value, risk:+inp.risk.value, thr:+inp.thr.value}; }
+  function seedFP(){ const f = seedF(); return {cx:Math.round(f.cx*ONE), cy:Math.round(f.cy*ONE), zoom:Math.round(f.zoom*ONE), nonce:1, threshold:f.thr, mode:0, active:1, riskFP:Math.round(f.risk*ONE)}; }
 
-    function getRecaptchaToken(action = "werracle_sim") {
-      return new Promise((resolve) => {
-        try {
-          if (typeof grecaptcha !== 'undefined' && grecaptcha.ready) {
-            grecaptcha.ready(function() {
-              grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: action })
-                .then(function(token) { resolve(token); })
-                .catch(function() { resolve(null); });
-            });
-          } else {
-            resolve(null);
-          }
-        } catch (e) {
-          resolve(null);
-        }
-      });
+  function drawDetail(){
+    const s = seedFP(), W = dt.width, H = dt.height;
+    const step = res.step / ONE, half = step * 1.6;
+    const cx = s.cx / ONE, cy = s.cy / ONE;
+    const img = dtx.createImageData(W, H), d = img.data, R = 2; // render at half res
+    for (let j = 0; j < H; j += R) for (let i = 0; i < W; i += R){
+      const cr = cx - half + 2*half*i/W, ci = cy + half - 2*half*j/H;
+      let x = 0, y = 0, n = 0; const M = MAX_ITER; // same 12-step horizon the contract uses
+      while (n < M && x*x + y*y < 16){ const t2 = x*x - y*y + cr; y = 2*x*y + ci; x = t2; n++; }
+      let c3 = n >= M ? [7,6,26] : pal(.08 + n / 15);
+      if (n < M){ const f = .35 + .65*(n/M); c3 = [7+(c3[0]-7)*f, 6+(c3[1]-6)*f, 26+(c3[2]-26)*f]; }
+      for (let dy = 0; dy < R; dy++) for (let dx = 0; dx < R; dx++){ const o = ((j+dy)*W + i+dx)*4; d[o]=c3[0]; d[o+1]=c3[1]; d[o+2]=c3[2]; d[o+3]=255; }
     }
+    dtx.putImageData(img, 0, 0);
+    // quadrant axes
+    dtx.strokeStyle = "rgba(239,234,255,.25)"; dtx.setLineDash([4,4]); dtx.lineWidth = 1;
+    dtx.beginPath(); dtx.moveTo(W/2, 0); dtx.lineTo(W/2, H); dtx.moveTo(0, H/2); dtx.lineTo(W, H/2); dtx.stroke(); dtx.setLineDash([]);
+    dtx.font = "600 13px JetBrains Mono, monospace"; dtx.fillStyle = "rgba(239,234,255,.6)";
+    dtx.fillText("Q1", W - 30, 20); dtx.fillText("Q2", 10, 20); dtx.fillText("Q3", 10, H - 10); dtx.fillText("Q4", W - 30, H - 10);
+    res.pts.forEach((p, idx) => {
+      const x = (p.px/ONE - (cx - half)) / (2*half) * W, y = ((cy + half) - p.py/ONE) / (2*half) * H;
+      const r = 6 + p.e * .75;
+      const col = p.e >= 12 ? "#07061a" : p.e > 6 ? "#9fe8ff" : p.e > 3 ? "#ffc857" : "#ff5d73";
+      dtx.beginPath(); dtx.arc(x, y, r, 0, 7); dtx.fillStyle = col; dtx.fill();
+      dtx.lineWidth = idx === sel ? 3 : 1.5; dtx.strokeStyle = idx === sel ? "#ffc857" : "rgba(239,234,255,.85)"; dtx.stroke();
+      dtx.fillStyle = p.e >= 12 ? "#efeaff" : "#07061a"; dtx.font = "600 10px JetBrains Mono, monospace"; dtx.textAlign = "center"; dtx.fillText(p.e, x, y + 3.5); dtx.textAlign = "start";
+      p._x = x / W; p._y = y / H;
+    });
+  }
+  dt.addEventListener("click", e => {
+    const r = dt.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+    let best = 0, bd = 9; res.pts.forEach((p, i) => { const dd = (p._x-x)**2 + (p._y-y)**2; if (dd < bd){ bd = dd; best = i; } });
+    sel = best; drawDetail(); traceOrbit(true);
+  });
+  let orbitAnim = 0;
+  function traceOrbit(animate){
+    const p = res.pts[sel], pts = [];
+    iterateEscape(p.px, p.py, MAX_ITER, pts);
+    const W = ob.width, H = ob.height, S = W / 5.2;
+    const X = v => W/2 + v * S, Y = v => H/2 - v * S;
+    cancelAnimationFrame(orbitAnim);
+    let k = animate && !RM ? 0 : pts.length;
+    const t0 = performance.now();
+    (function frame(now){
+      if (animate && !RM) k = Math.min(pts.length, Math.floor((now - t0) / 110) + 1);
+      obx.fillStyle = "#05040f"; obx.fillRect(0, 0, W, H);
+      obx.strokeStyle = "rgba(255,200,87,.35)"; obx.setLineDash([3,5]); obx.beginPath(); obx.arc(W/2, H/2, 2*S, 0, 7); obx.stroke(); obx.setLineDash([]);
+      obx.fillStyle = "rgba(255,200,87,.55)"; obx.font = "500 12px Instrument Sans, sans-serif"; obx.fillText("|z| = 2", W/2 + 2*S*.72, H/2 - 2*S*.72);
+      obx.strokeStyle = "rgba(167,162,207,.25)"; obx.beginPath(); obx.moveTo(0, H/2); obx.lineTo(W, H/2); obx.moveTo(W/2, 0); obx.lineTo(W/2, H); obx.stroke();
+      obx.beginPath(); obx.moveTo(X(0), Y(0));
+      for (let i = 0; i < k; i++) obx.lineTo(X(Math.max(-3, Math.min(3, pts[i][0]))), Y(Math.max(-3, Math.min(3, pts[i][1]))));
+      obx.strokeStyle = "#9fe8ff"; obx.lineWidth = 1.6; obx.stroke();
+      for (let i = 0; i < k; i++){ const [a, b] = pts[i]; obx.beginPath(); obx.arc(X(Math.max(-3, Math.min(3, a))), Y(Math.max(-3, Math.min(3, b))), i === k-1 ? 5 : 3, 0, 7); obx.fillStyle = i === k-1 ? "#ffc857" : "#9fe8ff"; obx.fill(); }
+      if (animate && !RM && k < pts.length) orbitAnim = requestAnimationFrame(frame);
+    })(performance.now());
+    $("#orbitCap").textContent = caption();
+  }
+  function caption(){ if (!res) return ""; const p = res.pts[sel]; return t().orbit("Q" + (p.q + 1), p.k + 1, p.e < 12, p.e); }
 
-    async function queryLiveEvmNode(score) {
-      const toggle = document.getElementById('liveEvmToggle');
-      const detailsEl = document.getElementById('outLiveDetails');
-      const dotEl = document.getElementById('liveDot');
+  function render(){
+    if (!inp.cx) return;
+    const f = seedF(), s = seedFP();
+    el("cxO").textContent = (f.cx >= 0 ? "+" : "") + f.cx.toFixed(6) + "  (" + s.cx + ")";
+    el("cyO").textContent = (f.cy >= 0 ? "+" : "") + f.cy.toFixed(6) + "  (" + s.cy + ")";
+    el("zoomO").textContent = f.zoom.toFixed(1) + "×";
+    el("riskO").textContent = (f.risk >= 0 ? "+" : "") + f.risk.toFixed(2) + "  (" + s.riskFP + ")";
+    el("thrO").textContent = f.thr + " bps";
+    res = previewDecision(s, s.riskFP);
+    const v = el("verdict"), word = el("vWord");
+    v.className = "verdict " + (res.allowed ? "ok" : "no");
+    word.textContent = res.allowed ? t().allowed : t().reverted;
+    if (lastAllowed !== null && lastAllowed !== res.allowed){ word.classList.remove("pop"); void word.offsetWidth; word.classList.add("pop"); }
+    lastAllowed = res.allowed;
+    el("vConf").textContent = res.conf + " bps";
+    el("rProb").textContent = res.prob + " bps";
+    el("rBias").textContent = (res.bias >= 0 ? "+" : "") + res.bias;
+    const iters = res.pts.reduce((a, p) => a + Math.min(p.e + 1, MAX_ITER), 0);
+    el("rIter").textContent = iters + " / 192";
+    el("quads").innerHTML = res.weights.map((w, q) => {
+      const frac = w / HALF, hgt = Math.abs(frac) * 50;
+      const st = frac >= 0 ? `bottom:50%;height:${hgt}%;background:var(--permit)` : `top:50%;height:${hgt}%;background:var(--revert)`;
+      return `<div class="quad">Q${q+1} <span class="mono">${res.esc[q]}/48</span><div class="bar"><i style="${st}"></i></div><b>w${q+1} ${w >= 0 ? "+" : ""}${w}</b></div>`;
+    }).join("");
+    drawOverview(); drawDetail(); traceOrbit(false);
+    queueLive(f.risk);
+  }
+  function clearPreset(){ $$("#presets button").forEach(b => b.setAttribute("aria-pressed", "false")); }
+  function applyPreset(name){
+    const p = PRESETS[name]; inp.cx.value = p.cx; inp.cy.value = p.cy; inp.zoom.value = p.zoom; inp.risk.value = p.risk; inp.thr.value = p.thr;
+    $$("#presets button").forEach(b => b.setAttribute("aria-pressed", b.dataset.p === name ? "true" : "false"));
+    render();
+  }
+  $$("#presets button").forEach(b => b.addEventListener("click", () => applyPreset(b.dataset.p)));
+  Object.values(inp).forEach(i => i.addEventListener("input", () => { if (i !== inp.risk && i !== inp.thr) clearPreset(); render(); }));
 
-      if (!toggle || !toggle.checked) {
-        if (detailsEl) detailsEl.textContent = 'Client-Side Mode';
-        if (dotEl) { dotEl.style.background = '#94a3b8'; dotEl.style.boxShadow = 'none'; }
-        return;
-      }
-
-      if (detailsEl) detailsEl.textContent = 'Querying api.answerr.me EVM...';
-      if (dotEl) { dotEl.style.background = 'var(--cyan)'; dotEl.style.boxShadow = '0 0 8px var(--cyan)'; }
-
+  // optional live node check (same endpoint as the current site)
+  let liveTimer = 0;
+  const liveT = el("liveT"), dot = el("liveDot"), lt = el("liveTxt");
+  let rcLoaded = false;
+  function loadRc(){ if (rcLoaded) return; rcLoaded = true; const sc = document.createElement("script"); sc.src = "https://www.google.com/recaptcha/api.js?render=6LdP-JgqAAAAAJLdy_W8uowqstSa4XKlJTOkVAux"; sc.async = true; document.head.appendChild(sc); }
+  function recaptcha(){ return new Promise(r => { try { if (window.grecaptcha && grecaptcha.ready) grecaptcha.ready(() => grecaptcha.execute("6LdP-JgqAAAAAJLdy_W8uowqstSa4XKlJTOkVAux", {action:"evm_eval"}).then(r, () => r(null))); else r(null); } catch(e){ r(null); } }); }
+  function queueLive(risk){
+    clearTimeout(liveTimer);
+    if (!liveT.checked){ dot.style.background = "#6d6896"; lt.textContent = t().live0; return; }
+    liveTimer = setTimeout(async () => {
+      dot.style.background = "var(--ice)"; lt.textContent = t().live1;
       try {
-        const token = await getRecaptchaToken("evm_eval");
-        const headers = { 'Content-Type': 'application/json' };
-        if (token) headers['X-Recaptcha-Token'] = token;
+        const tok = await recaptcha(); const h = {"Content-Type":"application/json"}; if (tok) h["X-Recaptcha-Token"] = tok;
+        const r = await fetch("https://api.answerr.me:4431/werracle/oracle/noul", {method:"POST", headers:h, body:JSON.stringify({risk_score:risk})});
+        if (!r.ok) throw 0; const d = await r.json();
+        dot.style.background = "var(--permit)"; lt.textContent = t().live2(d.blockNumber, d.executionMs, (d.gasUsed||0).toLocaleString());
+      } catch(e){ dot.style.background = "var(--gold)"; lt.textContent = t().live3; }
+    }, 250);
+  }
+  liveT.addEventListener("change", () => { if (liveT.checked) loadRc(); render(); });
 
-        const res = await fetch('https://api.answerr.me:4431/werracle/oracle/noul', {
-          method: 'POST',
-          headers: headers,
-          body: JSON.stringify({ risk_score: score - 0.5 })
-        });
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        const data = await res.json();
-        if (dotEl) { dotEl.style.background = 'var(--emerald)'; dotEl.style.boxShadow = '0 0 8px var(--emerald)'; }
-        if (detailsEl) {
-          detailsEl.textContent = `Block #${data.blockNumber} • ${data.executionMs}ms • Gas: ${data.gasUsed.toLocaleString()}`;
-        }
-      } catch (err) {
-        if (dotEl) { dotEl.style.background = 'var(--amber)'; dotEl.style.boxShadow = 'none'; }
-        if (detailsEl) {
-          detailsEl.textContent = 'Client-Side JS Fallback';
-        }
-      }
-    }
+  applyPreset("default");
+  return {render, caption};
+})();
+function orbitCaption(){ const c = $("#orbitCap"); if (c && sim.caption) c.textContent = sim.caption(); }
 
-    function applyPreset(name) {
-      document.querySelectorAll('.btn-preset').forEach(b => {
-        b.classList.remove('active');
-        b.classList.remove('near-active');
-      });
-      if (event && event.target) {
-        if (name === 'nearintent') {
-          event.target.classList.add('near-active');
-        } else {
-          event.target.classList.add('active');
-        }
-      }
+/* =========================================================
+   FLASH LOAN
+   ========================================================= */
+const flash = (() => {
+  const b = $("#borrow"), s = $("#slip"), ops = $$("#tx .op"), out = $("#outcome"), bn = $("#blockNo");
+  let state = "safe", timer = 0, seen = false, blk = 21876540;
+  function classify(){ const ratio = +b.value / 10000 * 100, sl = +s.value; return (ratio > 40 || sl > 10) ? "hostile" : (ratio > 15 || sl > 3) ? "mev" : "safe"; }
+  function update(){
+    $("#bO").textContent = (+b.value).toLocaleString() + " ETH (" + (+b.value/100).toFixed(1) + "%)";
+    $("#sO").textContent = (+s.value).toFixed(1) + "%";
+    $("#opBorrow").textContent = (+b.value).toLocaleString() + " ETH";
+    $("#opSlip").textContent = (+s.value).toFixed(1) + "%";
+    state = classify();
+    if (seen) play();
+  }
+  function play(){
+    clearTimeout(timer);
+    bn.textContent = "block #" + (++blk).toLocaleString("en-US");
+    ops.forEach(o => o.classList.remove("lit", "dead"));
+    out.className = "outcome"; out.textContent = "";
+    const seq = [0, 1, 2];
+    const d = RM ? 0 : 420;
+    seq.forEach((i, k) => setTimeout(() => ops[i].classList.add("lit"), d * k));
+    timer = setTimeout(() => {
+      if (state === "hostile"){ ops.forEach(o => o.classList.add("dead")); ops[2].classList.remove("dead"); out.className = "outcome no"; out.textContent = "revert  " + t().hostile; }
+      else { ops[3].classList.add("lit"); out.className = "outcome " + (state === "mev" ? "warn" : "ok"); out.textContent = (state === "mev" ? "fee 0.50%  " : "ok  ") + (state === "mev" ? t().mev : t().safe); }
+    }, d * 3 + 200);
+  }
+  [b, s].forEach(i => i.addEventListener("input", update));
+  new IntersectionObserver(es => { if (es[0].isIntersecting && !seen){ seen = true; play(); } }, {threshold:.4}).observe($("#tx"));
+  update();
+  return {update};
+})();
 
-      if (name === 'default') {
-        document.getElementById('cxRange').value = -0.7436;
-        document.getElementById('cyRange').value = 0.1318;
-        document.getElementById('zoomRange').value = 50.0;
-        document.getElementById('threshRange').value = 0.50;
-      } else if (name === 'flashloan') {
-        document.getElementById('cxRange').value = -1.2500;
-        document.getElementById('cyRange').value = 0.0200;
-        document.getElementById('zoomRange').value = 85.0;
-        document.getElementById('threshRange').value = 0.65;
-      } else if (name === 'nearintent') {
-        // Calibrated NEAR Intent Shield (v2.1 Bounded Stability)
-        document.getElementById('cxRange').value = -0.7436;
-        document.getElementById('cyRange').value = 0.1318;
-        document.getElementById('zoomRange').value = 50.0;
-        document.getElementById('threshRange').value = 0.50;
-      } else if (name === 'dynamicfee') {
-        document.getElementById('cxRange').value = -0.1011;
-        document.getElementById('cyRange').value = 0.9563;
-        document.getElementById('zoomRange').value = 32.0;
-        document.getElementById('threshRange').value = 0.40;
-      } else if (name === 'aml') {
-        document.getElementById('cxRange').value = -0.7269;
-        document.getElementById('cyRange').value = 0.1889;
-        document.getElementById('zoomRange').value = 60.0;
-        document.getElementById('threshRange').value = 0.55;
-      }
-      updateSimulation();
-    }
+/* =========================================================
+   BENCH bars (log scale 10k → 20M)
+   ========================================================= */
+(() => {
+  const L0 = Math.log10(8000), L1 = Math.log10(2e7);
+  const bars = $$("#benchBars .track i");
+  const go = () => bars.forEach(i => i.style.width = ((Math.log10(+i.dataset.v) - L0) / (L1 - L0) * 100) + "%");
+  if (RM) go(); else new IntersectionObserver((es, o) => { if (es[0].isIntersecting){ go(); o.disconnect(); } }, {threshold:.3}).observe($("#benchBars"));
+})();
 
-    // DeFi Flash-Loan dynamic sliders
-    function updateDeFi() {
-      const borrow = parseFloat(document.getElementById('borrowRange').value);
-      const slip = parseFloat(document.getElementById('slipRange').value);
-      document.getElementById('borrowVal').textContent = borrow.toLocaleString() + ' ETH';
-      document.getElementById('slipVal').textContent = slip.toFixed(1) + '%';
-
-      const ratio = (borrow / 10000.0) * 100.0;
-      document.getElementById('outRatio').textContent = ratio.toFixed(2) + '%';
-
-      const triageEl = document.getElementById('outTriage');
-      const actionEl = document.getElementById('outAction');
-
-      if (ratio > 40.0 || slip > 10.0) {
-        triageEl.textContent = 'HOSTILE_FLASH_LOAN_ATTACK';
-        triageEl.className = 'text-rose';
-        actionEl.textContent = 'ATOMIC_REVERT_TRANSACTION';
-        actionEl.className = 'text-rose';
-      } else if (ratio > 15.0 || slip > 3.0) {
-        triageEl.textContent = 'SANDWICH_MEV_SURGE';
-        triageEl.className = 'text-amber';
-        actionEl.textContent = 'SURCHARGE_DYNAMIC_FEE (0.50%)';
-        actionEl.className = 'text-amber';
+/* =========================================================
+   NEAR intent stream
+   ========================================================= */
+(() => {
+  const box = $("#stream"); let on = false, timer = 0;
+  const TYPES = [
+    {txt:"swap 1.2 ETH → USDC", ok:true},
+    {txt:"sandwich bundle", ok:false},
+    {txt:"agent pays 0.004 USDC", ok:true},
+    {txt:"flash-loan + oracle poke", ok:false},
+    {txt:"bridge 300 USDT → Base", ok:true},
+    {txt:"swap 40 NEAR → ETH", ok:true}
+  ];
+  let n = 0;
+  function spawn(){
+    if (!on || document.hidden) return;
+    const T = TYPES[n++ % TYPES.length];
+    const c = document.createElement("div"); c.className = "chip"; c.textContent = T.txt;
+    const lane = 26 + (n % 4) * 46;
+    c.style.top = lane + "px"; box.appendChild(c);
+    const W = box.clientWidth, cw = c.offsetWidth, gate = W / 2 - cw - 6;
+    const a1 = c.animate([{transform:`translateX(${-cw}px)`},{transform:`translateX(${gate}px)`}], {duration:2600, easing:"linear", fill:"forwards"});
+    a1.onfinish = () => {
+      c.classList.add(T.ok ? "ok" : "no");
+      c.textContent = (T.ok ? "noul=1  " : "noul=0  ") + T.txt;
+      if (T.ok){
+        c.animate([{transform:`translateX(${gate}px)`},{transform:`translateX(${W + 20}px)`}], {duration:2400, easing:"cubic-bezier(.4,0,.2,1)", fill:"forwards"}).onfinish = () => c.remove();
       } else {
-        triageEl.textContent = 'SAFE_RESERVE_OPERATION';
-        triageEl.className = 'text-emerald';
-        actionEl.textContent = 'EXECUTE_SWAP';
-        actionEl.className = 'text-emerald';
+        c.animate([{transform:`translateX(${gate}px)`, opacity:1},{transform:`translateX(${gate - 30}px) translateY(36px) rotate(-8deg)`, opacity:0}], {duration:1100, easing:"ease-in", fill:"forwards"}).onfinish = () => c.remove();
       }
-    }
+    };
+    timer = setTimeout(spawn, 1050);
+  }
+  if (RM){ return; }
+  new IntersectionObserver(es => { const was = on; on = es[0].isIntersecting; if (on && !was) spawn(); if (!on) clearTimeout(timer); }).observe(box);
+})();
 
-    // Attach event listeners
-    ['cxRange', 'cyRange', 'zoomRange', 'threshRange'].forEach(id => {
-      document.getElementById(id).addEventListener('input', updateSimulation);
-    });
-    ['borrowRange', 'slipRange'].forEach(id => {
-      document.getElementById(id).addEventListener('input', updateDeFi);
-    });
-    document.getElementById('liveEvmToggle').addEventListener('change', updateSimulation);
+/* =========================================================
+   Lean terminal
+   ========================================================= */
+(() => {
+  const NAMES = "zmod9_resonant_additive_closure zmod9_resonant_ideal_absorption zmod9_triadic_projection zmod9_partition_cardinality zmod9_error_kernel_iff_coprime_unit zmod9_unit_group_closure_and_totient orthogonal_8state_autoguard_invariance lemma:iterate_escape_fuel_bounded escape_zmod9_bounded escape_werracle_bounded q16_16_square_no_int64_overflow escape_zmod9_non_constant_spectrum observer_horizon_quadrant_sensitivity evm_gas_parametric_bound recurrent_ema_bounded_invariance wormhole_hibernation_triadic_sanctuary_and_genome_lock gaba_homeostasis_prevents_burnout dmnav_refractory_clamp_safety csr_synaptic_propagation_bounded colony_byzantine_shank_fault_tolerance soma_colony_gas_ceiling_within_budget sovereign_anti_subjugation_invariance atp_metabolic_conservation_and_mitosis_gate stigmergic_pheromone_preemptive_shield mitosis_child_inherits_horizon_and_covenant swarm_multi_colony_gas_sub_ceiling window_lock_zero_mortality_and_monotonic_learning premature_egress_lure_refusal_and_cap cross_pool_spore_migration_safety_and_fitness holographic_epigenetic_engram_single_slot step4_window_lifecycle_gas_sub_ceiling gap0331_constructive_extended_euclidean_neutralization gap0299_schreier_sift_base_stabilizer_invariance gap0299_schreier_sift_rejects_adversarial_tampering gap0332_ordered_partition_disjointness_conservation gap_injected_gas_sub_ceiling dynamic_leaky_fitness_strictly_bounded swarm_colony_turnover_population_ceiling mitosis_turnover_atp_conservation apoptosis_turnover_viability_guarantee dynamic_turnover_gas_sub_ceiling".split(" ");
+  const pre = $("#lean"); let started = false;
+  const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+  function lines(){
+    const L = t().lean.map(x => `<span class="d">${esc(x)}</span>`);
+    NAMES.forEach(n => { const lem = n.startsWith("lemma:"); L.push(`<span class="ok">✔</span> <span class="k">${lem ? "lemma" : "theorem"}</span> ${esc(lem ? n.slice(6) : n)}`); });
+    t().leanEnd.forEach(x => L.push(`<span class="ok">${esc(x)}</span>`));
+    return L;
+  }
+  function run(){
+    const L = lines(); let i = 0;
+    if (RM){ pre.innerHTML = L.join("\n"); pre.scrollTop = 1e6; return; }
+    (function next(){
+      pre.innerHTML = L.slice(0, ++i).join("\n"); pre.scrollTop = pre.scrollHeight;
+      if (i < L.length) setTimeout(next, i < 3 ? 380 : 55);
+    })();
+  }
+  new IntersectionObserver((es, o) => { if (es[0].isIntersecting && !started){ started = true; run(); o.disconnect(); } }, {threshold:.35}).observe(pre);
+})();
 
-    // Language Toggle
-    let currentLang = 'en';
-    const langBtn = document.getElementById('langToggle');
-    langBtn.addEventListener('click', () => {
-      currentLang = currentLang === 'en' ? 'tr' : 'en';
-      langBtn.textContent = currentLang === 'en' ? 'TR' : 'EN';
-      document.querySelectorAll('[data-en]').forEach(el => {
-        el.textContent = el.getAttribute(`data-${currentLang}`);
-      });
-    });
-
-    // Init
-    updateSimulation();
-    updateDeFi();
-  </script>
+/* init language */
+try { const s = localStorage.getItem("werr-lang") || ((navigator.language||"").startsWith("tr") ? "tr" : "en"); if (s === "tr"){ lang = "tr"; } } catch(e){}
+applyLang();
+})();
+</script>
 </body>
 </html>

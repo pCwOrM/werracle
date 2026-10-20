@@ -1,0 +1,1903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>Werracle | Zero-Memory On-Chain AI Decision Oracle (EVM 32-Byte Slot)</title>
+  <meta name="description" content="Sub-millisecond intra-block on-chain AI decision oracle for EVM smart contracts. Powered by WERR procedural Mandelbrot dynamics. 0 Bytes VRAM, 20k gas.">
+  <meta name="theme-color" content="#060913">
+  <link rel="icon" type="image/svg+xml" href="assets/werracle_logo_oracle_trans.svg">
+  <link rel="apple-touch-icon" href="assets/werracle_logo_oracle.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Google reCAPTCHA v3 API & Telemetry Protection -->
+  <script src="https://www.google.com/recaptcha/api.js?render=6LdP-JgqAAAAAJLdy_W8uowqstSa4XKlJTOkVAux" async defer></script>
+  <style>
+    :root {
+      --bg-main: #060913;
+      --bg-card: #0c1222;
+      --bg-card-hover: #121b33;
+      --border-color: #1a2744;
+      --border-accent: rgba(56, 189, 248, 0.35);
+      --cyan: #38bdf8;
+      --cyan-glow: rgba(56, 189, 248, 0.25);
+      --emerald: #10b981;
+      --emerald-glow: rgba(16, 185, 129, 0.25);
+      --amber: #f59e0b;
+      --amber-glow: rgba(245, 158, 11, 0.25);
+      --purple: #a855f7;
+      --purple-glow: rgba(168, 85, 247, 0.25);
+      --rose: #f43f5e;
+      --near-green: #00EC97;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'Fira Code', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Ambient background grid */
+    .bg-grid {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background-image: linear-gradient(rgba(56, 189, 248, 0.03) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(56, 189, 248, 0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header Nav */
+    header {
+      border-bottom: 1px solid var(--border-color);
+      background: rgba(6, 9, 19, 0.94);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: 70px;
+      transition: height 0.2s ease;
+    }
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 100%;
+      gap: 16px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: #fff;
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: -0.5px;
+      flex-shrink: 0;
+    }
+    .logo-badge {
+      background: linear-gradient(135deg, #0284c7, #38bdf8);
+      color: #000;
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .nav-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.86rem;
+      font-weight: 500;
+      padding: 6px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .nav-link:hover {
+      color: var(--cyan);
+      background: rgba(56, 189, 248, 0.08);
+    }
+    .nav-link.nav-link-near {
+      background: rgba(0, 236, 151, 0.12);
+      border: 1px solid rgba(0, 236, 151, 0.4);
+      color: var(--near-green) !important;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-weight: 600;
+    }
+    .nav-link.nav-link-near:hover {
+      background: rgba(0, 236, 151, 0.22);
+      box-shadow: 0 0 12px rgba(0, 236, 151, 0.3);
+    }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    /* Desktop Research Dropdown */
+    .nav-dropdown {
+      position: relative;
+    }
+    .btn-dropdown {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      min-height: 36px;
+    }
+    .nav-dropdown:hover .btn-dropdown, .btn-dropdown:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+    }
+    .dropdown-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      background: rgba(12, 18, 34, 0.98);
+      border: 1px solid var(--border-accent);
+      border-radius: 12px;
+      padding: 8px;
+      min-width: 250px;
+      box-shadow: 0 14px 35px rgba(0,0,0,0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      z-index: 120;
+    }
+    .nav-dropdown:hover .dropdown-menu, .nav-dropdown:focus-within .dropdown-menu, .nav-dropdown.active .dropdown-menu {
+      display: flex;
+      animation: fadeInMenu 0.18s ease-out forwards;
+    }
+    .dropdown-item {
+      padding: 10px 14px;
+      border-radius: 8px;
+      color: var(--text-main);
+      text-decoration: none;
+      font-size: 0.85rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      transition: background 0.15s;
+    }
+    .dropdown-item:hover {
+      background: rgba(56, 189, 248, 0.12);
+    }
+    .btn-icon-gh {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+    .btn-icon-gh:hover {
+      color: #fff;
+      border-color: var(--cyan);
+      background: rgba(56, 189, 248, 0.1);
+    }
+
+    .btn-lang {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--cyan);
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      transition: all 0.2s;
+      min-height: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .btn-lang:hover {
+      border-color: var(--cyan);
+      box-shadow: 0 0 10px var(--cyan-glow);
+    }
+
+    /* Mobile Hamburger Button */
+    .nav-toggle {
+      display: none;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      padding: 8px;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 102;
+      transition: all 0.2s;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text-main);
+      border-radius: 2px;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+    .nav-toggle.active span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    .nav-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .nav-toggle.active span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    /* Mobile/Tablet Drawer (Activated on <= 1140px to prevent any clipping) */
+    @media (max-width: 1140px) {
+      header { height: 64px; }
+      .nav-toggle { display: flex; }
+      .nav-dropdown { display: none; }
+      .btn-icon-gh { display: none; }
+      .nav-links {
+        display: none;
+        position: fixed;
+        top: 64px;
+        left: 0;
+        width: 100vw;
+        height: calc(100vh - 64px);
+        background: rgba(6, 9, 19, 0.98);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 24px 20px 40px;
+        gap: 0;
+        overflow-y: auto;
+        border-top: 1px solid var(--border-color);
+        z-index: 99;
+      }
+      .nav-links.open {
+        display: flex;
+        animation: fadeInMenu 0.2s ease-out forwards;
+      }
+      .nav-link {
+        font-size: 1.05rem;
+        padding: 16px 8px;
+        width: 100%;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-radius: 0;
+      }
+      .mobile-only-links {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin-top: 12px;
+      }
+    }
+    @media (min-width: 1141px) {
+      .mobile-only-links { display: none; }
+    }
+    @keyframes fadeInMenu {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 60px 0 45px;
+      text-align: center;
+    }
+    .pill-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(56, 189, 248, 0.08);
+      border: 1px solid var(--border-accent);
+      padding: 8px 18px;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      color: var(--cyan);
+      font-weight: 600;
+      margin-bottom: 24px;
+      max-width: 100%;
+      line-height: 1.4;
+      text-align: left;
+    }
+    .hero h1 {
+      font-size: clamp(2.1rem, 5vw, 4.2rem);
+      font-weight: 800;
+      letter-spacing: -1.2px;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #ffffff 40%, var(--cyan) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      color: var(--text-muted);
+      max-width: 820px;
+      margin: 0 auto 36px;
+    }
+
+    /* Metric Badges Grid */
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 20px;
+      border-radius: 12px;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .stat-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--border-accent);
+    }
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 4px; height: 100%;
+      background: var(--stat-color, var(--cyan));
+    }
+    .stat-val {
+      font-size: 1.75rem;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      line-height: 1.2;
+    }
+    .stat-lbl {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+      line-height: 1.35;
+    }
+
+    /* Buttons */
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      padding: 12px 24px;
+      min-height: 44px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.92rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-align: center;
+      touch-action: manipulation;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #0284c7, #06b6d4);
+      color: #000;
+      font-weight: 700;
+      border: none;
+      box-shadow: 0 4px 18px var(--cyan-glow);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 26px var(--cyan-glow);
+    }
+    .btn-secondary {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: #fff;
+    }
+    .btn-secondary:hover {
+      border-color: var(--cyan);
+      transform: translateY(-2px);
+    }
+
+    /* Section Wrapper */
+    .section-wrap {
+      padding: 65px 0;
+      border-top: 1px solid var(--border-color);
+    }
+    .section-header {
+      margin-bottom: 34px;
+    }
+    .section-header h2 {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      line-height: 1.25;
+    }
+    .section-header p {
+      color: var(--text-muted);
+      font-size: 1rem;
+      max-width: 850px;
+      line-height: 1.5;
+    }
+
+    /* Live Interactive EVM Simulator */
+    .sim-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    @media (max-width: 900px) {
+      .sim-grid { grid-template-columns: 1fr; }
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 26px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+    .form-group {
+      margin-bottom: 18px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      font-family: var(--font-mono);
+    }
+    .input-range-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    
+    /* Touch Ergonomic Range Inputs */
+    input[type=range] {
+      flex: 1;
+      -webkit-appearance: none;
+      appearance: none;
+      height: 8px;
+      border-radius: 4px;
+      background: #1e293b;
+      outline: none;
+      cursor: pointer;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 10px var(--cyan-glow);
+      border: 2px solid #ffffff;
+      cursor: grab;
+      transition: transform 0.1s ease;
+    }
+    input[type=range]::-webkit-slider-thumb:active {
+      transform: scale(1.15);
+      cursor: grabbing;
+    }
+    input[type=range]::-moz-range-thumb {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 10px var(--cyan-glow);
+      border: 2px solid #ffffff;
+      cursor: grab;
+    }
+    .val-badge {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--cyan);
+      background: rgba(56, 189, 248, 0.1);
+      padding: 6px 10px;
+      border-radius: 6px;
+      min-width: 95px;
+      text-align: right;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .preset-btns {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .btn-preset {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      font-size: 0.82rem;
+      padding: 8px 14px;
+      min-height: 40px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      touch-action: manipulation;
+    }
+    .btn-preset:hover, .btn-preset.active {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: var(--cyan);
+      color: var(--cyan);
+    }
+    .btn-preset.near-active {
+      background: rgba(0, 236, 151, 0.15);
+      border-color: var(--near-green);
+      color: var(--near-green);
+    }
+
+    /* Output Console */
+    .console-out {
+      background: #050811;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 18px;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      margin-top: 20px;
+    }
+    .console-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 8px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .console-row:last-child { border: none; margin: 0; padding: 0; }
+    .text-emerald { color: var(--emerald); font-weight: 700; }
+    .text-rose { color: var(--rose); font-weight: 700; }
+    .text-amber { color: var(--amber); font-weight: 700; }
+    .text-cyan { color: var(--cyan); font-weight: 700; }
+
+    /* Microgrid visualizer */
+    .microgrid-canvas-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    #paretoCanvas {
+      background: #04060c;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.1);
+      max-width: 100%;
+      height: auto;
+      aspect-ratio: 1 / 1;
+    }
+
+    /* Responsive Scroll Containers */
+    .slot-table-wrap, .code-wrap {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin: 16px 0;
+      border-radius: 8px;
+    }
+
+    /* 32-Byte Slot Diagram */
+    .slot-table {
+      width: 100%;
+      min-width: 580px;
+      border-collapse: collapse;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .slot-table th, .slot-table td {
+      border: 1px solid var(--border-color);
+      padding: 12px 14px;
+      text-align: left;
+    }
+    .slot-table th {
+      background: #090e1d;
+      color: var(--cyan);
+      font-weight: 700;
+    }
+    .slot-table tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+
+    /* Comparison Matrix Table */
+    .comp-table {
+      width: 100%;
+      min-width: 600px;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+    .comp-table th, .comp-table td {
+      border: 1px solid var(--border-color);
+      padding: 14px 16px;
+      text-align: left;
+    }
+    .comp-table th {
+      background: #0c1428;
+      color: #fff;
+      font-weight: 700;
+    }
+    .comp-table tr.highlight {
+      background: rgba(56, 189, 248, 0.08);
+      border-left: 3px solid var(--cyan);
+    }
+
+    /* Code Snippet Box */
+    .code-box {
+      background: #050811;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: #e2e8f0;
+      line-height: 1.55;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      white-space: pre;
+    }
+
+    /* Quick Snippet Box with Copy Button */
+    .quick-snippet {
+      position: relative;
+      background: #040712;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px 48px 12px 14px;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--cyan);
+      overflow-x: auto;
+      margin: 10px 0;
+      white-space: nowrap;
+    }
+    .btn-snippet-copy {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--cyan);
+      padding: 4px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.72rem;
+      font-family: var(--font-sans);
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .btn-snippet-copy:hover {
+      border-color: var(--cyan);
+      background: rgba(56, 189, 248, 0.15);
+    }
+
+    /* Wallet Support Card */
+    .wallet-card {
+      background: linear-gradient(135deg, rgba(12, 18, 34, 0.95), rgba(18, 27, 51, 0.95));
+      border: 1px solid var(--border-accent);
+      border-radius: 16px;
+      padding: 28px;
+      margin-top: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .wallet-addr {
+      background: #050811;
+      border: 1px solid var(--border-color);
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      color: var(--amber);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 10px 0;
+      word-break: break-all;
+      gap: 10px;
+    }
+    .btn-copy {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--cyan);
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.75rem;
+      font-weight: 600;
+      transition: all 0.2s;
+      flex-shrink: 0;
+      min-height: 34px;
+    }
+    .btn-copy:hover { border-color: var(--cyan); color: #fff; }
+
+    /* Toast Notification */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #0f172a;
+      border: 1px solid var(--cyan);
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 9999px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+    #toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* Floating Back to Top Button */
+    #backToTop {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 1px solid var(--border-accent);
+      color: var(--cyan);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.25s ease;
+      z-index: 90;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    }
+    #backToTop.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+    #backToTop:hover {
+      transform: translateY(-3px);
+      border-color: var(--cyan);
+      box-shadow: 0 0 15px var(--cyan-glow);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-color);
+      padding: 40px 0;
+      background: #04060c;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .footer-links {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--cyan); }
+
+    /* Mobile Responsive Optimizations */
+    @media (max-width: 768px) {
+      .container { padding: 0 16px; }
+      .hero { padding: 36px 0 28px; }
+      .hero h1 { font-size: 2.1rem; letter-spacing: -0.8px; }
+      .hero p { font-size: 0.98rem; margin-bottom: 26px; }
+      .hero-stats { grid-template-columns: 1fr; gap: 12px; }
+      .hero-actions .btn { width: 100%; }
+      .card { padding: 18px; border-radius: 14px; }
+      .wallet-card { padding: 20px; border-radius: 14px; }
+      .wallet-addr {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+      .btn-copy { width: 100%; }
+      .code-box {
+        font-size: 0.78rem;
+        padding: 14px;
+      }
+      .footer-inner {
+        flex-direction: column;
+        text-align: center;
+        gap: 16px;
+      }
+      .footer-links { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+  <div style="background:rgba(56,189,248,0.15);border-bottom:1px solid rgba(56,189,248,0.3);color:#38bdf8;text-align:center;padding:10px 16px;font-size:0.85rem;font-weight:600;position:relative;z-index:999;">📜 You are viewing the Classic v1.0 Archive. Experience the new interactive version at <a href="index.html" style="color:#fff;text-decoration:underline;margin-left:6px;">Werracle v2.0 (Home) →</a></div>
+  <div class="bg-grid"></div>
+
+  <!-- Header -->
+  <header>
+    <div class="container nav-inner">
+      <a href="#" class="logo">
+        <img src="assets/werracle_logo_oracle_trans.png" alt="Werracle Logo" width="34" height="34" style="filter: drop-shadow(0 0 10px rgba(0,236,151,0.6));" />
+        <span>Werracle</span>
+        <span class="logo-badge">EVM AI</span>
+      </a>
+
+      <!-- Center Desktop Navigation -->
+      <nav class="nav-links" id="navMenu">
+        <a href="#simulator" class="nav-link" data-en="⚡ Simulator" data-tr="⚡ Simülatör">⚡ Simulator</a>
+        <a href="#benchmark" class="nav-link" data-en="📊 Benchmarks" data-tr="📊 Kıyaslama">📊 Benchmarks</a>
+        <a href="#storage-slot" class="nav-link" data-en="🧩 32-Byte Slot" data-tr="🧩 32-Bayt Slot">🧩 32-Byte Slot</a>
+        <a href="#defi-defense" class="nav-link" data-en="🛡️ DeFi Defense" data-tr="🛡️ DeFi Savunması">🛡️ DeFi Defense</a>
+        <a href="#near-aurora" class="nav-link nav-link-near" data-en="🟢 NEAR & Aurora" data-tr="🟢 NEAR ve Aurora">🟢 NEAR & Aurora</a>
+        <a href="#contracts" class="nav-link" data-en="📄 Contracts" data-tr="📄 Kontratlar">📄 Contracts</a>
+
+        <!-- Visible only in Mobile Drawer -->
+        <div class="mobile-only-links">
+          <a href="https://arxiv.org/abs/2609.30719" target="_blank" class="nav-link" style="color:#f43f5e;">📄 arXiv:2609.30719 [cs.CR] ↗</a>
+          <a href="https://ssrn.com/abstract=7626279" target="_blank" class="nav-link" style="color:#38bdf8;">📄 SSRN:7626279 (Elsevier) ↗</a>
+          <a href="https://doi.org/10.5281/zenodo.22942598" target="_blank" class="nav-link" style="color:#10b981;">🏛️ Zenodo: 10.5281/zenodo.22942598 ↗</a>
+          <a href="https://huggingface.co/papers/2609.30719" target="_blank" class="nav-link" style="color:#fbbf24;">🤗 Hugging Face: Werracle ↗</a>
+          <a href="apidocs.html" class="nav-link" data-en="📚 API Documentation" data-tr="📚 API Dokümantasyonu">📚 API Documentation</a>
+          <a href="https://github.com/pCwOrM/werracle" target="_blank" class="nav-link">⭐ GitHub Repository ↗</a>
+        </div>
+      </nav>
+
+      <!-- Right Action Group -->
+      <div class="nav-actions">
+        <!-- Desktop Research Dropdown -->
+        <div class="nav-dropdown" id="researchDropdown">
+          <button class="btn-dropdown" aria-haspopup="true">
+            <span data-en="Research ▾" data-tr="Araştırma ▾">Research ▾</span>
+          </button>
+          <div class="dropdown-menu">
+            <a href="https://arxiv.org/abs/2609.30719" target="_blank" class="dropdown-item">
+              <span style="color:#f43f5e; font-weight:700;">📄 arXiv:2609.30719 ↗</span>
+              <small style="color:var(--text-muted); font-size:0.75rem;">cs.CR, cs.AI, cs.DC Preprint</small>
+            </a>
+            <a href="https://ssrn.com/abstract=7626279" target="_blank" class="dropdown-item">
+              <span style="color:#38bdf8; font-weight:700;">📄 SSRN:7626279 ↗</span>
+              <small style="color:var(--text-muted); font-size:0.75rem;">Elsevier Journal Record</small>
+            </a>
+            <a href="https://doi.org/10.5281/zenodo.22942598" target="_blank" class="dropdown-item">
+              <span style="color:#10b981; font-weight:700;">🏛️ Zenodo (CERN) ↗</span>
+              <small style="color:var(--text-muted); font-size:0.75rem;">DOI: 10.5281/zenodo.22942598</small>
+            </a>
+            <a href="https://huggingface.co/papers/2609.30719" target="_blank" class="dropdown-item">
+              <span style="color:#fbbf24; font-weight:700;">🤗 Hugging Face ↗</span>
+              <small style="color:var(--text-muted); font-size:0.75rem;">Paper, Models & Datasets</small>
+            </a>
+            <a href="apidocs.html" class="dropdown-item">
+              <span style="color:var(--cyan); font-weight:700;" data-en="📚 API Documentation" data-tr="📚 API Belgeleri">📚 API Documentation</span>
+              <small style="color:var(--text-muted); font-size:0.75rem;">Interactive Swagger & REST Node</small>
+            </a>
+          </div>
+        </div>
+
+        <a href="https://github.com/pCwOrM/werracle" target="_blank" class="btn-icon-gh" title="GitHub Repository">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        </a>
+
+        <button id="langToggle" class="btn-lang" title="Toggle Language">TR</button>
+
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle Navigation Menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="pill-tag">
+        <span style="color:var(--emerald);">●</span>
+        <span data-en="Published on arXiv: 2609.30719 & SSRN: 7626279 (Elsevier) • Production EVM AI Oracle" data-tr="arXiv: 2609.30719 & SSRN: 7626279 (Elsevier) Yayınlandı • Üretim EVM Yapay Zeka Orakılı">Published on arXiv: 2609.30719 [cs.CR, cs.AI, cs.DC] • Production EVM AI Oracle</span>
+      </div>
+      <h1 data-en="On-Chain AI Decision Oracle Inside a Single 32-Byte Slot" data-tr="Tek Bir 32-Bayt Slot İçinde On-Chain AI Karar Orakılı">On-Chain AI Decision Oracle Inside a Single 32-Byte Slot</h1>
+      <p data-en="Derive instant, deterministic, intra-block decision boundaries (noul, choice, score) natively inside EVM bytecode. Zero tensor matrices. 0 Bytes VRAM. ~19.4k gas." data-tr="EVM baytkodu içinde anlık, deterministik ve blok-içi karar sınırlarını (noul, choice, score) doğrudan üretin. Sıfır tensör matrisi. 0 Bayt VRAM. ~19.4k gas.">
+        Derive instant, deterministic, intra-block decision boundaries (noul, choice, score) natively inside EVM bytecode. Zero tensor matrices. 0 Bytes VRAM. ~19.4k gas.
+      </p>
+
+      <!-- Stats Grid -->
+      <div class="hero-stats">
+        <div class="stat-card" style="--stat-color: var(--cyan);">
+          <div class="stat-val">~19,400</div>
+          <div class="stat-lbl" data-en="EVM Gas per Inference (< $0.0001 on L2)" data-tr="Karar Başına Gas (< $0.0001 L2 üzerinde)">EVM Gas per Inference (&lt; $0.0001 on L2)</div>
+        </div>
+        <div class="stat-card" style="--stat-color: var(--emerald);">
+          <div class="stat-val">1,000 / 1,000</div>
+          <div class="stat-lbl" data-en="Sealed Tests (100.0% Pass Rate)" data-tr="Mühürlü Test (%100.0 Başarı Oranı)">Sealed Tests (100.0% Pass Rate)</div>
+        </div>
+        <div class="stat-card" style="--stat-color: var(--purple);">
+          <div class="stat-val">1 Slot</div>
+          <div class="stat-lbl" data-en="Single bytes32 EVM Storage Word" data-tr="Tek Bir bytes32 EVM Depolama Sözcüğü">Single bytes32 EVM Storage Word</div>
+        </div>
+        <div class="stat-card" style="--stat-color: var(--amber);">
+          <div class="stat-val">&lt; 1 ms</div>
+          <div class="stat-lbl" data-en="Intra-Block Flash-Loan Defense Latency" data-tr="Blok-İçi Flash-Loan Savunma Gecikmesi">Intra-Block Flash-Loan Defense Latency</div>
+        </div>
+        <div class="stat-card" style="--stat-color: var(--near-green);">
+          <div class="stat-val">40 Theorems</div>
+          <div class="stat-lbl" data-en="Machine-Certified Lean 4 (0 sorry, 0 axioms)" data-tr="Lean 4 Matematiksel Kanıt (0 sorry, 0 aksiyom)">Machine-Certified Lean 4 (0 sorry, 0 axioms)</div>
+        </div>
+      </div>
+
+      <div class="hero-actions">
+        <a href="#simulator" class="btn btn-primary" data-en="⚡ Launch Live Simulator" data-tr="⚡ Canlı Simülatörü Başlat">⚡ Launch Live Simulator</a>
+        <a href="#near-aurora" class="btn btn-secondary" style="border-color:var(--near-green); color:var(--near-green);" data-en="🟢 NEAR & Aurora Hackathon" data-tr="🟢 NEAR ve Aurora Hackathon">🟢 NEAR & Aurora Hackathon</a>
+        <a href="https://arxiv.org/abs/2609.30719" target="_blank" class="btn btn-secondary" style="border-color:#f43f5e; color:#f43f5e;">📄 arXiv:2609.30719 ↗</a>
+        <a href="https://github.com/pCwOrM/werracle" target="_blank" class="btn btn-secondary">
+          <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub Repository
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive EVM Simulator Section -->
+  <section class="section-wrap" id="simulator">
+    <div class="container">
+      <div class="section-header">
+        <h2 data-en="⚡ Interactive On-Chain Decision Simulator (Q16.16)" data-tr="⚡ Etkileşimli On-Chain Karar Simülatörü (Q16.16)">⚡ Interactive On-Chain Decision Simulator (Q16.16)</h2>
+        <p data-en="Direct browser execution of WerrMath.sol integer fixed-point arithmetic and 16-point Pareto microgrid dynamics matching the EVM bytecode." data-tr="WerrMath.sol sabit noktalı tam sayı matematiğinin ve 16 noktalı Pareto mikro-ızgarasının EVM baytkodu ile birebir eşleşen tarayıcı çalıştırması.">Direct browser execution of WerrMath.sol integer fixed-point arithmetic and 16-point Pareto microgrid dynamics matching the EVM bytecode.</p>
+      </div>
+
+      <div class="sim-grid">
+        <!-- Controls Column -->
+        <div class="card">
+          <!-- Live EVM Testnet Status Bar -->
+          <div class="evm-mode-bar" style="display:flex; justify-content:space-between; align-items:center; background:rgba(56,189,248,0.08); border:1px solid var(--border-accent); border-radius:8px; padding:10px 14px; margin-bottom:16px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span id="liveDot" style="display:inline-block; width:10px; height:10px; border-radius:50%; background:var(--emerald); box-shadow:0 0 8px var(--emerald);"></span>
+              <strong style="font-size:0.85rem;" data-en="Live EVM Node (api.answerr.me)" data-tr="Canlı EVM Düğümü (api.answerr.me)">Live EVM Node (api.answerr.me)</strong>
+              <span class="badge" style="font-size:0.7rem; background:#1e293b; color:var(--cyan); padding:2px 6px; border-radius:4px; font-family:var(--font-mono);">ChainID: 4242</span>
+            </div>
+            <label style="display:flex; align-items:center; gap:6px; cursor:pointer; font-size:0.8rem;">
+              <input type="checkbox" id="liveEvmToggle" checked style="accent-color:var(--cyan); cursor:pointer;">
+              <span data-en="Live On-Chain" data-tr="Canlı On-Chain">Live On-Chain</span>
+            </label>
+          </div>
+
+          <div class="preset-btns">
+            <span style="font-size:0.8rem; color:var(--text-muted); align-self:center; font-weight:600;" data-en="Presets:" data-tr="Hazır Ayarlar:">Presets:</span>
+            <button class="btn-preset active" onclick="applyPreset('default')">Standard Oracle</button>
+            <button class="btn-preset" onclick="applyPreset('flashloan')">Flash-Loan Defense</button>
+            <button class="btn-preset" onclick="applyPreset('nearintent')">🟢 NEAR Intent Guard</button>
+            <button class="btn-preset" onclick="applyPreset('dynamicfee')">Uniswap v4 Fee</button>
+            <button class="btn-preset" onclick="applyPreset('aml')">KYC / AML Gate</button>
+          </div>
+
+          <div class="form-group">
+            <label>c_x (Real Axis Coordinate / Q16.16)</label>
+            <div class="input-range-wrap">
+              <input type="range" id="cxRange" min="-2.0" max="0.5" step="0.001" value="-0.7436">
+              <span class="val-badge" id="cxVal">-0.7436</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>c_y (Imaginary Axis Coordinate / Q16.16)</label>
+            <div class="input-range-wrap">
+              <input type="range" id="cyRange" min="-1.5" max="1.5" step="0.001" value="0.1318">
+              <span class="val-badge" id="cyVal">+0.1318</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Zoom (Resolution / Boundary Sensitivity)</label>
+            <div class="input-range-wrap">
+              <input type="range" id="zoomRange" min="1.0" max="100.0" step="0.5" value="50.0">
+              <span class="val-badge" id="zoomVal">50.0x</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label data-en="Protocol Action Threshold" data-tr="Protokol Aksiyon Eşiği">Protocol Action Threshold</label>
+            <div class="input-range-wrap">
+              <input type="range" id="threshRange" min="0.1" max="0.9" step="0.05" value="0.50">
+              <span class="val-badge" id="threshVal">0.50</span>
+            </div>
+          </div>
+
+          <div class="console-out">
+            <div class="console-row">
+              <span data-en="Synthesized Byte (noul):" data-tr="Sentezlenen Bayt (noul):">Synthesized Byte (noul):</span>
+              <span id="outNoul" class="text-cyan">0x2A (42)</span>
+            </div>
+            <div class="console-row">
+              <span data-en="Autonomous Action:" data-tr="Otonom Aksiyon:">Autonomous Action:</span>
+              <span id="outChoice" class="text-emerald">PERMIT / EXECUTE</span>
+            </div>
+            <div class="console-row">
+              <span data-en="Confidence Score:" data-tr="Güven Skoru:">Confidence Score:</span>
+              <span id="outScore" class="text-amber">0.684</span>
+            </div>
+            <div class="console-row">
+              <span data-en="Estimated Gas Cost:" data-tr="Tahmini Gas Maliyeti:">Estimated Gas Cost:</span>
+              <span id="outGas" class="text-cyan">19,420 gas ($0.0006)</span>
+            </div>
+            <div class="console-row" id="liveEvmRow" style="border-top:1px dashed #334155; padding-top:8px; margin-top:8px;">
+              <span style="color:var(--text-muted); font-size:0.8rem;" data-en="Live EVM Node (api.answerr.me):" data-tr="Canlı EVM Düğümü (api.answerr.me):">Live EVM Node (api.answerr.me):</span>
+              <span id="outLiveDetails" class="text-emerald" style="font-size:0.8rem; font-family:var(--font-mono);">Connecting...</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Visualizer Column -->
+        <div class="card microgrid-canvas-wrap">
+          <canvas id="paretoCanvas" width="360" height="360"></canvas>
+          <div style="font-size:0.82rem; color:var(--text-muted); margin-top:14px; text-align:center; line-height:1.4;" data-en="16-Point Pareto Micro-Grid along Mandelbrot Boundary ∂ℳ" data-tr="Mandelbrot Sınırı ∂ℳ Boyunca 16-Noktalı Pareto Mikro-Izgarası">
+            16-Point Pareto Micro-Grid along Mandelbrot Boundary ∂ℳ
+          </div>
+          <div style="display:flex; gap:10px; margin-top:12px; font-size:0.75rem; flex-wrap:wrap; justify-content:center;">
+            <span style="color:#38bdf8;">● High Escape (Safe / Calm)</span>
+            <span style="color:#f59e0b;">● Medium (Turbulence)</span>
+            <span style="color:#f43f5e;">● Trapped / Low (Hostile MEV)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Architectural Benchmarks & Comparison Section -->
+  <section class="section-wrap" id="benchmark">
+    <div class="container">
+      <div class="section-header">
+        <h2 data-en="📊 Architecture Comparison: Werracle vs ZK-ML & Traditional ML" data-tr="📊 Mimari Karşılaştırma: Werracle vs ZK-ML ve Geleneksel ML">📊 Architecture Comparison: Werracle vs ZK-ML & Traditional ML</h2>
+        <p data-en="Why procedural fixed-point dynamical systems solve the EVM Von Neumann memory wall where deep neural networks fail." data-tr="Derin yapay sinir ağlarının başarısız olduğu yerde prosedürel sabit noktalı dinamik sistemlerin EVM Von Neumann bellek duvarını nasıl aştığı.">Why procedural fixed-point dynamical systems solve the EVM Von Neumann memory wall where deep neural networks fail.</p>
+      </div>
+
+      <div class="card">
+        <div class="slot-table-wrap">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th data-en="Evaluation Dimension" data-tr="Değerlendirme Boyutu">Evaluation Dimension</th>
+                <th data-en="Traditional ML on EVM" data-tr="Geleneksel ML (EVM)">Traditional ML on EVM</th>
+                <th data-en="ZK-ML (Zero-Knowledge)" data-tr="ZK-ML (Sıfır Bilgi)">ZK-ML (Zero-Knowledge)</th>
+                <th style="color:var(--cyan);" data-en="⚡ Werracle (This Work)" data-tr="⚡ Werracle (Bizim Çalışma)">⚡ Werracle (This Work)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="highlight">
+                <td><strong>EVM Gas Cost per Inference</strong></td>
+                <td style="color:var(--rose);">> 15,000,000 gas (Exceeds block)</td>
+                <td>~350,000 gas (Verifier call)</td>
+                <td style="color:var(--emerald); font-weight:700;">~19,400 gas (&lt; $0.0001)</td>
+              </tr>
+              <tr class="highlight">
+                <td><strong>Inference Latency</strong></td>
+                <td style="color:var(--rose);">Cannot execute within block</td>
+                <td style="color:var(--amber);">10 – 300 seconds (Off-chain proof)</td>
+                <td style="color:var(--emerald); font-weight:700;">&lt; 1 millisecond (Intra-Block Reflex)</td>
+              </tr>
+              <tr>
+                <td><strong>On-Chain Storage Footprint</strong></td>
+                <td>Gigabytes (Tensor weights)</td>
+                <td>Kilobytes (Verification keys)</td>
+                <td style="color:var(--cyan); font-weight:700;">32 Bytes (Single <code>bytes32</code> Slot)</td>
+              </tr>
+              <tr>
+                <td><strong>Intra-Block Flash Loan Defense</strong></td>
+                <td style="color:var(--rose);">Impossible</td>
+                <td style="color:var(--rose);">Impossible (Proof too slow)</td>
+                <td style="color:var(--emerald); font-weight:700;">Native Atomic Revert (Same Tx)</td>
+              </tr>
+              <tr>
+                <td><strong>External Prover / Relayer Dependency</strong></td>
+                <td>Required</td>
+                <td style="color:var(--rose);">Mandatory Off-Chain Prover</td>
+                <td style="color:var(--emerald); font-weight:700;">Zero External Dependency (Air-Gapped)</td>
+              </tr>
+              <tr>
+                <td><strong>Formal Mathematical Verification</strong></td>
+                <td>Empirical / None</td>
+                <td>Circuit Verification Only</td>
+                <td style="color:var(--purple); font-weight:700;">40 Lean 4 Theorems (0 sorry)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 32-Byte Slot Layout Section -->
+  <section class="section-wrap" id="storage-slot">
+    <div class="container">
+      <div class="section-header">
+        <h2 data-en="🧩 The 32-Byte Single Storage Slot Architecture" data-tr="🧩 32-Baytlık Tek Depolama Slotu Mimarisi">🧩 The 32-Byte Single Storage Slot Architecture</h2>
+        <p data-en="All decision coordinates, security nonces, and threshold parameters pack into a single bytes32 EVM storage word. A warm SLOAD costs only 100 gas." data-tr="Tüm karar koordinatları, güvenlik nonce değerleri ve eşik parametreleri tek bir bytes32 EVM slotuna sığar. Sıcak bir SLOAD yalnızca 100 gas harcar.">All decision coordinates, security nonces, and threshold parameters pack into a single bytes32 EVM storage word. A warm SLOAD costs only 100 gas.</p>
+      </div>
+
+      <div class="card">
+        <div class="slot-table-wrap">
+          <table class="slot-table">
+            <thead>
+              <tr>
+                <th>Field</th>
+                <th>Bytes</th>
+                <th>Type</th>
+                <th>Example Packed Value</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>c_x</code></td>
+                <td>00 – 07 (8B)</td>
+                <td><code>int64 (Q16.16)</code></td>
+                <td><code>-48735 (-0.7436)</code></td>
+                <td>Real component coordinate along Mandelbrot edge</td>
+              </tr>
+              <tr>
+                <td><code>c_y</code></td>
+                <td>08 – 15 (8B)</td>
+                <td><code>int64 (Q16.16)</code></td>
+                <td><code>+8639 (+0.1318)</code></td>
+                <td>Imaginary component coordinate along Mandelbrot edge</td>
+              </tr>
+              <tr>
+                <td><code>zoom</code></td>
+                <td>16 – 23 (8B)</td>
+                <td><code>uint64 (Q16.16)</code></td>
+                <td><code>3276800 (50.0x)</code></td>
+                <td>Resolution scaling and boundary sensitivity</td>
+              </tr>
+              <tr>
+                <td><code>nonce</code></td>
+                <td>24 – 27 (4B)</td>
+                <td><code>uint32</code></td>
+                <td><code>1048576</code></td>
+                <td>Anti-replay parameter update nonce</td>
+              </tr>
+              <tr>
+                <td><code>threshold</code></td>
+                <td>28 – 29 (2B)</td>
+                <td><code>uint16 (Q0.16)</code></td>
+                <td><code>32768 (0.500)</code></td>
+                <td>Normalized action trigger threshold</td>
+              </tr>
+              <tr>
+                <td><code>mode</code></td>
+                <td>30 (1B)</td>
+                <td><code>uint8</code></td>
+                <td><code>1 (DeFi Strict)</code></td>
+                <td>Governance operational policy flag</td>
+              </tr>
+              <tr>
+                <td><code>active</code></td>
+                <td>31 (1B)</td>
+                <td><code>uint8</code></td>
+                <td><code>1 (Active)</code></td>
+                <td>Emergency circuit-breaker state</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DeFi Flash-Loan Defense & Uniswap Hook -->
+  <section class="section-wrap" id="defi-defense">
+    <div class="container">
+      <div class="section-header">
+        <h2 data-en="🛡️ Atomic Flash-Loan Defense & Uniswap v4 Dynamic Fees" data-tr="🛡️ Atomik Flash-Loan Savunması ve Uniswap v4 Dinamik Komisyonu">🛡️ Atomic Flash-Loan Defense & Uniswap v4 Dynamic Fees</h2>
+        <p data-en="Halts hostile liquidity drainage within the exact same transaction before block finalization." data-tr="Saldırgan likidite boşaltma işlemlerini blok kesinleşmeden önce tam aynı işlem içinde durdurur.">Halts hostile liquidity drainage within the exact same transaction before block finalization.</p>
+      </div>
+
+      <div class="sim-grid">
+        <div class="card">
+          <h3 style="margin-bottom:16px; color:var(--cyan);" data-en="Simulate Pool Attack" data-tr="Havuz Saldırısı Simüle Et">Simulate Pool Attack</h3>
+          <div class="form-group">
+            <label data-en="Pool Total Liquidity (ETH)" data-tr="Havuz Toplam Likiditesi (ETH)">Pool Total Liquidity (ETH)</label>
+            <div class="val-badge" style="width:100%; text-align:left;">10,000 ETH</div>
+          </div>
+          <div class="form-group">
+            <label data-en="Flash-Loan Borrow Amount (ETH)" data-tr="Flash-Loan Borçlanma Miktarı (ETH)">Flash-Loan Borrow Amount (ETH)</label>
+            <div class="input-range-wrap">
+              <input type="range" id="borrowRange" min="10" max="9500" step="50" value="450">
+              <span class="val-badge" id="borrowVal">450 ETH</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label data-en="Instantaneous Price Slippage" data-tr="Anlık Fiyat Kayması (Slippage)">Instantaneous Price Slippage</label>
+            <div class="input-range-wrap">
+              <input type="range" id="slipRange" min="0.1" max="40.0" step="0.5" value="1.2">
+              <span class="val-badge" id="slipVal">1.2%</span>
+            </div>
+          </div>
+          <div class="console-out">
+            <div class="console-row">
+              <span data-en="Borrow / Reserve Ratio:" data-tr="Borç / Rezerv Oranı:">Borrow / Reserve Ratio:</span>
+              <span id="outRatio" class="text-cyan">4.50%</span>
+            </div>
+            <div class="console-row">
+              <span data-en="Triage Status:" data-tr="Triyaj Durumu:">Triage Status:</span>
+              <span id="outTriage" class="text-emerald">SAFE_RESERVE</span>
+            </div>
+            <div class="console-row">
+              <span data-en="Smart Contract Action:" data-tr="Akıllı Kontrat Aksiyonu:">Smart Contract Action:</span>
+              <span id="outAction" class="text-emerald">EXECUTE_SWAP</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 style="margin-bottom:16px; color:var(--amber);" data-en="Uniswap v4 Dynamic Fee Curve" data-tr="Uniswap v4 Dinamik Komisyon Eğrisi">Uniswap v4 Dynamic Fee Curve</h3>
+          <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:20px;" data-en="Werracle calculates real-time volatility without external oracles, adjusting pool LP fees dynamically between 0.05% and 0.50%." data-tr="Werracle harici orakıllara ihtiyaç duymadan gerçek zamanlı volatiliteyi hesaplar, havuz komisyonunu dinamik olarak %0.05 ile %0.50 arasında ayarlar.">
+            Werracle calculates real-time volatility without external oracles, adjusting pool LP fees dynamically between 0.05% and 0.50%.
+          </p>
+          <div class="console-out">
+            <div class="console-row">
+              <span>Deep Liquidity / Calm:</span>
+              <span class="text-cyan">0.05% – 0.15% (500–1500 pips)</span>
+            </div>
+            <div class="console-row">
+              <span>Normal Trading Volatility:</span>
+              <span class="text-emerald">0.25% – 0.30% (2500–3000 pips)</span>
+            </div>
+            <div class="console-row">
+              <span>Elevated Turbulence / MEV:</span>
+              <span class="text-amber">0.40% – 0.45% (4000–4500 pips)</span>
+            </div>
+            <div class="console-row">
+              <span>Extreme Flash Crash:</span>
+              <span class="text-rose">0.50% (5000 pips MAX_CAP)</span>
+            </div>
+          </div>
+          <div style="margin-top:20px;">
+            <a href="https://github.com/pCwOrM/werracle/blob/main/contracts/hooks/WerracleFeeHook.sol" target="_blank" class="btn btn-secondary" style="width:100%; justify-content:center;">
+              View WerracleFeeHook.sol ↗
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEAR Protocol & Aurora EVM Showcase Section -->
+  <section class="section-wrap" id="near-aurora" style="border-top:1px solid rgba(0,236,151,0.25); background:linear-gradient(180deg, rgba(0,236,151,0.04) 0%, rgba(10,15,30,0.85) 100%);">
+    <div class="container">
+      <div class="section-header">
+        <div class="pill-tag" style="border-color:rgba(0,236,151,0.4); color:var(--near-green);">
+          <span>●</span>
+          <span>NEAR Hackathon 2026 • Tracks: Unstoppable DeFi & AI Security</span>
+        </div>
+        <h2 data-en="🛡️ NEAR Protocol Intents & Aurora EVM Guard" data-tr="🛡️ NEAR Protokolü Niyetleri ve Aurora EVM Kalkanı">🛡️ NEAR Protocol Intents & Aurora EVM Guard</h2>
+        <p data-en="Defending cross-chain NEAR Intents and MPC Chain Signatures with intra-block procedural escape reflex gating (< 1ms, ~21k gas)." data-tr="Çapraz zincir NEAR niyetlerini ve MPC zincir imzalarını blok-içi prosedürel kaçış refleks kapısıyla koruyun (< 1ms, ~21k gas).">
+          Defending cross-chain NEAR Intents and MPC Chain Signatures with intra-block procedural escape reflex gating (&lt; 1ms, ~21k gas).
+        </p>
+      </div>
+
+      <div class="card" style="border-color:rgba(0,236,151,0.3); background:rgba(12,18,34,0.95);">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:16px;">
+          <div>
+            <h3 style="color:var(--near-green); font-size:1.15rem; margin:0;" data-en="⚡ Cross-Chain Intent & Chain Signature Verification Engine" data-tr="⚡ Çapraz Zincir Niyet & Zincir İmzası Doğrulama Motoru">⚡ Cross-Chain Intent & Chain Signature Verification Engine</h3>
+            <span style="font-size:0.85rem; color:var(--text-muted);" data-en="Pre-signing reflex triage suppresses toxic MEV and flash loans before target broadcast." data-tr="İmza öncesi refleks triyajı, hedef zincire yayından önce toksik MEV ve flaş kredileri durdurur.">Pre-signing reflex triage suppresses toxic MEV and flash loans before target broadcast.</span>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <span class="badge" style="background:#022c22; color:var(--near-green); border:1px solid var(--near-green); font-size:0.8rem; padding:4px 10px; border-radius:4px; font-family:var(--font-mono);">pcworm.near</span>
+            <span class="badge" style="background:#1e293b; color:#78D64B; font-size:0.8rem; padding:4px 10px; border-radius:4px; font-family:var(--font-mono);">Aurora Testnet: 1313161555</span>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:14px; margin-bottom:18px;">
+          <div style="background:rgba(0,0,0,0.35); padding:16px; border-radius:8px; border:1px solid rgba(0,236,151,0.25);">
+            <div style="font-size:0.75rem; color:var(--near-green); font-weight:700; text-transform:uppercase;">Clean Intent (Swap)</div>
+            <div style="font-size:1.15rem; color:var(--emerald); font-weight:700; margin:6px 0;">NOUL = 1 (APPROVED)</div>
+            <div style="font-size:0.82rem; color:var(--text-muted);">Volatility: 25 bps &bull; Latency: 12.6 µs &bull; Gas: 21,438</div>
+            <div style="font-size:0.78rem; color:#38bdf8; margin-top:4px;">Action: Chain Signature broadcasted to Base/ETH</div>
+          </div>
+          <div style="background:rgba(0,0,0,0.35); padding:16px; border-radius:8px; border:1px solid rgba(244,63,94,0.4);">
+            <div style="font-size:0.75rem; color:#f43f5e; font-weight:700; text-transform:uppercase;">Predatory Sandwich MEV</div>
+            <div style="font-size:1.15rem; color:#f43f5e; font-weight:700; margin:6px 0;">NOUL = 0 (VETOED)</div>
+            <div style="font-size:0.82rem; color:var(--text-muted);">Risk: 75.0% &bull; Latency: 13.1 µs &bull; Gas: 21,438</div>
+            <div style="font-size:0.78rem; color:#fbbf24; margin-top:4px;">Action: Signature suppressed; 0 funds lost</div>
+          </div>
+          <div style="background:rgba(0,0,0,0.35); padding:16px; border-radius:8px; border:1px solid rgba(168,85,247,0.3);">
+            <div style="font-size:0.75rem; color:#c084fc; font-weight:700; text-transform:uppercase;">Agent Autonomous Commerce</div>
+            <div style="font-size:1.15rem; color:#38bdf8; font-weight:700; margin:6px 0;">NOUL = 1 (APPROVED)</div>
+            <div style="font-size:0.82rem; color:var(--text-muted);">Sub-Cent API Micropayment &bull; Latency: 6.1 µs</div>
+            <div style="font-size:0.78rem; color:var(--emerald); margin-top:4px;">Action: Instant agent-to-agent settlement</div>
+          </div>
+        </div>
+
+        <!-- Live Aurora Verified Deployments Box -->
+        <div style="background:rgba(0,0,0,0.45); padding:14px 18px; border-radius:8px; border:1px dashed rgba(0,236,151,0.35); margin-bottom:16px;">
+          <div style="font-size:0.85rem; color:var(--near-green); font-weight:700; margin-bottom:8px;">🟢 Live Verified Deployments on Aurora Testnet (Ethereum on NEAR):</div>
+          
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.05);">
+            <div>
+              <strong style="font-size:0.85rem; color:#fff;">Werracle.sol:</strong>
+              <code style="font-size:0.82rem; color:var(--cyan); margin-left:6px; word-break:break-all;">0x4085673F1e45bf26682CA704b2d09C03d1212cd4</code>
+            </div>
+            <a href="https://explorer.testnet.aurora.dev/address/0x4085673F1e45bf26682CA704b2d09C03d1212cd4" target="_blank" style="font-size:0.78rem; color:var(--near-green); text-decoration:none;">Aurora Explorer ↗</a>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; padding:6px 0;">
+            <div>
+              <strong style="font-size:0.85rem; color:#fff;">WerracleTripodZMod9.sol:</strong>
+              <code style="font-size:0.82rem; color:#a78bfa; margin-left:6px; word-break:break-all;">0x1d7Ae9E1dDDA805539d9e225425804Ef8B9caBaF</code>
+            </div>
+            <a href="https://explorer.testnet.aurora.dev/address/0x1d7Ae9E1dDDA805539d9e225425804Ef8B9caBaF" target="_blank" style="font-size:0.78rem; color:var(--near-green); text-decoration:none;">Aurora Explorer ↗</a>
+          </div>
+        </div>
+
+        <!-- Quick Terminal Command Box -->
+        <div style="margin-bottom:16px;">
+          <div style="font-size:0.8rem; color:var(--text-muted); margin-bottom:4px;" data-en="Test on Aurora Testnet via Foundry Cast:" data-tr="Foundry Cast ile Aurora Testnet Üzerinde Sorgulayın:">Test on Aurora Testnet via Foundry Cast:</div>
+          <div class="quick-snippet">
+            <span id="castAuroraCmd">cast call 0x4085673F1e45bf26682CA704b2d09C03d1212cd4 "owner()(address)" --rpc-url https://testnet.aurora.dev</span>
+            <button class="btn-snippet-copy" onclick="copySnippet('castAuroraCmd')">Copy</button>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
+          <a href="https://github.com/pCwOrM/werracle/blob/main/near/README.md" target="_blank" class="btn btn-secondary" style="border-color:var(--near-green); color:var(--near-green);" data-en="📄 Read NEAR Architecture Spec" data-tr="📄 NEAR Mimari Belgesini Oku">📄 Read NEAR Architecture Spec</a>
+          <a href="https://explorer.testnet.aurora.dev/address/0x4085673F1e45bf26682CA704b2d09C03d1212cd4" target="_blank" class="btn btn-secondary" style="border-color:#78D64B; color:#78D64B;">View Explorer ↗</a>
+          <a href="https://nearhackathon.com" target="_blank" class="btn btn-secondary">NEAR Hackathon 2026 ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contracts & Integration -->
+  <section class="section-wrap" id="contracts">
+    <div class="container">
+      <div class="section-header">
+        <h2 data-en="📄 Solidity Interface & Quickstart" data-tr="📄 Solidity Arayüzü ve Hızlı Başlangıç">📄 Solidity Interface & Quickstart</h2>
+        <p data-en="Integrate Werracle into any EVM protocol with 3 lines of Solidity." data-tr="Werracle'ı 3 satır Solidity kodu ile dilediğiniz EVM protokolüne entegre edin.">Integrate Werracle into any EVM protocol with 3 lines of Solidity.</p>
+      </div>
+
+      <div class="card">
+        <div class="quick-snippet" style="margin-bottom:14px;">
+          <span id="forgeInstallCmd">forge install pCwOrM/werracle</span>
+          <button class="btn-snippet-copy" onclick="copySnippet('forgeInstallCmd')">Copy</button>
+        </div>
+
+        <div class="code-wrap">
+          <pre class="code-box"><code>// SPDX-License-Identifier: BSL-1.1
+pragma solidity ^0.8.20;
+
+import "./IWerracle.sol";
+
+contract ProtectedDeFiProtocol {
+    IWerracle public immutable werracle;
+    
+    constructor(address _werracleAddress) {
+        werracle = IWerracle(_werracleAddress);
+    }
+
+    function executeSensitiveAction(bytes32 inputState) external payable {
+        // Instant intra-block AI triage (< 20,000 gas)
+        (bool isAllowed, uint256 score) = werracle.decideChoice{value: msg.value}(inputState);
+        
+        require(isAllowed, "WERRACLE_DEFENSE_REVERT: Hostile pattern detected");
+        
+        // Proceed with protected DeFi operation
+    }
+}</code></pre>
+        </div>
+      </div>
+
+      <!-- Live Deployed Devnet Card -->
+      <div class="card" style="margin-top:20px; border-color:var(--border-accent); background:linear-gradient(180deg, rgba(56,189,248,0.06) 0%, rgba(12,18,34,1) 100%);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:10px;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:var(--emerald); box-shadow:0 0 8px var(--emerald);"></span>
+            <h3 style="color:var(--cyan); font-size:1.1rem; margin:0;" data-en="Live Deployed Contracts on Werracle Devnet" data-tr="Werracle Devnet Üzerinde Canlı Dağıtılmış Kontratlar">Live Deployed Contracts on Werracle Devnet</h3>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <span class="badge" style="font-size:0.75rem; background:#1e293b; color:var(--emerald); padding:3px 8px; border-radius:4px; font-family:var(--font-mono);">Chain ID: 4242</span>
+            <span class="badge" style="font-size:0.75rem; background:#1e293b; color:var(--cyan); padding:3px 8px; border-radius:4px; font-family:var(--font-mono);">Node: api.answerr.me</span>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:12px; margin-bottom:16px;">
+          <div style="background:rgba(0,0,0,0.3); padding:12px; border-radius:6px; border:1px solid rgba(16,185,129,0.4);">
+            <div style="font-size:0.75rem; color:var(--emerald); text-transform:uppercase; letter-spacing:0.5px;">WerracleTripodZMod9 (v2.0 Flagship Core - 22.5k Gas)</div>
+            <code style="color:var(--text-main); font-size:0.85rem; word-break:break-all;">0x0a95887dBa2783E1E445bB4D3A9a1f7cB3152d04</code>
+          </div>
+          <div style="background:rgba(0,0,0,0.3); padding:12px; border-radius:6px; border:1px solid var(--border-color);">
+            <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px;">BlockchainResonanceMatrix (0 SLOAD)</div>
+            <code style="color:var(--cyan); font-size:0.85rem; word-break:break-all;">Bytecode Matrix (40 Tokens, 5 Pillars)</code>
+          </div>
+          <div style="background:rgba(0,0,0,0.3); padding:12px; border-radius:6px; border:1px solid var(--border-color);">
+            <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px;">Werracle v1.0 Canonical Baseline</div>
+            <code style="color:var(--text-main); font-size:0.85rem; word-break:break-all;">0x5FbDB2315678afecb367f032d93F642f64180aa3</code>
+          </div>
+          <div style="background:rgba(0,0,0,0.3); padding:12px; border-radius:6px; border:1px solid var(--border-color);">
+            <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px;">WerracleFeeHook (Uniswap v4)</div>
+            <code style="color:var(--text-main); font-size:0.85rem; word-break:break-all;">0xdef5Ad647Af159D27cd111007e4CCD1fDE9d4006</code>
+          </div>
+        </div>
+
+        <div style="font-size:0.85rem; color:var(--text-muted); display:flex; gap:16px; flex-wrap:wrap;">
+          <span>🌐 <strong>Public RPC:</strong> <code style="color:var(--cyan);">https://api.answerr.me:4431/werracle/rpc</code></span>
+          <span>⚡ <strong>REST Status:</strong> <a href="https://api.answerr.me:4431/werracle/status" target="_blank" style="color:var(--cyan); text-decoration:none;">/werracle/status ↗</a></span>
+        </div>
+      </div>
+
+      <!-- Support & Grant Proposal Card -->
+      <div class="wallet-card">
+        <h3 style="color:var(--amber); margin-bottom:10px;" data-en="💎 Protocol Grants & Foundation Wallet" data-tr="💎 Protokol Hibeleri ve Destek Cüzdanı">💎 Protocol Grants & Foundation Wallet</h3>
+        <p style="color:var(--text-muted); font-size:0.9rem;" data-en="Official receiving address for Ethereum Foundation ESP, Base Ecosystem, NEAR Foundation, Arbitrum, and Web3 VC grants:" data-tr="Ethereum Foundation ESP, Base Ecosystem, NEAR Foundation, Arbitrum ve Web3 hibe destekleri için resmi cüzdan adresi:">
+          Official receiving address for Ethereum Foundation ESP, Base Ecosystem, NEAR Foundation, Arbitrum, and Web3 VC grants:
+        </p>
+
+        <div style="margin-top:16px;">
+          <div style="font-size:0.8rem; color:var(--text-muted);">Binance Wallet (USDT TRC20 / TRON Network):</div>
+          <div class="wallet-addr">
+            <span id="bnAddr">TLMhaDJTVYBHBSGJ9nCQGLvqnYFPSBgLJu</span>
+            <button class="btn-copy" onclick="copySnippet('bnAddr')">Copy</button>
+          </div>
+        </div>
+
+        <div style="font-size:0.85rem; color:var(--text-muted); margin-top:14px; line-height:1.5;">
+          <strong>Lead Builder:</strong> pcworm.near &bull; <strong>Corporate Entity:</strong> ITOUCH BİLİŞİM SİSTEMLERİ LTD. ŞTİ. (Çukurova Teknokent) &bull; <strong>Patent Pending:</strong> TR 2026/016285 &bull; <strong>Contact:</strong> vdagli@itouch.com.tr &bull; ask@answerr.me
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-inner">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <img src="assets/werracle_logo_oracle_trans.png" alt="Werracle Logo" width="32" height="32" style="filter: drop-shadow(0 0 8px rgba(0,236,151,0.5));" />
+        <div>
+          <strong>Werracle EVM Oracle</strong> &copy; 2026 ITOUCH BİLİŞİM SİSTEMLERİ LTD. ŞTİ.
+          <div style="font-size:0.8rem; color:var(--text-muted); margin-top:4px;">
+            Licensed under Business Source License 1.1 (BSL 1.1). Change Date: 2030-01-01 to Apache 2.0.
+          </div>
+        </div>
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/pCwOrM/werracle">Werracle Repo</a>
+        <a href="https://github.com/pCwOrM/werr">WERR Engine</a>
+        <a href="https://github.com/pCwOrM/answerr">Answerr Platform</a>
+        <a href="https://github.com/pCwOrM/mandelbrot-fractal-neural-synthesis">Fractal Research</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Element -->
+  <div id="toast">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--emerald)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    <span id="toastMsg">Copied to clipboard!</span>
+  </div>
+
+  <!-- Back To Top Button -->
+  <button id="backToTop" aria-label="Back to Top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+
+  <!-- Script for Interactive Simulator, Mobile Menu, & Language Toggle -->
+  <script>
+    // Mobile Nav Drawer Toggle
+    const navToggle = document.getElementById('navToggle');
+    const navMenu = document.getElementById('navMenu');
+
+    if (navToggle && navMenu) {
+      navToggle.addEventListener('click', () => {
+        navToggle.classList.toggle('active');
+        navMenu.classList.toggle('open');
+      });
+
+      // Close menu when clicking on any nav link
+      navMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          navToggle.classList.remove('active');
+          navMenu.classList.remove('open');
+        });
+      });
+    }
+
+    // Touch support for Research Dropdown
+    const researchDropdown = document.getElementById('researchDropdown');
+    const researchBtn = document.querySelector('.btn-dropdown');
+    if (researchDropdown && researchBtn) {
+      researchBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        researchDropdown.classList.toggle('active');
+      });
+      document.addEventListener('click', () => {
+        researchDropdown.classList.remove('active');
+      });
+    }
+
+    // Scroll listener for Back to Top Button
+    const backToTopBtn = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 350) {
+        backToTopBtn.classList.add('visible');
+      } else {
+        backToTopBtn.classList.remove('visible');
+      }
+    });
+
+    // Sleek Toast Notification
+    let toastTimeout = null;
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toastMsg');
+      toastMsg.textContent = msg || 'Copied to clipboard!';
+      toast.classList.add('show');
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2500);
+    }
+
+    function copySnippet(elementId) {
+      const el = document.getElementById(elementId);
+      if (!el) return;
+      const text = el.textContent || el.innerText;
+      navigator.clipboard.writeText(text.trim()).then(() => {
+        showToast('Copied: ' + (text.length > 30 ? text.substring(0, 30) + '...' : text));
+      }).catch(() => {
+        showToast('Copied to clipboard!');
+      });
+    }
+
+    // Q16.16 Fixed Point Mandelbrot Microgrid Implementation
+    const FP_SHIFT = 16;
+    const FP_ONE = 1 << FP_SHIFT;
+
+    function floatToFP(f) { return Math.round(f * FP_ONE); }
+    function fpToFloat(fp) { return fp / FP_ONE; }
+    function fpMul(a, b) { return Math.round((a * b) / FP_ONE); }
+
+    function mandelbrotEscape12(cxFP, cyFP) {
+      let zx = 0;
+      let zy = 0;
+      let count = 0;
+      const ESCAPE_LIMIT = 4 * FP_ONE;
+
+      for (let i = 0; i < 12; i++) {
+        let zx2 = fpMul(zx, zx);
+        let zy2 = fpMul(zy, zy);
+        if (zx2 + zy2 > ESCAPE_LIMIT) break;
+        let nextZy = 2 * fpMul(zx, zy) + cyFP;
+        let nextZx = zx2 - zy2 + cxFP;
+        zx = nextZx;
+        zy = nextZy;
+        count++;
+      }
+      return count;
+    }
+
+    const canvas = document.getElementById('paretoCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function updateSimulation() {
+      const cx = parseFloat(document.getElementById('cxRange').value);
+      const cy = parseFloat(document.getElementById('cyRange').value);
+      const zoom = parseFloat(document.getElementById('zoomRange').value);
+      const threshold = parseFloat(document.getElementById('threshRange').value);
+
+      document.getElementById('cxVal').textContent = (cx >= 0 ? '+' : '') + cx.toFixed(4);
+      document.getElementById('cyVal').textContent = (cy >= 0 ? '+' : '') + cy.toFixed(4);
+      document.getElementById('zoomVal').textContent = zoom.toFixed(1) + 'x';
+      document.getElementById('threshVal').textContent = threshold.toFixed(2);
+
+      const cxFP = floatToFP(cx);
+      const cyFP = floatToFP(cy);
+      const deltaFP = floatToFP(0.04 / (zoom / 10.0));
+
+      let totalEscapes = 0;
+
+      // Draw background
+      ctx.fillStyle = '#050811';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Draw coordinate crosshair
+      ctx.strokeStyle = '#1e293b';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(canvas.width / 2, 0); ctx.lineTo(canvas.width / 2, canvas.height);
+      ctx.moveTo(0, canvas.height / 2); ctx.lineTo(canvas.width, canvas.height / 2);
+      ctx.stroke();
+
+      const gridPoints = [-2, -1, 1, 2];
+      const stepPx = canvas.width / 6;
+
+      for (let ix = 0; ix < 4; ix++) {
+        for (let iy = 0; iy < 4; iy++) {
+          let dx = gridPoints[ix];
+          let dy = gridPoints[iy];
+          let ptCx = cxFP + dx * deltaFP;
+          let ptCy = cyFP + dy * deltaFP;
+          let esc = mandelbrotEscape12(ptCx, ptCy);
+          totalEscapes += esc;
+
+          // Draw microgrid dot
+          let px = canvas.width / 2 + dx * stepPx;
+          let py = canvas.height / 2 - dy * stepPx;
+          let intensity = esc / 12.0;
+
+          ctx.fillStyle = intensity > 0.8 ? '#38bdf8' : (intensity > 0.4 ? '#f59e0b' : '#f43f5e');
+          ctx.beginPath();
+          ctx.arc(px, py, 6 + intensity * 6, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.strokeStyle = 'rgba(255,255,255,0.6)';
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+        }
+      }
+
+      // Compute metrics matching Solidity Werracle.sol
+      let noul = totalEscapes % 256;
+      let score = (totalEscapes / (16.0 * 12.0));
+      let isAllowed = score >= threshold;
+
+      document.getElementById('outNoul').textContent = '0x' + noul.toString(16).toUpperCase().padStart(2, '0') + ` (${noul})`;
+      
+      const choiceEl = document.getElementById('outChoice');
+      if (isAllowed) {
+        choiceEl.textContent = 'PERMIT / ALLOWED';
+        choiceEl.className = 'text-emerald';
+      } else {
+        choiceEl.textContent = 'REVERT / DENIED';
+        choiceEl.className = 'text-rose';
+      }
+
+      document.getElementById('outScore').textContent = score.toFixed(4);
+      let gas = 18000 + (totalEscapes * 12);
+      document.getElementById('outGas').textContent = `${gas.toLocaleString()} gas ($0.0006)`;
+
+      if (liveEvmTimer) clearTimeout(liveEvmTimer);
+      liveEvmTimer = setTimeout(() => queryLiveEvmNode(score), 150);
+    }
+
+    let liveEvmTimer = null;
+    const RECAPTCHA_SITE_KEY = "6LdP-JgqAAAAAJLdy_W8uowqstSa4XKlJTOkVAux";
+
+    function getRecaptchaToken(action = "werracle_sim") {
+      return new Promise((resolve) => {
+        try {
+          if (typeof grecaptcha !== 'undefined' && grecaptcha.ready) {
+            grecaptcha.ready(function() {
+              grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: action })
+                .then(function(token) { resolve(token); })
+                .catch(function() { resolve(null); });
+            });
+          } else {
+            resolve(null);
+          }
+        } catch (e) {
+          resolve(null);
+        }
+      });
+    }
+
+    async function queryLiveEvmNode(score) {
+      const toggle = document.getElementById('liveEvmToggle');
+      const detailsEl = document.getElementById('outLiveDetails');
+      const dotEl = document.getElementById('liveDot');
+
+      if (!toggle || !toggle.checked) {
+        if (detailsEl) detailsEl.textContent = 'Client-Side Mode';
+        if (dotEl) { dotEl.style.background = '#94a3b8'; dotEl.style.boxShadow = 'none'; }
+        return;
+      }
+
+      if (detailsEl) detailsEl.textContent = 'Querying api.answerr.me EVM...';
+      if (dotEl) { dotEl.style.background = 'var(--cyan)'; dotEl.style.boxShadow = '0 0 8px var(--cyan)'; }
+
+      try {
+        const token = await getRecaptchaToken("evm_eval");
+        const headers = { 'Content-Type': 'application/json' };
+        if (token) headers['X-Recaptcha-Token'] = token;
+
+        const res = await fetch('https://api.answerr.me:4431/werracle/oracle/noul', {
+          method: 'POST',
+          headers: headers,
+          body: JSON.stringify({ risk_score: score - 0.5 })
+        });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+        if (dotEl) { dotEl.style.background = 'var(--emerald)'; dotEl.style.boxShadow = '0 0 8px var(--emerald)'; }
+        if (detailsEl) {
+          detailsEl.textContent = `Block #${data.blockNumber} • ${data.executionMs}ms • Gas: ${data.gasUsed.toLocaleString()}`;
+        }
+      } catch (err) {
+        if (dotEl) { dotEl.style.background = 'var(--amber)'; dotEl.style.boxShadow = 'none'; }
+        if (detailsEl) {
+          detailsEl.textContent = 'Client-Side JS Fallback';
+        }
+      }
+    }
+
+    function applyPreset(name) {
+      document.querySelectorAll('.btn-preset').forEach(b => {
+        b.classList.remove('active');
+        b.classList.remove('near-active');
+      });
+      if (event && event.target) {
+        if (name === 'nearintent') {
+          event.target.classList.add('near-active');
+        } else {
+          event.target.classList.add('active');
+        }
+      }
+
+      if (name === 'default') {
+        document.getElementById('cxRange').value = -0.7436;
+        document.getElementById('cyRange').value = 0.1318;
+        document.getElementById('zoomRange').value = 50.0;
+        document.getElementById('threshRange').value = 0.50;
+      } else if (name === 'flashloan') {
+        document.getElementById('cxRange').value = -1.2500;
+        document.getElementById('cyRange').value = 0.0200;
+        document.getElementById('zoomRange').value = 85.0;
+        document.getElementById('threshRange').value = 0.65;
+      } else if (name === 'nearintent') {
+        // Calibrated NEAR Intent Shield (v2.1 Bounded Stability)
+        document.getElementById('cxRange').value = -0.7436;
+        document.getElementById('cyRange').value = 0.1318;
+        document.getElementById('zoomRange').value = 50.0;
+        document.getElementById('threshRange').value = 0.50;
+      } else if (name === 'dynamicfee') {
+        document.getElementById('cxRange').value = -0.1011;
+        document.getElementById('cyRange').value = 0.9563;
+        document.getElementById('zoomRange').value = 32.0;
+        document.getElementById('threshRange').value = 0.40;
+      } else if (name === 'aml') {
+        document.getElementById('cxRange').value = -0.7269;
+        document.getElementById('cyRange').value = 0.1889;
+        document.getElementById('zoomRange').value = 60.0;
+        document.getElementById('threshRange').value = 0.55;
+      }
+      updateSimulation();
+    }
+
+    // DeFi Flash-Loan dynamic sliders
+    function updateDeFi() {
+      const borrow = parseFloat(document.getElementById('borrowRange').value);
+      const slip = parseFloat(document.getElementById('slipRange').value);
+      document.getElementById('borrowVal').textContent = borrow.toLocaleString() + ' ETH';
+      document.getElementById('slipVal').textContent = slip.toFixed(1) + '%';
+
+      const ratio = (borrow / 10000.0) * 100.0;
+      document.getElementById('outRatio').textContent = ratio.toFixed(2) + '%';
+
+      const triageEl = document.getElementById('outTriage');
+      const actionEl = document.getElementById('outAction');
+
+      if (ratio > 40.0 || slip > 10.0) {
+        triageEl.textContent = 'HOSTILE_FLASH_LOAN_ATTACK';
+        triageEl.className = 'text-rose';
+        actionEl.textContent = 'ATOMIC_REVERT_TRANSACTION';
+        actionEl.className = 'text-rose';
+      } else if (ratio > 15.0 || slip > 3.0) {
+        triageEl.textContent = 'SANDWICH_MEV_SURGE';
+        triageEl.className = 'text-amber';
+        actionEl.textContent = 'SURCHARGE_DYNAMIC_FEE (0.50%)';
+        actionEl.className = 'text-amber';
+      } else {
+        triageEl.textContent = 'SAFE_RESERVE_OPERATION';
+        triageEl.className = 'text-emerald';
+        actionEl.textContent = 'EXECUTE_SWAP';
+        actionEl.className = 'text-emerald';
+      }
+    }
+
+    // Attach event listeners
+    ['cxRange', 'cyRange', 'zoomRange', 'threshRange'].forEach(id => {
+      document.getElementById(id).addEventListener('input', updateSimulation);
+    });
+    ['borrowRange', 'slipRange'].forEach(id => {
+      document.getElementById(id).addEventListener('input', updateDeFi);
+    });
+    document.getElementById('liveEvmToggle').addEventListener('change', updateSimulation);
+
+    // Language Toggle
+    let currentLang = 'en';
+    const langBtn = document.getElementById('langToggle');
+    langBtn.addEventListener('click', () => {
+      currentLang = currentLang === 'en' ? 'tr' : 'en';
+      langBtn.textContent = currentLang === 'en' ? 'TR' : 'EN';
+      document.querySelectorAll('[data-en]').forEach(el => {
+        el.textContent = el.getAttribute(`data-${currentLang}`);
+      });
+    });
+
+    // Init
+    updateSimulation();
+    updateDeFi();
+  </script>
+</body>
+</html>
