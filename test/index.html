@@ -320,6 +320,8 @@ footer a:hover{color:var(--nacre)}
 .legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:10px;font-size:13px;color:var(--mist)}
 .legend>span{display:inline-flex;align-items:center;gap:6px}
 .legend i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.legend .ring-ico{background:none;border:2px solid var(--permit);width:12px;height:12px}
+.legend .dash-ico{background:none;border-radius:0;border-top:2px dashed var(--gold);height:0;width:16px}
 .seed-pick{display:grid;gap:8px;font-size:14px;color:var(--mist)}
 .seed-pick select{font:500 15px var(--f-body);color:var(--nacre);background:var(--ink);border:1px solid var(--line);border-radius:10px;padding:11px 12px;width:100%}
 .sub-h{font-size:16px;margin:22px 0 12px}
@@ -339,6 +341,18 @@ footer a:hover{color:var(--nacre)}
 .kpi-card strong{display:block;font-family:var(--f-display);font-size:clamp(18px,2vw,22px);font-weight:700;color:var(--gold);letter-spacing:-.01em}
 .kpi-card span{display:block;font-size:13px;color:var(--mist);margin-top:3px}
 footer nav a{padding:6px 0;display:inline-block}
+.viz-chip{position:absolute;left:12px;top:12px;font:700 15px var(--f-display);padding:7px 12px;border-radius:999px;border:1px solid;pointer-events:none;transition:background .3s,color .3s,border-color .3s}
+.viz-chip.ok{color:var(--permit);border-color:rgba(124,245,196,.55);background:rgba(7,6,26,.7)}
+.viz-chip.no{color:var(--revert);border-color:rgba(255,93,115,.6);background:rgba(7,6,26,.7)}
+.viz-chip b{font:600 13px var(--f-mono);margin-left:6px;opacity:.85}
+#mobileSlot:empty{display:none}
+#mobileSlot{margin-top:14px}
+#mobileSlot .sub-h{margin-top:4px}
+@media (max-width:960px){
+  #presets{flex-wrap:nowrap;overflow-x:auto;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;padding-bottom:6px;margin-right:-22px;padding-right:22px}
+  #presets button{flex:none;scroll-snap-align:start}
+}
+
 </style>
 </head>
 <body>
@@ -434,13 +448,17 @@ footer nav a{padding:6px 0;display:inline-block}
         <div class="viz" id="viz3d" role="img" aria-label="Twelve probe orbits rising through nine iteration steps inside a cylinder of radius 2">
           <canvas id="viz2d" width="560" height="560" aria-hidden="true"></canvas>
           <span class="viz-hint" data-i18n="sim.drag">Drag to turn</span>
+          <span class="viz-chip ok" id="vizChip" aria-hidden="true"></span>
         </div>
+        <div id="mobileSlot"></div>
         <p class="viz-cap" id="vizCap" aria-live="polite"></p>
         <div class="legend">
           <span><i style="background:var(--ice)"></i><span data-i18n="leg.wide">wide plane, 0.6×</span></span>
           <span><i style="background:var(--gold)"></i><span data-i18n="leg.focus">focus plane, 1×</span></span>
           <span><i style="background:#b18cff"></i><span data-i18n="leg.deep">deep plane, 1.6×</span></span>
           <span><i style="background:var(--revert)"></i><span data-i18n="leg.esc">left |z| ≤ 2</span></span>
+          <span><i class="ring-ico"></i><span data-i18n="leg.level">probability level</span></span>
+          <span><i class="dash-ico"></i><span data-i18n="leg.thr">threshold</span></span>
         </div>
       </div>
 
@@ -448,7 +466,7 @@ footer nav a{padding:6px 0;display:inline-block}
         <label class="seed-pick"><span data-i18n="sim.seed">Calibrated seed (stored in the contract)</span>
           <select id="seedSel"></select>
         </label>
-        <h3 class="sub-h" data-i18n="sim.scen_h">Incoming call</h3>
+        <div id="callBox"><h3 class="sub-h" data-i18n="sim.scen_h">Incoming call</h3>
         <div class="presets" id="presets" role="group" aria-label="Scenarios">
           <button data-p="default" aria-pressed="true" data-i18n="p.default">Clean swap</button>
           <button data-p="flash" aria-pressed="false" data-i18n="p.flash">Flash-loan drain</button>
@@ -457,7 +475,8 @@ footer nav a{padding:6px 0;display:inline-block}
           <button data-p="aml" aria-pressed="false" data-i18n="p.aml">KYC / AML flag</button>
         </div>
         <div class="ctrl" style="margin-top:20px">
-          <label><span data-i18n="c.risk">Risk score from the calling protocol</span><output id="riskO"></output><input type="range" id="risk" min="-4" max="4" step="0.01"></label>
+          <label id="riskLbl"><span data-i18n="c.risk">Risk score from the calling protocol</span><output id="riskO"></output><input type="range" id="risk" min="-4" max="4" step="0.01"></label>
+          </div></div><div class="ctrl" style="margin-top:18px">
           <label><span data-i18n="c.thr">Threshold</span><output id="thrO"></output><input type="range" id="thr" min="100" max="9900" step="50"></label>
         </div>
 
@@ -763,7 +782,7 @@ const TR = {
  "ch.btn":"Aurora testnet ile karşılaştır",
  "kpi.gas":"gaz, previewDecision (ölçülen)","kpi.gas2":"gaz, olaylı decideNoul","kpi.zk":"ZK-ML doğrulamasından 18 kat az gaz","kpi.storage":"zincir dışı sunucu ya da anahtar yok",
  "sim.note":"Gaz, solc 0.8.20 ve 200 çalıştırmalık optimizer ile yalnızca yürütme için ölçüldü. Senaryo risk puanları örnektir; üretimde bunları çağıran protokol hesaplar.",
- "n.v1":"v1.0 referans çekirdek","n.v2":"v2.0 amiral gemisi, simülatörde çalışan"
+ "leg.level":"olasılık seviyesi","leg.thr":"eşik","n.v1":"v1.0 referans çekirdek","n.v2":"v2.0 amiral gemisi, simülatörde çalışan"
 
 };
 const EN = {};
@@ -1181,17 +1200,11 @@ const sim = (() => {
   const H_STEP = 0.5;          // vertical spacing per iteration
   const CL = 3.6;              // clamp for drawing
   function pathOf(p){
-    const rFactor = inp.risk ? (+inp.risk.value) : 0;
-    const pts = p.orbit.map(([x, y], i) => {
-      // Dynamic centrifugal deflection based on transaction risk
-      const push = (i / 9) * (i / 9) * (rFactor * 0.42);
-      const rad = Math.sqrt(x * x + y * y) || 0.001;
-      const nx = x + (x / rad) * push;
-      const ny = y + (y / rad) * push;
-      return [Math.max(-CL, Math.min(CL, nx)), i * H_STEP, Math.max(-CL, Math.min(CL, ny))];
-    });
-    return pts;
+    // the exact orbit the contract computes; risk does not enter here
+    return p.orbit.map(([x, y], i) => [Math.max(-CL, Math.min(CL, x)), i * H_STEP, Math.max(-CL, Math.min(CL, y))]);
   }
+  const HGT = 9 * H_STEP;
+  const levelY = bps => (bps / 10000) * HGT;   // probability and threshold drawn as heights on the cylinder
 
   /* ---------- 2D fallback (isometric projection) ---------- */
   const v2 = el("viz2d"), v2x = v2.getContext("2d");
@@ -1207,21 +1220,18 @@ const sim = (() => {
       v2x.strokeStyle = k === 0 || k === 9 ? "rgba(255,200,87,.45)" : "rgba(255,200,87,.1)"; v2x.lineWidth = 1; v2x.stroke();
     }
     if (!res) return;
-    const isAllowed = res.allowed;
+    const ring = (y, col, w, dash) => { v2x.beginPath(); for (let a = 0; a <= 64; a++){ const [px, py] = proj([2.05 * Math.cos(a / 64 * 6.283), y, 2.05 * Math.sin(a / 64 * 6.283)]); a ? v2x.lineTo(px, py) : v2x.moveTo(px, py); } v2x.setLineDash(dash || []); v2x.strokeStyle = col; v2x.lineWidth = w; v2x.stroke(); v2x.setLineDash([]); };
+    ring(levelY(+inp.thr.value), "rgba(255,200,87,.95)", 2, [6, 6]);
     res.probes.forEach(p => {
-      const rawPts = pathOf(p);
-      const pts = rawPts.map(proj);
-      const maxR = Math.max(...rawPts.map(([x, , z]) => Math.sqrt(x*x + z*z)));
-      const probeEscaped = maxR > 2.0 || p.e < 9;
+      const pts = pathOf(p).map(proj);
       v2x.beginPath(); pts.forEach(([x, y], i) => i ? v2x.lineTo(x, y) : v2x.moveTo(x, y));
-      v2x.strokeStyle = probeEscaped ? (isAllowed ? "#ffc857" : "#ff5d73") : (isAllowed ? "#7cf5c4" : "#9fe8ff");
-      v2x.globalAlpha = .92; v2x.lineWidth = 2.2; v2x.stroke(); v2x.globalAlpha = 1;
+      v2x.strokeStyle = PLANE_COL[p.plane]; v2x.globalAlpha = .9; v2x.lineWidth = 2; v2x.stroke(); v2x.globalAlpha = 1;
       const [ex, ey] = pts[pts.length - 1];
-      v2x.beginPath(); v2x.arc(ex, ey, probeEscaped ? 6 : 4, 0, 7);
-      v2x.fillStyle = probeEscaped ? "#ff5d73" : (isAllowed ? "#7cf5c4" : "#ffc857");
-      v2x.fill();
+      v2x.beginPath(); v2x.arc(ex, ey, p.e < 9 ? 6 : 4, 0, 7); v2x.fillStyle = p.e < 9 ? "#ff5d73" : PLANE_COL[p.plane]; v2x.fill();
     });
+    ring(levelY(shownLevel), res.allowed ? "#7cf5c4" : "#ff5d73", 3.5);
   }
+  let shownLevel = 5000;   // animated toward res.prob
 
   /* ---------- 3D (three.js) ---------- */
   const box = el("viz3d");
@@ -1259,7 +1269,14 @@ const sim = (() => {
       // floor grid of the z-plane
       const grid = new T.PolarGridHelper(3, 12, 6, 64, 0x2a2760, 0x1a1840); root.add(grid);
       const dyn = new T.Group(); root.add(dyn);
-      three = {T, renderer, scene, cam, root, dyn, canvas};
+      const ringGeo = r => new T.BufferGeometry().setFromPoints(Array.from({length: 128}, (_, a) => new T.Vector3(r * Math.cos(a / 128 * Math.PI * 2), 0, r * Math.sin(a / 128 * Math.PI * 2))));
+      const thrRing = new T.LineLoop(ringGeo(2.05), new T.LineDashedMaterial({color: 0xffc857, dashSize: 0.18, gapSize: 0.12}));
+      thrRing.computeLineDistances(); root.add(thrRing);
+      const level = new T.Mesh(new T.TorusGeometry(2.05, 0.045, 10, 160), new T.MeshBasicMaterial({color: 0x7cf5c4}));
+      level.rotation.x = Math.PI / 2; root.add(level);
+      const levelDisc = new T.Mesh(new T.CircleGeometry(2, 96), new T.MeshBasicMaterial({color: 0x7cf5c4, transparent: true, opacity: 0.08, side: T.DoubleSide, depthWrite: false}));
+      levelDisc.rotation.x = -Math.PI / 2; root.add(levelDisc);
+      three = {T, renderer, scene, cam, root, dyn, canvas, thrRing, level, levelDisc, cyl};
       box.insertBefore(canvas, box.firstChild); v2.style.display = "none";
       resize3(); new ResizeObserver(resize3).observe(box);
       rebuild3();
@@ -1273,18 +1290,13 @@ const sim = (() => {
     dyn.children.forEach(c => { c.geometry && c.geometry.dispose(); c.material && c.material.dispose(); });
     dyn.clear();
     built = [];
-    const isAllowed = res.allowed;
     res.probes.forEach(p => {
-      const rawPts = pathOf(p);
-      const pts = rawPts.map(([x, y, z]) => new T.Vector3(x, y, z));
+      const pts = pathOf(p).map(([x, y, z]) => new T.Vector3(x, y, z));
       const curve = new T.CatmullRomCurve3(pts, false, "catmullrom", 0.2);
       const segs = Math.max(8, (pts.length - 1) * 10);
-      const maxR = Math.max(...rawPts.map(([x, , z]) => Math.sqrt(x*x + z*z)));
-      const probeEscaped = maxR > 2.0 || p.e < 9;
-      const col = probeEscaped ? (isAllowed ? 0xffc857 : 0xff5d73) : (isAllowed ? 0x7cf5c4 : 0x9fe8ff);
-      const tube = new T.Mesh(new T.TubeGeometry(curve, segs, 0.038, 8, false), new T.MeshBasicMaterial({color: col, transparent: true, opacity: 0.94}));
+      const tube = new T.Mesh(new T.TubeGeometry(curve, segs, 0.035, 8, false), new T.MeshBasicMaterial({color: PLANE_COL[p.plane], transparent: true, opacity: 0.92}));
       tube.geometry.setDrawRange(0, 0); dyn.add(tube);
-      const end = new T.Mesh(new T.SphereGeometry(probeEscaped ? 0.13 : 0.08, 16, 12), new T.MeshBasicMaterial({color: probeEscaped ? 0xff5d73 : (isAllowed ? 0x7cf5c4 : 0xffc857)}));
+      const end = new T.Mesh(new T.SphereGeometry(p.e < 9 ? 0.12 : 0.08, 16, 12), new T.MeshBasicMaterial({color: p.e < 9 ? 0xff5d73 : PLANE_COL[p.plane]}));
       end.position.copy(pts[pts.length - 1]); end.visible = false; dyn.add(end);
       built.push({tube, end, total: tube.geometry.index.count});
     });
@@ -1297,6 +1309,14 @@ const sim = (() => {
     const g = RM ? 1 : Math.min(1, (now - growStart) / 1100);
     if (built && g <= 1) built.forEach(b => { b.tube.geometry.setDrawRange(0, Math.floor(b.total * g / 6) * 6); b.end.visible = g >= 1; });
     if (g < 1) needs = true;
+    if (res){
+      const target = res.prob, d = target - shownLevel;
+      if (Math.abs(d) > 1){ shownLevel += RM ? d : d * 0.18; needs = true; } else shownLevel = target;
+      const col = res.allowed ? 0x7cf5c4 : 0xff5d73;
+      three.level.position.y = levelY(shownLevel); three.levelDisc.position.y = levelY(shownLevel);
+      three.level.material.color.setHex(col); three.levelDisc.material.color.setHex(col);
+      three.thrRing.position.y = levelY(+inp.thr.value);
+    }
     if (!needs) return;
     const r = 10.5;
     cam.position.set(Math.sin(yaw) * Math.cos(pitch) * r, 2.25 + Math.sin(pitch) * r, Math.cos(yaw) * Math.cos(pitch) * r);
@@ -1305,24 +1325,18 @@ const sim = (() => {
   }
   let visible = false;
   new IntersectionObserver(es => { visible = es[0].isIntersecting; if (visible && !three && !box.dataset.loading){ box.dataset.loading = "1"; initThree(); } }, {rootMargin: "400px"}).observe(box);
-  (function loop(now){ if (visible && !document.hidden){ if (three) frame3(now); else { if (autoSpin) yaw += 0.0025; draw2D(); } } requestAnimationFrame(loop); })(0);
+  (function loop(now){ if (visible && !document.hidden){ if (three) frame3(now); else { if (autoSpin) yaw += 0.0025; if (res) shownLevel += RM ? res.prob - shownLevel : (res.prob - shownLevel) * 0.18; draw2D(); } } requestAnimationFrame(loop); })(0);
 
   /* ---------- render ---------- */
   function caption(){
     if (!res) return "";
-    const escCount = res.probes.filter(p => {
-      const rawPts = pathOf(p);
-      return Math.max(...rawPts.map(([x, , z]) => Math.sqrt(x*x + z*z))) > 2.0 || p.e < 9;
-    }).length;
-    const inside = 12 - escCount;
-    if (lang === "tr"){
-      return res.allowed
-        ? `Yörünge analizi: ${inside} sonda güvenli silindir (|z| ≤ 2) içinde ➔ Karar: İZİN VERİLDİ (ALLOWED, ${res.conf} bps)`
-        : `Yörünge analizi: ${escCount} sonda güvenlik sınırını aşıyor (|z| > 2) ➔ Karar: GERİ ALINDI (REVERTED, ${res.conf} bps)`;
-    }
-    return res.allowed
-      ? `Trajectory analysis: ${inside} of 12 probes bounded inside |z| ≤ 2 ➔ Verdict: ALLOWED (${res.conf} bps)`
-      : `Trajectory analysis: ${escCount} of 12 probes breach boundary (|z| > 2) ➔ Verdict: REVERTED (${res.conf} bps)`;
+    const inside = res.probes.filter(p => p.e === 9).length;
+    const steps = res.esc.reduce((a, b) => a + b, 0);
+    const verdictTr = res.allowed ? `seviye eşiğin üstünde, izin (${res.conf} bps)` : `seviye eşiğin altında, revert (${res.conf} bps)`;
+    const verdictEn = res.allowed ? `the level clears the threshold, so the call is allowed (${res.conf} bps)` : `the level is below the threshold, so the call reverts (${res.conf} bps)`;
+    return lang === "tr"
+      ? `${inside}/12 sonda 9 adımın tamamında |z| ≤ 2 içinde kaldı (${steps}/108 adım), sınırlılık ${res.bounded} bps. Halka, risk düşüldükten sonraki olasılığı gösterir: ${verdictTr}.`
+      : `${inside} of 12 probes stayed inside |z| ≤ 2 for all 9 steps (${steps} of 108 steps), boundedness ${res.bounded} bps. The ring is the probability after the risk is applied: ${verdictEn}.`;
   }
   function render(){
     const s = seedNow(), r = riskFP();
@@ -1341,8 +1355,9 @@ const sim = (() => {
     el("ppL").textContent = fmt(res.logit);
     el("ppP").textContent = res.prob + " bps";
     el("vizCap").textContent = caption();
+    const chip = el("vizChip"); chip.className = "viz-chip " + (res.allowed ? "ok" : "no"); chip.innerHTML = (res.allowed ? t().allowed : t().reverted) + `<b>${res.prob} / ${inp.thr.value}</b>`;
     drawSig();
-    rebuild3();
+    if (prevSeed !== seedSel.value) rebuild3();
     needs = true;
   }
   function clearPreset(){ $$("#presets button").forEach(b => b.setAttribute("aria-pressed", "false")); }
@@ -1387,6 +1402,12 @@ const sim = (() => {
       out.textContent = lang === "tr" ? "Aurora RPC'ye ulaşılamadı. Biraz sonra tekrar deneyin." : "Couldn't reach the Aurora RPC. Try again in a moment.";
     }
   });
+
+  // on phones keep "incoming call" controls right under the 3D view so cause and effect stay on one screen
+  const callBox = el("callBox"), callHome = callBox.parentNode, callNext = callBox.nextSibling, slot = el("mobileSlot");
+  const mq = matchMedia("(max-width:960px)");
+  const place = () => { if (mq.matches) slot.appendChild(callBox); else callHome.insertBefore(callBox, callNext); };
+  (mq.addEventListener ? mq.addEventListener("change", place) : mq.addListener(place)); place();
 
   seedSel.value = "ethusdc";
   applyPreset("default");
