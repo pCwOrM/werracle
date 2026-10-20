@@ -25,7 +25,7 @@ This PR adds **WerracleFeeHook** to the community hooks collection.
 
 - **Contract:** [`contracts/hooks/WerracleFeeHook.sol`](https://github.com/pCwOrM/werracle/blob/main/contracts/hooks/WerracleFeeHook.sol)
 - **Repo:** [pCwOrM/werracle](https://github.com/pCwOrM/werracle)
-- **Live Simulator:** https://pcworm.github.io/werracle/
+- **Live Simulator:** https://werracle.io/
 
 ### Key Features
 - **Deterministic Chaos Evaluation:** Uses Q16.16 fixed-point math (`WerrMath.sol`) to calculate market turbulence directly intra-block.
@@ -82,7 +82,7 @@ Instead of relying on off-chain volatility oracles (which suffer from block late
 
 - 🔗 **GitHub Repository:** https://github.com/pCwOrM/werracle
 - 📄 **Hook Source:** https://github.com/pCwOrM/werracle/blob/main/contracts/hooks/WerracleFeeHook.sol
-- 🌐 **Interactive Sandbox:** https://pcworm.github.io/werracle/
+- 🌐 **Interactive Sandbox:** https://werracle.io/
 
 Feedback, review, and suggestions from the Uniswap builder community are warmly welcome!
 ```

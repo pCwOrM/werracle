@@ -99,7 +99,7 @@ WerracleFeeHook integrates a machine-native procedural decision engine directly 
 
 - Repository: https://github.com/pCwOrM/werracle
 - Hook Implementation: https://github.com/pCwOrM/werracle/blob/main/contracts/hooks/WerracleFeeHook.sol
-- Interactive Simulator: https://pcworm.github.io/werracle/
+- Interactive Simulator: https://werracle.io/
 
 We'd love feedback from hook developers and AMM researchers!
 ```

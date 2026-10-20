@@ -472,7 +472,7 @@ All smart contracts, test harnesses, and interactive simulators are openly acces
 <p class="no-indent">
 &bull; <strong>GitHub Repository:</strong> <a href="https://github.com/pCwOrM/werracle">https://github.com/pCwOrM/werracle</a><br>
 &bull; <strong>Live EVM Node (Chain ID 4242):</strong> <a href="https://api.answerr.me/werracle/status">https://api.answerr.me/werracle/status</a><br>
-&bull; <strong>Interactive Web Sandbox:</strong> <a href="https://pcworm.github.io/werracle/">https://pcworm.github.io/werracle/</a><br>
+&bull; <strong>Interactive Web Sandbox:</strong> <a href="https://werracle.io/">https://werracle.io/</a><br>
 &bull; <strong>Companion Research:</strong> WERR Foundation (arXiv:2609.25498) [4]<br>
 &bull; <strong>Intellectual Property:</strong> Patent Application TR 2026/016285 (TÜRKPATENT)
 </p>
