@@ -625,7 +625,7 @@ footer a:hover{color:var(--nacre)}
       <div class="addr"><span>WerracleTripodZMod9 v2.0</span><code>0x0a95887dBa2783E1E445bB4D3A9a1f7cB3152d04</code><span class="mono" style="font-size:13px;color:var(--mist)">22.5k gas</span></div>
       <div class="addr"><span>Werracle v1.0</span><code>0x5FbDB2315678afecb367f032d93F642f64180aa3</code><span></span></div>
       <div class="addr"><span>WerracleFeeHook</span><code>0xdef5Ad647Af159D27cd111007e4CCD1fDE9d4006</code><span class="mono" style="font-size:13px;color:var(--mist)">Uniswap v4</span></div>
-      <div class="links"><a class="pill" href="apidocs.html" data-i18n="i.api">API documentation</a><a class="pill" href="https://api.answerr.me:4431/werracle/status" data-i18n="i.status">Node status</a><a class="pill" href="https://github.com/pCwOrM/werracle/blob/main/contracts/Werracle.sol">Werracle.sol</a></div>
+      <div class="links"><a class="pill" href="apidocs.html" data-i18n="i.api">API documentation</a><a class="pill" href="https://api.answerr.me/werracle/status" data-i18n="i.status">Node status</a><a class="pill" href="https://github.com/pCwOrM/werracle/blob/main/contracts/Werracle.sol">Werracle.sol</a></div>
     </div>
   </div>
 </section>
@@ -1203,7 +1203,7 @@ const sim = (() => {
       dot.style.background = "var(--ice)"; lt.textContent = t().live1;
       try {
         const tok = await recaptcha(); const h = {"Content-Type":"application/json"}; if (tok) h["X-Recaptcha-Token"] = tok;
-        const r = await fetch("https://api.answerr.me:4431/werracle/oracle/noul", {method:"POST", headers:h, body:JSON.stringify({risk_score:risk})});
+        const r = await fetch("https://api.answerr.me/werracle/oracle/noul", {method:"POST", headers:h, body:JSON.stringify({risk_score:risk})});
         if (!r.ok) throw 0; const d = await r.json();
         dot.style.background = "var(--permit)"; lt.textContent = t().live2(d.blockNumber, d.executionMs, (d.gasUsed||0).toLocaleString());
       } catch(e){ dot.style.background = "var(--gold)"; lt.textContent = t().live3; }
