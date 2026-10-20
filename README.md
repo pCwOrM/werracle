@@ -18,6 +18,8 @@
 [![Telemetry: Permanently Disabled](https://img.shields.io/badge/Telemetry-Permanently%20Disabled-10b981.svg)]()
 [![Solidity: ^0.8.20](https://img.shields.io/badge/Solidity-%5E0.8.20-363636.svg?logo=solidity)](https://soliditylang.org/)
 [![Cairo: 2.8+ (Sierra)](https://img.shields.io/badge/Starknet-Cairo%202.8%2B%20(Sierra)-ec796b.svg)](cairo/)
+[![NEAR Protocol](https://img.shields.io/badge/NEAR%20Protocol-Intents%20%26%20Aurora%20EVM-00EC97.svg?logo=near&logoColor=black)](near/README.md)
+[![Aurora EVM](https://img.shields.io/badge/Aurora%20EVM-Chain%20ID%201313161555-78D64B.svg)](near/README.md)
 [![Starknet Steps: ~1,420](https://img.shields.io/badge/CairoVM-~1%2C420%20Steps%20(STARK--Native)-ec796b.svg)](docs/STARKNET_ARCHITECTURE_AND_SEED_GRANT_ROADMAP.md)
 [![Starknet DeFi: Ekubo Extension](https://img.shields.io/badge/Starknet%20DeFi-Ekubo%20LVR%20Extension-blueviolet.svg)](cairo/src/ekubo_werracle_extension.cairo)
 [![EVM Gas: ~20k](https://img.shields.io/badge/EVM%20Gas-~20k%20(Sub--Cent)-brightgreen.svg)](https://pcworm.github.io/werracle/#simulator)
@@ -51,7 +53,7 @@
 > *Authors:* Volkan Dağlı, Dr. Zerrin Dağlı, Dağhan Dağlı &bull; *Zenodo Concept DOI:* [10.5281/zenodo.22942598](https://doi.org/10.5281/zenodo.22942598)
 
 > 🌐 **Language Switcher / Dil Seçici:**  
-> **English (Default)** | [🇹🇷 Türkçe Dokümantasyon (README_TR.md)](README_TR.md) &bull; 🐺 [**Starknet (Cairo 2 / Sierra) Architecture & Roadmap**](docs/STARKNET_ARCHITECTURE_AND_SEED_GRANT_ROADMAP.md) &bull; 🌐 [**Interactive Web Simulator**](https://pcworm.github.io/werracle/) &bull; ⚡ [**Interactive API Docs**](https://pcworm.github.io/werracle/apidocs.html) &bull; 🎓 [**LEARN.md Guide**](LEARN.md) &bull; 🛡️ [**1,000-Test Sealed Audit Report**](docs/TEST_1000_AUDIT_REPORT.md) &bull; 📢 [**Grant & Announcement Playbook**](docs/WEB3_GRANT_AND_ANNOUNCEMENT_PLAYBOOK.md)
+> **English (Default)** | [🇹🇷 Türkçe Dokümantasyon (README_TR.md)](README_TR.md) &bull; 🐺 [**Starknet (Cairo 2 / Sierra) Architecture & Roadmap**](docs/STARKNET_ARCHITECTURE_AND_SEED_GRANT_ROADMAP.md) &bull; 🟢 [**NEAR Intents & Aurora Integration**](near/README.md) &bull; 🌐 [**Interactive Web Simulator**](https://pcworm.github.io/werracle/) &bull; ⚡ [**Interactive API Docs**](https://pcworm.github.io/werracle/apidocs.html) &bull; 🎓 [**LEARN.md Guide**](LEARN.md) &bull; 🛡️ [**1,000-Test Sealed Audit Report**](docs/TEST_1000_AUDIT_REPORT.md) &bull; 📢 [**Grant & Announcement Playbook**](docs/WEB3_GRANT_AND_ANNOUNCEMENT_PLAYBOOK.md)
 
 
 > **The first production-grade On-Chain AI Decision Oracle capable of intra-block, sub-millisecond execution inside both EVM (`Solidity`) and Starknet (`Cairo 2.x / Sierra`) smart contracts.**  

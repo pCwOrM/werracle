@@ -26,6 +26,8 @@
 [![Konnektom DOI](https://img.shields.io/badge/WerrSoma%20DOI-10.5281%2Fzenodo.22996625-024dad.svg)](https://doi.org/10.5281/zenodo.22996625)
 [![WerrSoma Portalı](https://img.shields.io/badge/WerrSoma%20Portal-werrsoma.answerr.me-00f0ff.svg)](https://werrsoma.answerr.me/)
 [![Ekosistem: WERRobotics](https://img.shields.io/badge/WERRobotics-Arduino%20%26%20Edge%20AI-ff9100.svg?logo=arduino&logoColor=white)](https://github.com/pCwOrM/WERRobotics)
+[![NEAR Protocol](https://img.shields.io/badge/NEAR%20Protocol-Intents%20%26%20Aurora%20EVM-00EC97.svg?logo=near&logoColor=black)](near/README.md)
+[![Aurora EVM](https://img.shields.io/badge/Aurora%20EVM-Chain%20ID%201313161555-78D64B.svg)](near/README.md)
 [![arXiv: 2609.30719 (Werracle)](https://img.shields.io/badge/arXiv-2609.30719%20%5Bcs.CR%5D-b31b1b.svg)](https://arxiv.org/abs/2609.30719)
 [![SSRN: 7626279](https://img.shields.io/badge/SSRN-7626279-002f6c.svg?logo=elsevier)](https://ssrn.com/abstract=7626279)
 [![arXiv DOI: 10.48550/arXiv.2609.30719](https://img.shields.io/badge/arXiv%20DOI-10.48550%2FarXiv.2609.30719-b31b1b.svg)](https://doi.org/10.48550/arXiv.2609.30719)
@@ -37,7 +39,7 @@
 [![Makale: Kamera-Hazır PDF](https://img.shields.io/badge/Makale%20v2.0-Kamera--Haz%C4%B1r-emerald.svg)](https://arxiv.org/pdf/2609.30719)
 
 > 🌐 **Dil Seçici / Language Switcher:**  
-> **Türkçe (Varsayılan)** | [🇬🇧 English Documentation (README.md)](README.md) &bull; 🐺 [**Starknet (Cairo 2 / Sierra) Mimarisi ve Yol Haritası**](docs/STARKNET_ARCHITECTURE_AND_SEED_GRANT_ROADMAP.md) &bull; 📄 [**Resmi arXiv Makalesi (2609.30719)**](https://arxiv.org/abs/2609.30719) &bull; 🌐 [**Etkileşimli Web Simülatörü**](https://pcworm.github.io/werracle/) &bull; ⚡ [**Etkileşimli API Dokümanı**](https://pcworm.github.io/werracle/apidocs.html) &bull; 🎓 [**LEARN.md Eğitim Kılavuzu**](LEARN.md) &bull; 🛡️ [**1.000 Test Mühürlü Denetim Raporu**](docs/TEST_1000_AUDIT_REPORT.md) &bull; 📢 [**Hibe ve Duyuru Rehberi**](docs/WEB3_GRANT_AND_ANNOUNCEMENT_PLAYBOOK.md)
+> **Türkçe (Varsayılan)** | [🇬🇧 English Documentation (README.md)](README.md) &bull; 🐺 [**Starknet (Cairo 2 / Sierra) Mimarisi ve Yol Haritası**](docs/STARKNET_ARCHITECTURE_AND_SEED_GRANT_ROADMAP.md) &bull; 🟢 [**NEAR Intents ve Aurora Mimarisi**](near/README.md) &bull; 📄 [**Resmi arXiv Makalesi (2609.30719)**](https://arxiv.org/abs/2609.30719) &bull; 🌐 [**Etkileşimli Web Simülatörü**](https://pcworm.github.io/werracle/) &bull; ⚡ [**Etkileşimli API Dokümanı**](https://pcworm.github.io/werracle/apidocs.html) &bull; 🎓 [**LEARN.md Eğitim Kılavuzu**](LEARN.md) &bull; 🛡️ [**1.000 Test Mühürlü Denetim Raporu**](docs/TEST_1000_AUDIT_REPORT.md) &bull; 📢 [**Hibe ve Duyuru Rehberi**](docs/WEB3_GRANT_AND_ANNOUNCEMENT_PLAYBOOK.md)
 
 > **Hem Ethereum Sanal Makinesi (`EVM / Solidity`) hem de Starknet (`Cairo 2.x / Sierra`) içinde blok-içi (intra-block) düzeyde ve milisaniye-altı hızda çalışabilen ilk üretime hazır On-Chain AI Karar Oracle'ı.**  
 > *WERR prosedürel Mandelbrot kaçış dinamiği ile güçlendirilmiştir. Sıfır tensör matrisi. ZK-ML'den 1000 kat daha hızlı ve 15 kat daha ucuz — Starknet üzerinde %100 doğal STARK kanıt geçerliliği ile.*  
