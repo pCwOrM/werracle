@@ -161,7 +161,7 @@ Key Innovations & Live EVM Benchmarks in v2.0:
 • Strict Privacy by Design: Telemetry is permanently disabled (Zero external network leakage).
 
 Live Ecosystem Resources:
-• High-Performance Gateway (Chain ID 4242): https://api.answerr.me:4431/werracle/status
+• High-Performance Gateway (Chain ID 4242): https://api.answerr.me/werracle/status
 • Interactive Portal & Docs: https://pcworm.github.io/werracle/
 • Live Interactive API Docs: https://pcworm.github.io/werracle/apidocs.html
 • GitHub Repository (Release v2.0.0): https://github.com/pCwOrM/werracle

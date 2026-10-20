@@ -1515,8 +1515,8 @@ contract ProtectedDeFiProtocol {
         </div>
 
         <div style="font-size:0.85rem; color:var(--text-muted); display:flex; gap:16px; flex-wrap:wrap;">
-          <span>🌐 <strong>Public RPC:</strong> <code style="color:var(--cyan);">https://api.answerr.me:4431/werracle/rpc</code></span>
-          <span>⚡ <strong>REST Status:</strong> <a href="https://api.answerr.me:4431/werracle/status" target="_blank" style="color:var(--cyan); text-decoration:none;">/werracle/status ↗</a></span>
+          <span>🌐 <strong>Public RPC:</strong> <code style="color:var(--cyan);">https://api.answerr.me/werracle/rpc</code></span>
+          <span>⚡ <strong>REST Status:</strong> <a href="https://api.answerr.me/werracle/status" target="_blank" style="color:var(--cyan); text-decoration:none;">/werracle/status ↗</a></span>
         </div>
       </div>
 
@@ -1793,7 +1793,7 @@ contract ProtectedDeFiProtocol {
         const headers = { 'Content-Type': 'application/json' };
         if (token) headers['X-Recaptcha-Token'] = token;
 
-        const res = await fetch('https://api.answerr.me:4431/werracle/oracle/noul', {
+        const res = await fetch('https://api.answerr.me/werracle/oracle/noul', {
           method: 'POST',
           headers: headers,
           body: JSON.stringify({ risk_score: score - 0.5 })
