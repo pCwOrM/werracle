@@ -75,7 +75,7 @@ Observe how the `DeFiFlashLoanGate` automatically flips the decision from `ALLOW
 ### Tutorial 3: Interactive EVM Simulator in Browser
 No installation required!  
 Open `index.html` locally in your web browser or visit the live GitHub Pages portal:
-🔗 **[https://pcworm.github.io/werracle/](https://pcworm.github.io/werracle/)**
+🔗 **[https://werracle.io/](https://werracle.io/)**
 
 1. Move the **Borrow Amount** and **Slippage** sliders to see real-time EVM gate evaluation.
 2. Inspect the **32-Byte Slot Decomposition** to see how coordinates, zoom, and thresholds are packed into a single EVM storage word.

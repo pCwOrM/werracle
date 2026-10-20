@@ -42,13 +42,13 @@
       "scheme": "url"
     },
     {
-      "identifier": "https://pcworm.github.io/werracle/",
+      "identifier": "https://werracle.io/",
       "relation": "isDocumentedBy",
       "resource_type": "interactive-resource",
       "scheme": "url"
     },
     {
-      "identifier": "https://pcworm.github.io/werracle/apidocs.html",
+      "identifier": "https://werracle.io/apidocs.html",
       "relation": "isDocumentedBy",
       "resource_type": "interactive-resource",
       "scheme": "url"

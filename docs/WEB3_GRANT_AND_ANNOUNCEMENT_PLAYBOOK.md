@@ -132,7 +132,7 @@ Aşağıdaki kurumlar Werracle'ın mimarisine (düşük gas, on-chain güvenlik,
 > Try the client-side simulator directly in your browser:
 >
 > Test coordinates, simulate flash-loan attacks, and inspect the 32-byte slot in real time:
-> 🌐 https://pcworm.github.io/werracle/
+> 🌐 https://werracle.io/
 
 **Tweet 9 (Açık Kaynak & Kurumsal Bilgi):**
 > Developed by ITOUCH BİLİŞİM SİSTEMLERİ LTD. ŞTİ. (Çukurova Teknokent) & Volkan Dağlı (@pCwOrM).
@@ -165,7 +165,7 @@ Werracle derives typed decisions (noul, choice, score) inside a single 32-byte s
 - Uniswap v4 dynamic fee hook (0.05% - 0.50%)
 - 1,000 sealed tests passed (100%)
 
-Live Simulator: https://pcworm.github.io/werracle/
+Live Simulator: https://werracle.io/
 Repo: https://github.com/pCwOrM/werracle
 
 Would love feedback from fellow Base builders! 🔵⚡
@@ -191,7 +191,7 @@ We built and open-sourced **Werracle**:
 - **Verification:** Completed a 1,000-test cryptographically sealed battery with 100% pass rate.
 - **Privacy:** Telemetry is permanently disabled.
 
-Live Browser Simulator: https://pcworm.github.io/werracle/
+Live Browser Simulator: https://werracle.io/
 GitHub Repo & Contracts: https://github.com/pCwOrM/werracle
 
 Looking forward to hearing thoughts from EVM engineers and security auditors!
@@ -211,7 +211,7 @@ We built Werracle (https://github.com/pCwOrM/werracle), an on-chain decision ora
 
 Instead of storing gigabyte neural weight matrices, Werracle procedurally derives non-linear decision boundaries from a 24-byte coordinate triplet (cx, cy, zoom) inside a single bytes32 storage slot.
 
-Interactive simulator (Q16.16 client-side execution): https://pcworm.github.io/werracle/
+Interactive simulator (Q16.16 client-side execution): https://werracle.io/
 
 We'd love your technical feedback on the fixed-point math, DeFi flash-loan triage, and Uniswap v4 hook implementation.
 ```
