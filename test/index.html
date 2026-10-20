@@ -1139,11 +1139,11 @@ const sim = (() => {
   const inp = {risk:el("risk"), thr:el("thr")};
   const seedSel = el("seedSel");
   const SCEN = {
-    default:{risk:-0.30, thr:5000},
-    flash:{risk:2.50, thr:5000},
-    near:{risk:0.75, thr:5000},
-    fee:{risk:0.30, thr:4500},
-    aml:{risk:0.60, thr:5500}
+    default:{seed:"ethusdc", risk:-0.30, thr:5000},
+    flash:{seed:"aaveeth", risk:2.50, thr:5000},
+    near:{seed:"solusdc", risk:0.75, thr:5000},
+    fee:{seed:"unieth", risk:0.30, thr:4500},
+    aml:{seed:"wbtcusdc", risk:0.60, thr:5500}
   };
   TRIPOD.SEEDS.forEach(sd => { const o = document.createElement("option"); o.value = sd.id; o.textContent = `${sd.name}  c = ${(sd.cx/ONE).toFixed(4)} ${sd.cy >= 0 ? "+" : "−"} ${Math.abs(sd.cy/ONE).toFixed(4)}i`; seedSel.appendChild(o); });
   let res = null, lastAllowed = null;
@@ -1179,9 +1179,17 @@ const sim = (() => {
 
   /* ---------- trajectory data ---------- */
   const H_STEP = 0.5;          // vertical spacing per iteration
-  const CL = 3;                // clamp for drawing
+  const CL = 3.6;              // clamp for drawing
   function pathOf(p){
-    const pts = p.orbit.map(([x, y], i) => [Math.max(-CL, Math.min(CL, x)), i * H_STEP, Math.max(-CL, Math.min(CL, y))]);
+    const rFactor = inp.risk ? (+inp.risk.value) : 0;
+    const pts = p.orbit.map(([x, y], i) => {
+      // Dynamic centrifugal deflection based on transaction risk
+      const push = (i / 9) * (i / 9) * (rFactor * 0.42);
+      const rad = Math.sqrt(x * x + y * y) || 0.001;
+      const nx = x + (x / rad) * push;
+      const ny = y + (y / rad) * push;
+      return [Math.max(-CL, Math.min(CL, nx)), i * H_STEP, Math.max(-CL, Math.min(CL, ny))];
+    });
     return pts;
   }
 
@@ -1199,12 +1207,19 @@ const sim = (() => {
       v2x.strokeStyle = k === 0 || k === 9 ? "rgba(255,200,87,.45)" : "rgba(255,200,87,.1)"; v2x.lineWidth = 1; v2x.stroke();
     }
     if (!res) return;
+    const isAllowed = res.allowed;
     res.probes.forEach(p => {
-      const pts = pathOf(p).map(proj);
+      const rawPts = pathOf(p);
+      const pts = rawPts.map(proj);
+      const maxR = Math.max(...rawPts.map(([x, , z]) => Math.sqrt(x*x + z*z)));
+      const probeEscaped = maxR > 2.0 || p.e < 9;
       v2x.beginPath(); pts.forEach(([x, y], i) => i ? v2x.lineTo(x, y) : v2x.moveTo(x, y));
-      v2x.strokeStyle = PLANE_COL[p.plane]; v2x.globalAlpha = .9; v2x.lineWidth = 2; v2x.stroke(); v2x.globalAlpha = 1;
+      v2x.strokeStyle = probeEscaped ? (isAllowed ? "#ffc857" : "#ff5d73") : (isAllowed ? "#7cf5c4" : "#9fe8ff");
+      v2x.globalAlpha = .92; v2x.lineWidth = 2.2; v2x.stroke(); v2x.globalAlpha = 1;
       const [ex, ey] = pts[pts.length - 1];
-      v2x.beginPath(); v2x.arc(ex, ey, p.e < 9 ? 6 : 4, 0, 7); v2x.fillStyle = p.e < 9 ? "#ff5d73" : PLANE_COL[p.plane]; v2x.fill();
+      v2x.beginPath(); v2x.arc(ex, ey, probeEscaped ? 6 : 4, 0, 7);
+      v2x.fillStyle = probeEscaped ? "#ff5d73" : (isAllowed ? "#7cf5c4" : "#ffc857");
+      v2x.fill();
     });
   }
 
@@ -1258,13 +1273,18 @@ const sim = (() => {
     dyn.children.forEach(c => { c.geometry && c.geometry.dispose(); c.material && c.material.dispose(); });
     dyn.clear();
     built = [];
+    const isAllowed = res.allowed;
     res.probes.forEach(p => {
-      const pts = pathOf(p).map(([x, y, z]) => new T.Vector3(x, y, z));
+      const rawPts = pathOf(p);
+      const pts = rawPts.map(([x, y, z]) => new T.Vector3(x, y, z));
       const curve = new T.CatmullRomCurve3(pts, false, "catmullrom", 0.2);
       const segs = Math.max(8, (pts.length - 1) * 10);
-      const tube = new T.Mesh(new T.TubeGeometry(curve, segs, 0.035, 8, false), new T.MeshBasicMaterial({color: PLANE_COL[p.plane], transparent: true, opacity: 0.92}));
+      const maxR = Math.max(...rawPts.map(([x, , z]) => Math.sqrt(x*x + z*z)));
+      const probeEscaped = maxR > 2.0 || p.e < 9;
+      const col = probeEscaped ? (isAllowed ? 0xffc857 : 0xff5d73) : (isAllowed ? 0x7cf5c4 : 0x9fe8ff);
+      const tube = new T.Mesh(new T.TubeGeometry(curve, segs, 0.038, 8, false), new T.MeshBasicMaterial({color: col, transparent: true, opacity: 0.94}));
       tube.geometry.setDrawRange(0, 0); dyn.add(tube);
-      const end = new T.Mesh(new T.SphereGeometry(p.e < 9 ? 0.12 : 0.08, 16, 12), new T.MeshBasicMaterial({color: p.e < 9 ? 0xff5d73 : PLANE_COL[p.plane]}));
+      const end = new T.Mesh(new T.SphereGeometry(probeEscaped ? 0.13 : 0.08, 16, 12), new T.MeshBasicMaterial({color: probeEscaped ? 0xff5d73 : (isAllowed ? 0x7cf5c4 : 0xffc857)}));
       end.position.copy(pts[pts.length - 1]); end.visible = false; dyn.add(end);
       built.push({tube, end, total: tube.geometry.index.count});
     });
@@ -1290,11 +1310,19 @@ const sim = (() => {
   /* ---------- render ---------- */
   function caption(){
     if (!res) return "";
-    const inside = res.probes.filter(p => p.e === 9).length;
-    const steps = res.esc.reduce((a, b) => a + b, 0);
-    return lang === "tr"
-      ? `12 sondadan ${inside} tanesi 9 adımın tamamında |z| ≤ 2 içinde kaldı (toplam ${steps}/108 adım). Ağırlıklı sınırlılık ${res.bounded} bps; 5000'in üstü izin yönüne iter.`
-      : `${inside} of 12 probes stayed inside |z| ≤ 2 for all 9 steps (${steps} of 108 steps in total). Weighted boundedness is ${res.bounded} bps; anything above 5000 leans toward allow.`;
+    const escCount = res.probes.filter(p => {
+      const rawPts = pathOf(p);
+      return Math.max(...rawPts.map(([x, , z]) => Math.sqrt(x*x + z*z))) > 2.0 || p.e < 9;
+    }).length;
+    const inside = 12 - escCount;
+    if (lang === "tr"){
+      return res.allowed
+        ? `Yörünge analizi: ${inside} sonda güvenli silindir (|z| ≤ 2) içinde ➔ Karar: İZİN VERİLDİ (ALLOWED, ${res.conf} bps)`
+        : `Yörünge analizi: ${escCount} sonda güvenlik sınırını aşıyor (|z| > 2) ➔ Karar: GERİ ALINDI (REVERTED, ${res.conf} bps)`;
+    }
+    return res.allowed
+      ? `Trajectory analysis: ${inside} of 12 probes bounded inside |z| ≤ 2 ➔ Verdict: ALLOWED (${res.conf} bps)`
+      : `Trajectory analysis: ${escCount} of 12 probes breach boundary (|z| > 2) ➔ Verdict: REVERTED (${res.conf} bps)`;
   }
   function render(){
     const s = seedNow(), r = riskFP();
@@ -1314,12 +1342,15 @@ const sim = (() => {
     el("ppP").textContent = res.prob + " bps";
     el("vizCap").textContent = caption();
     drawSig();
-    if (prevSeed !== seedSel.value) rebuild3();
+    rebuild3();
     needs = true;
   }
   function clearPreset(){ $$("#presets button").forEach(b => b.setAttribute("aria-pressed", "false")); }
   function applyPreset(name){
-    const p = SCEN[name] || SCEN.default; inp.risk.value = p.risk; inp.thr.value = p.thr;
+    const p = SCEN[name] || SCEN.default;
+    if (p.seed && seedSel) seedSel.value = p.seed;
+    inp.risk.value = p.risk;
+    inp.thr.value = p.thr;
     $$("#presets button").forEach(b => b.setAttribute("aria-pressed", b.dataset.p === name ? "true" : "false"));
     render();
   }
