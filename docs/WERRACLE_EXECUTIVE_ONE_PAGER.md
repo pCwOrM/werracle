@@ -12,7 +12,7 @@ Today’s DeFi protocols and autonomous AI agents face an impossible dilemma:
 - **ZK-ML (Zero-Knowledge ML):** Takes 10 to 300 seconds to generate off-chain proofs and costs ~350,000 gas to verify. By the time the proof arrives on-chain, the flash-loan attack has already drained the pool.
 - **Off-Chain Oracles (Chainlink/API):** Centralized points of failure, vulnerable to latency arbitrage and front-running.
 
-**The Solution:** **Werracle** introduces the **WERR™ Sovereign Core**—a proprietary, patented breakthrough that packs an entire decision model into a **single 32-byte EVM storage slot**. It delivers sub-millisecond, same-transaction intra-block verdicts in **~19,400 gas** (99.8% cheaper than ZK-ML, cheaper than an ERC-20 transfer), requiring **zero off-chain servers, zero external keys, and zero telemetry**.
+**The Solution:** **Werracle** introduces the **WERR™ Sovereign Core**—a proprietary, patent-pending breakthrough that packs an entire decision model into a **single 32-byte EVM storage slot**. It delivers sub-millisecond, same-transaction intra-block verdicts in **~19,400 gas** (about 18× less gas than a ZK-ML verification, roughly the cost of an ERC-20 transfer), requiring **zero off-chain servers, zero external keys, and zero telemetry**.
 
 ---
 
@@ -26,7 +26,7 @@ Like Coca-Cola’s Merchandise 7X or an Intel microprocessor, Werracle does not 
 | **Flash-Loan Defense** | ❌ Impossible (Arrives late) | ❌ Proof too late | **✅ Atomic Revert in-flight** |
 | **On-Chain Footprint** | External Node RPC | Kilobytes of proving keys | **Single 32-Byte Slot** |
 | **Formal Verification** | None | Circuit only | **40 Lean 4 Theorems (0 Sorry)** |
-| **Privacy / Telemetry** | High leakage (API logs) | Intermediate states leaked | **100% Air-Gapped Zero-Leakage** |
+| **Privacy / Telemetry** | High leakage (API logs) | Intermediate states leaked | **No off-chain calls or API logs** |
 
 ---
 

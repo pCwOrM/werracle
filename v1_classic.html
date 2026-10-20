@@ -894,6 +894,17 @@
       }
       .footer-links { justify-content: center; }
     }
+  
+    /* narrow-phone fixes */
+    .sim-grid > *, .card { min-width: 0; }
+    code { overflow-wrap: anywhere; }
+    @media (max-width: 600px) { table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; } }
+    @media (max-width: 400px) {
+      .nav-actions { gap: 6px; }
+      .logo-badge { display: none; }
+      .card { padding: 14px; }
+      input[type=range] { min-height: 28px; }
+    }
   </style>
 </head>
 <body>

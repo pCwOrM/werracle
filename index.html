@@ -139,8 +139,9 @@ section{position:relative}
 }
 
 /* ---------- simulator ---------- */
-.sim-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:28px;margin-top:56px}
-@media (max-width:960px){.sim-grid{grid-template-columns:1fr}}
+.sim-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:28px;margin-top:56px}
+.sim-grid>*{min-width:0}
+@media (max-width:960px){.sim-grid{grid-template-columns:minmax(0,1fr)}}
 .panel{background:var(--ink-2);border:1px solid var(--line);border-radius:20px;padding:22px}
 .maps{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .maps figure{margin:0}
@@ -179,7 +180,7 @@ figcaption{font-size:13px;color:var(--mist);margin-top:8px}
 .live .dot{width:9px;height:9px;border-radius:50%;background:#6d6896}
 .switch{display:inline-flex;gap:8px;align-items:center;cursor:pointer}
 .note{font-size:14px;color:var(--mist);margin-top:14px}
-.note code,.lede code,p code{font-family:var(--f-mono);font-size:.9em;color:var(--nacre);background:var(--ink-3);padding:1px 6px;border-radius:5px}
+.note code,.lede code,p code{overflow-wrap:anywhere;font-family:var(--f-mono);font-size:.9em;color:var(--nacre);background:var(--ink-3);padding:1px 6px;border-radius:5px}
 @media (max-width:520px){.readout b{font-size:13px}.readout span{font-size:12px}.quads{grid-template-columns:1fr 1fr}.verdict .word{font-size:26px}}
 
 /* ---------- flash-loan ---------- */

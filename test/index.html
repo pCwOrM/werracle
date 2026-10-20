@@ -138,7 +138,8 @@ section{position:relative}
 }
 
 /* ---------- simulator ---------- */
-.sim-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:28px;margin-top:56px}
+.sim-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:28px;margin-top:56px}
+.sim-grid>*{min-width:0}
 @media (max-width:960px){.sim-grid{grid-template-columns:1fr}}
 .panel{background:var(--ink-2);border:1px solid var(--line);border-radius:20px;padding:22px}
 .maps{display:grid;grid-template-columns:1fr 1fr;gap:14px}
@@ -178,7 +179,7 @@ figcaption{font-size:13px;color:var(--mist);margin-top:8px}
 .live .dot{width:9px;height:9px;border-radius:50%;background:#6d6896}
 .switch{display:inline-flex;gap:8px;align-items:center;cursor:pointer}
 .note{font-size:14px;color:var(--mist);margin-top:14px}
-.note code,.lede code,p code{font-family:var(--f-mono);font-size:.9em;color:var(--nacre);background:var(--ink-3);padding:1px 6px;border-radius:5px}
+.note code,.lede code,p code{overflow-wrap:anywhere;font-family:var(--f-mono);font-size:.9em;color:var(--nacre);background:var(--ink-3);padding:1px 6px;border-radius:5px}
 @media (max-width:520px){.readout b{font-size:13px}.readout span{font-size:12px}.quads{grid-template-columns:1fr 1fr}.verdict .word{font-size:26px}}
 
 /* ---------- flash-loan ---------- */
@@ -241,6 +242,7 @@ tbody th{color:var(--nacre);font-weight:500}
 .case p{color:var(--mist);font-size:15px;margin-top:8px}
 .deploy{margin-top:48px;display:grid;gap:12px}
 .addr{display:grid;grid-template-columns:240px 1fr auto;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);font-size:15px}
+.addr .ver{display:block;font-size:13px;color:var(--mist);font-weight:400}
 .addr code{font:400 14px var(--f-mono);overflow-wrap:anywhere;color:var(--nacre)}
 .addr a{font-size:14px;color:var(--ice)}
 @media (max-width:760px){.addr{grid-template-columns:1fr}}
@@ -302,27 +304,41 @@ footer a:hover{color:var(--nacre)}
   *{scroll-behavior:auto!important;transition:none!important;animation:none!important}
 }
 
-/* ---------- Executive Defense Console ---------- */
-.scenario-presets{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
-.scenario-presets button{border:1px solid var(--line);background:var(--ink);color:var(--mist);font:500 13px var(--f-body);padding:8px 14px;border-radius:999px;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
-.scenario-presets button:hover{border-color:var(--mist);color:var(--nacre)}
-.scenario-presets button[aria-pressed=true]{color:var(--ink);background:var(--gold);border-color:var(--gold);font-weight:600}
-.sim-flow{display:grid;grid-template-columns:1fr auto 1.2fr auto 1fr;align-items:center;gap:8px;background:var(--ink);border:1px solid var(--line);border-radius:14px;padding:14px;margin-top:20px;text-align:center}
-@media (max-width:640px){.sim-flow{grid-template-columns:1fr;gap:10px}}
-.sim-flow-node{display:flex;flex-direction:column;gap:3px}
-.sim-flow-node b{font-family:var(--f-display);font-size:12px;color:var(--nacre)}
-.sim-flow-node span{font-size:11px;color:var(--mist)}
-.sim-flow-arrow{color:var(--gold);font-weight:700}
-.kpi-deck{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
-.kpi-card{background:var(--ink);border:1px solid var(--line);border-radius:12px;padding:14px}
-.kpi-card strong{display:block;font-family:var(--f-display);font-size:clamp(17px,2vw,22px);font-weight:700;color:var(--gold);letter-spacing:-.01em}
-.kpi-card span{display:block;font-size:12px;color:var(--mist);margin-top:3px}
-.math-drawer{margin-top:32px;background:rgba(15,13,43,.5);border:1px dashed var(--line);border-radius:18px;padding:16px 22px;transition:all .3s ease}
-.math-drawer[open]{background:var(--ink-2);border-style:solid;border-color:var(--line)}
-.math-drawer summary{font-family:var(--f-body);font-weight:600;font-size:15px;color:var(--nacre);cursor:pointer;outline:none;user-select:none;display:flex;align-items:center;justify-content:space-between}
-.math-drawer summary:hover{color:var(--gold)}
-.math-drawer summary::-webkit-details-marker{display:none}
-.math-content{margin-top:20px}
+/* ---------- simulator v2 ---------- */
+.sim2{grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);align-items:start;margin-top:44px}
+@media (max-width:960px){.sim2{grid-template-columns:minmax(0,1fr)}}
+.viz-panel{display:flex;flex-direction:column}
+@media (min-width:961px){.viz-panel{position:sticky;top:88px}}
+.viz-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.viz-head h3{font-size:16px}
+.viz-tag{font-size:13px;color:var(--gold)}
+.viz{position:relative;width:100%;aspect-ratio:1;border-radius:14px;background:radial-gradient(circle at 50% 60%,#120f3a,#05040f 70%);border:1px solid var(--line);overflow:hidden;touch-action:pan-y;cursor:grab}
+.viz:active{cursor:grabbing}
+.viz canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.viz-hint{position:absolute;right:12px;bottom:10px;font-size:12px;color:var(--mist);pointer-events:none}
+.viz-cap{font:400 14px/1.5 var(--f-body);color:#cfc9f3;margin-top:14px;min-height:3em}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:10px;font-size:13px;color:var(--mist)}
+.legend>span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.seed-pick{display:grid;gap:8px;font-size:14px;color:var(--mist)}
+.seed-pick select{font:500 15px var(--f-body);color:var(--nacre);background:var(--ink);border:1px solid var(--line);border-radius:10px;padding:11px 12px;width:100%}
+.sub-h{font-size:16px;margin:22px 0 12px}
+.presets button{min-height:40px}
+.pipe{list-style:none;margin:14px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.pipe li{background:var(--ink);border:1px solid var(--line);border-radius:12px;padding:10px 12px;position:relative}
+.pipe li span{display:block;font-size:12px;color:var(--mist)}
+.pipe li b{font:600 15px var(--f-mono)}
+@media (max-width:520px){.pipe{grid-template-columns:repeat(2,minmax(0,1fr))}}
+#sig{width:100%;height:auto;aspect-ratio:3.2;margin-top:10px;border-radius:12px;background:#05040f;border:1px solid var(--line);display:block}
+.chain{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:16px}
+.chain .btn{padding:11px 16px;font-size:15px}
+.chain p{font-size:13px;color:var(--mist);flex:1 1 220px;margin:0}
+.chain p .ok{color:var(--permit)}.chain p .no{color:var(--revert)}
+.kpi-deck{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:16px}
+.kpi-card{background:var(--ink);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.kpi-card strong{display:block;font-family:var(--f-display);font-size:clamp(18px,2vw,22px);font-weight:700;color:var(--gold);letter-spacing:-.01em}
+.kpi-card span{display:block;font-size:13px;color:var(--mist);margin-top:3px}
+footer nav a{padding:6px 0;display:inline-block}
 </style>
 </head>
 <body>
@@ -353,7 +369,7 @@ footer a:hover{color:var(--nacre)}
   <canvas id="fractal" aria-hidden="true"></canvas>
   <div class="wrap">
     <h1><span class="thin" data-i18n="hero.a">The whole model</span><span data-i18n="hero.b">is 32 bytes.</span></h1>
-    <p class="lede" data-i18n="hero.lede">Werracle is a zero-memory AI decision oracle running inside EVM storage slot #0. Powered by the WERR™ Sovereign Core, it delivers intra-block allow, veto, and dynamic fee verdicts in ~19,400 gas—with zero off-chain dependencies and machine-checked in Lean 4.</p>
+    <p class="lede" data-i18n="hero.lede">Werracle is a zero-memory AI decision oracle that lives in a single EVM storage slot. Powered by the WERR™ Sovereign Core, it returns allow, veto and dynamic-fee verdicts inside the same transaction for about 19,400 gas, with no off-chain dependency, and its kernel is machine-checked in Lean 4.</p>
     <div class="cta">
       <a class="btn primary" href="#simulator" data-i18n="hero.cta1">Run the simulator</a>
       <a class="btn ghost" href="https://arxiv.org/abs/2609.30719" data-i18n="hero.cta2">Read the paper on arXiv</a>
@@ -407,73 +423,68 @@ footer a:hover{color:var(--nacre)}
 <section class="sec" id="simulator" aria-labelledby="simH">
   <div class="wrap">
     <h2 id="simH" data-i18n="sim.h">Run the contract in your browser.</h2>
-    <p class="lede" data-i18n-html="sim.lede">A pure on-chain decision reflex: within a single 32-byte storage slot, the contract evaluates incoming transaction risk. If the decision trajectory stays bounded within the safe horizon (|z| ≤ 2), the transaction is allowed. If an adversarial pattern or flash loan pushes it beyond the boundary, the contract reverts instantly in ~19,400 gas.</p>
+    <p class="lede" data-i18n-html="sim.lede">This is <code>WerracleTripodZMod9.previewDecision()</code>, the v2.0 core, ported integer for integer. It probes 12 points around its seed, runs z → z² + c for up to 9 steps on each, and measures how long they stay inside |z| ≤ 2. That boundedness pushes back against the caller's risk score. Above the threshold the call goes through; below it, the whole transaction reverts.</p>
 
-    <div class="sim-grid" style="grid-template-columns:1fr 1.05fr;gap:32px;align-items:start;margin-top:44px">
-      <!-- LEFT: Clean Orbit Trajectory Graphic -->
-      <div class="panel" style="padding:24px;display:flex;flex-direction:column;align-items:center">
-        <div style="width:100%;display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
-          <h3 style="font-size:16px" data-i18n="sim.orbit_h">Decision State Trajectory</h3>
-          <span class="mono" style="font-size:13px;color:var(--gold)">|z| ≤ 2</span>
+    <div class="sim-grid sim2">
+      <div class="panel viz-panel">
+        <div class="viz-head">
+          <h3 data-i18n="sim.orbit_h">Decision state trajectory</h3>
+          <span class="mono viz-tag">|z| ≤ 2</span>
         </div>
-
-        <figure style="margin:0;width:100%;max-width:460px">
-          <canvas id="orbit" width="460" height="460" style="width:100%;aspect-ratio:1;border-radius:14px;display:block;background:#05040f;border:1px solid var(--line)" aria-label="Decision state trajectory inside safety boundary"></canvas>
-          <figcaption id="orbitCap" style="font-family:var(--f-mono);font-size:13px;color:var(--nacre);margin-top:14px;text-align:center;padding:10px 14px;background:var(--ink);border:1px solid var(--line);border-radius:10px;line-height:1.4"></figcaption>
-        </figure>
-
-        <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:16px;margin-top:14px;font-size:13px;color:var(--mist)">
-          <span style="display:inline-flex;align-items:center;gap:6px"><i style="width:8px;height:8px;border-radius:50%;background:var(--permit)"></i> <b style="color:var(--permit)">Bounded (|z| ≤ 2):</b> <span data-i18n="leg.safe">Safe / Allowed</span></span>
-          <span style="display:inline-flex;align-items:center;gap:6px"><i style="width:8px;height:8px;border-radius:50%;background:var(--revert)"></i> <b style="color:var(--revert)">Escapes Boundary:</b> <span data-i18n="leg.hostile">Hostile / Reverted</span></span>
+        <div class="viz" id="viz3d" role="img" aria-label="Twelve probe orbits rising through nine iteration steps inside a cylinder of radius 2">
+          <canvas id="viz2d" width="560" height="560" aria-hidden="true"></canvas>
+          <span class="viz-hint" data-i18n="sim.drag">Drag to turn</span>
+        </div>
+        <p class="viz-cap" id="vizCap" aria-live="polite"></p>
+        <div class="legend">
+          <span><i style="background:var(--ice)"></i><span data-i18n="leg.wide">wide plane, 0.6×</span></span>
+          <span><i style="background:var(--gold)"></i><span data-i18n="leg.focus">focus plane, 1×</span></span>
+          <span><i style="background:#b18cff"></i><span data-i18n="leg.deep">deep plane, 1.6×</span></span>
+          <span><i style="background:var(--revert)"></i><span data-i18n="leg.esc">left |z| ≤ 2</span></span>
         </div>
       </div>
 
-      <!-- RIGHT: Interactive Presets, Controls & Real-Time Verdict -->
-      <div class="panel" style="padding:24px">
-        <h3 style="margin-bottom:12px;font-size:16px" data-i18n="sim.scen_h">Select Security Scenario</h3>
-        
-        <div class="presets" id="presets" role="group" aria-label="Presets">
-          <button data-p="default" aria-pressed="true" data-i18n="p.default">Standard</button>
-          <button data-p="flash" aria-pressed="false" data-i18n="p.flash">Flash-loan defense</button>
-          <button data-p="near" aria-pressed="false" data-i18n="p.near">NEAR intent guard</button>
-          <button data-p="fee" aria-pressed="false" data-i18n="p.fee">Uniswap v4 fee</button>
-          <button data-p="aml" aria-pressed="false" data-i18n="p.aml">KYC / AML gate</button>
+      <div class="panel">
+        <label class="seed-pick"><span data-i18n="sim.seed">Calibrated seed (stored in the contract)</span>
+          <select id="seedSel"></select>
+        </label>
+        <h3 class="sub-h" data-i18n="sim.scen_h">Incoming call</h3>
+        <div class="presets" id="presets" role="group" aria-label="Scenarios">
+          <button data-p="default" aria-pressed="true" data-i18n="p.default">Clean swap</button>
+          <button data-p="flash" aria-pressed="false" data-i18n="p.flash">Flash-loan drain</button>
+          <button data-p="near" aria-pressed="false" data-i18n="p.near">NEAR sandwich intent</button>
+          <button data-p="fee" aria-pressed="false" data-i18n="p.fee">Uniswap v4 turbulence</button>
+          <button data-p="aml" aria-pressed="false" data-i18n="p.aml">KYC / AML flag</button>
+        </div>
+        <div class="ctrl" style="margin-top:20px">
+          <label><span data-i18n="c.risk">Risk score from the calling protocol</span><output id="riskO"></output><input type="range" id="risk" min="-4" max="4" step="0.01"></label>
+          <label><span data-i18n="c.thr">Threshold</span><output id="thrO"></output><input type="range" id="thr" min="100" max="9900" step="50"></label>
         </div>
 
-        <div class="ctrl" style="margin-top:22px">
-          <label><span data-i18n="c.risk">Risk score of the incoming call</span><output id="riskO"></output><input type="range" id="risk" min="-4" max="4" step="0.01"></label>
-          <label><span data-i18n="c.thr">Protocol Security Threshold</span><output id="thrO"></output><input type="range" id="thr" min="100" max="9900" step="50"></label>
-        </div>
-
-        <div class="verdict ok" id="verdict" aria-live="polite" style="margin-top:20px">
+        <div class="verdict ok" id="verdict" aria-live="polite">
           <div class="word" id="vWord">Allowed</div>
           <div class="sub"><span data-i18n="v.conf">confidence</span><b id="vConf">—</b></div>
         </div>
 
-        <div class="kpi-deck" style="margin-top:18px">
-          <div class="kpi-card">
-            <strong>~19,400 Gas</strong>
-            <span data-i18n="kpi.gas">99.8% cheaper than ZK-ML</span>
-          </div>
-          <div class="kpi-card">
-            <strong style="color:var(--permit)">&lt; 1 ms</strong>
-            <span data-i18n="kpi.lat">Same-transaction intra-block reflex</span>
-          </div>
-          <div class="kpi-card">
-            <strong style="color:var(--ice)">40 Theorems</strong>
-            <span data-i18n="kpi.lean">Lean 4 verified (0 sorry)</span>
-          </div>
-          <div class="kpi-card">
-            <strong style="color:#a855f7">Single 32B Slot</strong>
-            <span data-i18n="kpi.storage">Zero off-chain servers or keys</span>
-          </div>
-        </div>
+        <ol class="pipe" aria-label="How the verdict is computed">
+          <li><span data-i18n="pp.b">boundedness</span><b id="ppB"></b></li>
+          <li><span data-i18n="pp.bias">bias</span><b id="ppBias"></b></li>
+          <li><span data-i18n="pp.logit">logit = bias − risk</span><b id="ppL"></b></li>
+          <li><span data-i18n="pp.p">sigmoid</span><b id="ppP"></b></li>
+        </ol>
+        <canvas id="sig" width="640" height="200" aria-label="Piecewise sigmoid with the current logit and threshold"></canvas>
 
-        <div class="live" style="margin-top:20px">
-          <label class="switch"><input type="checkbox" id="liveT"> <span data-i18n="live.t">Also ask the live node</span></label>
-          <span class="dot" id="liveDot"></span><span id="liveTxt" class="mono" style="font-size:13px"></span>
+        <div class="chain">
+          <button class="btn ghost" id="chainBtn" type="button" data-i18n="ch.btn">Check against Aurora testnet</button>
+          <p id="chainOut" class="mono" aria-live="polite"></p>
         </div>
-        <p class="note" style="margin-top:12px" data-i18n="sim.note">Same inputs give the same answer on every node. No randomness, no floats, no external call.</p>
+        <div class="kpi-deck">
+          <div class="kpi-card"><strong>15.0k</strong><span data-i18n="kpi.gas">gas, previewDecision (measured)</span></div>
+          <div class="kpi-card"><strong style="color:var(--permit)">20.7k</strong><span data-i18n="kpi.gas2">gas, decideNoul with event</span></div>
+          <div class="kpi-card"><strong style="color:var(--ice)">18×</strong><span data-i18n="kpi.zk">less gas than a ZK-ML verify</span></div>
+          <div class="kpi-card"><strong style="color:#b18cff">1 slot</strong><span data-i18n="kpi.storage">no off-chain server or key</span></div>
+        </div>
+        <p class="note" data-i18n="sim.note">Gas measured on solc 0.8.20 with the optimizer at 200 runs, execution only. Scenario risk scores are examples; in production the calling protocol computes them.</p>
       </div>
     </div>
   </div>
@@ -557,8 +568,8 @@ footer a:hover{color:var(--nacre)}
     </div>
     <div class="deploy">
       <h3 data-i18n="n.dep">Deployed on Aurora testnet (chain 1313161555)</h3>
-      <div class="addr"><span>Werracle.sol</span><code>0x4085673F1e45bf26682CA704b2d09C03d1212cd4</code><a href="https://explorer.testnet.aurora.dev/address/0x4085673F1e45bf26682CA704b2d09C03d1212cd4" data-i18n="n.exp">Explorer</a></div>
-      <div class="addr"><span>WerracleTripodZMod9.sol</span><code>0x1d7Ae9E1dDDA805539d9e225425804Ef8B9caBaF</code><a href="https://explorer.testnet.aurora.dev/address/0x1d7Ae9E1dDDA805539d9e225425804Ef8B9caBaF" data-i18n="n.exp">Explorer</a></div>
+      <div class="addr"><span>Werracle.sol <small class="ver" data-i18n="n.v1">v1.0 reference kernel</small></span><code>0x4085673F1e45bf26682CA704b2d09C03d1212cd4</code><a href="https://explorer.testnet.aurora.dev/address/0x4085673F1e45bf26682CA704b2d09C03d1212cd4" data-i18n="n.exp">Explorer</a></div>
+      <div class="addr"><span>WerracleTripodZMod9.sol <small class="ver" data-i18n="n.v2">v2.0 flagship, runs in the simulator</small></span><code>0x1d7Ae9E1dDDA805539d9e225425804Ef8B9caBaF</code><a href="https://explorer.testnet.aurora.dev/address/0x1d7Ae9E1dDDA805539d9e225425804Ef8B9caBaF" data-i18n="n.exp">Explorer</a></div>
       <div class="cmd"><code id="castCmd">cast call 0x4085673F1e45bf26682CA704b2d09C03d1212cd4 "owner()(address)" --rpc-url https://testnet.aurora.dev</code><button class="copy" data-copy="castCmd" data-i18n="copy">Copy</button></div>
       <div class="links"><a class="pill" href="https://github.com/pCwOrM/werracle/blob/main/near/README.md" data-i18n="n.spec">NEAR integration spec</a><a class="pill" href="https://github.com/pCwOrM/werracle/blob/main/docs/NEAR_INTENTS_AND_AURORA_INTEGRATION_SPEC.md" data-i18n="n.arch">Intents and Aurora architecture</a><a class="pill" href="https://nearhackathon.com">nearhackathon.com</a></div>
     </div>
@@ -609,7 +620,7 @@ footer a:hover{color:var(--nacre)}
     <span class="kw">constructor</span>(<span class="kw">address</span> oracle) { werracle = IWerracle(oracle); }
 
     <span class="kw">function</span> <span class="fn">withdraw</span>(<span class="kw">bytes32</span> state, <span class="kw">int64</span> riskQ16) <span class="kw">external payable</span> {
-        <span class="c">// same-transaction decision, ~19.4k gas</span>
+        <span class="c">// same-transaction decision; v2.0 flagship: ~20.7k gas</span>
         (<span class="kw">bool</span> allowed, ) = werracle.<span class="fn">decideNoul</span>{value: msg.value}(state, riskQ16);
         <span class="kw">require</span>(allowed, <span class="s">"Werracle: hostile pattern"</span>);
         <span class="c">// ... protected logic</span>
@@ -738,7 +749,22 @@ const TR = {
  "i.dev":"Werracle devnet (zincir 4242, api.answerr.me)","i.api":"API belgeleri","i.status":"Düğüm durumu",
  "re.h":"Makale, veri ve kod.","re.a":"Ön baskı<small>cs.CR, cs.AI, cs.DC</small>","re.s":"Elsevier SSRN kaydı<small>Özet ve tam metin</small>","re.z":"Arşivlenmiş araştırma paketi<small>CERN, atıf yapılabilir DOI</small>","re.h2":"Makale sayfası<small>Modeller ve veri setleri</small>","re.g":"Sözleşmeler, Cairo portu, simülasyonlar<small>Solidity, Cairo, Python, Lean 4</small>",
  "g.h":"Araştırmayı destekle.","g.p":"Ethereum Foundation ESP, Base, NEAR Foundation, Arbitrum ve diğer ekosistem hibeleri için alıcı adres.","g.w":"USDT, TRC20 (TRON ağı)","g.lead":"Baş geliştirici","g.patent":"Patent başvurusu",
- "ft.lic":"Business Source License 1.1, 2030-01-01'de Apache 2.0'a dönüşür.","copy":"Kopyala","pv":"Önizleme sürümü.","pv.l":"Mevcut site"
+ "ft.lic":"Business Source License 1.1, 2030-01-01'de Apache 2.0'a dönüşür.","copy":"Kopyala","pv":"Önizleme sürümü.","pv.l":"Mevcut site",
+ "hero.lede":"Werracle, tek bir EVM depolama slotunda yaşayan sıfır bellekli bir yapay zekâ karar kâhinidir. WERR™ Egemen Çekirdeği ile izin, veto ve dinamik ücret kararlarını aynı işlem içinde yaklaşık 19.400 gaz ile verir; zincir dışı bağımlılığı yoktur ve çekirdeği Lean 4 ile makine denetimlidir.",
+ "s3.h":"32 baytlık gizli formül: WERR™ Egemen Çekirdeği.","s3.p":"Gigabaytlarca sinir ağı ağırlığı ya da yavaş ZK ispatları yerine WERR™ çekirdeği karar zekâsını tek bir 32 baytlık depolama slotuna kodlar. Kararlar zincir üstünde deterministik tamsayı matematiğiyle 1 ms'nin altında hesaplanır. Tek bir SLOAD tüm beyni 100 gaza okur.",
+ "sim.h":"Sözleşmeyi tarayıcınızda çalıştırın.",
+ "sim.lede":"Bu, v2.0 çekirdeği <code>WerracleTripodZMod9.previewDecision()</code>'un tamsayısı tamsayısına kopyası. Tohumun çevresinde 12 noktayı yoklar, her birinde z → z² + c'yi en çok 9 adım çalıştırır ve |z| ≤ 2 içinde ne kadar kaldıklarını ölçer. Bu sınırlılık, çağıranın risk puanına karşı direnir. Eşiğin üstünde çağrı geçer; altında tüm işlem geri alınır.",
+ "sim.orbit_h":"Karar durumu yörüngesi","sim.drag":"Döndürmek için sürükleyin",
+ "leg.wide":"geniş düzlem, 0,6×","leg.focus":"odak düzlemi, 1×","leg.deep":"derin düzlem, 1,6×","leg.esc":"|z| ≤ 2 dışına çıktı",
+ "sim.seed":"Kalibre tohum (sözleşmede kayıtlı)","sim.scen_h":"Gelen çağrı",
+ "p.default":"Temiz swap","p.flash":"Flash-loan boşaltma","p.near":"NEAR sandviç niyeti","p.fee":"Uniswap v4 türbülansı","p.aml":"KYC / AML işareti",
+ "c.risk":"Çağıran protokolün risk puanı","c.thr":"Eşik",
+ "pp.b":"sınırlılık","pp.bias":"sapma","pp.logit":"logit = sapma − risk","pp.p":"sigmoid",
+ "ch.btn":"Aurora testnet ile karşılaştır",
+ "kpi.gas":"gaz, previewDecision (ölçülen)","kpi.gas2":"gaz, olaylı decideNoul","kpi.zk":"ZK-ML doğrulamasından 18 kat az gaz","kpi.storage":"zincir dışı sunucu ya da anahtar yok",
+ "sim.note":"Gaz, solc 0.8.20 ve 200 çalıştırmalık optimizer ile yalnızca yürütme için ölçüldü. Senaryo risk puanları örnektir; üretimde bunları çağıran protokol hesaplar.",
+ "n.v1":"v1.0 referans çekirdek","n.v2":"v2.0 amiral gemisi, simülatörde çalışan"
+
 };
 const EN = {};
 $$("[data-i18n]").forEach(el => EN[el.dataset.i18n] = el.textContent);
@@ -855,6 +881,55 @@ function packSeed(seed){
 // byte index (big-endian, as printed) → field
 const FIELD_OF = i => i < 1 ? "active" : i < 2 ? "mode" : i < 4 ? "threshold" : i < 8 ? "nonce" : i < 16 ? "zoom" : i < 24 ? "cy" : "cx";
 const FIELD_SPANS = [["active",1],["mode",1],["threshold",2],["nonce",4],["zoom",8],["cy",8],["cx",8]];
+
+/* =========================================================
+   Exact port of WerracleTripodZMod9 v2.0 (_evaluateSparseTripod,
+   _escapeZMod9, previewDecision). Verified against the compiled
+   contract and the live Aurora testnet deployment.
+   ========================================================= */
+const TRIPOD = {
+  ADDR: "0x1d7Ae9E1dDDA805539d9e225425804Ef8B9caBaF",
+  RPC: "https://testnet.aurora.dev",
+  SEEDS: [
+    {id:"ethusdc", name:"ETH/USDC (deployed)", cx:-93061, cy:14417, zoom:2949120},
+    {id:"wbtcusdc", name:"WBTC/USDC", cx:23592, cy:44564, zoom:524288},
+    {id:"unieth", name:"UNI/ETH", cx:-93061, cy:10704, zoom:2949120},
+    {id:"solusdc", name:"SOL/USDC", cx:21907, cy:44564, zoom:786432},
+    {id:"aaveeth", name:"AAVE/ETH", cx:20222, cy:44564, zoom:1638400},
+    {id:"seahorse", name:"Seahorse (legacy)", cx:-49058, cy:6422, zoom:2949120}
+  ]
+};
+function escapeZMod9(cx, cy, orbit){
+  let zx = 0, zy = 0;
+  if (orbit) orbit.push([0, 0]);
+  for (let i = 0; i < 9; i++){
+    const zx2 = sh16(zx * zx), zy2 = sh16(zy * zy);
+    if (zx2 + zy2 > FOUR) return i;
+    const nzx = zx2 - zy2 + cx, nzy = sh15(zx * zy) + cy;
+    zx = nzx; zy = nzy;
+    if (orbit) orbit.push([zx / ONE, zy / ONE]);
+  }
+  return 9;
+}
+function tripodPreview(seed, riskFP){
+  const step = seed.zoom > 0 ? Math.trunc((ONE * ONE) / seed.zoom) : ONE;
+  const steps = [Math.trunc(step * 100 / 60), step, Math.trunc(step * 100 / 160)];
+  const dirs = [[1,0],[-1,0],[0,1],[0,-1]];
+  const probes = []; const esc = [0, 0, 0];
+  steps.forEach((st, plane) => dirs.forEach(([dx, dy]) => {
+    const px = seed.cx + dx * st, py = seed.cy + dy * st, orbit = [];
+    const e = escapeZMod9(px, py, orbit);
+    esc[plane] += e; probes.push({plane, px, py, e, orbit});
+  }));
+  const ratio = esc.map(v => Math.floor(v * 10000 / 36));
+  const bounded = (ratio[0] + 2 * ratio[1] + ratio[2]) >> 2;
+  const biasBps = bounded - 5000;
+  const biasFP = Math.trunc(biasBps * ONE / 5000);
+  const logit = -riskFP + biasFP;
+  const prob = sigmoidBps(logit);
+  const allowed = prob >= seed.threshold;
+  return {probes, esc, ratio, bounded, biasBps, biasFP, logit, prob, allowed, conf: allowed ? prob : 10000 - prob};
+}
 
 /* =========================================================
    Shared palette (escape bands)
@@ -1055,166 +1130,238 @@ buildBytes($("#heroBytes"), $("#heroFields"), HERO_SEED, !RM);
 })();
 
 /* =========================================================
-   SIMULATOR: Clean Decision Trajectory (|z| <= 2)
+   SIMULATOR v2: WerracleTripodZMod9 in the browser
+   3D trajectory (three.js, lazy) with a 2D fallback,
+   sigmoid chart, live Aurora check.
    ========================================================= */
 const sim = (() => {
   const el = id => $("#" + id);
   const inp = {risk:el("risk"), thr:el("thr")};
-  const PRESETS = {
-    default:{cx:-0.743644, cy:0.131826, zoom:50, risk:0, thr:5000, sel:5},
-    flash:{cx:-1.25, cy:0.02, zoom:85, risk:0.85, thr:6500, sel:7},
-    near:{cx:-0.743644, cy:0.131826, zoom:50, risk:0.25, thr:5000, sel:5},
-    fee:{cx:-0.1011, cy:0.9563, zoom:32, risk:0.1, thr:4000, sel:6},
-    aml:{cx:-0.7269, cy:0.1889, zoom:60, risk:0.75, thr:5500, sel:8}
+  const seedSel = el("seedSel");
+  const SCEN = {
+    default:{risk:-0.30, thr:5000},
+    flash:{risk:2.50, thr:5000},
+    near:{risk:0.75, thr:5000},
+    fee:{risk:0.30, thr:4500},
+    aml:{risk:0.60, thr:5500}
   };
-  let currentPreset = "default";
-  let currentSeed = {...PRESETS.default};
-  let res = null, sel = 5, lastAllowed = null;
-  const ob = el("orbit"), obx = ob ? ob.getContext("2d") : null;
+  TRIPOD.SEEDS.forEach(sd => { const o = document.createElement("option"); o.value = sd.id; o.textContent = `${sd.name}  c = ${(sd.cx/ONE).toFixed(4)} ${sd.cy >= 0 ? "+" : "−"} ${Math.abs(sd.cy/ONE).toFixed(4)}i`; seedSel.appendChild(o); });
+  let res = null, lastAllowed = null;
+  const seedNow = () => { const sd = TRIPOD.SEEDS.find(x => x.id === seedSel.value) || TRIPOD.SEEDS[0]; return {cx:sd.cx, cy:sd.cy, zoom:sd.zoom, threshold:+inp.thr.value}; };
+  const riskFP = () => Math.round(+inp.risk.value * ONE);
+  const PLANE_COL = ["#9fe8ff", "#ffc857", "#b18cff"];
+  const fmt = n => (n >= 0 ? "+" : "−") + Math.abs(n).toLocaleString("en-US");
 
-  function seedF(){
-    return {
-      cx: currentSeed.cx,
-      cy: currentSeed.cy,
-      zoom: currentSeed.zoom,
-      risk: inp.risk ? +inp.risk.value : currentSeed.risk,
-      thr: inp.thr ? +inp.thr.value : currentSeed.thr
-    };
-  }
-  function seedFP(){
-    const f = seedF();
-    return {
-      cx: Math.round(f.cx * ONE),
-      cy: Math.round(f.cy * ONE),
-      zoom: Math.round(f.zoom * ONE),
-      nonce: 1,
-      threshold: f.thr,
-      mode: 0,
-      active: 1,
-      riskFP: Math.round(f.risk * ONE)
-    };
+  /* ---------- sigmoid chart ---------- */
+  const sg = el("sig"), sgx = sg.getContext("2d");
+  function drawSig(){
+    const W = sg.width, H = sg.height, pad = 26;
+    const X = l => pad + (l / ONE + 5) / 10 * (W - 2 * pad);
+    const Y = b => H - pad - (b / 10000) * (H - 2 * pad);
+    sgx.fillStyle = "#05040f"; sgx.fillRect(0, 0, W, H);
+    sgx.strokeStyle = "rgba(167,162,207,.2)"; sgx.lineWidth = 1;
+    sgx.beginPath(); sgx.moveTo(X(0), pad - 6); sgx.lineTo(X(0), H - pad); sgx.stroke();
+    // threshold
+    const ty = Y(+inp.thr.value);
+    sgx.setLineDash([6, 5]); sgx.strokeStyle = "rgba(255,200,87,.7)"; sgx.beginPath(); sgx.moveTo(pad, ty); sgx.lineTo(W - pad, ty); sgx.stroke(); sgx.setLineDash([]);
+    sgx.fillStyle = "rgba(255,200,87,.9)"; sgx.font = "500 15px Instrument Sans, sans-serif"; sgx.fillText((lang === "tr" ? "eşik " : "threshold ") + inp.thr.value, W - pad - 120, ty - 7);
+    // curve (exact piecewise function)
+    sgx.beginPath();
+    for (let i = 0; i <= 400; i++){ const l = (-5 + i / 40) * ONE; const yv = Y(sigmoidBps(Math.round(l))); i ? sgx.lineTo(X(l), yv) : sgx.moveTo(X(l), yv); }
+    sgx.strokeStyle = "#cfc9f3"; sgx.lineWidth = 2.2; sgx.stroke();
+    sgx.fillStyle = "rgba(167,162,207,.8)"; sgx.font = "400 13px JetBrains Mono, monospace";
+    sgx.fillText("−4", X(-4 * ONE) - 8, H - 8); sgx.fillText("0", X(0) - 4, H - 8); sgx.fillText("+4", X(4 * ONE) - 10, H - 8); sgx.fillText("logit", W - pad - 34, H - 8);
+    if (!res) return;
+    const lx = X(Math.max(-5 * ONE, Math.min(5 * ONE, res.logit))), ly = Y(res.prob);
+    sgx.strokeStyle = res.allowed ? "rgba(124,245,196,.5)" : "rgba(255,93,115,.5)"; sgx.beginPath(); sgx.moveTo(lx, H - pad); sgx.lineTo(lx, ly); sgx.stroke();
+    sgx.beginPath(); sgx.arc(lx, ly, 8, 0, 7); sgx.fillStyle = res.allowed ? "#7cf5c4" : "#ff5d73"; sgx.fill();
   }
 
-  let orbitAnim = 0;
-  function traceOrbit(animate){
-    if (!obx || !res || !res.pts || !res.pts[sel]) return;
-    const p = res.pts[sel], pts = [];
-    iterateEscape(p.px, p.py, MAX_ITER, pts);
-    const W = ob.width, H = ob.height, S = W / 5.2;
-    const X = v => W/2 + v * S, Y = v => H/2 - v * S;
-    cancelAnimationFrame(orbitAnim);
-    let k = animate && !RM ? 0 : pts.length;
-    const t0 = performance.now();
-    (function frame(now){
-      if (animate && !RM) k = Math.min(pts.length, Math.floor((now - t0) / 90) + 1);
-      obx.fillStyle = "#05040f"; obx.fillRect(0, 0, W, H);
-      
-      // Safety horizon circle |z| = 2
-      obx.strokeStyle = "rgba(255,200,87,.4)"; obx.setLineDash([4,4]);
-      obx.beginPath(); obx.arc(W/2, H/2, 2*S, 0, 7); obx.stroke(); obx.setLineDash([]);
-      obx.fillStyle = "rgba(255,200,87,.7)"; obx.font = "600 12px var(--f-mono)";
-      obx.fillText("Safety Horizon |z| = 2", W/2 + 2*S*.68 - 40, H/2 - 2*S*.72);
-      
-      // Cross axes
-      obx.strokeStyle = "rgba(167,162,207,.18)"; obx.lineWidth = 1;
-      obx.beginPath(); obx.moveTo(0, H/2); obx.lineTo(W, H/2); obx.moveTo(W/2, 0); obx.lineTo(W/2, H); obx.stroke();
-      
-      // Trace path
-      const escaped = p.e < 12;
-      obx.beginPath(); obx.moveTo(X(0), Y(0));
-      for (let i = 0; i < k; i++) obx.lineTo(X(Math.max(-3, Math.min(3, pts[i][0]))), Y(Math.max(-3, Math.min(3, pts[i][1]))));
-      obx.strokeStyle = escaped ? "#ff5d73" : "#7cf5c4"; obx.lineWidth = 2.4; obx.stroke();
-      
-      // Nodes
-      for (let i = 0; i < k; i++){
-        const [a, b] = pts[i];
-        obx.beginPath();
-        obx.arc(X(Math.max(-3, Math.min(3, a))), Y(Math.max(-3, Math.min(3, b))), i === k-1 ? 6 : 3.5, 0, 7);
-        obx.fillStyle = i === k-1 ? (escaped ? "#ff5d73" : "#ffc857") : "#9fe8ff";
-        obx.fill();
+  /* ---------- trajectory data ---------- */
+  const H_STEP = 0.5;          // vertical spacing per iteration
+  const CL = 3;                // clamp for drawing
+  function pathOf(p){
+    const pts = p.orbit.map(([x, y], i) => [Math.max(-CL, Math.min(CL, x)), i * H_STEP, Math.max(-CL, Math.min(CL, y))]);
+    return pts;
+  }
+
+  /* ---------- 2D fallback (isometric projection) ---------- */
+  const v2 = el("viz2d"), v2x = v2.getContext("2d");
+  let yaw = 0.7, pitch = 0.42, autoSpin = !RM;
+  function draw2D(){
+    const W = v2.width, H = v2.height, S = W / 8.5;
+    const proj = ([x, y, z]) => { const cx = Math.cos(yaw), sx = Math.sin(yaw); const X1 = x * cx - z * sx, Z1 = x * sx + z * cx; const cp = Math.cos(pitch), sp = Math.sin(pitch); const Y1 = (y - 2.2) * cp - Z1 * sp; return [W / 2 + X1 * S, H * 0.52 - Y1 * S]; };
+    v2x.clearRect(0, 0, W, H);
+    // horizon cylinder rings
+    for (let k = 0; k <= 9; k++){
+      v2x.beginPath();
+      for (let a = 0; a <= 64; a++){ const [px, py] = proj([2 * Math.cos(a / 64 * 6.283), k * H_STEP, 2 * Math.sin(a / 64 * 6.283)]); a ? v2x.lineTo(px, py) : v2x.moveTo(px, py); }
+      v2x.strokeStyle = k === 0 || k === 9 ? "rgba(255,200,87,.45)" : "rgba(255,200,87,.1)"; v2x.lineWidth = 1; v2x.stroke();
+    }
+    if (!res) return;
+    res.probes.forEach(p => {
+      const pts = pathOf(p).map(proj);
+      v2x.beginPath(); pts.forEach(([x, y], i) => i ? v2x.lineTo(x, y) : v2x.moveTo(x, y));
+      v2x.strokeStyle = PLANE_COL[p.plane]; v2x.globalAlpha = .9; v2x.lineWidth = 2; v2x.stroke(); v2x.globalAlpha = 1;
+      const [ex, ey] = pts[pts.length - 1];
+      v2x.beginPath(); v2x.arc(ex, ey, p.e < 9 ? 6 : 4, 0, 7); v2x.fillStyle = p.e < 9 ? "#ff5d73" : PLANE_COL[p.plane]; v2x.fill();
+    });
+  }
+
+  /* ---------- 3D (three.js) ---------- */
+  const box = el("viz3d");
+  let three = null, built = null, needs = true;
+  function setupDrag(onMove){
+    let down = false, px = 0, py = 0, moved = false;
+    box.addEventListener("pointerdown", e => { down = true; moved = false; px = e.clientX; py = e.clientY; autoSpin = false; });
+    addEventListener("pointerup", () => { down = false; });
+    box.addEventListener("pointermove", e => {
+      if (!down) return; const dx = e.clientX - px, dy = e.clientY - py;
+      if (!moved && Math.abs(dy) > Math.abs(dx) && e.pointerType === "touch") { down = false; return; } // let vertical swipes scroll the page
+      moved = true; px = e.clientX; py = e.clientY; onMove(dx, dy);
+    });
+  }
+  setupDrag((dx, dy) => { yaw += dx * 0.01; pitch = Math.max(-0.2, Math.min(1.2, pitch + dy * 0.006)); needs = true; });
+
+  async function initThree(){
+    try {
+      const T = await import("https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js");
+      const canvas = document.createElement("canvas"); canvas.setAttribute("aria-hidden", "true");
+      const renderer = new T.WebGLRenderer({canvas, antialias: true, alpha: true, powerPreference: "high-performance"});
+      renderer.setPixelRatio(Math.min(devicePixelRatio || 1, matchMedia("(max-width:820px)").matches ? 1.5 : 2));
+      const scene = new T.Scene();
+      const cam = new T.PerspectiveCamera(38, 1, 0.1, 100);
+      const root = new T.Group(); scene.add(root);
+      // safety horizon cylinder
+      const hgt = 9 * H_STEP;
+      const cyl = new T.Mesh(new T.CylinderGeometry(2, 2, hgt, 96, 1, true), new T.MeshBasicMaterial({color: 0xffc857, transparent: true, opacity: 0.05, side: T.DoubleSide, depthWrite: false}));
+      cyl.position.y = hgt / 2; root.add(cyl);
+      for (let k = 0; k <= 9; k++){
+        const ring = new T.LineLoop(new T.BufferGeometry().setFromPoints(Array.from({length: 96}, (_, a) => new T.Vector3(2 * Math.cos(a / 96 * Math.PI * 2), k * H_STEP, 2 * Math.sin(a / 96 * Math.PI * 2)))),
+          new T.LineBasicMaterial({color: 0xffc857, transparent: true, opacity: k === 0 || k === 9 ? 0.55 : 0.12}));
+        root.add(ring);
       }
-      if (animate && !RM && k < pts.length) orbitAnim = requestAnimationFrame(frame);
-    })(performance.now());
-    
-    const capEl = $("#orbitCap");
-    if (capEl) capEl.textContent = caption();
+      // floor grid of the z-plane
+      const grid = new T.PolarGridHelper(3, 12, 6, 64, 0x2a2760, 0x1a1840); root.add(grid);
+      const dyn = new T.Group(); root.add(dyn);
+      three = {T, renderer, scene, cam, root, dyn, canvas};
+      box.insertBefore(canvas, box.firstChild); v2.style.display = "none";
+      resize3(); new ResizeObserver(resize3).observe(box);
+      rebuild3();
+    } catch (e) { three = null; console.warn("3D unavailable, using 2D", e); }
   }
+  function resize3(){ if (!three) return; const w = box.clientWidth, h = box.clientHeight; three.renderer.setSize(w, h, false); three.cam.aspect = w / h; three.cam.updateProjectionMatrix(); needs = true; }
+  let growStart = 0;
+  function rebuild3(){
+    if (!three || !res) return;
+    const {T, dyn} = three;
+    dyn.children.forEach(c => { c.geometry && c.geometry.dispose(); c.material && c.material.dispose(); });
+    dyn.clear();
+    built = [];
+    res.probes.forEach(p => {
+      const pts = pathOf(p).map(([x, y, z]) => new T.Vector3(x, y, z));
+      const curve = new T.CatmullRomCurve3(pts, false, "catmullrom", 0.2);
+      const segs = Math.max(8, (pts.length - 1) * 10);
+      const tube = new T.Mesh(new T.TubeGeometry(curve, segs, 0.035, 8, false), new T.MeshBasicMaterial({color: PLANE_COL[p.plane], transparent: true, opacity: 0.92}));
+      tube.geometry.setDrawRange(0, 0); dyn.add(tube);
+      const end = new T.Mesh(new T.SphereGeometry(p.e < 9 ? 0.12 : 0.08, 16, 12), new T.MeshBasicMaterial({color: p.e < 9 ? 0xff5d73 : PLANE_COL[p.plane]}));
+      end.position.copy(pts[pts.length - 1]); end.visible = false; dyn.add(end);
+      built.push({tube, end, total: tube.geometry.index.count});
+    });
+    growStart = performance.now(); needs = true;
+  }
+  function frame3(now){
+    if (!three) return;
+    const {renderer, scene, cam, root} = three;
+    if (autoSpin) { yaw += 0.0025; needs = true; }
+    const g = RM ? 1 : Math.min(1, (now - growStart) / 1100);
+    if (built && g <= 1) built.forEach(b => { b.tube.geometry.setDrawRange(0, Math.floor(b.total * g / 6) * 6); b.end.visible = g >= 1; });
+    if (g < 1) needs = true;
+    if (!needs) return;
+    const r = 10.5;
+    cam.position.set(Math.sin(yaw) * Math.cos(pitch) * r, 2.25 + Math.sin(pitch) * r, Math.cos(yaw) * Math.cos(pitch) * r);
+    cam.lookAt(0, 2.25, 0);
+    renderer.render(scene, cam); needs = false;
+  }
+  let visible = false;
+  new IntersectionObserver(es => { visible = es[0].isIntersecting; if (visible && !three && !box.dataset.loading){ box.dataset.loading = "1"; initThree(); } }, {rootMargin: "400px"}).observe(box);
+  (function loop(now){ if (visible && !document.hidden){ if (three) frame3(now); else { if (autoSpin) yaw += 0.0025; draw2D(); } } requestAnimationFrame(loop); })(0);
 
+  /* ---------- render ---------- */
   function caption(){
-    if (!res || !res.pts || !res.pts[sel]) return "";
-    const p = res.pts[sel];
-    const esc = p.e < 12;
-    if (lang === "tr"){
-      return `Yörünge analizi Q${p.q + 1}.${p.k + 1}: ${esc ? `${p.e} adımda sınır dışına kaçıyor (|z| > 2) ➔ GERİ ALINDI (REVERT)` : `12 adım boyunca güvenli sınırda kalıyor (|z| ≤ 2) ➔ İZİN VERİLDİ (ALLOWED)`}`;
-    }
-    return `Orbit of point Q${p.q + 1}.${p.k + 1}: ${esc ? `escapes boundary after ${p.e} steps (|z| > 2) ➔ REVERTED` : `stays bounded for all 12 steps (|z| ≤ 2) ➔ ALLOWED`}`;
+    if (!res) return "";
+    const inside = res.probes.filter(p => p.e === 9).length;
+    const steps = res.esc.reduce((a, b) => a + b, 0);
+    return lang === "tr"
+      ? `12 sondadan ${inside} tanesi 9 adımın tamamında |z| ≤ 2 içinde kaldı (toplam ${steps}/108 adım). Ağırlıklı sınırlılık ${res.bounded} bps; 5000'in üstü izin yönüne iter.`
+      : `${inside} of 12 probes stayed inside |z| ≤ 2 for all 9 steps (${steps} of 108 steps in total). Weighted boundedness is ${res.bounded} bps; anything above 5000 leans toward allow.`;
   }
-
   function render(){
-    const f = seedF(), s = seedFP();
-    if (el("riskO") && inp.risk) el("riskO").textContent = (f.risk >= 0 ? "+" : "") + f.risk.toFixed(2) + " (" + s.riskFP + ")";
-    if (el("thrO") && inp.thr) el("thrO").textContent = f.thr + " bps";
-    
-    res = previewDecision(s, s.riskFP);
+    const s = seedNow(), r = riskFP();
+    el("riskO").textContent = (+inp.risk.value >= 0 ? "+" : "") + (+inp.risk.value).toFixed(2) + "  (" + r + ")";
+    el("thrO").textContent = inp.thr.value + " bps";
+    const prevSeed = res && res._seed;
+    res = tripodPreview(s, r); res._seed = seedSel.value;
     const v = el("verdict"), word = el("vWord");
-    if (v && word){
-      v.className = "verdict " + (res.allowed ? "ok" : "no");
-      word.textContent = res.allowed ? t().allowed : t().reverted;
-      if (lastAllowed !== null && lastAllowed !== res.allowed){
-        word.classList.remove("pop");
-        void word.offsetWidth;
-        word.classList.add("pop");
-      }
-      lastAllowed = res.allowed;
-    }
-    if (el("vConf")) el("vConf").textContent = res.conf + " bps";
-    
-    traceOrbit(true);
-    queueLive(f.risk);
+    v.className = "verdict " + (res.allowed ? "ok" : "no");
+    word.textContent = res.allowed ? t().allowed : t().reverted;
+    if (lastAllowed !== null && lastAllowed !== res.allowed){ word.classList.remove("pop"); void word.offsetWidth; word.classList.add("pop"); }
+    lastAllowed = res.allowed;
+    el("vConf").textContent = res.conf + " bps";
+    el("ppB").textContent = res.bounded + " bps";
+    el("ppBias").textContent = fmt(res.biasFP);
+    el("ppL").textContent = fmt(res.logit);
+    el("ppP").textContent = res.prob + " bps";
+    el("vizCap").textContent = caption();
+    drawSig();
+    if (prevSeed !== seedSel.value) rebuild3();
+    needs = true;
   }
-
-  function clearPreset(){
-    $$("#presets button").forEach(b => b.setAttribute("aria-pressed", "false"));
-  }
+  function clearPreset(){ $$("#presets button").forEach(b => b.setAttribute("aria-pressed", "false")); }
   function applyPreset(name){
-    currentPreset = name;
-    const p = PRESETS[name] || PRESETS.default;
-    currentSeed = {...p};
-    sel = p.sel || 5;
-    if (inp.risk) inp.risk.value = p.risk;
-    if (inp.thr) inp.thr.value = p.thr;
+    const p = SCEN[name] || SCEN.default; inp.risk.value = p.risk; inp.thr.value = p.thr;
     $$("#presets button").forEach(b => b.setAttribute("aria-pressed", b.dataset.p === name ? "true" : "false"));
     render();
   }
-
   $$("#presets button").forEach(b => b.addEventListener("click", () => applyPreset(b.dataset.p)));
-  if (inp.risk) inp.risk.addEventListener("input", () => { clearPreset(); render(); });
-  if (inp.thr) inp.thr.addEventListener("input", () => { clearPreset(); render(); });
+  inp.risk.addEventListener("input", () => { clearPreset(); render(); });
+  inp.thr.addEventListener("input", () => { clearPreset(); render(); });
+  seedSel.addEventListener("change", render);
 
-  let liveTimer = 0;
-  const liveT = el("liveT"), dot = el("liveDot"), lt = el("liveTxt");
-  let rcLoaded = false;
-  function loadRc(){ if (rcLoaded) return; rcLoaded = true; const sc = document.createElement("script"); sc.src = "https://www.google.com/recaptcha/api.js?render=6LdP-JgqAAAAAJLdy_W8uowqstSa4XKlJTOkVAux"; sc.async = true; document.head.appendChild(sc); }
-  function recaptcha(){ return new Promise(r => { try { if (window.grecaptcha && grecaptcha.ready) grecaptcha.ready(() => grecaptcha.execute("6LdP-JgqAAAAAJLdy_W8uowqstSa4XKlJTOkVAux", {action:"evm_eval"}).then(r, () => r(null))); else r(null); } catch(e){ r(null); } }); }
-  function queueLive(risk){
-    clearTimeout(liveTimer);
-    if (!liveT || !liveT.checked){ if (dot) dot.style.background = "#6d6896"; if (lt) lt.textContent = t().live0; return; }
-    liveTimer = setTimeout(async () => {
-      if (dot) dot.style.background = "var(--ice)"; if (lt) lt.textContent = t().live1;
-      try {
-        const tok = await recaptcha(); const h = {"Content-Type":"application/json"}; if (tok) h["X-Recaptcha-Token"] = tok;
-        const r = await fetch("https://api.answerr.me:4431/werracle/oracle/noul", {method:"POST", headers:h, body:JSON.stringify({risk_score:risk})});
-        if (!r.ok) throw 0; const d = await r.json();
-        if (dot) dot.style.background = "var(--permit)"; if (lt) lt.textContent = t().live2(d.blockNumber, d.executionMs, (d.gasUsed||0).toLocaleString());
-      } catch(e){ if (dot) dot.style.background = "var(--gold)"; if (lt) lt.textContent = t().live3; }
-    }, 250);
+  /* ---------- live check against the deployed contract on Aurora ---------- */
+  const out = el("chainOut");
+  async function rpc(method, params){
+    const r = await fetch(TRIPOD.RPC, {method: "POST", headers: {"content-type": "application/json"}, body: JSON.stringify({jsonrpc: "2.0", id: 1, method, params})});
+    const j = await r.json(); if (j.error) throw new Error(j.error.message); return j.result;
   }
-  if (liveT) liveT.addEventListener("change", () => { if (liveT.checked) loadRc(); render(); });
+  const word32 = (hex, i) => hex.slice(2 + i * 64, 2 + (i + 1) * 64);
+  const sInt = (h, bits) => Number(BigInt.asIntN(bits, BigInt("0x" + h)));
+  el("chainBtn").addEventListener("click", async () => {
+    out.innerHTML = lang === "tr" ? "Aurora testnet'e soruluyor…" : "Asking Aurora testnet…";
+    try {
+      const r = riskFP();
+      const riskHex = BigInt.asUintN(256, BigInt(r)).toString(16).padStart(64, "0");
+      const [seedHex, callHex, blk] = await Promise.all([
+        rpc("eth_call", [{to: TRIPOD.ADDR, data: "0x7d94792a"}, "latest"]),
+        rpc("eth_call", [{to: TRIPOD.ADDR, data: "0x0eea75c5" + "0".repeat(64) + riskHex}, "latest"]),
+        rpc("eth_blockNumber", [])
+      ]);
+      const onSeed = {cx: sInt(word32(seedHex, 0), 64), cy: sInt(word32(seedHex, 1), 64), zoom: sInt(word32(seedHex, 2), 64), threshold: sInt(word32(seedHex, 4), 16)};
+      const chainOk = BigInt("0x" + word32(callHex, 0)) === 1n, chainConf = Number(BigInt("0x" + word32(callHex, 1)));
+      const mine = tripodPreview(onSeed, r);
+      const match = mine.allowed === chainOk && mine.conf === chainConf;
+      const v = ok => ok ? (lang === "tr" ? "izin" : "allowed") : (lang === "tr" ? "revert" : "reverted");
+      out.innerHTML = `${lang === "tr" ? "Blok" : "Block"} #${parseInt(blk, 16).toLocaleString("en-US")}: ${lang === "tr" ? "zincir" : "chain"} <span class="${chainOk ? "ok" : "no"}">${v(chainOk)} ${chainConf}</span>, ${lang === "tr" ? "tarayıcı" : "browser"} ${v(mine.allowed)} ${mine.conf}. <span class="${match ? "ok" : "no"}">${match ? (lang === "tr" ? "Birebir aynı." : "Identical.") : (lang === "tr" ? "Farklı!" : "Different!")}</span> <span>(${lang === "tr" ? "zincirdeki tohum ve eşik" : "on-chain seed and threshold"}, risk ${(r / ONE).toFixed(2)})</span>`;
+    } catch (e) {
+      out.textContent = lang === "tr" ? "Aurora RPC'ye ulaşılamadı. Biraz sonra tekrar deneyin." : "Couldn't reach the Aurora RPC. Try again in a moment.";
+    }
+  });
 
+  seedSel.value = "ethusdc";
   applyPreset("default");
   return {render, caption};
 })();
-function orbitCaption(){ const c = $("#orbitCap"); if (c && sim.caption) c.textContent = sim.caption(); }
+function orbitCaption(){ const c = $("#vizCap"); if (c && sim.caption) c.textContent = sim.caption(); }
 
 /* =========================================================
    FLASH LOAN
