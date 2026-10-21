@@ -10,7 +10,7 @@ What if an entire AI model could fit inside a single 32-byte storage slot on Eth
 
 No stored weights, no off-chain provers, no 300s ZK-ML latency.
 
-Introducing Werracle v2.0: Sub-millisecond on-chain AI decisions in ~19,400 gas (< .0001).
+Introducing Werracle v2.0: Sub-millisecond on-chain AI decisions in ~20.7k gas (< \.0001).
 
 🧵👇
 
@@ -68,7 +68,7 @@ By Volkan Dağlı, Dr. Zerrin Dağlı, Dağhan Dağlı (ITOUCH Systems R&D).
 
 Priority Patent: TR 2026/016285
 
-🇹🇷 Yapay zeka modelinin tamamını tek bir 32-baytlık EVM depolama yuvasına sığdırdık. ~19.4k gaz ile anında zincir içi karar!
+🇹🇷 Yapay zeka modelinin tamamını tek bir 32-baytlık EVM depolama yuvasına sığdırdık. ~20.7k gaz ile anında zincir içi karar!
 
 #Ethereum #NEAR #DeFi #Web3 #AI #Lean4
 
@@ -81,7 +81,7 @@ Tüm bir Yapay Zeka modeli Ethereum'da tek bir 32-baytlık depolama alanına (by
 
 Ağırlık yok, harici kanıtlayıcı yok, 300 saniyelik ZK-ML gecikmesi yok!
 
-Werracle v2.0 yayında: ~19.400 gaz (< .0001) ile mikrosaniyelik zincir içi yapay zeka kararları.
+Werracle v2.0 yayında: ~20.7k gaz (< \.0001) ile mikrosaniyelik zincir içi yapay zeka kararları.
 
 🧵👇
 
@@ -92,7 +92,7 @@ Nasıl çalışıyor?
 
 Milyarlarca parametreyi EVM'e yüklemek yerine Werracle, Mandelbrot kaçış dinamiğinden (z_{n+1} = z_n^2 + c) sürekli karar sınırları üretir.
 
-bytes32 içindeki 24-baytlık tohum (cx, cy, zoom), saf Solidity bayt kodunda sabit noktalı Q16.16 mikro ızgarayı açar.
+bytes32 içindeki 24-baytlık tohum (cx, cy, zoom), saf Solidity kodunda sabit noktalı Q16.16 mikro ızgarayı açar.
 
 ---
 
