@@ -230,7 +230,7 @@ body::before {{
 
         <div class="grid">
             <div class="card c-cyan">
-                <div class="card-header">⚡ ~19,400 Gas / Reflex</div>
+                <div class="card-header">⚡ ~20.7k Gas / Decision</div>
                 <div class="card-desc">Sub-millisecond intra-block AI decisions (< $0.0001) in pure EVM bytecode.</div>
             </div>
             <div class="card c-green">
@@ -243,7 +243,7 @@ body::before {{
             </div>
             <div class="card c-purple">
                 <div class="card-header">📜 40 Lean 4 Proofs</div>
-                <div class="card-desc">100% formally verified bytecode with 0 sorry and 1,000 sealed test vectors.</div>
+                <div class="card-desc">Formal math & escape dynamics certified with 0 sorry and 1,000 sealed test vectors.</div>
             </div>
         </div>
     </div>
