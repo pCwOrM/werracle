@@ -9,7 +9,7 @@
 <meta name="description" content="Werracle is an on-chain AI decision oracle for the EVM. No stored weights: decisions are derived from one point on the Mandelbrot boundary, packed into a single 32-byte storage slot. ~20k gas, same-transaction, 40 Lean 4 theorems.">
 <meta name="theme-color" content="#07061a">
 <meta property="og:title" content="Werracle — the whole model is 32 bytes">
-<meta property="og:description" content="On-chain AI decisions inside one EVM storage slot. ~20k gas, same transaction, machine-checked in Lean 4.">
+<meta property="og:description" content="On-chain AI decisions inside one EVM storage slot. ~20k execution gas, same transaction, machine-checked in Lean 4.">
 <meta property="og:image" content="https://werracle.io/assets/og.jpg">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
@@ -442,7 +442,7 @@ footer nav a{padding:6px 0;display:inline-block}
     </div>
 
     <div class="facts">
-      <div><strong>~20k</strong><span data-i18n="fact.gas">gas per decision</span></div>
+      <div><strong>~20k</strong><span data-i18n="fact.gas">execution gas per decision</span></div>
       <div><strong>1,000 / 1,000</strong><span data-i18n="fact.tests">sealed tests passed</span></div>
       <div><strong>40</strong><span data-i18n="fact.lean">Lean 4 theorems, 0 sorry</span></div>
       <div><strong>Aurora</strong><span data-i18n="fact.aurora">live on testnet</span></div>
@@ -544,7 +544,7 @@ footer nav a{padding:6px 0;display:inline-block}
         </div>
         <div class="kpi-deck">
           <div class="kpi-card"><strong>15.0k</strong><span data-i18n="kpi.gas">gas, previewDecision (measured)</span></div>
-          <div class="kpi-card"><strong style="color:var(--permit)">20.7k</strong><span data-i18n="kpi.gas2">gas, decideNoul with event</span></div>
+          <div class="kpi-card"><strong style="color:var(--permit)">20.7k</strong><span data-i18n="kpi.gas2">execution gas, decideNoul with event</span></div>
           <div class="kpi-card"><strong style="color:var(--ice)">18×</strong><span data-i18n="kpi.zk">less gas than a ZK-ML verify</span></div>
           <div class="kpi-card"><strong style="color:#b18cff">1 slot</strong><span data-i18n="kpi.storage">no off-chain server or key</span></div>
         </div>
@@ -757,7 +757,7 @@ const TR = {
  "hero.lede":"Werracle, EVM'in içinde çalışan bir yapay zekâ karar kâhinidir. Hiç ağırlık saklamaz. Ağırlıkları Mandelbrot sınırındaki tek bir noktadan türetir; izin ver, yönlendir ya da puanla kararını yaklaşık 20k gaz ile, soruyu soran işlemin içinde verir.",
  "hero.cta1":"Simülatörü çalıştır","hero.cta2":"Makaleyi arXiv'de oku",
  "hero.slot":"Bu depolama kelimesi modelin ta kendisi. Bir bayta gelin.","hero.bg":"arka plan: tohumun canlı görüntüsü",
- "fact.gas":"karar başına gaz","fact.tests":"mühürlü test geçti","fact.lean":"Lean 4 teoremi, 0 sorry","fact.aurora":"testnet'te canlı",
+ "fact.gas":"karar başına execution gas","fact.tests":"mühürlü test geçti","fact.lean":"Lean 4 teoremi, 0 sorry","fact.aurora":"testnet'te canlı",
  "s1.u":"ağırlık","s1.h":"Bir sinir ağı bloğa sığmaz.","s1.p":"Milyonlarca kayan noktalı ağırlık, tek bir çıkarım için 15 milyon gazı aşar. Bu yüzden bugünün yapay zekâsı zincir dışında kalır ve sözleşmeler bir blok geç gelen imzalı bir mesaja güvenir.",
  "s2.u":"ispat","s2.h":"ZK-ML kanıtlar ama yavaştır.","s2.p":"Model yine zincir dışında çalışır. İspatlayıcı 10 ila 300 saniye harcar, zincir doğrulama için yaklaşık 350.000 gaz öder. Doğrudur, ama asla saldırının kendi işleminin içinde değil.",
  "s3.u":"bayt","s3.h":"Werracle model değil, bir koordinat saklar.","s3.p":"Ağırlıklar z → z² + c kaçış dinamiğinden, Q16.16 tamsayılarla, ihtiyaç anında yeniden hesaplanır. Tek bir SLOAD tüm beyni 100 gaza okur. Zincirden hiçbir şey çıkmaz.",
@@ -824,7 +824,7 @@ const TR = {
  "c.risk":"Çağıran protokolün risk puanı","c.thr":"Eşik",
  "pp.b":"sınırlılık","pp.bias":"sapma","pp.logit":"logit = sapma − risk","pp.p":"sigmoid",
  "ch.btn":"Aurora testnet ile karşılaştır",
- "kpi.gas":"gaz, previewDecision (ölçülen)","kpi.gas2":"gaz, olaylı decideNoul","kpi.zk":"ZK-ML doğrulamasından 18 kat az gaz","kpi.storage":"zincir dışı sunucu ya da anahtar yok",
+ "kpi.gas":"gaz, previewDecision (ölçülen)","kpi.gas2":"execution gas, olaylı decideNoul","kpi.zk":"ZK-ML doğrulamasından 18 kat az gaz","kpi.storage":"zincir dışı sunucu ya da anahtar yok",
  "sim.note":"Gaz, solc 0.8.20 ve 200 çalıştırmalık optimizer ile yalnızca yürütme için ölçüldü. Senaryo risk puanları örnektir; üretimde bunları çağıran protokol hesaplar.",
  "leg.level":"olasılık seviyesi","leg.thr":"eşik","n.v1":"v1.0 referans çekirdek","n.v2":"v2.0 amiral gemisi, simülatörde çalışan"
 
