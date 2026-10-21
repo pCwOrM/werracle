@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://werracle.io/</loc><lastmod>2026-10-21</lastmod></url>
-  <url><loc>https://werracle.io/apidocs.html</loc></url>
-  <url><loc>https://werracle.io/Werracle_EVM_AI_Oracle_Research_Paper.html</loc></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://werracle.io/</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://werracle.io/assets/og.jpg</image:loc>
+      <image:title>Werracle On-Chain AI Decision Oracle</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://werracle.io/assets/werracle_logo_oracle.svg</image:loc>
+      <image:title>Werracle Protocol Emblem</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://werracle.io/Werracle_EVM_AI_Oracle_Research_Paper.html</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://werracle.io/apidocs.html</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>

@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
 Disallow: /test/
+Disallow: /tests/
+Disallow: /contracts/
+Disallow: /cairo/
+
 Sitemap: https://werracle.io/sitemap.xml
