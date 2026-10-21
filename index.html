@@ -6,10 +6,10 @@
 <title>Werracle — the whole model is 32 bytes</title>
 <link rel="canonical" href="https://werracle.io/">
 <meta property="og:url" content="https://werracle.io/">
-<meta name="description" content="Werracle is an on-chain AI decision oracle for the EVM. No stored weights: decisions are derived from one point on the Mandelbrot boundary, packed into a single 32-byte storage slot. ~19.4k gas, same-transaction, 40 Lean 4 theorems.">
+<meta name="description" content="Werracle is an on-chain AI decision oracle for the EVM. No stored weights: decisions are derived from one point on the Mandelbrot boundary, packed into a single 32-byte storage slot. ~20k gas, same-transaction, 40 Lean 4 theorems.">
 <meta name="theme-color" content="#07061a">
 <meta property="og:title" content="Werracle — the whole model is 32 bytes">
-<meta property="og:description" content="On-chain AI decisions inside one EVM storage slot. ~19.4k gas, same transaction, machine-checked in Lean 4.">
+<meta property="og:description" content="On-chain AI decisions inside one EVM storage slot. ~20k gas, same transaction, machine-checked in Lean 4.">
 <meta property="og:image" content="https://werracle.io/assets/og.jpg">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
@@ -430,7 +430,7 @@ footer nav a{padding:6px 0;display:inline-block}
   <canvas id="fractal" aria-hidden="true"></canvas>
   <div class="wrap">
     <h1><span class="thin" data-i18n="hero.a">The whole model</span><span data-i18n="hero.b">is 32 bytes.</span></h1>
-    <p class="lede" data-i18n="hero.lede">Werracle is a zero-memory AI decision oracle that lives in a single EVM storage slot. Powered by the WERR™ Sovereign Core, it returns allow, veto and dynamic-fee verdicts inside the same transaction for about 19,400 gas, with no off-chain dependency, and its kernel is machine-checked in Lean 4.</p>
+    <p class="lede" data-i18n="hero.lede">Werracle is a zero-memory AI decision oracle that lives in a single EVM storage slot. Powered by the WERR™ Sovereign Core, it returns allow, veto and dynamic-fee verdicts inside the same transaction for about 20k gas, with no off-chain dependency, and its kernel is machine-checked in Lean 4.</p>
     <div class="cta">
       <a class="btn primary" href="#simulator" data-i18n="hero.cta1">Run the simulator</a>
       <a class="btn ghost" href="https://arxiv.org/abs/2609.30719" data-i18n="hero.cta2">Read the paper on arXiv</a>
@@ -444,7 +444,7 @@ footer nav a{padding:6px 0;display:inline-block}
     </div>
 
     <div class="facts">
-      <div><strong>~19,400</strong><span data-i18n="fact.gas">gas per decision</span></div>
+      <div><strong>~20k</strong><span data-i18n="fact.gas">gas per decision</span></div>
       <div><strong>1,000 / 1,000</strong><span data-i18n="fact.tests">sealed tests passed</span></div>
       <div><strong>40</strong><span data-i18n="fact.lean">Lean 4 theorems, 0 sorry</span></div>
       <div><strong>Aurora</strong><span data-i18n="fact.aurora">live on testnet</span></div>
@@ -581,7 +581,7 @@ footer nav a{padding:6px 0;display:inline-block}
         <div class="tx" id="tx">
           <div class="op" data-s="0"><span class="n">1</span><span data-i18n="f.op1">Borrow from lending pool</span><em id="opBorrow"></em></div>
           <div class="op" data-s="1"><span class="n">2</span><span data-i18n="f.op2">Swap to move the price</span><em id="opSlip"></em></div>
-          <div class="op guard" data-s="2"><span class="n">3</span><span data-i18n="f.op3">Protocol asks Werracle</span><em>~19.4k gas</em></div>
+          <div class="op guard" data-s="2"><span class="n">3</span><span data-i18n="f.op3">Protocol asks Werracle</span><em>~20k gas</em></div>
           <div class="op okay" data-s="3"><span class="n">4</span><span data-i18n="f.op4">Liquidate, swap back, repay</span><em></em></div>
         </div>
         <div class="outcome" id="outcome"></div>
@@ -599,7 +599,7 @@ footer nav a{padding:6px 0;display:inline-block}
     <div class="bench" id="benchBars">
       <div class="brow t"><div class="who" data-i18n-html="b.t">Neural net on EVM<small>exceeds a block</small></div><div class="track"><i data-v="15000000"></i><b>&gt;15,000,000</b></div></div>
       <div class="brow z"><div class="who" data-i18n-html="b.z">ZK-ML verifier<small>plus 10–300 s off-chain</small></div><div class="track"><i data-v="350000"></i><b>~350,000</b></div></div>
-      <div class="brow w"><div class="who" data-i18n-html="b.w">Werracle<small>same transaction</small></div><div class="track"><i data-v="19400"></i><b>~19,400</b></div></div>
+      <div class="brow w"><div class="who" data-i18n-html="b.w">Werracle<small>same transaction</small></div><div class="track"><i data-v="19400"></i><b>~20k</b></div></div>
       <div class="axis"><span></span><div><span>10k</span><span>100k</span><span>1M</span><span>10M</span></div></div>
     </div>
     <div class="tbl">
@@ -757,7 +757,7 @@ const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const TR = {
  "nav.how":"Nasıl çalışır","nav.sim":"Simülatör","nav.defense":"Savunma","nav.near":"NEAR","nav.proofs":"İspatlar","nav.build":"Entegrasyon","nav.research":"Araştırma ▾","nav.res_overview":"Bölüm Özeti ▾","nav.menu":"Menü",
  "hero.a":"Modelin tamamı","hero.b":"32 bayt.",
- "hero.lede":"Werracle, EVM'in içinde çalışan bir yapay zekâ karar kâhinidir. Hiç ağırlık saklamaz. Ağırlıkları Mandelbrot sınırındaki tek bir noktadan türetir; izin ver, yönlendir ya da puanla kararını yaklaşık 19.400 gaz ile, soruyu soran işlemin içinde verir.",
+ "hero.lede":"Werracle, EVM'in içinde çalışan bir yapay zekâ karar kâhinidir. Hiç ağırlık saklamaz. Ağırlıkları Mandelbrot sınırındaki tek bir noktadan türetir; izin ver, yönlendir ya da puanla kararını yaklaşık 20k gaz ile, soruyu soran işlemin içinde verir.",
  "hero.cta1":"Simülatörü çalıştır","hero.cta2":"Makaleyi arXiv'de oku",
  "hero.slot":"Bu depolama kelimesi modelin ta kendisi. Bir bayta gelin.","hero.bg":"arka plan: tohumun canlı görüntüsü",
  "fact.gas":"karar başına gaz","fact.tests":"mühürlü test geçti","fact.lean":"Lean 4 teoremi, 0 sorry","fact.aurora":"testnet'te canlı",
@@ -765,7 +765,7 @@ const TR = {
  "s2.u":"ispat","s2.h":"ZK-ML kanıtlar ama yavaştır.","s2.p":"Model yine zincir dışında çalışır. İspatlayıcı 10 ila 300 saniye harcar, zincir doğrulama için yaklaşık 350.000 gaz öder. Doğrudur, ama asla saldırının kendi işleminin içinde değil.",
  "s3.u":"bayt","s3.h":"Werracle model değil, bir koordinat saklar.","s3.p":"Ağırlıklar z → z² + c kaçış dinamiğinden, Q16.16 tamsayılarla, ihtiyaç anında yeniden hesaplanır. Tek bir SLOAD tüm beyni 100 gaza okur. Zincirden hiçbir şey çıkmaz.",
  "sim.h":"Sözleşmeyi tarayıcınızda çalıştırın.",
- "sim.lede":"WERR™ Gizli Motoru tamamen EVM'in #0 numaralı depolama slotunun içinde çalışır. Aşağıdan bir saldırı veya işlem deseni seçin, risk parametrelerini ayarlayın ve kâhinin harici sunucusuz, ~19.400 gaz ile işlem içinde milisaniyenin altında nasıl karar verdiğini canlı izleyin.",
+ "sim.lede":"WERR™ Gizli Motoru tamamen EVM'in #0 numaralı depolama slotunun içinde çalışır. Aşağıdan bir saldırı veya işlem deseni seçin, risk parametrelerini ayarlayın ve kâhinin harici sunucusuz, ~20k gaz ile işlem içinde milisaniyenin altında nasıl karar verdiğini canlı izleyin.",
  "sim.scen_h":"Simüle Edilen Saldırı ve İşlem Desenleri",
  "sim.out_h":"Canlı Kâhin Kararı ve Telemetri",
  "c.exposure":"İşlem Büyüklüğü / Maruziyet",
@@ -816,7 +816,7 @@ const TR = {
  "re.h":"Makale, veri ve kod.","re.a":"Ön baskı<small>cs.CR, cs.AI, cs.DC</small>","re.s":"Elsevier SSRN kaydı<small>Özet ve tam metin</small>","re.z":"Arşivlenmiş araştırma paketi<small>CERN, atıf yapılabilir DOI</small>","re.h2":"Makale sayfası<small>Modeller ve veri setleri</small>","re.g":"Sözleşmeler, Cairo portu, simülasyonlar<small>Solidity, Cairo, Python, Lean 4</small>",
  "g.h":"Araştırmayı destekle.","g.p":"Ethereum Foundation ESP, Base, NEAR Foundation, Arbitrum ve diğer ekosistem hibeleri için alıcı adres.","g.w":"USDT, TRC20 (TRON ağı)","g.lead":"Baş geliştirici","g.patent":"Patent başvurusu",
  "ft.rights":"Tüm hakları saklıdır.","copy":"Kopyala","pv":"Werracle v2.0","pv.l":"Klasik v1.0 Arşivi","ft.archive":"Klasik v1.0 Arşivi",
- "hero.lede":"Werracle, tek bir EVM depolama slotunda yaşayan sıfır bellekli bir yapay zekâ karar kâhinidir. WERR™ Egemen Çekirdeği ile izin, veto ve dinamik ücret kararlarını aynı işlem içinde yaklaşık 19.400 gaz ile verir; zincir dışı bağımlılığı yoktur ve çekirdeği Lean 4 ile makine denetimlidir.",
+ "hero.lede":"Werracle, tek bir EVM depolama slotunda yaşayan sıfır bellekli bir yapay zekâ karar kâhinidir. WERR™ Egemen Çekirdeği ile izin, veto ve dinamik ücret kararlarını aynı işlem içinde yaklaşık 20k gaz ile verir; zincir dışı bağımlılığı yoktur ve çekirdeği Lean 4 ile makine denetimlidir.",
  "s3.h":"32 baytlık gizli formül: WERR™ Egemen Çekirdeği.","s3.p":"Gigabaytlarca sinir ağı ağırlığı ya da yavaş ZK ispatları yerine WERR™ çekirdeği karar zekâsını tek bir 32 baytlık depolama slotuna kodlar. Kararlar zincir üstünde deterministik tamsayı matematiğiyle 1 ms'nin altında hesaplanır. Tek bir SLOAD tüm beyni 100 gaza okur.",
  "sim.h":"Sözleşmeyi tarayıcınızda çalıştırın.",
  "sim.lede":"Bu, v2.0 çekirdeği <code>WerracleTripodZMod9.previewDecision()</code>'un tamsayısı tamsayısına kopyası. Tohumun çevresinde 12 noktayı yoklar, her birinde z → z² + c'yi en çok 9 adım çalıştırır ve |z| ≤ 2 içinde ne kadar kaldıklarını ölçer. Bu sınırlılık, çağıranın risk puanına karşı direnir. Eşiğin üstünde çağrı geçer; altında tüm işlem geri alınır.",
