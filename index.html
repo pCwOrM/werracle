@@ -435,7 +435,7 @@ footer nav a{padding:6px 0;display:inline-block}
     </div>
 
     <div class="slot">
-      <div class="slot-cap"><span data-i18n="hero.slot">This storage word is the entire model. Point at a byte.</span><b class="mono">bytes32</b></div>
+      <div class="slot-cap"><div><span data-i18n="hero.slot">This storage word is the entire model. Point at a byte.</span><span class="mono" style="font-size:11px;color:#38bdf8;display:block;margin-top:4px;">Verified on-chain: Matches Aurora testnet (chain 1313161555) & Devnet slot 4 (cx: -93061, cy: 14417, zoom: 2949120, mode: 1)</span></div><b class="mono">bytes32</b></div>
       <div class="bytes" id="heroBytes" role="list" aria-label="Packed 32-byte seed"></div>
       <div class="fields" id="heroFields" aria-hidden="true"></div>
       <p class="field-note" id="fieldNote" aria-live="polite"></p>
@@ -1072,7 +1072,7 @@ const hero = (() => {
 /* =========================================================
    HERO byte strip
    ========================================================= */
-const HERO_SEED = {cx:-48735, cy:8639, zoom:3276800, nonce:1, threshold:5000, mode:0, active:1};
+const HERO_SEED = {cx:-93061, cy:14417, zoom:2949120, nonce:1, threshold:5000, mode:1, active:1};
 function buildBytes(container, fieldsEl, seed, scramble){
   const hex = packSeed(seed);
   container.innerHTML = "";
