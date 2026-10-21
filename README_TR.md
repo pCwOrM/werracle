@@ -321,3 +321,11 @@ Werracle, **Business Source License 1.1 (BSL 1.1)** ile korunmaktadır (Uniswap 
 * Testnet'lerde test etmek, akademik araştırmalar ve kar amacı gütmeyen protokoller için **%100 ücretsiz ve açık kaynaklıdır**.
 * Ticari ana ağ (mainnet) dağıtımları **1 Ocak 2030** tarihine kadar resmi yönlendirici kullanımına veya ticari lisansa tabidir; bu tarihten sonra otomatik olarak **Apache License, Version 2.0**'a dönüşür.
 * Somutlaştırılan prosedürel mekanizmalar **TÜRKPATENT TR 2026/016285** patent başvurusu koruması altındadır.
+
+## 🏛️ Tarihsel Arşivler ve Sürüm Mirası
+
+Tüm önceki tasarım ve protokol sürümleri şeffaflık ve denetlenebilirlik amacıyla kaynakta arşiv olarak korunmaktadır:
+
+- **Klasik v1.0 Arşivi (`werracle.io` İlk Temel Sürüm):** [`https://werracle.io/v1_classic.html`](https://werracle.io/v1_classic.html)
+- **Mimari v2.0 Deneme Alanı Arşivi:** [`https://werracle.io/v2_initial_archive.html`](https://werracle.io/v2_initial_archive.html)
+- **Kurumsal Portal v1.0 (Koyu Tema Arşivi):** [`https://werracle.com/archive_dark_v1.html`](https://werracle.com/archive_dark_v1.html)

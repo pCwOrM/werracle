@@ -447,3 +447,11 @@ Werracle is released under the **Business Source License 1.1 (BSL 1.1)**.
 * Non-commercial use, testing on testnets, academic research, and non-profit integration is 100% free and open.
 * Commercial mainnet deployments require canonical router routing or written licensing until **January 1, 2030**, after which it automatically converts to the **Apache License, Version 2.0**.
 * Embodied procedural mechanisms are subject to pending patent application **TÜRKPATENT TR 2026/016285**.
+
+## 🏛️ Historical Archives & Version Heritage
+
+All previous design iterations and protocol evolutions are permanently preserved in source for transparency:
+
+- **Classic v1.0 Archive (`werracle.io` Initial Baseline):** [`https://werracle.io/v1_classic.html`](https://werracle.io/v1_classic.html)
+- **Architecture v2.0 Sandbox Archive:** [`https://werracle.io/v2_initial_archive.html`](https://werracle.io/v2_initial_archive.html)
+- **Corporate Portal v1.0 (Dark Theme Archive):** [`https://werracle.com/archive_dark_v1.html`](https://werracle.com/archive_dark_v1.html)

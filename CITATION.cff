@@ -14,7 +14,7 @@ authors:
     orcid: "https://orcid.org/0009-0003-2492-8313"
     affiliation: "Toros Science College, Mersin, Turkey"
 title: "Werracle: Sub-Cent Intra-Block AI Reflex Oracles and Flash-Loan Circuit Breakers for EVM Smart Contracts"
-version: "1.0.0"
+version: "2.0.0"
 doi: "10.48550/arXiv.2609.30719"
 date-released: 2026-09-24
 url: "https://arxiv.org/abs/2609.30719"
