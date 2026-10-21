@@ -232,6 +232,13 @@ window.MathJax = {
   </div>
 </div>
 
+<div class="abstract-box" style="margin-top: 10px; background: #f0fdf4; border-top: 1px solid #16a34a; border-bottom: 1px solid #16a34a; font-size: 8.5pt;">
+  <strong style="color: #15803d;">Author & Measurement Addendum (Protocol v2.0 Update):</strong><br>
+  <strong>1. EVM Gas & Architecture Calibration:</strong> The early simulated 16-point exploratory grid prototype described in this preprint (~21.4k theoretical compute; ~230k full loop in reference <code>Werracle.sol</code>) has been superseded by the flagship <strong>v2.0 Tripod architecture</strong> (<code>WerracleTripodZMod9.sol</code>). On-chain EVM measurements with <code>solc 0.8.20</code> (200 runs) demonstrate <strong>15,000 execution gas</strong> for <code>previewDecision</code> and <strong>20,706 execution gas</strong> for <code>decideNoul</code> with event emission (~42k for standalone EOA transactions including the 21k base fee).<br>
+  <strong>2. Deployment Status:</strong> The protocol is active and verified on <strong>Aurora Testnet (Chain ID 1313161555)</strong> and <strong>Dedicated Devnet Sandbox (Chain ID 4242)</strong>. Production mainnet deployment follows formal multi-sig governance rollout.<br>
+  <strong>3. Verification Framework:</strong> Mathematical soundness and convergence invariants are formally verified with <strong>40 machine-checked theorems in Lean 4 (0 sorry)</strong>; the 1,000-test battery provides empirical byte-level differential conformance across runtimes.
+</div>
+
 <div class="columns">
 
 <h2>I. Introduction</h2>
