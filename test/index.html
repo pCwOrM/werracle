@@ -6,6 +6,7 @@
 <title>Werracle — the whole model is 32 bytes</title>
 <meta name="description" content="Werracle is an on-chain AI decision oracle for the EVM. No stored weights: decisions are derived from one point on the Mandelbrot boundary, packed into a single 32-byte storage slot. ~19.4k gas, same-transaction, 40 Lean 4 theorems.">
 <meta name="theme-color" content="#07061a">
+<meta name="robots" content="noindex">
 <meta property="og:title" content="Werracle — the whole model is 32 bytes">
 <meta property="og:description" content="On-chain AI decisions inside one EVM storage slot. ~19.4k gas, same transaction, machine-checked in Lean 4.">
 <meta property="og:image" content="https://werracle.io/assets/werracle_logo_oracle.png">
@@ -298,7 +299,7 @@ footer a:hover{color:var(--nacre)}
 .toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,120px);background:var(--nacre);color:var(--ink);font:600 14px var(--f-body);padding:12px 18px;border-radius:12px;z-index:80;transition:transform .3s}
 .toast.show{transform:translate(-50%,0)}
 .preview-flag{position:fixed;left:14px;bottom:14px;z-index:60;font:500 12px var(--f-body);color:var(--mist);background:rgba(15,13,43,.85);border:1px solid var(--line);padding:6px 10px;border-radius:8px}
-.preview-flag a{color:var(--ice)}
+.preview-flag a{color:var(--ice);display:inline-block;padding:6px 2px}
 
 @media (prefers-reduced-motion:reduce){
   *{scroll-behavior:auto!important;transition:none!important;animation:none!important}
@@ -678,7 +679,7 @@ footer nav a{padding:6px 0;display:inline-block}
         </div>
       </div>
       <div class="org">
-        <p><b>ITOUCH Bilişim Sistemleri Ltd. Şti.</b><br>Çukurova Teknokent, Adana, Türkiye</p>
+        <p><b>ITouch Systems</b><br><span style="font-size:13px">ITouch Bilişim Sistemleri Mühendislik Danışmanlık Sanayi ve Ticaret Limited Şirketi</span><br>Çukurova Teknokent, Adana, Türkiye</p>
         <p style="margin-top:14px"><span data-i18n="g.lead">Lead builder</span>: <b>pcworm.near</b><br><span data-i18n="g.patent">Patent pending</span>: TR 2026/016285</p>
         <p style="margin-top:14px"><a href="mailto:vdagli@itouch.com.tr">vdagli@itouch.com.tr</a><br><a href="mailto:pcworm@pcworm.net">pcworm@pcworm.net</a><br><a href="mailto:ask@answerr.me">ask@answerr.me</a></p>
       </div>
@@ -689,7 +690,7 @@ footer nav a{padding:6px 0;display:inline-block}
 
 <footer>
   <div class="wrap">
-    <span>© 2026 ITOUCH Bilişim Sistemleri Ltd. Şti. <span data-i18n="ft.rights">All rights reserved.</span></span>
+    <span>© 2026 ITouch Systems (ITouch Bilişim Sistemleri Mühendislik Danışmanlık Sanayi ve Ticaret Limited Şirketi). <span data-i18n="ft.rights">All rights reserved.</span></span>
     <nav><a href="https://github.com/pCwOrM/werracle">Werracle</a><a href="https://github.com/pCwOrM/werr">WERR Engine</a><a href="https://github.com/pCwOrM/answerr">Answerr</a><a href="https://github.com/pCwOrM/mandelbrot-fractal-neural-synthesis">Fractal research</a></nav>
   </div>
 </footer>

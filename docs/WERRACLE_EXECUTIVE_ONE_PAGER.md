@@ -1,7 +1,7 @@
 # WERRACLE — EXECUTIVE PITCH & ONE-PAGER
 ## Zero-Memory On-Chain AI Decision Oracle | EVM 32-Byte Slot & NEAR Intent Guard
 **Patent Pending: TR 2026/016285 & TR 2026/016633 | Formally Verified in Lean 4 (40 Theorems, 0 Sorry)**  
-*Lead Builder: pcworm.near | ITOUCH Bilişim Sistemleri Ltd. Şti.*  
+*Lead Builder: pcworm.near | ITouch Systems*  
 *Target Tracks: Unstoppable DeFi, AI Security & Defense, Privacy & Private AI, Autonomous Business, AI Swarms*
 
 ---
@@ -70,6 +70,6 @@ require(allowed, "Werracle: Hostile transaction pattern vetoed");
 
 ### 6. Contact & Research Records
 - **Lead Builder:** pcworm.near / Volkan Dagli (`pcworm@pcworm.net`, `vdagli@itouch.com.tr`)
-- **Institution:** ITOUCH Bilişim Sistemleri Ltd. Şti. (Çukurova Teknokent, Adana, Türkiye)
+- **Institution:** ITouch Systems — ITouch Bilişim Sistemleri Mühendislik Danışmanlık Sanayi ve Ticaret Limited Şirketi (Çukurova Teknokent, Adana, Türkiye)
 - **Official Portal:** [https://werracle.io/](https://werracle.io/)
 - **Academic Records:** arXiv:2609.30719 | SSRN:7626279 | Zenodo DOI: 10.5281/zenodo.22942598 | Hugging Face: papers/2609.30719

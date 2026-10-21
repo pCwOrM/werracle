@@ -10,11 +10,11 @@
 <meta name="theme-color" content="#07061a">
 <meta property="og:title" content="Werracle — the whole model is 32 bytes">
 <meta property="og:description" content="On-chain AI decisions inside one EVM storage slot. ~19.4k gas, same transaction, machine-checked in Lean 4.">
-<meta property="og:image" content="https://werracle.io/assets/werracle_logo_oracle.png">
+<meta property="og:image" content="https://werracle.io/assets/og.jpg">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/svg+xml" href="assets/werracle_logo_oracle_trans.svg">
-<link rel="apple-touch-icon" href="assets/werracle_logo_oracle.png">
+<link rel="apple-touch-icon" href="assets/werracle-mark.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;500;700&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -301,7 +301,7 @@ footer a:hover{color:var(--nacre)}
 .toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,120px);background:var(--nacre);color:var(--ink);font:600 14px var(--f-body);padding:12px 18px;border-radius:12px;z-index:80;transition:transform .3s}
 .toast.show{transform:translate(-50%,0)}
 .preview-flag{position:fixed;left:14px;bottom:14px;z-index:60;font:500 12px var(--f-body);color:var(--mist);background:rgba(15,13,43,.85);border:1px solid var(--line);padding:6px 10px;border-radius:8px}
-.preview-flag a{color:var(--ice)}
+.preview-flag a{color:var(--ice);display:inline-block;padding:6px 2px}
 
 @media (prefers-reduced-motion:reduce){
   *{scroll-behavior:auto!important;transition:none!important;animation:none!important}
@@ -367,7 +367,7 @@ footer nav a{padding:6px 0;display:inline-block}
 .dropdown-item small{color:var(--mist);font-size:11px}
 @media (max-width:980px){
   .nav-dropdown .dropdown-menu{position:static;display:flex;background:transparent;border:none;box-shadow:none;padding:4px 0 8px 16px}
-  .nav-dropdown .dropdown-menu a{border-bottom:none;padding:6px 0;font-size:14px}
+  .nav-dropdown .dropdown-menu a{border-bottom:none;padding:10px 0;font-size:15px}
 }
 </style>
 </head>
@@ -375,7 +375,7 @@ footer nav a{padding:6px 0;display:inline-block}
 
 <header class="nav" id="nav">
   <div class="wrap">
-    <a class="brand" href="#top" aria-label="Werracle home"><img src="assets/werracle_logo_oracle_trans.png" alt="Werracle Logo" width="34" height="34" style="filter:drop-shadow(0 0 10px rgba(0,236,151,0.5))">Werracle</a>
+    <a class="brand" href="#top" aria-label="Werracle home"><img src="assets/werracle-mark.png" alt="" width="34" height="34" style="filter:drop-shadow(0 0 10px rgba(0,236,151,0.5))">Werracle</a>
     <ul id="menu">
       <li><a href="#how" data-i18n="nav.how">How it works</a></li>
       <li><a href="#simulator" data-i18n="nav.sim">Simulator</a></li>
@@ -725,7 +725,7 @@ footer nav a{padding:6px 0;display:inline-block}
         </div>
       </div>
       <div class="org">
-        <p><b>ITOUCH Bilişim Sistemleri Ltd. Şti.</b><br>Çukurova Teknokent, Adana, Türkiye</p>
+        <p><b>ITouch Systems</b><br><span style="font-size:13px">ITouch Bilişim Sistemleri Mühendislik Danışmanlık Sanayi ve Ticaret Limited Şirketi</span><br>Çukurova Teknokent, Adana, Türkiye</p>
         <p style="margin-top:14px"><span data-i18n="g.lead">Lead builder</span>: <b>pcworm.near</b><br><span data-i18n="g.patent">Patent pending</span>: TR 2026/016285 &amp; TR 2026/016633</p>
         <p style="margin-top:14px"><a href="mailto:vdagli@itouch.com.tr">vdagli@itouch.com.tr</a><br><a href="mailto:pcworm@pcworm.net">pcworm@pcworm.net</a><br><a href="mailto:ask@answerr.me">ask@answerr.me</a></p>
       </div>
@@ -736,7 +736,7 @@ footer nav a{padding:6px 0;display:inline-block}
 
 <footer>
   <div class="wrap">
-    <span>© 2026 ITOUCH Bilişim Sistemleri Ltd. Şti. <span data-i18n="ft.rights">All rights reserved.</span></span>
+    <span>© 2026 ITouch Systems (ITouch Bilişim Sistemleri Mühendislik Danışmanlık Sanayi ve Ticaret Limited Şirketi). <span data-i18n="ft.rights">All rights reserved.</span></span>
     <nav><a href="https://github.com/pCwOrM/werracle">Werracle</a><a href="https://github.com/pCwOrM/werr">WERR Engine</a><a href="https://github.com/pCwOrM/answerr">Answerr</a><a href="https://github.com/pCwOrM/mandelbrot-fractal-neural-synthesis">Fractal research</a><a href="v1_classic.html" data-i18n="ft.archive">Classic v1.0 Archive</a></nav>
   </div>
 </footer>
