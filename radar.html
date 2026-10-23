@@ -179,9 +179,9 @@ footer a:hover{color:var(--nacre)}
           <div class="sub" id="metricPositions">69,341 Tracked Positions</div>
         </div>
         <div class="card">
-          <div class="label">Hot Zone (HF &lt; 1.10)</div>
-          <div class="val revert" id="metricHot">3,686</div>
-          <div class="sub">High-risk liquidation threshold</div>
+          <div class="label">Near Liquidation (0.95 &le; HF &lt; 1.10)</div>
+          <div class="val revert" id="metricHot">Active Risk</div>
+          <div class="sub" id="metricBadDebt">Bad Debt (HF &lt; 0.95): Tracking</div>
         </div>
         <div class="card">
           <div class="label">Protocol Value Recaptured</div>
@@ -403,7 +403,14 @@ footer a:hover{color:var(--nacre)}
       if (data.portfolio_surveillance) {
         document.getElementById("metricMarkets").textContent = data.portfolio_surveillance.total_monitored_markets + " Markets";
         document.getElementById("metricPositions").textContent = data.portfolio_surveillance.total_tracked_positions.toLocaleString() + " Tracked Positions";
-        document.getElementById("metricHot").textContent = data.portfolio_surveillance.hot_positions_near_liquidation.toLocaleString();
+        if (data.portfolio_surveillance.near_liquidation_active != null) {
+          document.getElementById("metricHot").textContent = data.portfolio_surveillance.near_liquidation_active.toLocaleString();
+        } else if (data.portfolio_surveillance.hot_positions_near_liquidation != null) {
+          document.getElementById("metricHot").textContent = data.portfolio_surveillance.hot_positions_near_liquidation.toLocaleString();
+        }
+        if (data.portfolio_surveillance.insolvent_bad_debt_legacy != null) {
+          document.getElementById("metricBadDebt").textContent = "Bad Debt (HF < 0.95): " + data.portfolio_surveillance.insolvent_bad_debt_legacy.toLocaleString() + " legacy";
+        }
       }
       if (data.verified_svr_findings) {
         document.getElementById("metricRecapture").textContent = data.verified_svr_findings.protocol_capture_rate_pct.toFixed(2) + "%";
