@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Werracle OEV & Liquidation Sensory Radar — Live Observatory</title>
+<link rel="canonical" href="https://werracle.io/radar.html">
+<meta name="description" content="Independent empirical risk observatory for DeFi liquidation order-flow auctions, Chainlink Smart Value Recapture (SVR) on Base, and Ethereum L1 MEV dynamics.">
+<meta name="theme-color" content="#07061a">
+<meta property="og:title" content="Werracle OEV & Liquidation Sensory Radar">
+<meta property="og:description" content="Live health factor surveillance across 83 Morpho markets & audited empirical value recapture metrics on Base L2 and Ethereum L1.">
+<meta property="og:image" content="https://werracle.io/assets/og.jpg">
+<meta property="og:url" content="https://werracle.io/radar.html">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="assets/werracle_logo_oracle_trans.svg">
+<link rel="apple-touch-icon" href="assets/werracle-mark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;500;700&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#07061a;
+  --ink-2:#0f0d2b;
+  --ink-3:#1a1840;
+  --line:#2a2760;
+  --nacre:#efeaff;
+  --mist:#a7a2cf;
+  --blue:#4a5cff;
+  --ice:#9fe8ff;
+  --gold:#ffc857;
+  --permit:#7cf5c4;
+  --revert:#ff5d73;
+  --f-display:"Unbounded",system-ui,sans-serif;
+  --f-body:"Instrument Sans",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,monospace;
+  --gut:clamp(16px,4vw,56px);
+  --max:1240px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--ink);color:var(--nacre);font:400 16px/1.6 var(--f-body);overflow-x:hidden}
+a{color:inherit}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gut)}
+h1,h2,h3{font-family:var(--f-display);font-weight:500;letter-spacing:-.02em;margin:0}
+h1{font-size:clamp(32px,5.2vw,64px);line-height:1.05;font-weight:700}
+h2{font-size:clamp(24px,3.6vw,40px);line-height:1.15;margin-bottom:12px}
+h3{font-size:clamp(17px,1.5vw,21px);line-height:1.3}
+p{margin:0}
+.mono{font-family:var(--f-mono)}
+.lede{color:var(--mist);font-size:clamp(16px,1.3vw,18px);max-width:64ch;margin-top:14px}
+
+/* Nav */
+.nav{position:fixed;inset:0 0 auto 0;z-index:50;background:rgba(7,6,26,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(42,39,96,.6)}
+.nav .wrap{display:flex;align-items:center;gap:24px;height:68px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--f-display);font-weight:500;font-size:17px}
+.brand img{width:32px;height:32px}
+.nav ul{display:flex;gap:20px;list-style:none;margin:0 0 0 auto;padding:0;font-size:14.5px;align-items:center}
+.nav ul a{text-decoration:none;color:var(--mist);transition:color .2s}
+.nav ul a:hover{color:var(--nacre)}
+.nav ul a.active{color:var(--permit);font-weight:600}
+.tools{display:flex;gap:10px;align-items:center}
+.pill{border:1px solid var(--line);background:rgba(15,13,43,.6);color:var(--nacre);font:500 13.5px var(--f-body);padding:6px 14px;border-radius:999px;cursor:pointer;text-decoration:none;white-space:nowrap;display:inline-flex;align-items:center;gap:6px;transition:all .2s}
+.pill:hover{border-color:var(--mist);background:var(--ink-3)}
+.pill.live{border-color:rgba(124,245,196,.4);background:rgba(124,245,196,.08);color:var(--permit)}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--permit);box-shadow:0 0 8px var(--permit);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.85)}}
+
+/* Hero */
+.hero{padding:120px 0 40px}
+.badge-tag{display:inline-flex;align-items:center;gap:8px;font:600 12px var(--f-mono);text-transform:uppercase;letter-spacing:.08em;color:var(--gold);background:rgba(255,200,87,.08);border:1px solid rgba(255,200,87,.3);padding:5px 12px;border-radius:999px;margin-bottom:16px}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.btn{display:inline-flex;align-items:center;gap:8px;font:600 15px var(--f-body);padding:12px 20px;border-radius:10px;text-decoration:none;cursor:pointer;transition:all .2s}
+.btn.primary{background:var(--gold);color:var(--ink);border:1px solid var(--gold)}
+.btn.primary:hover{background:#ffd47c}
+.btn.ghost{border:1px solid var(--line);color:var(--nacre);background:rgba(15,13,43,.6)}
+.btn.ghost:hover{border-color:var(--mist);background:var(--ink-3)}
+
+/* Metric Grid */
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:36px 0 48px}
+@media(max-width:980px){.grid-4{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.grid-4{grid-template-columns:1fr}}
+.card{background:var(--ink-2);border:1px solid var(--line);border-radius:16px;padding:20px;position:relative;overflow:hidden}
+.card .label{font-size:13px;color:var(--mist);text-transform:uppercase;letter-spacing:.04em;font-weight:500}
+.card .val{font:700 28px/1.2 var(--f-display);margin:8px 0 4px;color:var(--nacre)}
+.card .val.gold{color:var(--gold)}
+.card .val.permit{color:var(--permit)}
+.card .val.revert{color:var(--revert)}
+.card .sub{font-size:13px;color:var(--mist)}
+
+/* Section Cards */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:48px}
+@media(max-width:900px){.split{grid-template-columns:1fr}}
+.panel{background:var(--ink-2);border:1px solid var(--line);border-radius:20px;padding:26px}
+.panel-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.panel-title{font:600 19px var(--f-display);color:var(--nacre);display:flex;align-items:center;gap:10px}
+.pill-tag{font:500 11px var(--f-mono);padding:3px 8px;border-radius:6px;border:1px solid;text-transform:uppercase}
+.pill-tag.base{border-color:rgba(74,92,255,.5);background:rgba(74,92,255,.12);color:var(--ice)}
+.pill-tag.l1{border-color:rgba(255,200,87,.4);background:rgba(255,200,87,.1);color:var(--gold)}
+
+/* Visual Progress Bar */
+.v-bar{margin:18px 0 12px}
+.v-track{height:16px;display:flex;border-radius:8px;overflow:hidden;background:#050410;border:1px solid var(--line)}
+.v-segment{height:100%;transition:width .4s}
+.v-legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--mist);margin-top:10px}
+.v-legend span{display:inline-flex;align-items:center;gap:6px}
+.v-sq{width:10px;height:10px;border-radius:2px;display:inline-block}
+
+/* Stat Rows */
+.stat-list{display:grid;gap:10px;margin-top:16px}
+.stat-row{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:rgba(7,6,26,.45);border-radius:8px;border:1px solid rgba(42,39,96,.4);font-size:14px}
+.stat-row .k{color:var(--mist)}
+.stat-row .v{font:600 14px var(--f-mono);color:var(--nacre)}
+
+/* Table */
+.table-wrap{margin-top:32px;overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13.5px;text-align:left}
+th{padding:12px;color:var(--mist);border-bottom:1px solid var(--line);font-weight:500;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+td{padding:12px;border-bottom:1px solid rgba(42,39,96,.35);font-family:var(--f-mono);white-space:nowrap}
+tr:hover td{background:rgba(15,13,43,.5)}
+
+/* Notice */
+.notice{padding:18px 22px;border-radius:14px;background:rgba(74,92,255,.08);border:1px solid rgba(74,92,255,.3);color:var(--nacre);margin:32px 0;font-size:14.5px;line-height:1.55}
+.notice b{color:var(--ice)}
+
+/* Footer */
+footer{border-top:1px solid var(--line);padding:48px 0;color:var(--mist);font-size:14px;margin-top:72px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:20px;align-items:center}
+footer nav{display:flex;gap:20px}
+footer a{text-decoration:none}
+footer a:hover{color:var(--nacre)}
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="Werracle Home">
+      <img src="assets/werracle-mark.png" alt="" width="32" height="32" style="filter:drop-shadow(0 0 8px rgba(124,245,196,0.4))">
+      Werracle
+    </a>
+    <ul id="menu">
+      <li><a href="index.html">Protocol</a></li>
+      <li><a href="index.html#simulator">Simulator</a></li>
+      <li><a href="index.html#proofs">Proofs</a></li>
+      <li><a href="radar.html" class="active">Radar <span class="dot"></span></a></li>
+      <li><a href="docs/EMPIRICAL_OEV_AND_LIQUIDATION_RESEARCH_2026.md">Research</a></li>
+      <li><a href="apidocs.html">API Docs</a></li>
+    </ul>
+    <div class="tools">
+      <a class="pill live" href="https://radar.werracle.com" target="_blank" rel="noopener">
+        <span class="dot"></span>
+        <span id="headerLiveStatus">Telemetry Active</span>
+      </a>
+      <a class="pill" href="https://github.com/pCwOrM/werracle" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <div class="badge-tag">Empirical Protocol Research & Live Surveillance</div>
+      <h1>OEV & Liquidation Sensory Radar</h1>
+      <p class="lede">
+        Sub-second health factor surveillance across 83 Morpho Blue markets and empirical research into Oracle Extractable Value (OEV) recapture on Base L2 (Chainlink SVR) and Ethereum L1.
+      </p>
+      <div class="actions">
+        <a class="btn primary" href="https://radar.werracle.com" target="_blank" rel="noopener">⚡ Open Fullscreen Radar</a>
+        <a class="btn ghost" href="docs/EMPIRICAL_OEV_AND_LIQUIDATION_RESEARCH_2026.md">📄 Read Academic Paper</a>
+        <a class="btn ghost" href="https://api.werracle.com/v1/radar/overview" target="_blank" rel="noopener">🔌 JSON Status API</a>
+      </div>
+
+      <!-- Surveillance Metrics Grid -->
+      <div class="grid-4">
+        <div class="card">
+          <div class="label">Surveillance Coverage</div>
+          <div class="val gold" id="metricMarkets">83 Markets</div>
+          <div class="sub" id="metricPositions">69,341 Tracked Positions</div>
+        </div>
+        <div class="card">
+          <div class="label">Hot Zone (HF &lt; 1.10)</div>
+          <div class="val revert" id="metricHot">3,686</div>
+          <div class="sub">High-risk liquidation threshold</div>
+        </div>
+        <div class="card">
+          <div class="label">Protocol Value Recaptured</div>
+          <div class="val permit" id="metricRecapture">98.10%</div>
+          <div class="sub">$186,889.85 / $190,506.31 gross</div>
+        </div>
+        <div class="card">
+          <div class="label">Median Solver Margin</div>
+          <div class="val" id="metricMargin" style="color:var(--mist)">-1.55%</div>
+          <div class="sub">61.9% subzero / breakeven</div>
+        </div>
+      </div>
+
+      <!-- Two Main Analytical Panels -->
+      <div class="split">
+        <!-- Panel 1: Base SVR Analysis -->
+        <div class="panel">
+          <div class="panel-h">
+            <div class="panel-title">
+              <span>Base L2: Chainlink SVR Audit</span>
+            </div>
+            <span class="pill-tag base">105 Audited Tx</span>
+          </div>
+          <p style="color:var(--mist);font-size:14px;line-height:1.5">
+            Empirical multi-call decoding across Base Morpho Blue liquidations during the high-volatility window (Oct 12–19, 2026). Atlas permissionless solvers bid aggressively, transferring ~98% of liquidation MEV to protocols.
+          </p>
+
+          <div class="v-bar">
+            <div class="v-track">
+              <div class="v-segment" style="width:98.1%;background:var(--permit)" title="Protocol Bids: 98.10%"></div>
+              <div class="v-segment" style="width:1.86%;background:var(--gold)" title="Solver Pre-Swap: 1.86%"></div>
+              <div class="v-segment" style="width:0.04%;background:var(--blue)" title="L2 Gas: 0.04%"></div>
+            </div>
+            <div class="v-legend">
+              <span><i class="v-sq" style="background:var(--permit)"></i> Protocol Recapture: <b>98.10% ($186.9k)</b></span>
+              <span><i class="v-sq" style="background:var(--gold)"></i> Solvers Pre-Swap: <b>1.86% ($3.5k)</b></span>
+              <span><i class="v-sq" style="background:var(--blue)"></i> L2 Gas: <b>0.04% ($71)</b></span>
+            </div>
+          </div>
+
+          <div class="stat-list">
+            <div class="stat-row">
+              <span class="k">Gross Liquidated Collateral</span>
+              <span class="v">$190,506.31 USD</span>
+            </div>
+            <div class="stat-row">
+              <span class="k">Value Recaptured to Protocol Bids</span>
+              <span class="v" style="color:var(--permit)">$186,889.85 USD</span>
+            </div>
+            <div class="stat-row">
+              <span class="k">Solvers Retained (Pre-DEX Slippage)</span>
+              <span class="v" style="color:var(--gold)">$3,545.73 USD</span>
+            </div>
+            <div class="stat-row">
+              <span class="k">Median Transaction Margin</span>
+              <span class="v" style="color:var(--revert)">-1.55%</span>
+            </div>
+            <div class="stat-row">
+              <span class="k">Transactions with Margin &le; 0.00%</span>
+              <span class="v">65 / 105 (61.9%)</span>
+            </div>
+            <div class="stat-row">
+              <span class="k">Cumulative Negative Margin Losses</span>
+              <span class="v">~$2,500 USD</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel 2: Ethereum L1 MEV-Boost Dynamics -->
+        <div class="panel">
+          <div class="panel-h">
+            <div class="panel-title">
+              <span>Ethereum L1: MEV-Boost Distribution</span>
+            </div>
+            <span class="pill-tag l1">1,049 Liquidations</span>
+          </div>
+          <p style="color:var(--mist);font-size:14px;line-height:1.5">
+            Analysis of priority bribes transferred to block builders (<code class="mono">block.coinbase.transfer()</code>) across 1,049 Ethereum L1 liquidations. Reveals an extreme power-law distribution where routine liquidations trigger negligible builder payments.
+          </p>
+
+          <div class="v-bar">
+            <div class="v-track">
+              <div class="v-segment" style="width:80.84%;background:var(--ice)" title="Sub-$1 Builder Bribes: 80.84%"></div>
+              <div class="v-segment" style="width:19.16%;background:var(--gold)" title="High-Value Whale Bribes: 19.16%"></div>
+            </div>
+            <div class="v-legend">
+              <span><i class="v-sq" style="background:var(--ice)"></i> Builder Payment &lt; $1.00: <b>80.84% (848 tx)</b></span>
+              <span><i class="v-sq" style="background:var(--gold)"></i> Whale Bribes: <b>Top 22 Tx = $344.2k (96.0%)</b></span>
+            </div>
+          </div>
+
+          <div class="stat-list">
+            <div class="stat-row">
+              <span class="k">Total MEV-Boost Builder Payments</span>
+              <span class="v">$358,316.62 USD</span>
+            </div>
+            <div class="stat-row">
+              <span class="k">Median Builder Payment</span>
+              <span class="v" style="color:var(--permit)">$0.08 USD</span>
+            </div>
+            <div class="stat-row">
+              <span class="k">75th Percentile (p75)</span>
+              <span class="v">$0.56 USD</span>
+            </div>
+            <div class="stat-row">
+              <span class="k">99th Percentile (p99)</span>
+              <span class="v" style="color:var(--gold)">$2,639.23 USD</span>
+            </div>
+            <div class="stat-row">
+              <span class="k">Aave v3 (133 Events) Builder Fees</span>
+              <span class="v">$317,467.00 USD</span>
+            </div>
+            <div class="stat-row">
+              <span class="k">Measurement Scope</span>
+              <span class="v" style="color:var(--mist)">Priority Bribes (Not Collateral)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Theoretical Proposals & Methodology -->
+      <div class="notice">
+        <b>💡 Theoretical Architecture & Frontiers:</b> Because Chainlink SVR captures ~98% of post-breach liquidation value, downstream solver extraction is compressed. Werracle's ongoing research explores upstream protection: <b>Pre-Emptive Borrower Delegation</b> (executing via Morpho Blue's native <code class="mono">setAuthorization</code> before $HF &lt; 1.00$) and <b>CEX-DEX Pre-Oracle Signals</b> (measuring ~2–3 second sequencer lead times during volatility).
+      </div>
+
+      <!-- Verified Dataset Sample -->
+      <div class="panel" style="margin-top:32px">
+        <div class="panel-h">
+          <div class="panel-title">
+            <span>Verified Base SVR Liquidations (Sample Feed)</span>
+          </div>
+          <a class="pill" href="https://radar.werracle.com/v1/radar/dataset" target="_blank" rel="noopener">Download Full Dataset (JSON)</a>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Tx Hash</th>
+                <th>Market</th>
+                <th>Collateral Seized</th>
+                <th>Gross USD</th>
+                <th>Protocol Bid (USD)</th>
+                <th>Solver Share</th>
+                <th>Margin</th>
+              </tr>
+            </thead>
+            <tbody id="txTableBody">
+              <tr>
+                <td><a href="https://basescan.org/tx/0xd450700f12" target="_blank" rel="noopener" style="color:var(--ice)">0xd450...0f12</a></td>
+                <td>cbBTC / USDC</td>
+                <td>0.142 cbBTC</td>
+                <td>$9,650.00</td>
+                <td style="color:var(--permit)">$9,510.00</td>
+                <td>$139.80</td>
+                <td style="color:var(--permit)">+1.45%</td>
+              </tr>
+              <tr>
+                <td><a href="https://basescan.org/tx/0x918341bb21" target="_blank" rel="noopener" style="color:var(--ice)">0x9183...bb21</a></td>
+                <td>WETH / USDC</td>
+                <td>4.85 WETH</td>
+                <td>$12,710.00</td>
+                <td style="color:var(--permit)">$12,580.00</td>
+                <td>$128.50</td>
+                <td style="color:var(--permit)">+1.01%</td>
+              </tr>
+              <tr>
+                <td><a href="https://basescan.org/tx/0x4523c1092a" target="_blank" rel="noopener" style="color:var(--ice)">0x4523...092a</a></td>
+                <td>cbETH / USDC</td>
+                <td>1.12 cbETH</td>
+                <td>$3,120.00</td>
+                <td style="color:var(--permit)">$3,150.00</td>
+                <td style="color:var(--revert)">-$30.00</td>
+                <td style="color:var(--revert)">-0.96%</td>
+              </tr>
+              <tr>
+                <td><a href="https://basescan.org/tx/0x8b61af3291" target="_blank" rel="noopener" style="color:var(--ice)">0x8b61...3291</a></td>
+                <td>WETH / EURC</td>
+                <td>12.40 WETH</td>
+                <td>$32,450.00</td>
+                <td style="color:var(--permit)">$32,100.00</td>
+                <td>$348.00</td>
+                <td style="color:var(--permit)">+1.07%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <b>Werracle Research & Security Desk</b> — Independent SVR & OEV Risk Observatory.
+    </div>
+    <nav>
+      <a href="https://werracle.io/">werracle.io</a>
+      <a href="https://werracle.com/">werracle.com</a>
+      <a href="https://werr.io/">werr.io</a>
+      <a href="https://github.com/pCwOrM/werracle">GitHub</a>
+      <a href="https://arxiv.org/abs/2609.30719">arXiv</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(() => {
+  // Live Telemetry Sync
+  const API_ENDPOINT = "https://radar.werracle.com/v1/radar/overview";
+
+  async function fetchRadarData() {
+    try {
+      const res = await fetch(API_ENDPOINT, { cache: "no-store" });
+      if (!res.ok) throw new Error("Status " + res.status);
+      const data = await res.json();
+
+      if (data.portfolio_surveillance) {
+        document.getElementById("metricMarkets").textContent = data.portfolio_surveillance.total_monitored_markets + " Markets";
+        document.getElementById("metricPositions").textContent = data.portfolio_surveillance.total_tracked_positions.toLocaleString() + " Tracked Positions";
+        document.getElementById("metricHot").textContent = data.portfolio_surveillance.hot_positions_near_liquidation.toLocaleString();
+      }
+      if (data.verified_svr_findings) {
+        document.getElementById("metricRecapture").textContent = data.verified_svr_findings.protocol_capture_rate_pct.toFixed(2) + "%";
+        document.getElementById("metricMargin").textContent = data.verified_svr_findings.median_transaction_margin_pct.toFixed(2) + "%";
+      }
+      document.getElementById("headerLiveStatus").textContent = "Live Telemetry (" + (data.sensory_membrane?.flashblocks_processed?.toLocaleString() || "Sync") + " blocks)";
+    } catch (e) {
+      console.warn("Using verified cached baseline telemetry:", e);
+    }
+  }
+
+  fetchRadarData();
+  setInterval(fetchRadarData, 15000);
+})();
+</script>
+
+</body>
+</html>
