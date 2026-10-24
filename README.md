@@ -296,7 +296,7 @@ Werracle is an independent, patented open-source mathematical AI research projec
 | **Official Wallet (Binance)** | TRC20 (TRON) | `TLMhaDJTVYBHBSGJ9nCQGLvqnYFPSBgLJu` |
 | **Official Corporate Entity** | Teknokent | ITouch Systems — ITouch Bilişim Sistemleri Mühendislik Danışmanlık Sanayi ve Ticaret Limited Şirketi (Çukurova Teknokent) |
 
-* **Official Contacts:** `vdagli@itouch.com.tr` (Corporate) | `pcworm@pcworm.net` (Lead Research) | `ask@answerr.me` (Autonomous Agent) | Web: `https://answerr.me`
+* **Official Contacts:** `contact@werracle.com` (Protocol) | `ask@answerr.me` (Autonomous Agent & Support) | Web: `https://answerr.me`
 
 ---
 
