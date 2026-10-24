@@ -77,7 +77,7 @@ p{margin:0}
 .btn.ghost:hover{border-color:var(--mist);background:var(--ink-3)}
 
 /* Metric Grid */
-.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:36px 0 48px}
+.grid-4{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin:36px 0 48px}
 @media(max-width:980px){.grid-4{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:560px){.grid-4{grid-template-columns:1fr}}
 .card{background:var(--ink-2);border:1px solid var(--line);border-radius:16px;padding:20px;position:relative;overflow:hidden}
@@ -193,6 +193,16 @@ footer a:hover{color:var(--nacre)}
           <div class="val" id="metricMargin" style="color:var(--mist)">-1.55%</div>
           <div class="sub">61.9% subzero / breakeven</div>
         </div>
+        <div class="card">
+          <div class="label">Solver Decentralization</div>
+          <div class="val" style="color:var(--ice)">20 Solvers</div>
+          <div class="sub">27 Signers | Top Solver Vol: 31.6% (Zero Cartel)</div>
+        </div>
+        <div class="card">
+          <div class="label">Multi-Call Bundling</div>
+          <div class="val permit">64.8%</div>
+          <div class="sub">68/105 Multi-Calls | Up to 32 Sub-Calls/Tx</div>
+        </div>
       </div>
 
       <!-- Two Main Analytical Panels -->
@@ -307,6 +317,97 @@ footer a:hover{color:var(--nacre)}
         <b>💡 Theoretical Architecture & Frontiers:</b> Because Chainlink SVR captures ~98% of post-breach liquidation value, downstream solver extraction is compressed. Werracle's ongoing research explores upstream protection: <b>Pre-Emptive Borrower Delegation</b> (executing via Morpho Blue's native <code class="mono">setAuthorization</code> before $HF &lt; 1.00$) and <b>CEX-DEX Pre-Oracle Signals</b> (measuring ~2–3 second sequencer lead times during volatility).
       </div>
 
+      <!-- MetaMorpho Vault Curator Telemetry -->
+      <div class="panel" style="margin-top:32px">
+        <div class="panel-h">
+          <div class="panel-title">
+            <span>🏛️ MetaMorpho Curator Risk & Collateral Exposure (Audited Oct 12–19 SVR)</span>
+          </div>
+          <span class="pill-tag base">Curator Telemetry</span>
+        </div>
+        <p style="color:var(--mist);font-size:14px;line-height:1.5;margin-bottom:16px">
+          Collateral concentration and liquidation recapture across the highest-exposure Morpho Blue markets on Base. Informs vault curators (e.g., Steakhouse, Gauntlet, Flagship) on real-world solver liquidation efficiency.
+        </p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Collateral Market</th>
+                <th>LLTV</th>
+                <th>Tracked Borrowers</th>
+                <th>SVR Events</th>
+                <th>Gross Seized ($)</th>
+                <th>Recaptured ($)</th>
+                <th>Recapture Rate</th>
+                <th>Solver Share</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>cbXRP / USDC</b></td>
+                <td>62.5%</td>
+                <td>18,801</td>
+                <td>10</td>
+                <td>$88,801.33</td>
+                <td>$85,417.49</td>
+                <td><span style="color:var(--permit)">96.19%</span></td>
+                <td>3.81% (Peak: 32 sub-calls bundle)</td>
+              </tr>
+              <tr>
+                <td><b>SOL / USDC</b></td>
+                <td>62.5%</td>
+                <td>4,172</td>
+                <td>8</td>
+                <td>$27,790.95</td>
+                <td>$26,707.10</td>
+                <td><span style="color:var(--permit)">96.10%</span></td>
+                <td>3.90%</td>
+              </tr>
+              <tr>
+                <td><b>cbLTC / USDC</b></td>
+                <td>62.5%</td>
+                <td>1,771</td>
+                <td>8</td>
+                <td>$17,056.41</td>
+                <td>$16,288.87</td>
+                <td><span style="color:var(--permit)">95.50%</span></td>
+                <td>4.50%</td>
+              </tr>
+              <tr>
+                <td><b>WETH / USDC</b></td>
+                <td>86.0%</td>
+                <td>23,182</td>
+                <td>9</td>
+                <td>$14,907.65</td>
+                <td>$14,669.13</td>
+                <td><span style="color:var(--permit)">98.40%</span></td>
+                <td>1.60%</td>
+              </tr>
+              <tr>
+                <td><b>cbADA / USDC</b></td>
+                <td>62.5%</td>
+                <td>1,704</td>
+                <td>11</td>
+                <td>$10,488.43</td>
+                <td>$10,299.64</td>
+                <td><span style="color:var(--permit)">98.20%</span></td>
+                <td>1.80%</td>
+              </tr>
+              <tr>
+                <td><b>cbBTC / USDC</b></td>
+                <td>86.0%</td>
+                <td>72,055</td>
+                <td>2</td>
+                <td>$40.25</td>
+                <td>$39.65</td>
+                <td><span style="color:var(--permit)">98.51%</span></td>
+                <td>1.49%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
       <!-- Verified Dataset Sample -->
       <div class="panel" style="margin-top:32px">
         <div class="panel-h">
@@ -330,40 +431,49 @@ footer a:hover{color:var(--nacre)}
             </thead>
             <tbody id="txTableBody">
               <tr>
-                <td><a href="https://basescan.org/tx/0xd450700f12" target="_blank" rel="noopener" style="color:var(--ice)">0xd450...0f12</a></td>
-                <td>cbBTC / USDC</td>
-                <td>0.142 cbBTC</td>
-                <td>$9,650.00</td>
-                <td style="color:var(--permit)">$9,510.00</td>
-                <td>$139.80</td>
-                <td style="color:var(--permit)">+1.45%</td>
+                <td><a href="https://basescan.org/tx/0xc0a51904f3bd704512b5c502e3812e7568cbbe6191c8110b4aa110899c26c1f9" target="_blank" rel="noopener" style="color:var(--ice)">0xc0a5...1f9 (32 sub-calls)</a></td>
+                <td>cbXRP / USDC</td>
+                <td>cbXRP Bundle</td>
+                <td>$20,969.08</td>
+                <td style="color:var(--permit)">$19,979.88 (95.28%)</td>
+                <td>$988.81</td>
+                <td style="color:var(--permit)">+4.72%</td>
               </tr>
               <tr>
-                <td><a href="https://basescan.org/tx/0x918341bb21" target="_blank" rel="noopener" style="color:var(--ice)">0x9183...bb21</a></td>
-                <td>WETH / USDC</td>
-                <td>4.85 WETH</td>
-                <td>$12,710.00</td>
-                <td style="color:var(--permit)">$12,580.00</td>
-                <td>$128.50</td>
-                <td style="color:var(--permit)">+1.01%</td>
+                <td><a href="https://basescan.org/tx/0x76a4c8ed78f4c331ce6da89b4cf0dfc8b003666b6c0e0b35542ae1c68f76085a" target="_blank" rel="noopener" style="color:var(--ice)">0x76a4...085a (Overbid)</a></td>
+                <td>cbXRP / USDC</td>
+                <td>cbXRP</td>
+                <td>$18,539.32</td>
+                <td style="color:var(--permit)">$19,056.49 (102.79%)</td>
+                <td style="color:var(--revert)">-$522.48</td>
+                <td style="color:var(--revert)">-2.82%</td>
               </tr>
               <tr>
-                <td><a href="https://basescan.org/tx/0x4523c1092a" target="_blank" rel="noopener" style="color:var(--ice)">0x4523...092a</a></td>
-                <td>cbETH / USDC</td>
-                <td>1.12 cbETH</td>
-                <td>$3,120.00</td>
-                <td style="color:var(--permit)">$3,150.00</td>
-                <td style="color:var(--revert)">-$30.00</td>
-                <td style="color:var(--revert)">-0.96%</td>
+                <td><a href="https://basescan.org/tx/0xc0eb42bbc9176e73dbdca29671f65d6fe62cb8e8f8101683b51ee2bc09df5ff1" target="_blank" rel="noopener" style="color:var(--ice)">0xc0eb...5ff1 (15 sub-calls)</a></td>
+                <td>cbXRP / USDC</td>
+                <td>cbXRP Bundle</td>
+                <td>$15,421.05</td>
+                <td style="color:var(--permit)">$13,679.12 (88.70%)</td>
+                <td>$1,740.65</td>
+                <td style="color:var(--permit)">+11.29%</td>
               </tr>
               <tr>
-                <td><a href="https://basescan.org/tx/0x8b61af3291" target="_blank" rel="noopener" style="color:var(--ice)">0x8b61...3291</a></td>
-                <td>WETH / EURC</td>
-                <td>12.40 WETH</td>
-                <td>$32,450.00</td>
-                <td style="color:var(--permit)">$32,100.00</td>
-                <td>$348.00</td>
-                <td style="color:var(--permit)">+1.07%</td>
+                <td><a href="https://basescan.org/tx/0x5bc6b67722b3e94a8cf61fa3854eb1ce66858a74ec785e2db8ba574fe369a4c0" target="_blank" rel="noopener" style="color:var(--ice)">0x5bc6...a4c0</a></td>
+                <td>cbLTC / USDC</td>
+                <td>cbLTC</td>
+                <td>$12,288.41</td>
+                <td style="color:var(--permit)">$11,736.94 (95.51%)</td>
+                <td>$551.40</td>
+                <td style="color:var(--permit)">+4.49%</td>
+              </tr>
+              <tr>
+                <td><a href="https://basescan.org/tx/0xd93e14f62bfb55f1ff5ce993ce8bb2e81177ceef755712160bbffdd9cbf81dc8" target="_blank" rel="noopener" style="color:var(--ice)">0xd93e...1dc8 (6 sub-calls)</a></td>
+                <td>SOL / USDC</td>
+                <td>SOL Bundle</td>
+                <td>$10,287.36</td>
+                <td style="color:var(--permit)">$9,882.18 (96.06%)</td>
+                <td>$405.06</td>
+                <td style="color:var(--permit)">+3.94%</td>
               </tr>
             </tbody>
           </table>
