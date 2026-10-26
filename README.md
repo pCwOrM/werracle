@@ -59,7 +59,9 @@
 
 > 📄 **Official Published Paper:** [arXiv:2609.30719 [cs.CR, cs.AI, cs.DC]](https://arxiv.org/abs/2609.30719) │ [SSRN: 7626279 (Elsevier)](https://ssrn.com/abstract=7626279) │ [Direct PDF](https://arxiv.org/pdf/2609.30719) │ DOI: [10.48550/arXiv.2609.30719](https://doi.org/10.48550/arXiv.2609.30719)  
 > *Title:* "Werracle: Sub-Cent Intra-Block AI Reflex Oracles and Flash-Loan Circuit Breakers for EVM Smart Contracts"  
-> *Authors:* Volkan Dağlı, Dr. Zerrin Dağlı, Dağhan Dağlı &bull; *Zenodo Concept DOI:* [10.5281/zenodo.22942598](https://doi.org/10.5281/zenodo.22942598)
+> *Authors:* Volkan Dağlı, Dr. Zerrin Dağlı, Dağhan Dağlı &bull; *Zenodo Concept DOI:* [10.5281/zenodo.22942598](https://doi.org/10.5281/zenodo.22942598)  
+> 📡 **Werracle Radar (Live DaaS & Liquidation Observatory):** [radar.werracle.com](https://radar.werracle.com) │ [Dataset on Hugging Face (v1.2)](https://huggingface.co/datasets/pCwOrM/werracle-oev-liquidation-dataset-2026) │ [Zenodo Dataset DOI: 10.5281/zenodo.23623588](https://doi.org/10.5281/zenodo.23623588) │ [SSRN: 7668638](https://papers.ssrn.com/abstract=7668638)  
+> 💼 **Investor Pitch Decks (PDF):** [Radar DaaS (EN)](docs/Werracle_Radar_Investor_Pitch_Deck.pdf) │ [Radar DaaS (TR)](docs/Werracle_Radar_Yatirimci_Sunumu_TR.pdf) │ [Full Ecosystem (EN)](docs/Werracle_Product_Investor_Pitch_Deck_EN.pdf) │ [Full Ecosystem (TR)](docs/Werracle_Product_Investor_Pitch_Deck_TR.pdf)
 
 > 🌐 **Language Switcher / Dil Seçici:**  
 > **English (Default)** | [🇹🇷 Türkçe Dokümantasyon (README_TR.md)](README_TR.md) &bull; 🐺 [**Starknet (Cairo 2 / Sierra) Architecture & Roadmap**](docs/STARKNET_ARCHITECTURE_AND_SEED_GRANT_ROADMAP.md) &bull; 🟢 [**NEAR Intents & Aurora Integration**](near/README.md) &bull; 🌐 [**Interactive Web Simulator**](https://werracle.io/) &bull; ⚡ [**Interactive API Docs**](https://werracle.io/apidocs.html) &bull; 🎓 [**LEARN.md Guide**](LEARN.md) &bull; 🛡️ [**1,000-Test Sealed Audit Report**](docs/TEST_1000_AUDIT_REPORT.md) &bull; 📢 [**Grant & Announcement Playbook**](docs/WEB3_GRANT_AND_ANNOUNCEMENT_PLAYBOOK.md)

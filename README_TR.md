@@ -52,7 +52,9 @@
 
 > **Hem Ethereum Sanal Makinesi (`EVM / Solidity`) hem de Starknet (`Cairo 2.x / Sierra`) içinde blok-içi (intra-block) düzeyde ve milisaniye-altı hızda çalışabilen ilk üretime hazır On-Chain AI Karar Oracle'ı.**  
 > *WERR prosedürel Mandelbrot kaçış dinamiği ile güçlendirilmiştir. Sıfır tensör matrisi. ZK-ML'den 1000 kat daha hızlı ve 15 kat daha ucuz — Starknet üzerinde %100 doğal STARK kanıt geçerliliği ile.*  
-> 📄 **Resmi Yayın:** *"Werracle: Sub-Cent Intra-Block AI Reflex Oracles and Flash-Loan Circuit Breakers for EVM Smart Contracts"* — [**arXiv:2609.30719 [cs.CR, cs.AI, cs.DC]**](https://arxiv.org/abs/2609.30719) │ [**SSRN: 7626279 (Elsevier)**](https://ssrn.com/abstract=7626279) | DOI: [`10.48550/arXiv.2609.30719`](https://doi.org/10.48550/arXiv.2609.30719) | Zenodo: [`10.5281/zenodo.22942598`](https://doi.org/10.5281/zenodo.22942598)
+> 📄 **Resmi Yayın:** *"Werracle: Sub-Cent Intra-Block AI Reflex Oracles and Flash-Loan Circuit Breakers for EVM Smart Contracts"* — [**arXiv:2609.30719 [cs.CR, cs.AI, cs.DC]**](https://arxiv.org/abs/2609.30719) │ [**SSRN: 7626279 (Elsevier)**](https://ssrn.com/abstract=7626279) | DOI: [`10.48550/arXiv.2609.30719`](https://doi.org/10.48550/arXiv.2609.30719) | Zenodo: [`10.5281/zenodo.22942598`](https://doi.org/10.5281/zenodo.22942598)  
+> 📡 **Werracle Radar (Canlı DaaS & Tasfiye Gözlemevi):** [radar.werracle.com](https://radar.werracle.com) │ [Hugging Face Veri Seti (v1.2)](https://huggingface.co/datasets/pCwOrM/werracle-oev-liquidation-dataset-2026) │ [Zenodo Veri Seti DOI: 10.5281/zenodo.23623588](https://doi.org/10.5281/zenodo.23623588) │ [SSRN: 7668638](https://papers.ssrn.com/abstract=7668638)  
+> 💼 **Yatırımcı Sunumları (PDF):** [Radar DaaS (EN)](docs/Werracle_Radar_Investor_Pitch_Deck.pdf) │ [Radar DaaS (TR)](docs/Werracle_Radar_Yatirimci_Sunumu_TR.pdf) │ [Tüm Ekosistem (EN)](docs/Werracle_Product_Investor_Pitch_Deck_EN.pdf) │ [Tüm Ekosistem (TR)](docs/Werracle_Product_Investor_Pitch_Deck_TR.pdf)
 
 <p align="center">
   <img src="assets/twitter_lean4_tesla_gauntlet.png" alt="Werracle Lean 4 Formel Doğrulama & Tesla 3-6-9 Harmonikleri" width="100%">
