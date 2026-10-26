@@ -19,7 +19,7 @@ ITouch Systems Research & Development Desk (headquartered at Adana Çukurova Tec
 **Prior Track Record & Existing Morpho Footprint:**
 Before requesting any grant funding, our desk self-funded, built, and actively deployed a production-grade monitoring suite for the Morpho Blue ecosystem on Base:
 1. **Live High-Frequency Telemetry:** We run a continuous, bare-metal observation daemon (`pcworm-root`) that has processed over **285,000 Base flashblocks** and decoded **5.6M+ transactions**, tracking **83 Morpho Blue markets** and **69,000+ borrower positions** in real time.
-2. **Empirical OEV & Liquidation Proof:** During the acute market volatility regime of October 12–19, 2026, we captured and audited all 105 Chainlink Smart Value Recapture (SVR) multi-call liquidation transactions on Base Morpho ($190,506.31 gross collateral). Our findings independently proved to the DeFi ecosystem that **98.10% ($186,889.85 USD)** of gross liquidation value was successfully recaptured and returned directly to Morpho vaults and depositors.
+2. **Empirical OEV & Liquidation Proof:** During the acute market volatility regime of October 12–19, 2026, we captured and audited all 105 Chainlink Smart Value Recapture (SVR) multi-call liquidation transactions on Base Morpho ($190,506.31 gross collateral). Our findings independently proved to the DeFi ecosystem that **94.38% ($179,807.38 USD; median tx recapture 98.33%)** of gross liquidation value was successfully recaptured and returned directly to Morpho vaults and depositors.
 3. **Open Science & Peer Verification:** This research and its underlying 1,157-transaction dataset have been formally registered on **CERN Zenodo** under permanent DOI `10.5281/zenodo.23623588`, indexed on **Elsevier SSRN** ([Abstract: 7668638](https://papers.ssrn.com/abstract=7668638)), and open-sourced on **Hugging Face** (`pCwOrM/werracle-oev-liquidation-dataset-2026`) with 15/15 mathematical validation invariants passing at 100%.
 
 ---
@@ -73,7 +73,7 @@ While Morpho Blue provides unmatched mathematical elegance and modular isolation
 ### Benefit for the Morpho Ecosystem:
 1. **Public Good with Zero Gating:** In full adherence to MIP 93 rules, every tool, dashboard, API endpoint, and dataset is 100% free, open-source (MIT / CC-BY-4.0), and devoid of paywalls or subscription tiers.
 2. **Independent Curator Validation:** Provides MetaMorpho vault managers with a neutral, third-party observatory to safeguard depositor capital and calibrate LLTV allocations.
-3. **Scientific Proof of SVR Efficacy:** Our empirical research provides empirical proof that Chainlink SVR on Morpho Blue succeeds in eliminating toxic liquidation MEV, recapturing 98.10% for vault depositors. This strengthens institutional trust in Morpho's architecture.
+3. **Scientific Proof of SVR Efficacy:** Our empirical research provides empirical proof that Chainlink SVR on Morpho Blue succeeds in eliminating toxic liquidation MEV, recapturing 94.38% (median 98.33%) for vault depositors. This strengthens institutional trust in Morpho's architecture.
 
 ---
 

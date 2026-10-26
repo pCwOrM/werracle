@@ -11,7 +11,7 @@
 **Permanent DOI:** [https://doi.org/10.5281/zenodo.23623588](https://doi.org/10.5281/zenodo.23623588) (Zenodo Archive: [https://zenodo.org/records/23623589](https://zenodo.org/records/23623589))  
 **SSRN Abstract ID:** [`7668638`](https://papers.ssrn.com/abstract=7668638)  
 **Classification:** Empirical Protocol Research, Cryptoeconomics & Open Science  
-**Data Repository:** [`werracle_oev_empirical_dataset_2026.json`](file:///c:/Users/maat/Documents/antigravity/wonderful-raman/data/werracle_oev_empirical_dataset_2026.json) | [Hugging Face Hub](https://huggingface.co/datasets/pCwOrM/werracle-oev-liquidation-dataset-2026)  
+**Data Repository:** [Zenodo v2 Replication Package (DOI: `10.5281/zenodo.23642090`)](https://doi.org/10.5281/zenodo.23642090) | [Hugging Face Hub](https://huggingface.co/datasets/pCwOrM/werracle-oev-liquidation-dataset-2026)  
 **Live Observatory:** [https://radar.werracle.com](https://radar.werracle.com) | [https://werracle.io/radar.html](https://werracle.io/radar.html)  
 
 ---
@@ -23,19 +23,19 @@ Order Flow Auctions (OFA) and Proposer-Builder Separation (PBS) have fundamental
 This paper presents an empirical analysis based on **1,049 verified liquidations on Ethereum L1** and **105 audited multi-call Chainlink Smart Value Recapture (SVR) transactions on Base (L2)** recorded during the high-volatility window of **October 12–19, 2026**.
 
 ### Key Empirical Findings:
-1. **Base L2 (Chainlink SVR & Atlas):** Across 105 multi-call verified SVR liquidations totaling **\$190,506.31 in gross liquidation value**, competitive solver bidding redirected **\$186,889.85 (98.10%)** directly back to lending protocols and depositors as bids. Solvers retained a pre-swap gross margin of only **1.86% (\$3,545.73)**, with median transaction margins compressed to **-1.55%**. Over **61.9%** (65 of 105) of transactions concluded at zero or negative net profit prior to off-chain DEX slippage.
-2. **Ethereum L1 (MEV-Boost Builder Payments):** Across 1,049 analyzed L1 liquidation events, we measured the priority payments made by searchers to block builders via MEV-Boost. In **848 of 1,049 events (80.84%)**, builder payments were under **\$1.00 USD**, with a median of **\$0.08 USD** (p75: \$0.56, p99: \$2,639.23). High-value liquidations are heavily concentrated: the top 22 transactions accounted for **\$344,155.62** of the total \$358,316.62 paid to builders (with 133 Aave v3 transactions accounting for \$317,467.00). *Note: L1 metrics measure builder priority fees; gross collateral volume was not measured.*
+1. **Base L2 (Chainlink SVR & Atlas):** Across 105 multi-call verified SVR liquidations totaling **\$190,506.31 in gross liquidation value**, competitive solver bidding redirected **\$179,807.38 (94.38%, median tx recapture 98.33%)** directly back to lending protocols and depositors as bids across 513 sub-liquidations (\$1,898,755.19 repaid debt). Solvers retained an oracle pre-swap margin of **5.58% (\$10,630.95)**, with median transaction margins compressed to **+1.26%**. **31.4%** (33 of 105) of transactions concluded at zero or negative net profit prior to off-chain DEX slippage.
+2. **Ethereum L1 (MEV-Boost Builder Payments):** Across 1,049 analyzed L1 liquidation events, we measured the priority payments made by searchers to block builders via MEV-Boost. In **848 of 1,049 events (80.84%)**, builder payments were under **\$1.00 USD**, with a median of **\$0.08 USD** (p75: \$0.56, p99: \$2,639.23). High-value liquidations are heavily concentrated: the top 22 transactions accounted for **\$351,268.00 (95.94%)** of the total \$366,112.89 paid to builders (with 133 Aave v3 transactions accounting for \$317,467.00). *Note: L1 metrics measure builder priority fees; gross collateral volume was not measured.*
 
 ```mermaid
 flowchart LR
     subgraph SVR["Chainlink SVR (Base L2 - 105 İşlem)"]
-        G1["Brüt Tasfiye Değeri: $190.5k"] -->|"%98.10 Protokol Teklifi"| P1["Borç Verme Protokolü & Kasa ($186.9k)"]
-        G1 -->|"%1.86 Pay (Medyan -%1.55)"| S1["Solver Payı ($3.5k pre-swap)"]
+        G1["Brüt Tasfiye Teşviki: $190.5k"] -->|"%94.38 Protokol Teklifi (Medyan %98.3)"| P1["Borç Verme Protokolü & Kasa ($179.8k)"]
+        G1 -->|"%5.58 Pay (Medyan +%1.26)"| S1["Solver Payı ($10.6k pre-swap)"]
         G1 -->|"%0.04 Gaz"| Gas1["L2 Ağ Gazı ($71)"]
     end
 
     subgraph L1["Ethereum L1 Builder Ödemeleri (1.049 İşlem)"]
-        B1["Toplam Builder Ödemesi: $358.3k"] -->|"Top 22 İşlem (%96.0)"| Whale["Balina İşlemleri ($344.2k)"]
+        B1["Toplam Builder Ödemesi: $366.1k"] -->|"Top 22 İşlem (%95.94)"| Whale["Balina İşlemleri ($351.3k)"]
         B1 -->|"848 İşlem (%80.84)"| Dust["Mikro-Toz Ödemeler (< $1.00, Medyan $0.08)"]
     end
 ```
@@ -64,7 +64,7 @@ Earlier desk automated logs undercounted bundled multi-liquidation transactions 
 Our verified multi-call decoder (`denetci_svr_marj_yeniden.py`) re-audited all transactions:
 - Actual gross liquidation value across 105 verified Base SVR transactions was **\$190,506.31**.
 - Solver `0x8b61...` earned a modest positive balance of **+\$447.20** across 51 operations before swap slippage.
-- The median solver margin settled at **-1.55%**, illustrating intense Bertrand price competition among permissionless solvers.
+- The median solver margin settled at **+1.26%**, illustrating intense Bertrand price competition among permissionless solvers.
 
 ---
 
@@ -101,7 +101,7 @@ Chainlink Smart Value Recapture (SVR) utilizes permissionless off-chain auctions
 | Metric | Amount (USD) | Share of Gross (%) |
 | :--- | :--- | :--- |
 | **Gross Liquidation Value** | **\$190,506.31** | **100.00%** |
-| **Protocol Recaptured Value (Bids)** | **\$186,889.85** | **98.10%** |
+| **Protocol Recaptured Value (Bids)** | **\$179,807.38** | **94.38%** |
 | **Gas Costs Incurred (L2 Execution)** | **\$71.22** | **0.04%** |
 | **Pre-Swap Solver Net Margin** | **\$3,545.73** | **1.86%** |
 
@@ -114,7 +114,7 @@ xychart-beta
 ```
 
 ### 3.2 Bertrand Margin Compression
-- **Median Solver Margin:** **-1.55%**
+- **Median Solver Margin:** **+1.26%**
 - **Transactions with Margin $\le 0.00\%$:** **65 of 105 (61.9%)**
 - **Transactions with Margin between 0% and 2%:** **24 of 105 (22.9%)**
 - **Transactions with Margin $\ge 5.00\%$:** **9 of 105 (8.6%)**
@@ -216,7 +216,7 @@ Centralized exchanges (CEX) like Binance frequently exhibit price movements prio
 
 ## Conclusion
 
-The empirical findings from Base Morpho Blue markets demonstrate that Chainlink SVR has effectively addressed post-facto liquidation MEV leakage for observed lending markets on Base by recapturing 98.10% of liquidation value during the October 2026 volatility window. However, this observation is bounded to Base L2; further empirical surveillance across Arbitrum, Ethereum L1, and other lending protocols is required before generalizing protocol-wide conclusions. Future protocol innovation lies in permissioned, pre-emptive borrower risk management and collaborative safety mechanisms.
+The empirical findings from Base Morpho Blue markets demonstrate that Chainlink SVR has effectively addressed post-facto liquidation MEV leakage for observed lending markets on Base by recapturing 94.38% of liquidation value during the October 2026 volatility window. However, this observation is bounded to Base L2; further empirical surveillance across Arbitrum, Ethereum L1, and other lending protocols is required before generalizing protocol-wide conclusions. Future protocol innovation lies in permissioned, pre-emptive borrower risk management and collaborative safety mechanisms.
 
 *For live monitoring of Health Factors across 83 Morpho markets and audited SVR records, visit:*  
 👉 **[https://radar.werracle.com](https://radar.werracle.com)** | **[https://werracle.io/radar.html](https://werracle.io/radar.html)**

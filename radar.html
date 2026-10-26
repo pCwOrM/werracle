@@ -163,7 +163,7 @@ footer a:hover{color:var(--nacre)}
       <div class="badge-tag">Empirical Protocol Research & Live Surveillance</div>
       <h1>OEV & Liquidation Sensory Radar</h1>
       <p class="lede">
-        Sub-second health factor surveillance across 83 Morpho Blue markets and empirical research into Oracle Extractable Value (OEV) recapture on Base L2 (Chainlink SVR) and Ethereum L1.
+        Sub-second health factor surveillance across 38 verified Morpho Blue markets ($2.20B monitored debt, 45 unlisted spam markets filtered) and empirical research into Oracle Extractable Value (OEV) recapture on Base L2 (Chainlink SVR) and Ethereum L1.
       </p>
       <div class="actions">
         <a class="btn primary" href="https://radar.werracle.com" target="_blank" rel="noopener">⚡ Open Fullscreen Radar</a>
@@ -175,33 +175,33 @@ footer a:hover{color:var(--nacre)}
       <div class="grid-4">
         <div class="card">
           <div class="label">Surveillance Coverage</div>
-          <div class="val gold" id="metricMarkets">83 Markets</div>
-          <div class="sub" id="metricPositions">69,341 Tracked Positions</div>
+          <div class="val gold" id="metricMarkets">38 Markets</div>
+          <div class="sub" id="metricPositions">$2.20B Debt | 68,573 Positions</div>
         </div>
         <div class="card">
           <div class="label">Near Liquidation (0.95 &le; HF &lt; 1.10)</div>
-          <div class="val revert" id="metricHot">Active Risk</div>
-          <div class="sub" id="metricBadDebt">Bad Debt (HF &lt; 0.95): Tracking</div>
+          <div class="val revert" id="metricHot">5,083 Hot</div>
+          <div class="sub" id="metricBadDebt">Bad Debt (HF &lt; 0.95): 82 positions</div>
         </div>
         <div class="card">
           <div class="label">Protocol Value Recaptured</div>
-          <div class="val permit" id="metricRecapture">98.10%</div>
-          <div class="sub">$186,889.85 / $190,506.31 gross</div>
+          <div class="val permit" id="metricRecapture">94.38%</div>
+          <div class="sub">$179,807.38 / $190,506.31 (Med: 98.3%)</div>
         </div>
         <div class="card">
           <div class="label">Median Solver Margin</div>
-          <div class="val" id="metricMargin" style="color:var(--mist)">-1.55%</div>
-          <div class="sub">61.9% subzero / breakeven</div>
+          <div class="val" id="metricMargin" style="color:var(--mist)">+1.26%</div>
+          <div class="sub">33/105 (31.4%) subzero / breakeven</div>
         </div>
         <div class="card">
           <div class="label">Solver Decentralization</div>
-          <div class="val" style="color:var(--ice)">20 Solvers</div>
-          <div class="sub">27 Signers | Top Solver Vol: 31.6% (Zero Cartel)</div>
+          <div class="val" style="color:var(--ice)">17 Solvers</div>
+          <div class="sub">Top-3 Vol: 77.05% | HHI: 2,216</div>
         </div>
         <div class="card">
           <div class="label">Multi-Call Bundling</div>
           <div class="val permit">64.8%</div>
-          <div class="sub">68/105 Multi-Calls | Up to 32 Sub-Calls/Tx</div>
+          <div class="sub">68/105 Multi-Calls | 513 Liquidations</div>
         </div>
       </div>
 
@@ -216,18 +216,18 @@ footer a:hover{color:var(--nacre)}
             <span class="pill-tag base">105 Audited Tx</span>
           </div>
           <p style="color:var(--mist);font-size:14px;line-height:1.5">
-            Empirical multi-call decoding across Base Morpho Blue liquidations during the high-volatility window (Oct 12–19, 2026). Atlas permissionless solvers bid aggressively, transferring ~98% of liquidation MEV to protocols.
+            Empirical on-chain re-derivation across 105 Base SVR transactions (86 Morpho Blue, 19 Aave v3; 513 sub-liquidations). Atlas permissionless solvers bid aggressively, returning 94.38% of liquidation OEV (median 98.3%) to protocols.
           </p>
 
           <div class="v-bar">
             <div class="v-track">
-              <div class="v-segment" style="width:98.1%;background:var(--permit)" title="Protocol Bids: 98.10%"></div>
-              <div class="v-segment" style="width:1.86%;background:var(--gold)" title="Solver Pre-Swap: 1.86%"></div>
+              <div class="v-segment" style="width:94.38%;background:var(--permit)" title="Protocol Bids: 94.38%"></div>
+              <div class="v-segment" style="width:5.58%;background:var(--gold)" title="Solver Pre-Swap: 5.58%"></div>
               <div class="v-segment" style="width:0.04%;background:var(--blue)" title="L2 Gas: 0.04%"></div>
             </div>
             <div class="v-legend">
-              <span><i class="v-sq" style="background:var(--permit)"></i> Protocol Recapture: <b>98.10% ($186.9k)</b></span>
-              <span><i class="v-sq" style="background:var(--gold)"></i> Solvers Pre-Swap: <b>1.86% ($3.5k)</b></span>
+              <span><i class="v-sq" style="background:var(--permit)"></i> Protocol Recapture: <b>94.38% ($179.8k)</b></span>
+              <span><i class="v-sq" style="background:var(--gold)"></i> Solvers Pre-Swap: <b>5.58% ($10.6k)</b></span>
               <span><i class="v-sq" style="background:var(--blue)"></i> L2 Gas: <b>0.04% ($71)</b></span>
             </div>
           </div>
@@ -239,23 +239,23 @@ footer a:hover{color:var(--nacre)}
             </div>
             <div class="stat-row">
               <span class="k">Value Recaptured to Protocol Bids</span>
-              <span class="v" style="color:var(--permit)">$186,889.85 USD</span>
+              <span class="v" style="color:var(--permit)">$179,807.38 USD (94.38%)</span>
             </div>
             <div class="stat-row">
-              <span class="k">Solvers Retained (Pre-DEX Slippage)</span>
-              <span class="v" style="color:var(--gold)">$3,545.73 USD</span>
+              <span class="k">Solvers Retained (Oracle Pre-Swap)</span>
+              <span class="v" style="color:var(--gold)">$10,630.95 USD (5.58%)</span>
             </div>
             <div class="stat-row">
               <span class="k">Median Transaction Margin</span>
-              <span class="v" style="color:var(--revert)">-1.55%</span>
+              <span class="v" style="color:var(--permit)">+1.26% (Median Bid: 98.3%)</span>
             </div>
             <div class="stat-row">
               <span class="k">Transactions with Margin &le; 0.00%</span>
-              <span class="v">65 / 105 (61.9%)</span>
+              <span class="v">33 / 105 (31.4%)</span>
             </div>
             <div class="stat-row">
-              <span class="k">Cumulative Negative Margin Losses</span>
-              <span class="v">~$2,500 USD</span>
+              <span class="k">Total Repaid Debt (513 Sub-Calls)</span>
+              <span class="v">$1,898,755.19 USD</span>
             </div>
           </div>
         </div>
@@ -279,18 +279,18 @@ footer a:hover{color:var(--nacre)}
             </div>
             <div class="v-legend">
               <span><i class="v-sq" style="background:var(--ice)"></i> Builder Payment &lt; $1.00: <b>80.84% (848 tx)</b></span>
-              <span><i class="v-sq" style="background:var(--gold)"></i> Whale Bribes: <b>Top 22 Tx = $344.2k (96.0%)</b></span>
+              <span><i class="v-sq" style="background:var(--gold)"></i> Whale Bribes: <b>Top 22 Tx = $351.3k (95.94%)</b></span>
             </div>
           </div>
 
           <div class="stat-list">
             <div class="stat-row">
               <span class="k">Total MEV-Boost Builder Payments</span>
-              <span class="v">$358,316.62 USD</span>
+              <span class="v">$366,112.89 USD</span>
             </div>
             <div class="stat-row">
               <span class="k">Median Builder Payment</span>
-              <span class="v" style="color:var(--permit)">$0.08 USD</span>
+              <span class="v" style="color:var(--permit)">$0.09 USD</span>
             </div>
             <div class="stat-row">
               <span class="k">75th Percentile (p75)</span>
@@ -314,7 +314,7 @@ footer a:hover{color:var(--nacre)}
 
       <!-- Theoretical Proposals & Methodology -->
       <div class="notice">
-        <b>💡 Theoretical Architecture & Frontiers:</b> Because Chainlink SVR captures ~98% of post-breach liquidation value, downstream solver extraction is compressed. Werracle's ongoing research explores upstream protection: <b>Pre-Emptive Borrower Delegation</b> (executing via Morpho Blue's native <code class="mono">setAuthorization</code> before $HF &lt; 1.00$) and <b>CEX-DEX Pre-Oracle Signals</b> (measuring ~2–3 second sequencer lead times during volatility).
+        <b>💡 Theoretical Architecture & Frontiers:</b> Because Chainlink SVR captures 94.38% (median 98.3%) of post-breach liquidation value, downstream solver extraction is compressed. Werracle's ongoing research explores upstream protection: <b>Pre-Emptive Borrower Delegation</b> (executing via Morpho Blue's native <code class="mono">setAuthorization</code> before $HF &lt; 1.00$) and <b>CEX-DEX Pre-Oracle Signals</b> (measuring ~2–3 second sequencer lead times during volatility).
       </div>
 
       <!-- MetaMorpho Vault Curator Telemetry -->
@@ -511,23 +511,25 @@ footer a:hover{color:var(--nacre)}
       if (!res.ok) throw new Error("Status " + res.status);
       const data = await res.json();
 
-      if (data.portfolio_surveillance) {
-        document.getElementById("metricMarkets").textContent = data.portfolio_surveillance.total_monitored_markets + " Markets";
-        document.getElementById("metricPositions").textContent = data.portfolio_surveillance.total_tracked_positions.toLocaleString() + " Tracked Positions";
-        if (data.portfolio_surveillance.near_liquidation_active != null) {
-          document.getElementById("metricHot").textContent = data.portfolio_surveillance.near_liquidation_active.toLocaleString();
-        } else if (data.portfolio_surveillance.hot_positions_near_liquidation != null) {
-          document.getElementById("metricHot").textContent = data.portfolio_surveillance.hot_positions_near_liquidation.toLocaleString();
+      const b2 = data.realtime_surveillance?.base_l2;
+      if (b2) {
+        document.getElementById("metricMarkets").textContent = b2.markets_monitored + " Verified Markets";
+        const debtB = (b2.total_monitored_debt_usd / 1e9).toFixed(2);
+        document.getElementById("metricPositions").textContent = "$" + debtB + "B Debt | " + b2.open_positions_tracked.toLocaleString() + " Positions";
+        if (b2.hot_positions_hf_below_1_10 != null) {
+          document.getElementById("metricHot").textContent = b2.hot_positions_hf_below_1_10.toLocaleString() + " Hot";
         }
-        if (data.portfolio_surveillance.insolvent_bad_debt_legacy != null) {
-          document.getElementById("metricBadDebt").textContent = "Bad Debt (HF < 0.95): " + data.portfolio_surveillance.insolvent_bad_debt_legacy.toLocaleString() + " legacy";
+        if (b2.bad_debt_positions != null) {
+          document.getElementById("metricBadDebt").textContent = "Bad Debt (HF < 0.95): " + b2.bad_debt_positions.toLocaleString() + " positions";
         }
+        document.getElementById("headerLiveStatus").textContent = "Live Telemetry (" + (b2.flashblocks_processed?.toLocaleString() || "Active") + " blocks)";
       }
-      if (data.verified_svr_findings) {
-        document.getElementById("metricRecapture").textContent = data.verified_svr_findings.protocol_capture_rate_pct.toFixed(2) + "%";
-        document.getElementById("metricMargin").textContent = data.verified_svr_findings.median_transaction_margin_pct.toFixed(2) + "%";
+      const svr = data.verified_svr_baseline;
+      if (svr) {
+        document.getElementById("metricRecapture").textContent = svr.protocol_capture_rate_pct.toFixed(2) + "%";
+        const m = svr.median_tx_solver_margin_pct;
+        document.getElementById("metricMargin").textContent = (m >= 0 ? "+" : "") + m.toFixed(2) + "%";
       }
-      document.getElementById("headerLiveStatus").textContent = "Live Telemetry (" + (data.sensory_membrane?.flashblocks_processed?.toLocaleString() || "Sync") + " blocks)";
     } catch (e) {
       console.warn("Using verified cached baseline telemetry:", e);
     }
