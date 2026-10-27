@@ -1519,7 +1519,9 @@ const flash = (() => {
    NEAR intent stream
    ========================================================= */
 (() => {
-  const box = $("#stream"); let on = false, timer = 0;
+  const box = $("#stream");
+  if (!box) return;
+  let on = false, timer = 0;
   const TYPES = [
     {txt:"swap 1.2 ETH → USDC", ok:true},
     {txt:"sandwich bundle", ok:false},
@@ -1529,27 +1531,62 @@ const flash = (() => {
     {txt:"swap 40 NEAR → ETH", ok:true}
   ];
   let n = 0;
+
+  function scheduleNext(delay = 1050){
+    clearTimeout(timer);
+    timer = setTimeout(spawn, delay);
+  }
+
   function spawn(){
-    if (!on || document.hidden) return;
+    if (!on || document.hidden){
+      scheduleNext(1000);
+      return;
+    }
     const T = TYPES[n++ % TYPES.length];
-    const c = document.createElement("div"); c.className = "chip"; c.textContent = T.txt;
+    const c = document.createElement("div");
+    c.className = "chip";
+    c.textContent = T.txt;
     const lane = 26 + (n % 4) * 46;
-    c.style.top = lane + "px"; box.appendChild(c);
-    const W = box.clientWidth, cw = c.offsetWidth, gate = W / 2 - cw - 6;
-    const a1 = c.animate([{transform:`translateX(${-cw}px)`},{transform:`translateX(${gate}px)`}], {duration:2600, easing:"linear", fill:"forwards"});
+    c.style.top = lane + "px";
+    box.appendChild(c);
+
+    const W = box.clientWidth || 800, cw = c.offsetWidth || 140, gate = W / 2 - cw - 6;
+    const a1 = c.animate(
+      [{transform:`translateX(${-cw}px)`},{transform:`translateX(${gate}px)`}],
+      {duration:2600, easing:"linear", fill:"forwards"}
+    );
+
     a1.onfinish = () => {
       c.classList.add(T.ok ? "ok" : "no");
       c.textContent = (T.ok ? "noul=1  " : "noul=0  ") + T.txt;
       if (T.ok){
-        c.animate([{transform:`translateX(${gate}px)`},{transform:`translateX(${W + 20}px)`}], {duration:2400, easing:"cubic-bezier(.4,0,.2,1)", fill:"forwards"}).onfinish = () => c.remove();
+        c.animate(
+          [{transform:`translateX(${gate}px)`},{transform:`translateX(${W + 20}px)`}],
+          {duration:2400, easing:"cubic-bezier(.4,0,.2,1)", fill:"forwards"}
+        ).onfinish = () => c.remove();
       } else {
-        c.animate([{transform:`translateX(${gate}px)`, opacity:1},{transform:`translateX(${gate - 30}px) translateY(36px) rotate(-8deg)`, opacity:0}], {duration:1100, easing:"ease-in", fill:"forwards"}).onfinish = () => c.remove();
+        c.animate(
+          [{transform:`translateX(${gate}px)`, opacity:1},{transform:`translateX(${gate - 30}px) translateY(36px) rotate(-8deg)`, opacity:0}],
+          {duration:1100, easing:"ease-in", fill:"forwards"}
+        ).onfinish = () => c.remove();
       }
     };
-    timer = setTimeout(spawn, 1050);
+
+    scheduleNext(1050);
   }
-  if (RM){ return; }
-  new IntersectionObserver(es => { const was = on; on = es[0].isIntersecting; if (on && !was) spawn(); if (!on) clearTimeout(timer); }).observe(box);
+
+  new IntersectionObserver(es => {
+    const was = on;
+    on = es[0].isIntersecting;
+    if (on && !was) spawn();
+    if (!on) clearTimeout(timer);
+  }, {threshold: 0.05}).observe(box);
+
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden && on){
+      spawn();
+    }
+  });
 })();
 
 /* =========================================================
