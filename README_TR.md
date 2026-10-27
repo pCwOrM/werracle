@@ -196,6 +196,8 @@ Bu araştırmayı bilimsel yayınlarınızda referans gösterirken lütfen aşa�
 * **Ticari Faaliyetler ve Üretim Lisanslaması:** Her türlü ticari ana ağ (mainnet) dağıtımı, gelir üreten DeFi protokollerine entegrasyon veya tescilli SaaS/DaaS işletimi, Lisans Veren'den yazılı Ticari Lisans alınmasını gerektirir:
   * **Lisans Veren:** `ITOUCH BİLİŞİM SİSTEMLERİ MÜHENDİSLİK DANIŞMANLIK SANAYİ VE TİCARET LİMİTED ŞİRKETİ` (`ITouch Sistemleri` · Çukurova Teknokent, Adana, Türkiye).
   * **Bilimsel Ortak Yazarlar ve Mucitler:** Volkan Dağlı (*Anadolu Üniversitesi*), Dr. Zerrin Dağlı (*Mersin Üniversitesi — Akademik Danışman, Ortak Yazar ve Ortak Mucit*), Dağhan Dağlı (*Toros Üniversitesi — Ortak Yazar ve Ortak Mucit*).
+  * **Hak Devri ve Yetki Silsilesi:** Bilimsel ortak yazarlar ve mucitler, fikri mülkiyet yönetimi ve temsil yetkisini Volkan Dağlı'ya; Volkan Dağlı ise münhasır küresel ticari lisanslama, marka ve operasyon haklarını ITouch Bilişim Sistemleri Ltd. Şti.'ye devretmiştir.
+  * **Ticari Markalar:** `WERR™`, `Werracle™`, `answerr™` ve `WerrSoma™` markalarının mülkiyeti münhasıran ITouch Bilişim Sistemleri Ltd. Şti.'ye aittir.
   * **Patent Başvuruları:** TÜRKPATENT **TR 2026/016285** ve **TR 2026/016633**.
   * **İletişim:** `contact@werracle.com` · `info@itouch.com.tr`
 
