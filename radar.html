@@ -78,6 +78,8 @@ p{margin:0}
 
 /* Metric Grid */
 .grid-4{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin:36px 0 48px}
+/* nav-mobile-fix 2026-10-27: keep the header inside the viewport on phones */
+@media(max-width:760px){.nav .wrap{gap:10px}.nav ul{overflow-x:auto;white-space:nowrap;gap:14px;min-width:0;flex:1 1 auto;margin-left:6px;scrollbar-width:none;-webkit-mask-image:linear-gradient(90deg,#000 85%,transparent);mask-image:linear-gradient(90deg,#000 85%,transparent)}.nav ul::-webkit-scrollbar{display:none}.nav ul li{flex:none}.nav .tools{display:none}main .pill{white-space:normal;text-align:left}}
 @media(max-width:980px){.grid-4{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:560px){.grid-4{grid-template-columns:1fr}}
 .card{background:var(--ink-2);border:1px solid var(--line);border-radius:16px;padding:20px;position:relative;overflow:hidden}
@@ -488,7 +490,7 @@ footer a:hover{color:var(--nacre)}
 <footer>
   <div class="wrap">
     <div>
-      <b>Werracle Research &amp; Security Desk</b> — Operated commercially by <b>ITouch Systems</b> (ITouch Bilişim Sistemleri Ltd. Şti., Çukurova Teknokent, VKN: 4690944558) &bull; <a href="https://radar.werracle.com/v1/radar/dashboard#subscribe-section" style="color:var(--ice)">1-Click API Checkout &amp; Commercial Invoice PDF</a>
+      <b>Werracle Research &amp; Security Desk</b> — Operated commercially by <b>ITouch Systems</b> (ITouch Systems · Cukurova University Science Park (ITouch Bilişim Sistemleri Ltd. Şti.), VKN: 4690944558) &bull; <a href="https://radar.werracle.com/v1/radar/dashboard#subscribe-section" style="color:var(--ice)">1-Click API Checkout &amp; Commercial Invoice PDF</a>
     </div>
     <nav>
       <a href="https://werracle.io/">werracle.io</a>
