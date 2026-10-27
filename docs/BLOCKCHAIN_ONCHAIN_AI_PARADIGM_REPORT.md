@@ -2,7 +2,7 @@
 ## On-Chain AI Paradigm Report: The Fall of the Tensor Storage Wall and the Rise of Intra-Block Reflexive Intelligence
 
 **Tarih:** 25 Eylül 2026  
-**Kurum:** ITOUCH BİLİŞİM SİSTEMLERİ LTD. ŞTİ. (Çukurova Teknokent)  
+**Kurum:** ITOUCH BİLİŞİM SİSTEMLERİ LTD. ŞTİ. (Çukurova Üniversitesi Teknokent)  
 **Patent Referansı:** TÜRKPATENT TR 2026/016285  
 **Temel Araştırma:** Dağlı ve ark. (Zenodo: [10.5281/zenodo.22939253](https://doi.org/10.5281/zenodo.22939253) &bull; [10.5281/zenodo.22942599](https://doi.org/10.5281/zenodo.22942599) &bull; arXiv:2609.25498)  
 **Canlı EVM Gaz Başarımı:** 22.557 gas ($\le 24.000$ katı tavan testi onaylı, %90,0 gaz düşüşü)

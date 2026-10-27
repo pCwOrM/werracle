@@ -167,7 +167,7 @@ Live Ecosystem Resources:
 • GitHub Repository (Release v2.0.0): https://github.com/pCwOrM/werracle
 • Formal Gas Audit: https://github.com/pCwOrM/werracle/blob/main/docs/EVM_GAS_IDEAL_BENCHMARK_REPORT.md
 
-Developed by ITOUCH BİLİŞİM SİSTEMLERİ LTD. ŞTİ. (Çukurova Teknokent) & Volkan Dağlı.
+Developed by ITOUCH BİLİŞİM SİSTEMLERİ LTD. ŞTİ. (Çukurova Üniversitesi Teknokent) & Volkan Dağlı.
 Patent: TR 2026/016285. License: BSL 1.1.
 
 Direct Contacts:

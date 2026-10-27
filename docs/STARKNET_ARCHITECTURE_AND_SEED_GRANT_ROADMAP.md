@@ -4,7 +4,7 @@
 * **Project:** Werracle (`werracle_starknet` v2.1.0)
 * **Grant Track:** Starknet Foundation Seed Grant (Status: **🔬 In Screening** — Advanced Oct 14, 2026)
 * **Lead Researcher:** Volkan Dağlı (`@pCwOrM`, ORCID: `0009-0000-1587-8703`)
-* **Co-Researchers:** Zerrin Dağlı, Dağhan Dağlı (ITouch Systems Research Group — Çukurova Teknokent)
+* **Co-Researchers:** Zerrin Dağlı, Dağhan Dağlı (ITouch Systems Research Group — Çukurova Üniversitesi Teknokent)
 * **Cairo Package Path:** [`cairo/`](../cairo/) ([`Scarb.toml`](../cairo/Scarb.toml), [`werr_math.cairo`](../cairo/src/werr_math.cairo), [`werracle_tripod_zmod9.cairo`](../cairo/src/werracle_tripod_zmod9.cairo), [`ekubo_werracle_extension.cairo`](../cairo/src/ekubo_werracle_extension.cairo))
 * **Machine-Checked Formal Verification:** Lean 4 (`v4.34.1`, Mathlib4, **40 Theorems, 0 `sorry` axioms**) — [`formal_proofs/`](../formal_proofs/)
 * **Published Preprints:** [arXiv:2609.30719](https://arxiv.org/abs/2609.30719) &bull; [arXiv:2609.33066](https://arxiv.org/abs/2609.33066) &bull; [Zenodo 10.5281/zenodo.22942598](https://doi.org/10.5281/zenodo.22942598)

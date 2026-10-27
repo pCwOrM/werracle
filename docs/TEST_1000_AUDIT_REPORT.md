@@ -1,6 +1,6 @@
 # 🛡️ Werracle: 1,000-Test Master Verification & Cryptographic Seal Report
 
-**Entity:** ITOUCH BİLİŞİM SİSTEMLERİ LTD. ŞTİ. (Çukurova Teknokent)  
+**Entity:** ITOUCH BİLİŞİM SİSTEMLERİ LTD. ŞTİ. (Çukurova Üniversitesi Teknokent)  
 **Patent Reference:** TR 2026/016285  
 **Seal Timestamp (UTC):** `2026-09-28T02:05:18Z`  
 **Test Battery SHA-256:** `08588afae14e260545019cd96e2308f459cb442536637e760e3e0a1ae66913e4`  

@@ -70,6 +70,6 @@ require(allowed, "Werracle: Dusmanca islem deseni engellendi");
 
 ### 6. İletişim ve Araştırma Kayıtları
 - **Baş Geliştirici:** pcworm.near / Volkan Dağlı (`pcworm@pcworm.net`, `vdagli@itouch.com.tr`)
-- **Kurum:** ITouch Systems — ITouch Bilişim Sistemleri Mühendislik Danışmanlık Sanayi ve Ticaret Limited Şirketi (Çukurova Teknokent, Adana, Türkiye)
+- **Kurum:** ITouch Systems — ITouch Bilişim Sistemleri Mühendislik Danışmanlık Sanayi ve Ticaret Limited Şirketi (Çukurova Üniversitesi Teknokent, Adana, Türkiye)
 - **Resmi Web Sitesi:** [https://werracle.io/](https://werracle.io/)
 - **Akademik Kayıtlar:** arXiv:2609.30719 | SSRN:7626279 | Zenodo DOI: 10.5281/zenodo.22942598 | Hugging Face: papers/2609.30719

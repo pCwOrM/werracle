@@ -1,6 +1,6 @@
 # 📜 LEAN 4 FORMAL VERIFICATION CERTIFICATE (40-THEOREM CUMULATIVE MASTER SEAL)
 **Machine-Verified Determinism, Halting Invariant, Dynamic Leaky Integrator Fitness, and Saturated Swarm Turnover for Sovereign On-Chain Neural Organisms**  
-*ITouch Bilişim Sistemleri Ltd. Şti. (Çukurova Teknokent) & Volkan Dağlı (@pCwOrM)*  
+*ITouch Bilişim Sistemleri Ltd. Şti. (Çukurova Üniversitesi Teknokent) & Volkan Dağlı (@pCwOrM)*  
 *Proof Environment: Lean 4 (v4.34.1) & Lake (v5.0.0) • Mathlib4 Verified*  
 *Hardware: Dual Intel Xeon E5-2630 v4 (40 Cores, 256 GB RAM • Ubuntu 24.04 LTS • Contabo Dedicated)*  
 *Source File SHA-256:* `0db751f9ba66a6e97fcb5981c8ee549d2ed6e5230cedc3f09a6754a1976dcfea`  

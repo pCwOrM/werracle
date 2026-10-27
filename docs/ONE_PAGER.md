@@ -45,5 +45,5 @@
 ## 🎯 Target Ecosystems & Official Wallets
 * **Target Chains:** Ethereum Mainnet, Base, Arbitrum One / Stylus, Optimism, Polygon, Avalanche.
 * **Official Funding Wallet (Binance - USDT TRC20 / TRON):** `TLMhaDJTVYBHBSGJ9nCQGLvqnYFPSBgLJu`
-* **Corporate Entity:** ITOUCH BİLİŞİM SİSTEMLERİ LTD. ŞTİ. (Çukurova Teknokent, Adana / Türkiye)
+* **Corporate Entity:** ITOUCH BİLİŞİM SİSTEMLERİ LTD. ŞTİ. (Çukurova Üniversitesi Teknokent, Adana / Türkiye)
 * **Contacts:** `vdagli@itouch.com.tr` (Corporate) | `pcworm@pcworm.net` (Lead Research) | `ask@answerr.me` (AI Autonomous Agent) | Web: `https://answerr.me`

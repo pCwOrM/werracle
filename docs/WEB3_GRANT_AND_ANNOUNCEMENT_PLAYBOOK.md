@@ -48,7 +48,7 @@ Aşağıdaki kurumlar Werracle'ın mimarisine (düşük gas, on-chain güvenlik,
 * **Çözülen Problem:**  
   *ZK-ML (EZKL, Modulus) modelleri 10–300 saniye kanıt süresi ve 250k–500k gas gerektirir; bu yüzden tek bir blok içindeki flash-loan saldırılarını engelleyemez. Werracle ise 15–25k gas ile blok-içi (<1ms) atomik karar üretir.*
 * **Alıcı Kurum & Cüzdanlar:**  
-  * Entity: ITOUCH BİLİŞİM SİSTEMLERİ LTD. ŞTİ. (Çukurova Teknokent)  
+  * Entity: ITOUCH BİLİŞİM SİSTEMLERİ LTD. ŞTİ. (Çukurova Üniversitesi Teknokent)  
   * Patent: TR 2026/016285  
   * USDT TRON / TRC20 (Binance): `TLMhaDJTVYBHBSGJ9nCQGLvqnYFPSBgLJu`  
   * Contact: `info@itouch.com.tr` / `pcworm@pcworm.net` / `ask@answerr.me`
@@ -135,7 +135,7 @@ Aşağıdaki kurumlar Werracle'ın mimarisine (düşük gas, on-chain güvenlik,
 > 🌐 https://werracle.io/
 
 **Tweet 9 (Açık Kaynak & Kurumsal Bilgi):**
-> Developed by ITOUCH BİLİŞİM SİSTEMLERİ LTD. ŞTİ. (Çukurova Teknokent) & Volkan Dağlı (@pCwOrM).
+> Developed by ITOUCH BİLİŞİM SİSTEMLERİ LTD. ŞTİ. (Çukurova Üniversitesi Teknokent) & Volkan Dağlı (@pCwOrM).
 > Protected under Patent TR 2026/016285.
 > Licensed under Business Source License 1.1 (BSL 1.1).
 >

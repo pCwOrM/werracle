@@ -3,7 +3,7 @@
 > **Document Status:** Permanent Historical & Empirical Research Archive (Unabridged)  
 > **Repository:** [pCwOrM/werracle](https://github.com/pCwOrM/werracle)  
 > **Archival Snapshot Date:** October 2026  
-> **Licensor:** ITouch Bilişim Sistemleri Ltd. Şti. (`ITouch Systems` · Çukurova Teknokent / Cukurova University Science Park)  
+> **Licensor:** ITouch Bilişim Sistemleri Ltd. Şti. (`ITouch Systems` · Cukurova University Science Park)  
 > **Scientific Co-Authors & Inventors:** Volkan Dağlı (Anadolu University), Dr. Zerrin Dağlı (Mersin University), Dağhan Dağlı (Toros University)  
 >
 > *Notice: This document permanently preserves the cumulative historical research logs, ablation matrices, experimental hardware telemetry, and empirical benchmarks of the werracle initiative. It serves as an unalterable academic ledger supporting our published monographs, CERN Zenodo records, and patent disclosures.*
@@ -314,7 +314,7 @@ Werracle is an independent, patented open-source mathematical AI research projec
 
 ### 🏛️ Corporate & Academic Attribution
 
-* **Commercial Operations & Licensing:** Developed and operated by **ITouch Systems** (*ITouch Bilişim Sistemleri Mühendislik Danışmanlık Sanayi ve Ticaret Ltd. Şti.*, Çukurova Teknokent, Adana, Türkiye). *Werr™*, *Werracle™*, and *Answerr™* are registered trademarks of ITouch Systems.
+* **Commercial Operations & Licensing:** Developed and operated by **ITouch Systems** (*ITouch Bilişim Sistemleri Mühendislik Danışmanlık Sanayi ve Ticaret Ltd. Şti.*, Çukurova Üniversitesi Teknokent, Adana, Türkiye). *Werr™*, *Werracle™*, and *Answerr™* are registered trademarks of ITouch Systems.
 * **Scientific Research & Patents:** Authored by **Volkan Dağlı** (*Anadolu University*), **Dr. Zerrin Dağlı** (*Mersin University*), and **Dağhan Dağlı** (*Toros University — Toros Science High School*). Patent applications: **TÜRKPATENT TR 2026/016285** & **TR 2026/016633**.
 * **API Subscriptions & Grants:** [Instant API Checkout (`radar.werracle.com`)](https://radar.werracle.com/pricing#subscribe-section) • Contact: `contact@werracle.com` | `ask@answerr.me`
 
@@ -803,7 +803,7 @@ Werracle'ı veya temelindeki WERR fraktal Sistem-1 karar motorunu Web3 araştır
 
 ### 🏛️ Kurumsal ve Akademik Künye
 
-* **Ticari İşletim ve Lisanslama:** **ITouch Systems** (*ITouch Bilişim Sistemleri Mühendislik Danışmanlık Sanayi ve Ticaret Ltd. Şti.*, Çukurova Teknokent, Adana) tarafından geliştirilmekte ve işletilmektedir. *Werr®*, *Werracle®* ve *Answerr®* markaları ITouch Systems bünyesindedir.
+* **Ticari İşletim ve Lisanslama:** **ITouch Systems** (*ITouch Bilişim Sistemleri Mühendislik Danışmanlık Sanayi ve Ticaret Ltd. Şti.*, Çukurova Üniversitesi Teknokent, Adana) tarafından geliştirilmekte ve işletilmektedir. *Werr®*, *Werracle®* ve *Answerr®* markaları ITouch Systems bünyesindedir.
 * **Bilimsel Araştırma ve Patentler:** **Volkan Dağlı** (*Anadolu Üniversitesi*), **Dr. Zerrin Dağlı** (*Mersin Üniversitesi*) ve **Dağhan Dağlı** (*Toros Üniversitesi — Toros Fen Lisesi*). Patent başvuruları: **TÜRKPATENT TR 2026/016285** ve **TR 2026/016633**.
 * **API Aboneliği ve İletişim:** [Anında API Aboneliği (`radar.werracle.com`)](https://radar.werracle.com/v1/radar/dashboard#subscribe-section) • İletişim: `contact@werracle.com` | `ask@answerr.me`
 

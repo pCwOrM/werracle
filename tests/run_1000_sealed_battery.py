@@ -368,7 +368,7 @@ def run_battery():
     with open(report_file, "w", encoding="utf-8") as f:
         f.write(f"""# 🛡️ Werracle: 1,000-Test Master Verification & Cryptographic Seal Report
 
-**Entity:** ITOUCH BİLİŞİM SİSTEMLERİ LTD. ŞTİ. (Çukurova Teknokent)  
+**Entity:** ITOUCH BİLİŞİM SİSTEMLERİ LTD. ŞTİ. (Çukurova Üniversitesi Teknokent)  
 **Patent Reference:** TR 2026/016285  
 **Seal Timestamp (UTC):** `{manifest_data['seal_timestamp_utc']}`  
 **Test Battery SHA-256:** `{results_sha256}`  

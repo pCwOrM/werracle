@@ -69,7 +69,7 @@ Werracle provides **Starknet** and Ethereum L2 rollups with their first true **n
   `0x4642C97991461A5f98A4c023B5F698991206f52C` (Derived Ethereum / Base / Arbitrum)
 * **Corporate Entity & Licensor:**
   ITOUCH BİLİŞİM SİSTEMLERİ MÜHENDİSLİK DANIŞMANLIK SANAYİ VE TİCARET LİMİTED ŞİRKETİ  
-  Balcalı Mah. Güney Kampüs/5 Sk. No: 4/1 Daire: 26 Sarıçam / Adana, Türkiye (Çukurova Teknokent)  
+  Balcalı Mah. Güney Kampüs/5 Sk. No: 4/1 Daire: 26 Sarıçam / Adana, Türkiye (Çukurova Üniversitesi Teknokent)  
   MERSİS: `0469094455800001` | Ticaret Sicil: `77766` | Tax ID / VKN: `4690944558` (Yüreğir V.D.)
 * **Official Communications:**
   - Corporate Email: `vdagli@itouch.com.tr` / `info@itouch.com.tr`
