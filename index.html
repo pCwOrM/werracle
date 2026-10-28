@@ -1308,7 +1308,7 @@ const sim = (() => {
 
   async function initThree(){
     try {
-      const T = await import("https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js");
+      const T = await import("/assets/vendor/three-0.170.0.module.min.js");
       const canvas = document.createElement("canvas"); canvas.setAttribute("aria-hidden", "true");
       const renderer = new T.WebGLRenderer({canvas, antialias: true, alpha: true, powerPreference: "high-performance"});
       renderer.setPixelRatio(Math.min(devicePixelRatio || 1, matchMedia("(max-width:820px)").matches ? 1.5 : 2));
