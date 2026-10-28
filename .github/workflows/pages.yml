@@ -28,6 +28,11 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      - name: Strip archives and non-public files from Pages artifact
+        run: |
+          rm -rf archive _archive
+          rm -f test/index.html test/*.png test/*.jpg 2>/dev/null || true
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

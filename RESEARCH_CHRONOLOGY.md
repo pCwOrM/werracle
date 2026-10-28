@@ -472,9 +472,9 @@ Werracle is released under the **Business Source License 1.1 (BSL 1.1)**.
 
 All previous design iterations and protocol evolutions are permanently preserved in source for transparency:
 
-- **Classic v1.0 Archive (`werracle.io` Initial Baseline):** [`https://werracle.io/v1_classic.html`](https://werracle.io/v1_classic.html)
-- **Architecture v2.0 Sandbox Archive:** [`https://werracle.io/v2_initial_archive.html`](https://werracle.io/v2_initial_archive.html)
-- **Corporate Portal v1.0 (Dark Theme Archive):** [`https://werracle.com/archive_dark_v1.html`](https://werracle.com/archive_dark_v1.html)
+- **Classic v1.0 Archive (`werracle.io` Initial Baseline):** [`archive/sites/v1_classic.html`](archive/sites/v1_classic.html)
+- **Architecture v2.0 Sandbox Archive:** [`archive/sites/v2_initial_archive.html`](archive/sites/v2_initial_archive.html)
+- **Staging Testbed Archive:** [archive/sites/test_site/](archive/sites/test_site/)
 
 
 ---
@@ -819,7 +819,7 @@ Werracle, **Business Source License 1.1 (BSL 1.1)** ile korunmaktadır (Uniswap 
 
 Tüm önceki tasarım ve protokol sürümleri şeffaflık ve denetlenebilirlik amacıyla kaynakta arşiv olarak korunmaktadır:
 
-- **Klasik v1.0 Arşivi (`werracle.io` İlk Temel Sürüm):** [`https://werracle.io/v1_classic.html`](https://werracle.io/v1_classic.html)
-- **Mimari v2.0 Deneme Alanı Arşivi:** [`https://werracle.io/v2_initial_archive.html`](https://werracle.io/v2_initial_archive.html)
-- **Kurumsal Portal v1.0 (Koyu Tema Arşivi):** [`https://werracle.com/archive_dark_v1.html`](https://werracle.com/archive_dark_v1.html)
+- **Klasik v1.0 Arşivi (`werracle.io` İlk Temel Sürüm):** [`archive/sites/v1_classic.html`](archive/sites/v1_classic.html)
+- **Mimari v2.0 Deneme Alanı Arşivi:** [`archive/sites/v2_initial_archive.html`](archive/sites/v2_initial_archive.html)
+- **Test ve Hazırlık Alanı Arşivi:** [archive/sites/test_site/](archive/sites/test_site/)
 
