@@ -68,6 +68,8 @@ section{position:relative}
 .nav .tools{display:flex;gap:10px;align-items:center}
 .pill{border:1px solid var(--line);background:transparent;color:var(--nacre);font:500 14px var(--f-body);padding:7px 14px;border-radius:999px;cursor:pointer;text-decoration:none;white-space:nowrap}
 .pill:hover{border-color:var(--mist)}
+/* 28 Oct 2026: long pill labels pushed 320-px phones 50 px wide */
+@media(max-width:480px){.pill{white-space:normal;max-width:100%;text-align:center}}
 .menu-btn{display:none}
 @media (max-width:1080px){
   .nav ul{position:fixed;inset:68px 0 auto 0;flex-direction:column;gap:0;background:var(--ink-2);border-bottom:1px solid var(--line);padding:8px var(--gut) 20px;transform:translateY(-120%);transition:transform .35s ease;margin:0}

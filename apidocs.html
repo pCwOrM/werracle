@@ -396,15 +396,20 @@
           const res = await fetch('https://api.answerr.me/werracle/status', {
             headers: token ? { 'X-Recaptcha-Token': token } : {}
           });
-          const data = await res.json();
-          el.textContent = JSON.stringify(data, null, 2);
+          const data = await res.json().catch(() => ({}));
+          el.textContent = (res.ok ? '' : `HTTP ${res.status}\n`) + JSON.stringify(data, null, 2);
         } catch (e) {
           el.textContent = 'Error: ' + e.message;
         }
       } else if (type === 'noul') {
         const el = document.getElementById('res-noul');
         el.style.display = 'block';
-        const risk = parseFloat(document.getElementById('inputRisk').value);
+        const raw = document.getElementById('inputRisk').value.trim();
+        const risk = Number(raw);
+        if (raw === '' || !Number.isFinite(risk) || risk < -1 || risk > 1) {
+          el.textContent = 'Enter a risk score between -1.0 and 1.0 (e.g. -0.25 low risk, 0.9 high risk).';
+          return;
+        }
         el.textContent = 'Calling decideNoul on-chain...';
         try {
           const res = await fetch('https://api.answerr.me/werracle/oracle/noul', {
@@ -412,8 +417,8 @@
             headers: headers,
             body: JSON.stringify({risk_score: risk})
           });
-          const data = await res.json();
-          el.textContent = JSON.stringify(data, null, 2);
+          const data = await res.json().catch(() => ({}));
+          el.textContent = (res.ok ? '' : `HTTP ${res.status}\n`) + JSON.stringify(data, null, 2);
         } catch (e) {
           el.textContent = 'Error: ' + e.message;
         }
@@ -427,8 +432,8 @@
             headers: headers,
             body: JSON.stringify({imbalance_ratio: 0.35})
           });
-          const data = await res.json();
-          el.textContent = JSON.stringify(data, null, 2);
+          const data = await res.json().catch(() => ({}));
+          el.textContent = (res.ok ? '' : `HTTP ${res.status}\n`) + JSON.stringify(data, null, 2);
         } catch (e) {
           el.textContent = 'Error: ' + e.message;
         }
