@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="oracle-hex-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="50%" stop-color="#00ec97" />
+      <stop offset="100%" stop-color="#a855f7" />
+    </linearGradient>
+    <linearGradient id="oracle-inner-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00ec97" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.9" />
+    </linearGradient>
+    <radialGradient id="oracle-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00ec97" stop-opacity="0.4" />
+      <stop offset="70%" stop-color="#38bdf8" stop-opacity="0.1" />
+      <stop offset="100%" stop-color="#050814" stop-opacity="0" />
+    </radialGradient>
+    <filter id="hex-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="#050814" />
+  <circle cx="64" cy="64" r="52" fill="url(#oracle-glow)" />
+  <polygon points="64,16 104,39 104,89 64,112 24,89 24,39" fill="none" stroke="url(#oracle-hex-grad)" stroke-width="3" stroke-linejoin="round" opacity="0.6" />
+  <polygon points="64,28 94,45 94,83 64,100 34,83 34,45" fill="none" stroke="url(#oracle-hex-grad)" stroke-width="4.5" stroke-linejoin="round" filter="url(#hex-glow)" />
+  <polygon points="64,38 84,64 64,90 44,64" fill="url(#oracle-inner-grad)" stroke="#ffffff" stroke-width="1.5" opacity="0.9" />
+  <line x1="28" y1="64" x2="100" y2="64" stroke="#ffffff" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.5" />
+  <circle cx="64" cy="64" r="7" fill="#ffffff" filter="url(#hex-glow)" />
+  <circle cx="64" cy="64" r="3.5" fill="#050814" />
+</svg>
