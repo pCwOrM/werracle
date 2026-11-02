@@ -21,7 +21,14 @@
 [Live Risk Radar](#-werracle-risk-radar) •
 [Ecosystem](#-the-werr-ecosystem) •
 [Research Chronology](RESEARCH_CHRONOLOGY.md) •
-[Türkçe Dokümantasyon](README_TR.md)
+[Türkçe Dokümantasyon](README_TR.md) •
+[NEAR Hackathon Guide](near/README.md)
+
+</div>
+
+> ⚡ **NEAR HACKATHON 2026 OFFICIAL SUBMISSION (Tracks: Unstoppable DeFi, AI Security & Defense, Agent Economy)**:
+> For Hackathon judges, AI screening agents, and developers: Please inspect the dedicated **[NEAR & Aurora EVM Architecture Guide (
+ear/README.md)](near/README.md)** with live Aurora Testnet contracts, interactive simulation battery (python3 near/werracle_near_intent_guard.py), and reproducible benchmarks.
 
 </div>
 
