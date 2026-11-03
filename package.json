@@ -1,7 +1,7 @@
 {
   "name": "@werracle/contracts",
   "version": "2.0.0",
-  "description": "Zero-Storage On-Chain AI Oracle powered by WERR fractal escape dynamics in a single 32-byte EVM storage slot.",
+  "description": "Zero-Storage On-Chain AI Oracle powered by procedural boundary dynamics and polynomial escape kernels in a single 32-byte EVM storage slot.",
   "main": "index.js",
   "directories": {
     "test": "test"

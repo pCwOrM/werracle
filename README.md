@@ -42,7 +42,7 @@ Decentralized finance (DeFi) protocols face a fundamental trilemma between **ora
 
 **Werracle** breaks this barrier by porting the **WERR** procedural fractal reflex engine into native EVM bytecode:
 * **Zero-Storage Footprint:** Requires **0 bytes** of state storage for neural weights. Decision boundaries are geometric invariants computed on the fly.
-* **Deterministic Q16.16 Fixed-Point Math:** Employs fixed-point polynomial boundary escape dynamics ($z_{n+1} = z_n^2 + c$) implemented in optimized Solidity assembly.
+* **Deterministic Q16.16 Fixed-Point Math:** Employs fixed-point polynomial escape dynamics ($z_{n+1} = z_n^2 + c$) to derive non-linear fractal decision boundaries directly in optimized Solidity assembly.
 * **Sub-Block Execution Latency:** Computes full reflex verification in **$< 42,000$ gas** on Ethereum L1 and sub-cent transaction costs on Base / Arbitrum L2s.
 
 ```

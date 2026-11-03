@@ -24,7 +24,7 @@ However, cross-chain execution creates a catastrophic vulnerability: **Intra-Blo
 ### 🛡️ The Werracle Solution on NEAR & Aurora
 **Werracle** is the world’s first production-grade, zero-storage on-chain AI decision oracle fitting inside a **single 32-byte storage slot (`bytes32`)**.
 
-1. **Sub-Millisecond Intra-Block Execution:** Evaluates continuous non-linear decision boundaries via procedural Mandelbrot escape dynamics (\(z_{n+1} = z_n^2 + c\)) in **~21,400 gas (< $0.0001)**.
+1. **Sub-Millisecond Intra-Block Execution:** Evaluates continuous non-linear fractal decision boundaries via procedural polynomial escape dynamics (\(z_{n+1} = z_n^2 + c\)) in **~21,400 gas (< $0.0001)**.
 2. **Native Aurora Deployment:** Runs with zero code changes on **Aurora (EVM on NEAR)**, taking advantage of NEAR's 1-second finality.
 3. **NEAR Intent & Chain Signature Guard:** Acts as a pre-signing reflex circuit breaker: before a Chain Signature is broadcasted to external chains, Werracle verifies orderbook volatility, pool turbulence, and toxic rebalancing signals. If an attack is detected, the intent is atomically vetoed within milliseconds.
 

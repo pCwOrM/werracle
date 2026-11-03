@@ -88,7 +88,7 @@
 
 
 > **The first production-grade On-Chain AI Decision Oracle capable of intra-block, sub-millisecond execution inside both EVM (`Solidity`) and Starknet (`Cairo 2.x / Sierra`) smart contracts.**  
-> *Powered by WERR procedural Mandelbrot escape dynamics. Zero neural tensor matrices. 1000x faster and 15x cheaper than ZK-ML — with 100% native STARK validity on Starknet.*
+> *Powered by WERR procedural polynomial escape dynamics. Zero neural tensor matrices. 1000x faster and 15x cheaper than ZK-ML — with 100% native STARK validity on Starknet.*
 
 <p align="center">
   <img src="assets/twitter_lean4_tesla_gauntlet.png" alt="Werracle Lean 4 Machine Verification & Tesla 3-6-9 Harmonics" width="100%">

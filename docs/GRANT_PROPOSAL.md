@@ -24,7 +24,7 @@ Current workarounds rely on **Off-Chain ZK-ML (Zero-Knowledge Machine Learning)*
 ---
 
 ## 3. The Werracle Solution
-Werracle eliminates stored weight matrices entirely. Operating on procedural quadratic Mandelbrot escape dynamics ($z_{n+1} = z_n^2 + c$) and the $\mathbb{Z}/9\mathbb{Z}$ Sparse Multi-Scale Harmonic Tripod:
+Werracle eliminates stored weight matrices entirely. Operating on procedural polynomial escape dynamics ($z_{n+1} = z_n^2 + c$) and the $\mathbb{Z}/9\mathbb{Z}$ Sparse Multi-Scale Harmonic Tripod to derive non-linear fractal decision boundaries:
 * The entire decision model is encapsulated in a **24-byte coordinate seed** $(c_x, c_y, \text{zoom})$.
 * It fits within a **single 32-byte EVM storage slot (`bytes32`)** and a **single 251-bit Starknet `felt252` storage word**.
 * Using Q16.16 fixed-point arithmetic, Werracle evaluates deterministic non-linear decision hyperplanes (`noul`, `choice`, `score`) natively inside **Starknet CairoVM (Sierra)** in **~1,420 Cairo steps (~$0.00004 in STRK)** with **100% native STARK validity**, and inside **EVM bytecode** for **~18,000 – 22,557 gas in < 1 millisecond**.

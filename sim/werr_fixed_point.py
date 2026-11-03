@@ -194,7 +194,7 @@ class WerracleFixedPointEngine:
     def decide_score(self, risk_signal_fp: int, max_score: int = 3) -> int:
         """
         Score Evaluator:
-        Scales risk and fractal escape into [0, max_score].
+        Scales risk and polynomial escape dynamics into [0, max_score].
         Returns integer level.
         """
         grid = sample_quadrants_microgrid(self.cx, self.cy, self.zoom)

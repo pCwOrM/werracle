@@ -19,7 +19,7 @@ Introducing Werracle v2.0: Sub-millisecond on-chain AI decisions in ~20.7k gas (
 ### 🧵 Tweet 2 (274 / 280)
 How it works:
 
-Instead of multi-GB weights hitting the EVM memory wall, Werracle derives non-linear decision boundaries via Mandelbrot escape dynamics (z_{n+1} = z_n^2 + c).
+Instead of multi-GB weights hitting the EVM memory wall, Werracle derives non-linear fractal decision boundaries via procedural polynomial escape dynamics (z_{n+1} = z_n^2 + c).
 
 A 24-byte seed Θ = (cx, cy, zoom) in bytes32 unfolds a Pareto micro-grid in pure Solidity bytecode.
 
