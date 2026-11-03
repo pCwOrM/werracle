@@ -15,7 +15,7 @@ Dünyanın en popüler Uniswap v4 hook listesi (Uniswap Foundation tarafından r
 
 ### 📋 Eklenecek Satır (Markdown):
 ```markdown
-- [Werracle Chaos-Adaptive Dynamic Fee Hook](https://github.com/pCwOrM/werracle/blob/main/contracts/hooks/WerracleFeeHook.sol): A zero-storage Uniswap v4 dynamic fee hook evaluating real-time orderbook chaos using procedural Mandelbrot escape dynamics (~23k gas). Dynamically adjusts LP fees between 0.05% and 0.50% atomically inside the swap.
+- [Werracle Chaos-Adaptive Dynamic Fee Hook](https://github.com/pCwOrM/werracle/blob/main/contracts/hooks/WerracleFeeHook.sol): A zero-storage Uniswap v4 dynamic fee hook evaluating real-time orderbook chaos using polynomial escape dynamics and procedural boundary geometry (~23k gas). Dynamically adjusts LP fees between 0.05% and 0.50% atomically inside the swap.
 ```
 
 ### 📝 PR Açıklaması (PR Body):
@@ -101,7 +101,7 @@ Hello Solidity community,
 
 We wanted to showcase an implementation of non-linear procedural decision boundaries executed directly on EVM bytecode without floating-point support.
 
-In `WerrMath.sol`, we implemented fixed-point Q16.16 complex number arithmetic to iterate Mandelbrot escape dynamics:
+In `WerrMath.sol`, we implemented fixed-point Q16.16 complex number arithmetic to iterate polynomial escape dynamics:
 $z_{n+1} = z_n^2 + c$
 
 By unrolling loops and optimizing bitwise operations (`shl`, `shr`, `sar`), we evaluate a 16-point Pareto micro-grid in just **~21,438 gas**, making complex algorithmic decisions viable directly on-chain within a single block.

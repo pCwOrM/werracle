@@ -29,7 +29,7 @@ Werracle'ı GitHub Global Campus üzerinde öğrencilere, araştırmacılara ve 
   ```text
   We welcome students and academic researchers to collaborate in:
   1. Layer-2 Rollup Benchmarking: Testing gas variance across Base, Arbitrum One, Optimism, and Polygon zkEVM.
-  2. Non-EVM Porting: Implementing the Q16.16 fixed-point Mandelbrot escape dynamics in Rust (Solana/Near) and Cairo (Starknet).
+  2. Non-EVM Porting: Implementing the Q16.16 fixed-point polynomial escape dynamics in Rust (Solana/Near) and Cairo (Starknet).
   3. Novel Uniswap v4 Hooks: Expanding WerracleFeeHook.sol to dynamic liquidity rebalancing and MEV protection.
   4. Mathematical Verification: Extending formal verification (Certora / Halmos) on the 16-point Pareto micro-grid.
   ```
@@ -157,7 +157,7 @@ Aşağıdaki kurumlar Werracle'ın mimarisine (düşük gas, on-chain güvenlik,
 ```text
 Built an on-chain AI decision oracle that runs natively on Base for ~$0.0006 gas per decision.
 
-Werracle derives typed decisions (noul, choice, score) inside a single 32-byte storage slot using Q16.16 fixed-point Mandelbrot escape dynamics.
+Werracle derives typed decisions (noul, choice, score) inside a single 32-byte storage slot using Q16.16 fixed-point polynomial escape dynamics and procedural boundary geometry.
 
 - 0 Bytes VRAM / 0 neural matrices
 - ~19.4k gas on EVM

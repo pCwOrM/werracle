@@ -249,7 +249,7 @@ def compute_mandelbrot_patch(
     max_iter: int = 50
 ) -> Tuple[float, float, List[List[int]]]:
     """
-    Evaluates Mandelbrot escape dynamics over a 2D patch centered at (cx, cy).
+    Evaluates polynomial escape dynamics over a 2D patch centered at (cx, cy).
     """
     scale = 1.0 / zoom if zoom > 0 else 1.0
     half_res = res / 2.0
