@@ -1,6 +1,6 @@
 # 📜 Werracle on NEAR: Intra-Block Reflex Oracles for Chain Signatures & Aurora EVM
 **Technical Specification & Architecture Dossier for NEAR Hackathon 2026**  
-*Track: Unstoppable DeFi (`01 / DFI`) &bull; Lead Builder: Volkan Dağlı (`pcworm.near`)*  
+*Tracks: Unstoppable DeFi (`01 / DFI`), AI Security & Defense (`02 / SEC`), Agent Economy (`03 / AGT`) &bull; Lead Builder: Volkan Dağlı (`pcworm.near`)*  
 *Associated Research: arXiv:2609.30719, Elsevier SSRN: 7626279, CERN Zenodo: 10.5281/zenodo.22942598*
 
 ---
@@ -55,7 +55,7 @@ $$a \otimes b = \frac{a \times b}{2^{16}}$$
 The underlying $Z/9Z$ ideal decomposition, dynamic boundary invariants, and non-constant sensitivity are formally verified in **Lean 4 (`v4.34.1`)**:
 * **40 Theorems, 0 Sorry, 0 Axioms**
 * Certificate: [`docs/WERRACLE_LEAN4_FORMAL_VERIFICATION_CERTIFICATE.md`](WERRACLE_LEAN4_FORMAL_VERIFICATION_CERTIFICATE.md)
-* Mühürlü Test Suite: 1,000 deterministically sealed test cases with 100.0% pass rate.
+* Sealed Test Suite: 1,000 deterministically sealed test cases with 100.0% pass rate.
 
 ---
 

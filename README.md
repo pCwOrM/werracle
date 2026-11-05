@@ -5,7 +5,7 @@
 
 [![License: BSL 1.1](https://img.shields.io/badge/License-BSL_1.1-0ea5e9.svg)](LICENSE)
 [![Solidity: ^0.8.24](https://img.shields.io/badge/Solidity-^0.8.24%20(Q16.16)-6366f1.svg)](contracts/)
-[![EVM Devnet: Chain ID 4242](https://img.shields.io/badge/EVM_Devnet-Chain_4242-10b981.svg)](https://api.answerr.me/rpc)
+[![EVM Devnet: Chain ID 4242](https://img.shields.io/badge/EVM_Devnet-Chain_4242-10b981.svg)](https://api.answerr.me/werracle/status)
 [![Zenodo DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.22942598-f59e0b.svg)](https://doi.org/10.5281/zenodo.22942598)
 [![arXiv Preprint](https://img.shields.io/badge/arXiv-2609.30719-b91c1c.svg)](https://arxiv.org/abs/2609.30719)
 [![Live Radar](https://img.shields.io/badge/Live_Telemetry-radar.werracle.com-38bdf8.svg)](https://radar.werracle.com)
@@ -15,7 +15,7 @@
 </p>
 
 [Quickstart](#-quickstart--deployment) •
-[Architecture](#-on-chain-fractal-architecture) •
+[Architecture](#️-the-paradigm) •
 [Smart Contracts](#-smart-contract-suite) •
 [Empirical Results](#-empirical-benchmarks--svr-telemetry) •
 [Live Risk Radar](#-werracle-risk-radar) •
@@ -24,19 +24,10 @@
 [Türkçe Dokümantasyon](README_TR.md) •
 [NEAR Hackathon Guide](near/README.md)
 
-[Hermes Agent Plugin](https://github.com/pCwOrM/hermes-werracle-guard)
-
 </div>
-
-> 🛡️ **HERMES AGENT PLUGIN HACKATHON 2026 (Nous Research)**:
-> For Hackathon judges and developers: Inspect the official **[hermes-werracle-guard](https://github.com/pCwOrM/hermes-werracle-guard)** repository — providing deterministic EVM pre-execution circuit breakers (pre_tool_call), transaction simulations, and real-time Radar MEV telemetry for Hermes Agent.
-
 
 > ⚡ **NEAR HACKATHON 2026 OFFICIAL SUBMISSION (Tracks: Unstoppable DeFi, AI Security & Defense, Agent Economy)**:
-> For Hackathon judges, AI screening agents, and developers: Please inspect the dedicated **[NEAR & Aurora EVM Architecture Guide (
-ear/README.md)](near/README.md)** with live Aurora Testnet contracts, interactive simulation battery (python3 near/werracle_near_intent_guard.py), and reproducible benchmarks.
-
-</div>
+> For Hackathon judges, AI screening agents, and developers: Please inspect the dedicated **[NEAR & Aurora EVM Architecture Guide (`near/README.md`)](near/README.md)** and **[Technical Specification (`docs/NEAR_INTENTS_AND_AURORA_INTEGRATION_SPEC.md`)](docs/NEAR_INTENTS_AND_AURORA_INTEGRATION_SPEC.md)** with live Aurora Testnet contracts, interactive simulation battery (`python3 near/werracle_near_intent_guard.py`), and 1,000-test sealed benchmark suite (`python3 tests/run_1000_sealed_battery.py`).
 
 ---
 
@@ -76,41 +67,58 @@ Decentralized finance (DeFi) protocols face a fundamental trilemma between **ora
 
 ## ⚡ Quickstart & Deployment
 
-### Contract Installation (Foundry)
+### 1. Run Zero-Dependency Verification & Simulation Suites
+
+```bash
+# 1. NEAR Intent Guard & Chain Signature Reflex Simulation (4 scenarios)
+python3 near/werracle_near_intent_guard.py
+
+# 2. Q16.16 Fixed-Point EVM Cross-Validation Suite
+python3 sim/test_cross_validation.py
+
+# 3. 1,000-Test Cryptographically Sealed Audit Battery
+python3 tests/run_1000_sealed_battery.py
+```
+
+### 2. Query Live Aurora Testnet Contracts (Chain ID `1313161555`)
+
+```bash
+# Query Werracle.sol (v1.0) on Aurora Testnet
+cast call 0x4085673F1e45bf26682CA704b2d09C03d1212cd4 "owner()(address)" --rpc-url https://testnet.aurora.dev
+
+# Query WerracleTripodZMod9.sol (v2.0) live decision reflex on Aurora Testnet
+cast call 0x1d7Ae9E1dDDA805539d9e225425804Ef8B9caBaF "previewDecision(bytes32,int64)(bool,uint16,int64,int64)" 0x0000000000000000000000000000000000000000000000000000000000000000 0 --rpc-url https://testnet.aurora.dev
+```
+
+### 3. Contract Installation (Foundry)
 
 ```bash
 forge install pCwOrM/werracle
-```
-
-*Or install via npm/yarn:*
-
-```bash
-npm install @werracle/contracts
+forge build
 ```
 
 ### Basic Contract Integration
 
 ```solidity
-// SPDX-License-Identifier: BUSL-1.1
-pragma solidity ^0.8.24;
+// SPDX-License-Identifier: BSL-1.1
+pragma solidity ^0.8.20;
 
-import {IWerracleOracle} from "@werracle/contracts/interfaces/IWerracleOracle.sol";
+import {IWerracle} from "werracle/contracts/IWerracle.sol";
 
 contract SafeVault {
-    IWerracleOracle public immutable oracle;
+    IWerracle public immutable oracle;
 
     constructor(address _oracle) {
-        oracle = IWerracleOracle(_oracle);
+        oracle = IWerracle(_oracle);
     }
 
-    function executeProtectedAction(bytes32 poolId, uint256 volatility) external {
-        // Query the zero-storage reflex oracle
-        // Returns: 0 = Allow / Normal, 1 = Caution / Elevated Fee, 2 = Emergency Gate
-        uint8 decision = oracle.evaluateRisk(poolId, volatility);
+    function executeProtectedAction(bytes32 stateHash, int64 riskScoreFP) external payable {
+        // Query the zero-storage reflex oracle in the same transaction (~20.7k gas)
+        (bool allowed, ) = oracle.decideNoul{value: msg.value}(stateHash, riskScoreFP);
         
-        require(decision != 2, "Werracle: Emergency volatility reflex triggered");
+        require(allowed, "Werracle: Emergency volatility reflex triggered");
         
-        // Execute state transition...
+        // Execute protected state transition...
     }
 }
 ```
@@ -119,14 +127,17 @@ contract SafeVault {
 
 ## 📐 Smart Contract Suite
 
-The repository contains audited Solidity implementations for EVM execution:
+The repository contains verified Solidity implementations for EVM and Aurora execution:
 
 | Contract | Purpose | Gas Profile | Target Networks |
 |---|---|---|---|
-| [`WerracleCore.sol`](contracts/WerracleCore.sol) | Canonical on-chain reflex oracle with Q16.16 escape math | ~38,500 gas | Ethereum L1, Base, Arbitrum |
-| [`WerracleUniswapV4Hook.sol`](contracts/hooks/WerracleUniswapV4Hook.sol) | `beforeSwap` dynamic fee hook mitigating toxic LVR | ~41,200 gas | Base L2, Uniswap v4 Deployments |
-| [`WerracleMorphoSVR.sol`](contracts/adapters/WerracleMorphoSVR.sol) | MetaMorpho vault health monitoring & SVR recapture | ~32,000 gas | Ethereum L1 / Base L2 |
-| [`FixedPointFractal.sol`](contracts/libraries/FixedPointFractal.sol) | Math library computing iterative complex orbital escape | Pure library | EVM Bytecode compatible |
+| [`WerracleTripodZMod9.sol`](contracts/WerracleTripodZMod9.sol) | v2.0 Flagship Multi-Scale Sparse Tripod with $\mathbb{Z}/9\mathbb{Z}$ Lean 4 dynamics | ~20,700 gas | Aurora (NEAR), Ethereum, Base, Arbitrum |
+| [`Werracle.sol`](contracts/Werracle.sol) | v1.0 Canonical on-chain reflex oracle with 16-point Q16.16 escape math | ~21,400 gas | Aurora (NEAR), Ethereum, Base, Arbitrum |
+| [`WerracleFeeHook.sol`](contracts/hooks/WerracleFeeHook.sol) | Uniswap v4 `beforeSwap` dynamic fee hook mitigating toxic LVR | ~24,800 gas | Base L2, Uniswap v4 Deployments |
+| [`PancakeWerracleHook.sol`](contracts/hooks/PancakeWerracleHook.sol) | PancakeSwap v4 CLPool dynamic fee & circuit-breaker hook | ~25,100 gas | BNB Chain, Base L2 |
+| [`WerrMath.sol`](contracts/WerrMath.sol) | Pure Q16.16 fixed-point polynomial orbital escape library | Pure library | All EVM-compatible chains |
+| [`BlockchainResonanceMatrix.sol`](contracts/BlockchainResonanceMatrix.sol) | Procedural coordinate seed and resonance calibration matrix | Pure / View | All EVM-compatible chains |
+| [`IWerracle.sol`](contracts/IWerracle.sol) | Standard Solidity interface (`decideNoul`, `decideChoice`, `decideScore`) | Interface | All EVM-compatible chains |
 
 ---
 
@@ -176,8 +187,9 @@ Werracle represents the decentralized execution tier of the WERR foundational ar
 ```
 
 * **[`werr`](https://github.com/pCwOrM/werr):** The core zero-memory fractal reflex engine and Lean 4 formally verified mathematical proofs.
-* **`werracle`:** On-chain Solidity implementations, Uniswap v4 hooks, and decentralized risk radar.
+* **`werracle`:** On-chain Solidity implementations, NEAR / Aurora Intent Guards, Uniswap v4 hooks, and decentralized risk radar ([werracle.io](https://werracle.io)).
 * **[`answerr`](https://github.com/pCwOrM/answerr):** Natural language dual-cognition workspace connecting System-2 deliberation to deterministic reflex execution.
+* **[`hermes-werracle-guard`](https://github.com/pCwOrM/hermes-werracle-guard):** Autonomous EVM pre-execution circuit breaker (`pre_tool_call`) and transaction simulation plugin for Nous Research Hermes Agent.
 
 ---
 

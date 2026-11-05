@@ -5,7 +5,7 @@
 
 [![Lisans: BSL 1.1](https://img.shields.io/badge/Lisans-BSL_1.1-0ea5e9.svg)](LICENSE)
 [![Solidity: ^0.8.24](https://img.shields.io/badge/Solidity-^0.8.24%20(Q16.16)-6366f1.svg)](contracts/)
-[![EVM Devnet: Chain ID 4242](https://img.shields.io/badge/EVM_Devnet-Zincir_4242-10b981.svg)](https://api.answerr.me/rpc)
+[![EVM Devnet: Chain ID 4242](https://img.shields.io/badge/EVM_Devnet-Zincir_4242-10b981.svg)](https://api.answerr.me/werracle/status)
 [![Zenodo DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.22942598-f59e0b.svg)](https://doi.org/10.5281/zenodo.22942598)
 [![arXiv Ön Baskı](https://img.shields.io/badge/arXiv-2609.30719-b91c1c.svg)](https://arxiv.org/abs/2609.30719)
 [![Canlı Radar](https://img.shields.io/badge/Canl%C4%B1_Telemetri-radar.werracle.com-38bdf8.svg)](https://radar.werracle.com)
@@ -15,15 +15,19 @@
 </p>
 
 [Hızlı Başlangıç](#-hızlı-başlangıç-ve-dağıtım) •
-[Mimari](#-blokzincir-üzeri-fraktal-mimari) •
+[Mimari](#️-yeni-bir-paradigma) •
 [Akıllı Sözleşmeler](#-akıllı-sözleşme-paketi) •
 [Ampirik Sonuçlar](#-ampirik-kıyaslamalar-ve-svr-telemetrisi) •
 [Canlı Risk Radarı](#-werracle-risk-radarı) •
 [Ekosistem](#-werr-ekosistemi) •
 [Araştırma Kronolojisi](RESEARCH_CHRONOLOGY.md) •
-[English Documentation](README.md)
+[English Documentation](README.md) •
+[NEAR Hackathon Rehberi](near/README.md)
 
 </div>
+
+> ⚡ **NEAR HACKATHON 2026 RESMİ BAŞVURUSU (Kategoriler: Unstoppable DeFi, AI Security & Defense, Agent Economy)**:
+> Hackathon jüri üyeleri, yapay zekâ inceleme ajanları ve geliştiriciler için: Canlı Aurora Testnet sözleşmelerini, etkileşimli simülasyon bataryasını (`python3 near/werracle_near_intent_guard.py`) ve 1.000 mühürlü test paketini (`python3 tests/run_1000_sealed_battery.py`) içeren **[NEAR & Aurora EVM Mimari Rehberi (`near/README.md`)](near/README.md)** sayfasını inceleyebilirsiniz.
 
 ---
 
@@ -63,41 +67,48 @@ Merkeziyetsiz finans (DeFi) protokolleri **kâhin gecikmesi**, **gas maliyeti** 
 
 ## ⚡ Hızlı Başlangıç ve Dağıtım
 
-### Sözleşme Kurulumu (Foundry)
+### 1. Sıfır Bağımlılıklı Doğrulama ve Simülasyon Paketleri
+
+```bash
+# 1. NEAR Intent Guard & Chain Signature Refleks Simülasyonu (4 senaryo)
+python3 near/werracle_near_intent_guard.py
+
+# 2. Q16.16 Sabit Nokta EVM Çapraz Doğrulama Paketi
+python3 sim/test_cross_validation.py
+
+# 3. 1.000 Mühürlü Kriptografik Denetim Test Bataryası
+python3 tests/run_1000_sealed_battery.py
+```
+
+### 2. Sözleşme Kurulumu (Foundry)
 
 ```bash
 forge install pCwOrM/werracle
-```
-
-*Veya npm/yarn ile yükleyin:*
-
-```bash
-npm install @werracle/contracts
+forge build
 ```
 
 ### Temel Sözleşme Entegrasyonu
 
 ```solidity
-// SPDX-License-Identifier: BUSL-1.1
-pragma solidity ^0.8.24;
+// SPDX-License-Identifier: BSL-1.1
+pragma solidity ^0.8.20;
 
-import {IWerracleOracle} from "@werracle/contracts/interfaces/IWerracleOracle.sol";
+import {IWerracle} from "werracle/contracts/IWerracle.sol";
 
 contract SafeVault {
-    IWerracleOracle public immutable oracle;
+    IWerracle public immutable oracle;
 
     constructor(address _oracle) {
-        oracle = IWerracleOracle(_oracle);
+        oracle = IWerracle(_oracle);
     }
 
-    function executeProtectedAction(bytes32 poolId, uint256 volatility) external {
-        // Sıfır-depolamalı refleks kâhinini sorgula
-        // Dönen değer: 0 = İzin Ver / Normal, 1 = Dikkat / Yüksek Ücret, 2 = Acil Durum Kapısı
-        uint8 decision = oracle.evaluateRisk(poolId, volatility);
+    function executeProtectedAction(bytes32 stateHash, int64 riskScoreFP) external payable {
+        // Sıfır-depolamalı refleks kâhinini aynı işlem içinde sorgula (~20.7k gas)
+        (bool allowed, ) = oracle.decideNoul{value: msg.value}(stateHash, riskScoreFP);
         
-        require(decision != 2, "Werracle: Acil durum volatilite refleksi tetiklendi");
+        require(allowed, "Werracle: Acil durum volatilite refleksi tetiklendi");
         
-        // Durum geçişini yürüt...
+        // Korunan durum geçişini yürüt...
     }
 }
 ```
@@ -106,14 +117,17 @@ contract SafeVault {
 
 ## 📐 Akıllı Sözleşme Paketi
 
-Depo, EVM üzerinde çalışan denetlenmiş Solidity uygulamalarını içerir:
+Depo, EVM ve Aurora üzerinde çalışan doğrulanmış Solidity uygulamalarını içerir:
 
 | Sözleşme | Amaç | Gas Profili | Hedef Ağlar |
 |---|---|---|---|
-| [`WerracleCore.sol`](contracts/WerracleCore.sol) | Q16.16 kaçış matematiğiyle kanonik blokzincir üzeri refleks kâhini | ~38.500 gas | Ethereum L1, Base, Arbitrum |
-| [`WerracleUniswapV4Hook.sol`](contracts/hooks/WerracleUniswapV4Hook.sol) | Toksik LVR arbitrajını önleyen `beforeSwap` dinamik ücret kancası | ~41.200 gas | Base L2, Uniswap v4 Dağıtımları |
-| [`WerracleMorphoSVR.sol`](contracts/adapters/WerracleMorphoSVR.sol) | MetaMorpho kasa sağlığı izleme & SVR değer geri kazanımı | ~32.000 gas | Ethereum L1 / Base L2 |
-| [`FixedPointFractal.sol`](contracts/libraries/FixedPointFractal.sol) | Yörüngesel karmaşık kaçış hesaplayan matematik kütüphanesi | Saf kütüphane | EVM Bayt Kodu uyumlu |
+| [`WerracleTripodZMod9.sol`](contracts/WerracleTripodZMod9.sol) | $\mathbb{Z}/9\mathbb{Z}$ Lean 4 dinamikleriyle v2.0 Çok Ölçekli Seyrek Tripod kâhini | ~20.700 gas | Aurora (NEAR), Ethereum, Base, Arbitrum |
+| [`Werracle.sol`](contracts/Werracle.sol) | 16 noktalı Q16.16 kaçış matematiğiyle v1.0 kanonik refleks kâhini | ~21.400 gas | Aurora (NEAR), Ethereum, Base, Arbitrum |
+| [`WerracleFeeHook.sol`](contracts/hooks/WerracleFeeHook.sol) | Toksik LVR arbitrajını önleyen Uniswap v4 `beforeSwap` dinamik ücret kancası | ~24.800 gas | Base L2, Uniswap v4 Dağıtımları |
+| [`PancakeWerracleHook.sol`](contracts/hooks/PancakeWerracleHook.sol) | PancakeSwap v4 CLPool dinamik ücret ve devre kesici kancası | ~25.100 gas | BNB Chain, Base L2 |
+| [`WerrMath.sol`](contracts/WerrMath.sol) | Saf Q16.16 sabit noktalı polinom yörünge kaçış kütüphanesi | Saf kütüphane | Tüm EVM uyumlu ağlar |
+| [`BlockchainResonanceMatrix.sol`](contracts/BlockchainResonanceMatrix.sol) | Prosedürel koordinat tohumu ve rezonans kalibrasyon matrisi | Saf / View | Tüm EVM uyumlu ağlar |
+| [`IWerracle.sol`](contracts/IWerracle.sol) | Standart Solidity arayüzü (`decideNoul`, `decideChoice`, `decideScore`) | Arayüz | Tüm EVM uyumlu ağlar |
 
 ---
 

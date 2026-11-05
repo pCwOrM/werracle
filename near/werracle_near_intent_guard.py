@@ -58,7 +58,7 @@ class WerracleReflexVerdict:
 
 class WerracleNearIntentGuard:
     """
-    Evaluates Mandelbrot boundedness dynamics inside single 32-byte EVM storage slot semantics
+    Evaluates polynomial escape boundedness dynamics inside single 32-byte EVM storage slot semantics
     adapted for Aurora EVM / NEAR Chain Signatures.
     
     Calibration Invariant:

@@ -6,7 +6,9 @@
 
 [![NEAR Protocol](https://img.shields.io/badge/NEAR%20Protocol-Intents%20%26%20Chain%20Signatures-00EC97.svg?logo=near&logoColor=black)](https://near.org)
 [![Aurora EVM](https://img.shields.io/badge/Aurora%20EVM-Ethereum%20on%20NEAR-78D64B.svg)](https://aurora.dev)
-[![Track: Unstoppable DeFi](https://img.shields.io/badge/NEAR%20Hackathon%202026-01%20%2F%20Unstoppable%20DeFi-002f6c.svg)](https://nearhackathon.com)
+[![Track: Unstoppable DeFi](https://img.shields.io/badge/Track%2001-Unstoppable%20DeFi-002f6c.svg)](https://nearhackathon.com)
+[![Track: AI Security & Defense](https://img.shields.io/badge/Track%2002-AI%20Security%20%26%20Defense-0ea5e9.svg)](https://nearhackathon.com)
+[![Track: Agent Economy](https://img.shields.io/badge/Track%2003-Agent%20Economy-10b981.svg)](https://nearhackathon.com)
 [![License: BSL 1.1](https://img.shields.io/badge/License-BSL%201.1-blue.svg)](../LICENSE)
 [![Formal Proof: Lean 4](https://img.shields.io/badge/Formal%20Verification-Lean%204%20(0%20Sorry)-9333ea.svg)](../formal_proofs/WerracleProof.lean)
 
