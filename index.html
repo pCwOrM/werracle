@@ -3,23 +3,23 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Werracle — the whole model is 32 bytes</title>
+<title>Werracle — Zero-Storage On-Chain AI Decision Oracle | 32-Byte EVM &amp; NEAR Guard</title>
 <link rel="canonical" href="https://werracle.io/">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://werracle.io/#site","url":"https://werracle.io/","name":"Werracle"},{"@type":"SoftwareApplication","name":"Werracle","applicationCategory":"DeveloperApplication","operatingSystem":"EVM","url":"https://werracle.io/","description":"Zero-storage on-chain AI decision oracle; the decision model is packed into one 32-byte EVM storage slot.","softwareVersion":"2.0.0","author":{"@type":"Person","name":"Volkan Dağlı"},"publisher":{"@type":"Organization","name":"ITouch Systems","url":"https://itouch.com.tr/"},"sameAs":["https://github.com/pCwOrM/werracle","https://arxiv.org/abs/2609.30719"]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://werracle.io/#site","url":"https://werracle.io/","name":"Werracle — Zero-Storage On-Chain AI Decision Oracle"},{"@type":"SoftwareApplication","name":"Werracle","applicationCategory":"DeveloperApplication","operatingSystem":"EVM, Aurora, NEAR","url":"https://werracle.io/","description":"Sub-millisecond, zero-storage on-chain AI decision oracle packed into one 32-byte EVM storage slot (~20.7k execution gas, 40 Lean 4 theorems, NEAR Intents & Aurora guard).","softwareVersion":"2.0.0","author":{"@type":"Person","name":"Volkan Dağlı"},"publisher":{"@type":"Organization","name":"ITouch Systems","url":"https://itouch.com.tr/"},"sameAs":["https://github.com/pCwOrM/werracle","https://arxiv.org/abs/2609.30719"]}]}</script>
 
 <meta property="og:url" content="https://werracle.io/">
-<meta name="description" content="On-chain AI decision oracle for the EVM: the whole model is one 32-byte storage slot. ~20.7k execution gas per decision, same transaction, Lean 4-checked.">
+<meta name="description" content="Sub-millisecond, zero-storage on-chain AI decision oracle living in a single 32-byte EVM storage slot (~20.7k execution gas, same-transaction execution, 40 Lean 4 theorems, NEAR Intents &amp; Aurora guard).">
 <meta name="theme-color" content="#07061a">
-<meta property="og:title" content="Werracle — the whole model is 32 bytes">
-<meta property="og:description" content="On-chain AI decisions inside one EVM storage slot. ~20k execution gas, same transaction, machine-checked in Lean 4.">
+<meta property="og:title" content="Werracle — Zero-Storage On-Chain AI Decision Oracle (32-Byte EVM &amp; NEAR Guard)">
+<meta property="og:description" content="Sub-millisecond, zero-storage on-chain AI decision oracle inside a single 32-byte EVM storage slot. ~20.7k execution gas, same-transaction execution, 40 Lean 4 theorems, and live on Aurora Testnet.">
 <meta property="og:image" content="https://werracle.io/assets/og.jpg">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
   <meta property="og:site_name" content="Werracle">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta name="twitter:title" content="Werracle — the whole model is 32 bytes">
-  <meta name="twitter:description" content="On-chain AI decisions inside one EVM storage slot. ~20k execution gas, same transaction, machine-checked in Lean 4.">
+  <meta name="twitter:title" content="Werracle — Zero-Storage On-Chain AI Decision Oracle (32-Byte EVM &amp; NEAR Guard)">
+  <meta name="twitter:description" content="Sub-millisecond, zero-storage on-chain AI decision oracle inside a single 32-byte EVM storage slot. ~20.7k execution gas, same-transaction execution, 40 Lean 4 theorems, and live on Aurora Testnet.">
   <meta name="twitter:image" content="https://werracle.io/assets/og.jpg">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
@@ -897,6 +897,7 @@ function applyLang(){
   $$("[data-i18n]").forEach(el => { const v = d[el.dataset.i18n]; if (v != null) el.textContent = v; });
   $$("[data-i18n-html]").forEach(el => { const v = d[el.dataset.i18nHtml]; if (v != null) el.innerHTML = v; });
   document.documentElement.lang = lang;
+  document.title = lang === "tr" ? "Werracle — Sıfır Bellekli Zincir Üstü Yapay Zekâ Karar Kâhini | 32-Bayt EVM & NEAR Koruması" : "Werracle — Zero-Storage On-Chain AI Decision Oracle | 32-Byte EVM & NEAR Guard";
   $("#lang").textContent = lang === "en" ? "TR" : "EN";
   $("#fieldNote").textContent = t().hint;
   sim.render(); flash.update(); orbitCaption();
