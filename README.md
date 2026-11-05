@@ -24,7 +24,13 @@
 [Türkçe Dokümantasyon](README_TR.md) •
 [NEAR Hackathon Guide](near/README.md)
 
+[Hermes Agent Plugin](https://github.com/pCwOrM/hermes-werracle-guard)
+
 </div>
+
+> 🛡️ **HERMES AGENT PLUGIN HACKATHON 2026 (Nous Research)**:
+> For Hackathon judges and developers: Inspect the official **[hermes-werracle-guard](https://github.com/pCwOrM/hermes-werracle-guard)** repository — providing deterministic EVM pre-execution circuit breakers (pre_tool_call), transaction simulations, and real-time Radar MEV telemetry for Hermes Agent.
+
 
 > ⚡ **NEAR HACKATHON 2026 OFFICIAL SUBMISSION (Tracks: Unstoppable DeFi, AI Security & Defense, Agent Economy)**:
 > For Hackathon judges, AI screening agents, and developers: Please inspect the dedicated **[NEAR & Aurora EVM Architecture Guide (
