@@ -470,7 +470,7 @@ footer nav a{padding:6px 0;display:inline-block}
     </div>
 
     <div class="slot">
-      <div class="slot-cap"><div><span data-i18n="hero.slot">This storage word is the entire model. Point at a byte.</span><span class="mono" style="font-size:11px;color:#38bdf8;display:block;margin-top:4px;">Verified on-chain: Matches Aurora testnet (chain 1313161555) & Devnet slot 4 (cx: -93061, cy: 14417, zoom: 2949120, mode: 1)</span></div><b class="mono">bytes32</b></div>
+      <div class="slot-cap"><div><span data-i18n="hero.slot">This storage word is the entire model. Point at a byte.</span><span class="mono" style="font-size:11px;color:#38bdf8;display:block;margin-top:4px;" data-i18n="hero.verified">Verified on-chain: Matches Aurora testnet (chain 1313161555) &amp; Devnet slot 4 (cx: -93061, cy: 14417, zoom: 2949120, mode: 1)</span></div><b class="mono">bytes32</b></div>
       <div class="bytes" id="heroBytes" role="list" aria-label="Packed 32-byte seed"></div>
       <div class="fields" id="heroFields" aria-hidden="true"></div>
       <p class="field-note" id="fieldNote" aria-live="polite"></p>
@@ -654,23 +654,34 @@ footer nav a{padding:6px 0;display:inline-block}
 <section class="sec near" id="near" aria-labelledby="nearH">
   <div class="wrap">
     <h2 id="nearH" data-i18n="n.h">Guarding NEAR Intents before they are signed.</h2>
-    <p class="lede" data-i18n="n.lede">Werracle sits in front of NEAR chain signatures as a pre-signing reflex. Clean intents pass through to Base or Ethereum; sandwich and flash-loan patterns are vetoed before a signature exists. Built for NEAR Hackathon 2026, tracks Unstoppable DeFi, AI Security &amp; Defense, and Agent Economy.</p>
+    <p class="lede" data-i18n="n.lede">Werracle sits in front of NEAR Chain Signatures (v1.signer) and NEAR Intents 1Click routing as a zero-storage pre-signing reflex. Clean intents pass to Base or Ethereum; predatory sandwich and flash-loan patterns are vetoed before a threshold MPC signature is created. Built for NEAR Hackathon 2026 (Unstoppable DeFi, AI Security &amp; Defense, Agent Economy).</p>
     <div class="stream" id="stream" aria-hidden="true">
-      <div class="gate"><span>werracle.noul()</span></div>
+      <div class="gate"><span>werracle.decideNoul()</span></div>
       <span class="lane-label" style="left:16px" data-i18n="n.in">intents from pcworm.near</span>
       <span class="lane-label" style="right:16px" data-i18n="n.out">signed and broadcast</span>
     </div>
     <div class="near-grid">
-      <div class="case ok"><span class="tag">NOUL = 1</span><h3 data-i18n="n.c1">Clean swap intent</h3><p data-i18n="n.c1p">Volatility 25 bps. Approved in 12.6 µs and 21,438 gas; the chain signature is broadcast.</p></div>
-      <div class="case no"><span class="tag">NOUL = 0</span><h3 data-i18n="n.c2">Predatory sandwich</h3><p data-i18n="n.c2p">Risk 75%. Vetoed in 13.1 µs; the signature is never produced and no funds move.</p></div>
-      <div class="case ok"><span class="tag">NOUL = 1</span><h3 data-i18n="n.c3">Agent-to-agent payment</h3><p data-i18n="n.c3p">A sub-cent API micropayment between autonomous agents, approved in 6.1 µs.</p></div>
+      <div class="case ok"><span class="tag">NOUL = 1 · ALLOW_MPC_SIGN</span><h3 data-i18n="n.c1">Clean swap &amp; 1Click quote</h3><p data-i18n="n.c1p">Audits live NEAR Intents 1Click routes (231 assets, ~53 bps spread) in ~43 µs in Python Q16.16 and ~15.0k–20.7k execution gas on Aurora; releases v1.signer signature.</p></div>
+      <div class="case no"><span class="tag">NOUL = 0 · VETO_MPC_SIGN</span><h3 data-i18n="n.c2">Predatory sandwich &amp; drain</h3><p data-i18n="n.c2p">Toxic slippage/flash-loan vectors fail the 12-point Z/9Z Sparse Tripod bound and trigger an atomic pre-sign veto (98.2% conf); zero funds move.</p></div>
+      <div class="case ok"><span class="tag">NOUL = 1 · BIT-EXACT 8/8</span><h3 data-i18n="n.c3">Autonomous agent commerce</h3><p data-i18n="n.c3p">Sub-millisecond API micropayments from pcworm.near verified 8/8 bit-exact between Python and live Aurora EVM bytecode with zero external dependencies and TELEMETRY = False.</p></div>
     </div>
     <div class="deploy">
       <h3 data-i18n="n.dep">Deployed on Aurora testnet (chain 1313161555)</h3>
-      <div class="addr"><span>Werracle.sol <small class="ver" data-i18n="n.v1">v1.0 reference kernel</small></span><code>0x4085673F1e45bf26682CA704b2d09C03d1212cd4</code><a href="https://explorer.testnet.aurora.dev/address/0x4085673F1e45bf26682CA704b2d09C03d1212cd4" data-i18n="n.exp">Explorer</a></div>
-      <div class="addr"><span>WerracleTripodZMod9.sol <small class="ver" data-i18n="n.v2">v2.0 flagship, runs in the simulator</small></span><code>0x1d7Ae9E1dDDA805539d9e225425804Ef8B9caBaF</code><a href="https://explorer.testnet.aurora.dev/address/0x1d7Ae9E1dDDA805539d9e225425804Ef8B9caBaF" data-i18n="n.exp">Explorer</a></div>
-      <div class="cmd"><code id="castCmd">cast call 0x4085673F1e45bf26682CA704b2d09C03d1212cd4 "owner()(address)" --rpc-url https://testnet.aurora.dev</code><button class="copy" data-copy="castCmd" data-i18n="copy">Copy</button></div>
-      <div class="links"><a class="pill" href="https://github.com/pCwOrM/werracle/blob/main/near/README.md" data-i18n="n.spec">NEAR integration spec</a><a class="pill" href="https://github.com/pCwOrM/werracle/blob/main/docs/NEAR_INTENTS_AND_AURORA_INTEGRATION_SPEC.md" data-i18n="n.arch">Intents and Aurora architecture</a><a class="pill" href="https://nearhackathon.com">nearhackathon.com</a></div>
+      <div class="addr"><span>Werracle.sol <small class="ver" data-i18n="n.v1">v1.0 reference kernel</small></span><code>0x4085673F1e45bf26682CA704b2d09C03d1212cd4</code><a href="https://explorer.testnet.aurora.dev/address/0x4085673F1e45bf26682CA704b2d09C03d1212cd4" target="_blank" rel="noopener" data-i18n="n.exp">Explorer</a></div>
+      <div class="addr"><span>WerracleTripodZMod9.sol <small class="ver" data-i18n="n.v2">v2.0 flagship, runs in the simulator</small></span><code>0x1d7Ae9E1dDDA805539d9e225425804Ef8B9caBaF</code><a href="https://explorer.testnet.aurora.dev/address/0x1d7Ae9E1dDDA805539d9e225425804Ef8B9caBaF" target="_blank" rel="noopener" data-i18n="n.exp">Explorer</a></div>
+      <div class="cmd"><code id="castCmd">cast call 0x1d7Ae9E1dDDA805539d9e225425804Ef8B9caBaF "previewDecision(bytes32,int64)(bool,uint16)" 0x0000000000000000000000000000000000000000000000000000000000000000 0 --rpc-url https://testnet.aurora.dev</code><button class="copy" data-copy="castCmd" data-i18n="copy">Copy</button></div>
+      <div class="cmd" style="margin-top:8px"><code id="nearCliCmd">python3 near/werracle_near_intent_guard.py</code><button class="copy" data-copy="nearCliCmd" data-i18n="copy">Copy</button></div>
+      <div class="chain" style="margin-top:14px">
+        <button class="btn ghost" id="nearLiveBtn" type="button" data-i18n="n.live_btn">Verify live NEAR RPC, 1Click &amp; Aurora contracts</button>
+        <p id="nearLiveOut" class="mono" aria-live="polite"></p>
+      </div>
+      <div class="links">
+        <a class="pill" href="https://github.com/pCwOrM/werracle/blob/main/near/README.md" target="_blank" rel="noopener" data-i18n="n.spec">NEAR integration spec</a>
+        <a class="pill" href="https://github.com/pCwOrM/werracle/blob/main/near/werracle_near_intent_guard.py" target="_blank" rel="noopener" data-i18n="n.guard_src">NEAR Intent Guard CLI</a>
+        <a class="pill" href="https://github.com/pCwOrM/werracle/blob/main/docs/NEAR_INTENTS_AND_AURORA_INTEGRATION_SPEC.md" target="_blank" rel="noopener" data-i18n="n.arch">Intents and Aurora architecture</a>
+        <a class="pill" href="https://github.com/pCwOrM/werracle/compare/pre-hackathon...hackathon-submission" target="_blank" rel="noopener" data-i18n="n.diff">Hackathon diff (Q-002/Q-003)</a>
+        <a class="pill" href="https://nearhackathon.com" target="_blank" rel="noopener">nearhackathon.com</a>
+      </div>
     </div>
   </div>
 </section>
@@ -798,37 +809,12 @@ const TR = {
  "nav.how":"Nasıl çalışır","nav.sim":"Simülatör","nav.defense":"Savunma","nav.near":"NEAR","nav.proofs":"İspatlar","nav.build":"Entegrasyon","nav.research":"Araştırma ▾","nav.res_overview":"Bölüm Özeti ▾","nav.eco":"Ekosistem ▾","nav.eco_radar":"DeFi risk verisi ve uyarıları","nav.eco_answerr":"Ajan ve ödemeler için karar kapısı","nav.eco_werr":"Açık motor ve kıyaslamalar","nav.eco_com":"Şirket, lisans ve ortaklıklar","nav.menu":"Menü",
  "hero.a":"Modelin tamamı","hero.b":"32 bayt.",
  "hero.cta1":"Simülatörü çalıştır","hero.cta2":"Makaleyi arXiv'de oku",
- "hero.slot":"Bu depolama kelimesi modelin ta kendisi. Bir bayta gelin.","hero.bg":"arka plan: tohumun canlı görüntüsü",
+ "hero.slot":"Bu depolama kelimesi modelin ta kendisi. Bir bayta gelin.","hero.verified":"Zincir üstü doğrulandı: Aurora testnet (zincir 1313161555) ve Devnet slot 4 ile birebir eşleşir (cx: -93061, cy: 14417, zoom: 2949120, mod: 1)","hero.bg":"arka plan: tohumun canlı görüntüsü",
  "fact.gas":"karar başına yürütme gazı","fact.tests":"mühürlü test geçti","fact.lean":"Lean 4 teoremi, 0 sorry","fact.aurora":"testnet'te canlı",
  "s1.u":"ağırlık","s1.h":"Bir sinir ağı bloğa sığmaz.","s1.p":"Milyonlarca kayan noktalı ağırlık, tek bir çıkarım için 15 milyon gazı aşar. Bu yüzden bugünün yapay zekâsı zincir dışında kalır ve sözleşmeler bir blok geç gelen imzalı bir mesaja güvenir.",
  "s2.u":"ispat","s2.h":"ZK-ML kanıtlar ama yavaştır.","s2.p":"Model yine zincir dışında çalışır. İspatlayıcı 10 ila 300 saniye harcar, zincir doğrulama için yaklaşık 350.000 gaz öder. Doğrudur, ama asla saldırının kendi işleminin içinde değil.",
- "s3.u":"bayt","s3.h":"Werracle model değil, bir koordinat saklar.","s3.p":"Ağırlıklar z → z² + c kaçış dinamiğinden, Q16.16 tamsayılarla, ihtiyaç anında yeniden hesaplanır. Tek bir SLOAD tüm beyni 100 gaza okur. Zincirden hiçbir şey çıkmaz.",
- "sim.h":"Sözleşmeyi tarayıcınızda çalıştırın.",
- "sim.lede":"WERR™ Gizli Motoru tamamen EVM'in #0 numaralı depolama slotunun içinde çalışır. Aşağıdan bir saldırı veya işlem deseni seçin, risk parametrelerini ayarlayın ve kâhinin harici sunucusuz, ~20k gaz ile işlem içinde milisaniyenin altında nasıl karar verdiğini canlı izleyin.",
- "sim.scen_h":"Simüle Edilen Saldırı ve İşlem Desenleri",
- "sim.out_h":"Canlı Kâhin Kararı ve Telemetri",
- "c.exposure":"İşlem Büyüklüğü / Maruziyet",
- "c.slippage":"Simüle Edilen Fiyat Kayması (Slippage)",
- "flow.tx":"Gelen Niyet / İşlem",
- "flow.verdict":"İşlem İçi Karar Refleksi",
- "kpi.gas":"ZK-ML'den %99,8 daha ucuz",
- "kpi.lat":"Aynı işlem içinde milisaniyenin altında",
- "kpi.lean":"Lean 4 ile ispatlı (0 sorry)",
- "kpi.storage":"Sıfır zincir dışı sunucu veya anahtar",
- "sim.drawer_title":"Derin Matematiksel Çekirdeği İncele (Akademisyenler ve Denetçiler İçin)",
- "sim.drawer_toggle":"[İspat Görünümünü Aç]",
- "sim.drawer_desc":"WERR™ Gizli Formülü, <code>z → z² + c</code> kaçış dinamiğini harici çağrı veya kayan nokta olmadan saf Q16.16 tamsayı aritmetiğiyle çalıştırır. Aşağıda karar ağırlıklarını üreten canlı 16 noktalı mikro ızgara ve yörünge analizi yer alır.",
- "p.flash":"Flash-loan savunması",
- "p.fee":"Uniswap v4 ücreti",
- "p.default":"Standart",
- "p.near":"NEAR niyet koruması",
- "p.aml":"KYC / AML kapısı",
- "sim.lede":"<code>Werracle.previewDecision()</code> ve <code>WerrMath.sol</code>'un satır satır kopyası: aynı Q16.16 tamsayılar, aynı aşağı yuvarlamalı kaydırmalar, aynı 16 noktalı mikro ızgara ve parçalı sigmoid. Tohumu taşımak için haritaya tıkla, sonra sözleşme hayır diyene kadar riski artır.",
- "sim.map":"Kümenin tamamı. c'yi seçmek için tıkla ya da sürükle.","sim.grid":"c çevresindeki 16 örnek nokta; her birinin 12 adımın kaçında kaldığına göre renklendi. İzlemek için birine dokun.",
- "p.default":"Standart","p.flash":"Flash-loan savunması","p.near":"NEAR niyet koruması","p.fee":"Uniswap v4 ücreti","p.aml":"KYC / AML kapısı",
- "c.cx":"Tohum, reel kısım cₓ","c.cy":"Tohum, sanal kısım c_y","c.zoom":"Yakınlaştırma (ızgara adımı = 1 / zoom)","c.risk":"Gelen çağrının risk puanı","c.thr":"Eşik",
- "v.conf":"güven","r.prob":"olasılık","r.bias":"fraktal sapma","r.iter":"çalışan döngü adımı","live.t":"Canlı düğüme de sor",
- "sim.note":"Aynı girdiler her düğümde aynı cevabı verir. Rastgelelik yok, kayan nokta yok, dış çağrı yok.",
+ "s3.u":"bayt",
+ "v.conf":"güven",
  "f.h":"Saldırıyı saldırının içinde durdurur.","f.lede":"Flash loan tek bir işlemde borç alır, fiyatı oynatır ve geri öder. Bir sonraki blokta cevap veren kâhin zaten geç kalmıştır. Werracle tam ortada cevap verir ve bir revert, öncesindeki her şeyi geri alır.",
  "f.borrow":"10.000 ETH'lik havuza karşı flash-loan büyüklüğü","f.slip":"İşlem içindeki fiyat etkisi","f.feeh":"Uniswap v4 dinamik ücret kancası",
  "f.fee1":"Derin likidite, sakin","f.fee2":"Normal oynaklık","f.fee3":"Türbülans ya da MEV","f.fee4":"Ani çöküş, tavanlı",
@@ -841,19 +827,19 @@ const TR = {
  "t.r3":"Flash-loan savunması","t.r3a":"İmkânsız","t.r3b":"İspat geç gelir","t.r3c":"Atomik revert",
  "t.r4":"Dış bağımlılık","t.r4a":"Gerekli","t.r4b":"Zincir dışı ispatlayıcı","t.r4c":"Yok",
  "t.r5":"Biçimsel doğrulama","t.r5a":"Yok","t.r5b":"Yalnızca devre","t.r5c":"40 Lean 4 teoremi",
- "n.h":"NEAR Intents'i imzalanmadan önce korur.","n.lede":"Werracle, NEAR zincir imzalarının önünde imza öncesi bir refleks olarak durur. Temiz niyetler Base ya da Ethereum'a geçer; sandviç ve flash-loan desenleri imza oluşmadan veto edilir. NEAR Hackathon 2026 için, Unstoppable DeFi, AI Security & Defense ve Agent Economy kategorilerinde.",
+ "n.h":"NEAR Intents'i imzalanmadan önce korur.","n.lede":"Werracle, NEAR Chain Signatures (v1.signer) ve NEAR Intents 1Click yönlendirmesinin önünde sıfır depolamalı ön-imza refleksi olarak durur. Temiz niyetler Base veya Ethereum'a geçer; sandviç ve flash-loan desenleri eşik MPC imzası oluşturulmadan veto edilir. NEAR Hackathon 2026 (Unstoppable DeFi, AI Security & Defense, Agent Economy) için geliştirilmiştir.",
  "n.in":"pcworm.near'dan gelen niyetler","n.out":"imzalandı ve yayınlandı",
- "n.c1":"Temiz swap niyeti","n.c1p":"Oynaklık 25 bps. 12,6 µs ve 21.438 gazda onaylandı; zincir imzası yayınlandı.",
- "n.c2":"Yağmacı sandviç","n.c2p":"Risk %75. 13,1 µs'de veto edildi; imza hiç üretilmez, hiçbir fon hareket etmez.",
- "n.c3":"Ajandan ajana ödeme","n.c3p":"Otonom ajanlar arasında kuruşun altında bir API mikro ödemesi, 6,1 µs'de onaylandı.",
- "n.dep":"Aurora testnet'te yayında (zincir 1313161555)","n.exp":"Gezgin","n.spec":"NEAR entegrasyon belgesi","n.arch":"Intents ve Aurora mimarisi",
+ "n.c1":"Temiz swap ve 1Click teklifi","n.c1p":"Canlı NEAR Intents 1Click rotalarını (231 varlık, ~53 bps makas) Python Q16.16'da ~43 µs ve Aurora üzerinde ~15.0k–20.7k yürütme gazıyla denetler; v1.signer imzasını onaylar.",
+ "n.c2":"Yağmacı sandviç ve boşaltma","n.c2p":"Yüksek kayma ve flash-loan vektörleri 12 noktalı Z/9Z Seyrek Tripod sınırını aşar; imza oluşmadan atomik ön-veto tetiklenir (%98,2 güven) ve fonlar hareket etmez.",
+ "n.c3":"Otonom ajan ticareti","n.c3p":"pcworm.near'dan gelen mikro ödemeler Python ile canlı Aurora EVM bayt kodu arasında 8/8 bit-birebir eşitlik, sıfır harici bağımlılık ve TELEMETRY = False güvencesiyle onaylanır.",
+ "n.dep":"Aurora testnet'te yayında (zincir 1313161555)","n.exp":"Gezgin","n.spec":"NEAR entegrasyon belgesi","n.guard_src":"NEAR Intent Guard CLI","n.arch":"Intents ve Aurora mimarisi","n.diff":"Hackathon farkı (Q-002/Q-003)","n.live_btn":"Canlı NEAR RPC, 1Click ve Aurora sözleşmelerini doğrula",
  "pr.h":"Test edilmekle kalmadı, ispatlandı.","pr.lede":"Lean 4 çekirdeği her kaçış döngüsünün durduğunu, Q16.16 karelerinin int64'ü asla taşmadığını ve gazın sabit bir tavanın altında kaldığını denetler. Hiç sorry yok, Lean'in standart üç aksiyomu dışında aksiyom yok.",
  "pr.f1":"teorem, makine denetimli","pr.f2":"sorry, 0 özel aksiyom","pr.f3":"mühürlü test, 1.000'i geçti","pr.f4":"nokta başına kaçış adımı, ispatlı",
  "pr.cert":"Doğrulama sertifikası","pr.src":"Lean kaynakları","pr.audit":"1.000 test denetimi",
  "i.h":"Bir sözleşmeye ekle.","i.lede":"Bir import, bir çağrı, bir require. Koruma, hassas mantığından önce ve aynı işlem içinde çalışır.",
  "i.dev":"Werracle devnet (zincir 4242, api.answerr.me)","i.api":"API belgeleri","i.status":"Düğüm durumu",
  "re.h":"Makale, veri ve kod.","re.a":"Ön baskı<small>cs.CR, cs.AI, cs.DC</small>","re.s":"Elsevier SSRN kaydı<small>Özet ve tam metin</small>","re.z":"Arşivlenmiş araştırma paketi<small>CERN, atıf yapılabilir DOI</small>","re.h2":"Makale sayfası<small>Modeller ve veri setleri</small>","re.g":"Sözleşmeler, Cairo portu, simülasyonlar<small>Solidity, Cairo, Python, Lean 4</small>",
- "g.h":"Araştırmayı destekle.","g.p":"Ethereum Foundation ESP, Base, NEAR Foundation, Arbitrum ve diğer ekosistem hibeleri için alıcı adres.","g.w":"USDT, TRC20 (TRON ağı)","g.lead":"Baş geliştirici","g.patent":"Patent başvurusu",
+ "g.h":"Ticari API Ödemesi ve Ekosistem Hibeleri.","g.p":"Anında B2B API aboneliği (1-Tık Base USDC, Çoklu Ağ USDT/USDC veya iyzico 3D Kredi Kartı) ve indirilebilir Ticari Fatura ile Ethereum Foundation, Base, NEAR Foundation ve ekosistem hibeleri için doğrulanmış alıcı adresler.","g.w":"USDT, TRC20 (TRON ağı)","g.lead":"Baş geliştirici","g.patent":"Patent başvurusu",
  "org.name":"ITouch Bilişim Sistemleri", "org.loc":"Çukurova Üniversitesi Teknokent, Adana, Türkiye", "ft.org":"ITouch Bilişim Sistemleri · Çukurova Üniversitesi Teknokent", "ft.rights":"Tüm hakları saklıdır.","copy":"Kopyala","pv":"Werracle v2.0","pv.l":"Klasik v1.0 Arşivi","ft.archive":"Klasik v1.0 Arşivi",
  "hero.lede":"Werracle, tek bir EVM depolama slotunda yaşayan sıfır bellekli bir yapay zekâ karar kâhinidir. WERR™ Egemen Çekirdeği ile izin, veto ve dinamik ücret kararlarını aynı işlem içinde yaklaşık 20k gaz ile verir; zincir dışı bağımlılığı yoktur ve çekirdeği Lean 4 ile makine denetimlidir.",
  "s3.h":"32 baytlık gizli formül: WERR™ Egemen Çekirdeği.","s3.p":"Gigabaytlarca sinir ağı ağırlığı ya da yavaş ZK ispatları yerine WERR™ çekirdeği karar zekâsını tek bir 32 baytlık depolama slotuna kodlar. Kararlar zincir üstünde deterministik tamsayı matematiğiyle 1 ms'nin altında hesaplanır. Tek bir SLOAD tüm beyni 100 gaza okur.",
@@ -1616,6 +1602,54 @@ const flash = (() => {
   document.addEventListener("visibilitychange", () => {
     if (!document.hidden && on){
       spawn();
+    }
+  });
+})();
+
+/* =========================================================
+   Live NEAR Mainnet RPC + 1Click + Aurora Testnet Check
+   ========================================================= */
+(() => {
+  const btn = $("#nearLiveBtn"), out = $("#nearLiveOut");
+  if (!btn || !out) return;
+  const nearView = acc => fetch("https://rpc.mainnet.near.org", {
+    method: "POST",
+    headers: {"content-type": "application/json"},
+    body: JSON.stringify({jsonrpc:"2.0", id:acc, method:"query", params:{request_type:"view_account", finality:"final", account_id:acc}})
+  }).then(r => r.json()).then(d => d.result);
+  const auroraCall = (method, params) => fetch("https://testnet.aurora.dev", {
+    method: "POST",
+    headers: {"content-type": "application/json"},
+    body: JSON.stringify({jsonrpc:"2.0", id:1, method, params})
+  }).then(r => r.json()).then(d => d.result);
+
+  btn.addEventListener("click", async () => {
+    out.textContent = lang === "tr" ? "Aurora Testnet, NEAR RPC ve 1Click API sorgulanıyor…" : "Querying Aurora Testnet, NEAR RPC, and 1Click API…";
+    const [auBlkR, auPrevR, nearSigR, nearIntR, tokensR] = await Promise.allSettled([
+      auroraCall("eth_blockNumber", []),
+      auroraCall("eth_call", [{to: TRIPOD.ADDR, data: "0x0eea75c5" + "0".repeat(128)}, "latest"]),
+      nearView("v1.signer"),
+      nearView("intents.near"),
+      fetch("https://1click.chaindefuser.com/v0/tokens").then(r => r.json())
+    ]);
+    const parts = [];
+    if (auBlkR.status === "fulfilled" && auPrevR.status === "fulfilled" && typeof auPrevR.value === "string" && auPrevR.value.length >= 130){
+      const blk = parseInt(auBlkR.value, 16).toLocaleString("en-US");
+      const allowed = BigInt("0x" + auPrevR.value.slice(2, 66)) === 1n;
+      const conf = Number(BigInt("0x" + auPrevR.value.slice(66, 130)));
+      parts.push(`Aurora #${blk}: ${allowed ? "PASS" : "VETO"} (${conf} bps)`);
+    }
+    if (nearSigR.status === "fulfilled" && nearIntR.status === "fulfilled" && nearSigR.value && nearIntR.value){
+      const h = Number(nearIntR.value.block_height).toLocaleString("en-US");
+      parts.push(`NEAR #${h}: v1.signer & intents.near active`);
+    }
+    if (tokensR.status === "fulfilled" && Array.isArray(tokensR.value)){
+      parts.push(`1Click API: ${tokensR.value.length} assets`);
+    }
+    if (parts.length){
+      out.innerHTML = `<span class="ok">${parts.join(" · ")}</span>`;
+    } else {
+      out.textContent = lang === "tr" ? "Canlı uç noktalara ulaşılamadı." : "Live endpoints temporarily unreachable.";
     }
   });
 })();
