@@ -26,7 +26,7 @@ However, cross-chain execution creates a catastrophic vulnerability: **Intra-Blo
 ### 🛡️ The Werracle Solution on NEAR & Aurora
 **Werracle** is the world’s first production-grade, zero-storage on-chain AI decision oracle fitting inside a **single 32-byte storage slot (`bytes32`)**.
 
-1. **Sub-Millisecond Intra-Block Execution:** Evaluates continuous non-linear fractal decision boundaries via procedural polynomial escape dynamics (\(z_{n+1} = z_n^2 + c\)) in **~21,400 gas (< $0.0001)**.
+1. **Sub-Millisecond Intra-Block Execution:** Evaluates continuous non-linear fractal decision boundaries via procedural polynomial escape dynamics ($z_{n+1} = z_n^2 + c$) in **~20,700–21,400 execution gas (< $0.0001 on Aurora)**.
 2. **Native Aurora Deployment:** Runs with zero code changes on **Aurora (EVM on NEAR)**, taking advantage of NEAR's 1-second finality.
 3. **NEAR Intent & Chain Signature Guard:** Acts as a pre-signing reflex circuit breaker: before a Chain Signature is broadcasted to external chains, Werracle verifies orderbook volatility, pool turbulence, and toxic rebalancing signals. If an attack is detected, the intent is atomically vetoed within milliseconds.
 
@@ -77,18 +77,44 @@ However, cross-chain execution creates a catastrophic vulnerability: **Intra-Blo
 
 ---
 
-## 🧪 Verification & Simulation
+## 🧪 Verification, Live Cross-Chain Parity & Simulation
 
-You can run the standalone NEAR Intent Guard verification simulation directly:
+Run the zero-dependency NEAR Intent Guard, Chain Signatures (`v1.signer`) policy gate, and live Aurora EVM parity verifier:
 
 ```bash
-# Run the NEAR Intent Guard & Chain Signature Verification Battery
+# 1. Full live audit: 4 canonical intents + Aurora Testnet bit-exact EVM parity (8/8 vectors)
+#    + NEAR RPC (pcworm.near, v1.signer, intents.near) + live NEAR Intents 1Click dry quote
 python3 near/werracle_near_intent_guard.py
+
+# 2. Air-gapped / deterministic modes & machine-readable agent JSON output
+python3 near/werracle_near_intent_guard.py --offline
+python3 near/werracle_near_intent_guard.py --json --eval-risk 2.5
+
+# 3. Direct Aurora Testnet Foundry queries (expected: true, 5266)
+cast call 0x1d7Ae9E1dDDA805539d9e225425804Ef8B9caBaF "previewDecision(bytes32,int64)(bool,uint16)" \
+  0x0000000000000000000000000000000000000000000000000000000000000000 0 \
+  --rpc-url https://testnet.aurora.dev
+
+# 4. Unit tests, 1,000-test sealed battery & Foundry smart contract suite
+python3 -m pytest -q
+python3 tests/run_1000_sealed_battery.py
+forge test
 ```
 
-### Key Metrics:
+### Key Metrics
 * **Storage Footprint:** Single 32-byte slot (`bytes32`)
-* **Inference Gas Cost:** ~21,438 gas (~$0.00005 on Aurora)
-* **Execution Latency:** < 1 millisecond
-* **Formal Verification:** 40 Machine-Certified Lean 4 Theorems (0 sorry, 0 axioms)
-* **Audit Suite:** 1,000 Cryptographically Sealed Test Cases (100.0% Pass Rate)
+* **Inference Gas Cost:** ~20,700–21,438 execution gas (`86,813` measured Aurora Testnet tx gas estimate for `decideNoul`; < $0.0001 on Aurora)
+* **Execution Latency:** < 1 millisecond (~40–55 us in Python Q16.16)
+* **Formal Verification:** 40 core Werracle Lean 4 theorems (`formal_proofs/`, 0 `sorry`; 170+ across the broader WERR research corpus)
+* **Audit & Test Suites:** 1,000/1,000 sealed test battery + 22/22 `pytest` tests + 7/7 `forge test` Foundry tests
+
+---
+
+## 📋 Hackathon Baseline & Diff Disclosure (Rules Q-002 / Q-003 / Q-005)
+
+* **Pre-Hackathon Baseline ([`pre-hackathon`](https://github.com/pCwOrM/werracle/tree/pre-hackathon) tag, Oct 18 2026):** Core Q16.16 fixed-point research kernel (`engine/`), early Solidity v1 prototype, initial 1,000-test battery, and baseline Lean 4 formalizations.
+* **Built During NEAR Hackathon 2026 ([Compare `pre-hackathon...hackathon-submission`](https://github.com/pCwOrM/werracle/compare/pre-hackathon...hackathon-submission)):**
+  * [`near/werracle_near_intent_guard.py`](werracle_near_intent_guard.py) & [`tests/test_near_intent_guard.py`](../tests/test_near_intent_guard.py): Bit-exact Q16.16 `WerracleTripodZMod9` Python port, Chain Signatures (`v1.signer`) pre-signing policy gate, live NEAR Intents 1Click API (`1click.chaindefuser.com/v0`) quote slippage audit, NEAR RPC account checks, and live Aurora Testnet parity verification.
+  * Live **Aurora Testnet** deployments (`0x1d7Ae9E1dDDA805539d9e225425804Ef8B9caBaF` & `0x4085673F1e45bf26682CA704b2d09C03d1212cd4`), [`deploy_aurora_testnet.sh`](deploy_aurora_testnet.sh), and [`NEAR_INTENTS_AND_AURORA_INTEGRATION_SPEC.md`](../docs/NEAR_INTENTS_AND_AURORA_INTEGRATION_SPEC.md).
+  * Interactive Q16.16 Aurora simulator portal ([`werracle.io`](https://werracle.io)) & OEV/liquidation telemetry observatory ([`radar.werracle.com`](https://radar.werracle.com)), extended 40-theorem Lean 4 core proof files, and Starknet/Foundry verification harnesses.
+* **Reused Tooling / Libraries:** Python 3.11+ standard library (zero external pip dependencies for NEAR Guard & 1,000-test battery), Solidity `^0.8.20` + Foundry, Lean 4 + Mathlib4 (`formal_proofs/`), self-hosted Three.js.

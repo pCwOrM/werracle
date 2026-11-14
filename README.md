@@ -32,7 +32,14 @@
 </div>
 
 > ⚡ **NEAR HACKATHON 2026 OFFICIAL SUBMISSION (Tracks: Unstoppable DeFi, AI Security & Defense, Agent Economy)**:
-> For Hackathon judges, AI screening agents, and developers: Please inspect the dedicated **[NEAR & Aurora EVM Architecture Guide (`near/README.md`)](near/README.md)** and **[Technical Specification (`docs/NEAR_INTENTS_AND_AURORA_INTEGRATION_SPEC.md`)](docs/NEAR_INTENTS_AND_AURORA_INTEGRATION_SPEC.md)** with live Aurora Testnet contracts, interactive simulation battery (`python3 near/werracle_near_intent_guard.py`), and 1,000-test sealed benchmark suite (`python3 tests/run_1000_sealed_battery.py`).
+> For Hackathon judges, AI screening agents, and developers:
+> - **Architecture & Quickstart:** [`near/README.md`](near/README.md) · **Integration Spec:** [`docs/NEAR_INTENTS_AND_AURORA_INTEGRATION_SPEC.md`](docs/NEAR_INTENTS_AND_AURORA_INTEGRATION_SPEC.md)
+> - **Verify in 10 seconds (Zero-Dependency):** Run `python3 near/werracle_near_intent_guard.py` (uses `--offline` automatically if air-gapped, or `--json` for agent pipelines) -> triages 4 NEAR Intents, verifies bit-exact Q16.16 parity against live Aurora Testnet (`Chain 1313161555`), queries NEAR RPC (`pcworm.near`, `v1.signer`, `intents.near`), and audits a live NEAR Intents 1Click dry quote.
+> - **Run Test Suites:** `python3 -m pytest -q` (`22 passed`) · `python3 tests/run_1000_sealed_battery.py` (`1000/1000 PASS`) · `forge test` (`7/7 PASS`)
+> - **Pre-Hackathon Baseline & Hackathon Diff Disclosure (Rules Q-002 / Q-003 / Q-005):**
+>   * **Pre-Hackathon Baseline ([`pre-hackathon`](https://github.com/pCwOrM/werracle/tree/pre-hackathon) tag, Oct 18 2026):** Core Q16.16 fixed-point research library (`engine/`), early Solidity v1 prototype, initial 1,000-test sealed battery, and baseline Lean 4 theorems (`0 sorry`).
+>   * **Built During NEAR Hackathon 2026 ([Compare `pre-hackathon...hackathon-submission`](https://github.com/pCwOrM/werracle/compare/pre-hackathon...hackathon-submission)):** NEAR Intents 1Click API & Chain Signatures (`v1.signer`) pre-signing policy guard (`near/werracle_near_intent_guard.py`, `tests/test_near_intent_guard.py`); live Aurora Testnet deployments of `WerracleTripodZMod9` (`0x1d7Ae9E...BaF`) and `Werracle` (`0x4085673...cd4`) with bit-exact RPC parity checker; live [`werracle.io`](https://werracle.io) v2.0 interactive Aurora simulator & [`radar.werracle.com`](https://radar.werracle.com) OEV observatory; extended 40-theorem Lean 4 core proof suite & Starknet/Foundry test suites.
+>   * **Reused Tooling / Libraries:** Python 3.11+ stdlib (`near/werracle_near_intent_guard.py`, `run_1000_sealed_battery.py`), Solidity `^0.8.20` + Foundry (`forge`/`cast`), Lean 4 + Mathlib4 (`formal_proofs/`), self-hosted Three.js (UI visualization).
 
 ---
 
@@ -88,11 +95,11 @@ python3 tests/run_1000_sealed_battery.py
 ### 2. Query Live Aurora Testnet Contracts (Chain ID `1313161555`)
 
 ```bash
-# Query Werracle.sol (v1.0) on Aurora Testnet
+# Query Werracle.sol (v1.0) on Aurora Testnet (expected: 0x89d689a469210Ef708420294B332b586D00371af)
 cast call 0x4085673F1e45bf26682CA704b2d09C03d1212cd4 "owner()(address)" --rpc-url https://testnet.aurora.dev
 
-# Query WerracleTripodZMod9.sol (v2.0) live decision reflex on Aurora Testnet
-cast call 0x1d7Ae9E1dDDA805539d9e225425804Ef8B9caBaF "previewDecision(bytes32,int64)(bool,uint16,int64,int64)" 0x0000000000000000000000000000000000000000000000000000000000000000 0 --rpc-url https://testnet.aurora.dev
+# Query WerracleTripodZMod9.sol (v2.0) live decision reflex on Aurora Testnet (expected: true, 5266)
+cast call 0x1d7Ae9E1dDDA805539d9e225425804Ef8B9caBaF "previewDecision(bytes32,int64)(bool,uint16)" 0x0000000000000000000000000000000000000000000000000000000000000000 0 --rpc-url https://testnet.aurora.dev
 ```
 
 ### 3. Contract Installation (Foundry)

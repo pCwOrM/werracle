@@ -27,7 +27,8 @@
 </div>
 
 > ⚡ **NEAR HACKATHON 2026 RESMİ BAŞVURUSU (Kategoriler: Unstoppable DeFi, AI Security & Defense, Agent Economy)**:
-> Hackathon jüri üyeleri, yapay zekâ inceleme ajanları ve geliştiriciler için: Canlı Aurora Testnet sözleşmelerini, etkileşimli simülasyon bataryasını (`python3 near/werracle_near_intent_guard.py`) ve 1.000 mühürlü test paketini (`python3 tests/run_1000_sealed_battery.py`) içeren **[NEAR & Aurora EVM Mimari Rehberi (`near/README.md`)](near/README.md)** sayfasını inceleyebilirsiniz.
+> Hackathon jüri üyeleri, yapay zekâ inceleme ajanları ve geliştiriciler için: Canlı Aurora Testnet sözleşmelerini, **NEAR Intents 1Click API + Chain Signatures (`v1.signer`)** ön-imzalama koruma kapısını (`python3 near/werracle_near_intent_guard.py`) ve 1.000 mühürlü test paketini (`python3 tests/run_1000_sealed_battery.py`) içeren **[NEAR & Aurora EVM Mimari Rehberi (`near/README.md`)](near/README.md)** sayfasını inceleyebilirsiniz.
+> * **Hackathon Öncesi Temel & Fark Beyanı (Kurallar Q-002 / Q-003 / Q-005):** Hackathon öncesi temel (`pre-hackathon` etiketi, 18 Ekim 2026) Q16.16 çekirdek motoru (`engine/`) ve ilk Solidity/Lean 4 temelini içerir; hackathon süresince geliştirilen tüm NEAR Intents, 1Click API canlı teklif denetimi, Aurora Testnet sözleşme dağıtımları, bit-birebir EVM parite doğrulayıcı, canlı `werracle.io` & `radar.werracle.com` panelleri ve genişletilmiş Lean 4/Foundry testleri **[`compare/pre-hackathon...hackathon-submission`](https://github.com/pCwOrM/werracle/compare/pre-hackathon...hackathon-submission)** bağlantısında açıkça ayrıştırılmıştır.
 
 ---
 

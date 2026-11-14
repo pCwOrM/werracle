@@ -64,14 +64,20 @@ The underlying $Z/9Z$ ideal decomposition, dynamic boundary invariants, and non-
 Judges and builders can verify the entire pipeline locally and on-chain:
 
 ```bash
-# 1. Run the local NEAR Intent Guard simulation
+# 1. Run NEAR Intent Guard + Live Aurora Bit-Exact Parity + 1Click API Quote Audit
 python3 near/werracle_near_intent_guard.py
+# Or air-gapped offline / JSON agent mode:
+python3 near/werracle_near_intent_guard.py --offline --json
 
-# 2. Inspect Aurora Testnet deployment script
-cat near/deploy_aurora_testnet.sh
+# 2. Query live Aurora Testnet contract (expected: true, 5266)
+cast call 0x1d7Ae9E1dDDA805539d9e225425804Ef8B9caBaF "previewDecision(bytes32,int64)(bool,uint16)" \
+  0x0000000000000000000000000000000000000000000000000000000000000000 0 \
+  --rpc-url https://testnet.aurora.dev
 
-# 3. Verify Lean 4 proof suite
-cd formal_proofs && lake build
+# 3. Run Python & Foundry test suites + inspect Lean 4 formal proofs (0 sorry)
+python3 -m pytest -q
+forge test
+cat formal_proofs/CERTIFICATE.md
 ```
 
 ---
