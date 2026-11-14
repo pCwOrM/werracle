@@ -81,7 +81,17 @@ python3 sim/test_cross_validation.py
 python3 tests/run_1000_sealed_battery.py
 ```
 
-### 2. Sözleşme Kurulumu (Foundry)
+### 2. Canlı Aurora Testnet Sözleşmelerini Sorgulama (Chain ID `1313161555`)
+
+```bash
+# Aurora Testnet üzerinde Werracle.sol (v1.0) sorgusu (beklenen: 0x89d689a469210Ef708420294B332b586D00371af)
+cast call 0x4085673F1e45bf26682CA704b2d09C03d1212cd4 "owner()(address)" --rpc-url https://testnet.aurora.dev
+
+# Aurora Testnet üzerinde WerracleTripodZMod9.sol (v2.0) canlı karar refleksi (beklenen: true, 5266)
+cast call 0x1d7Ae9E1dDDA805539d9e225425804Ef8B9caBaF "previewDecision(bytes32,int64)(bool,uint16)" 0x0000000000000000000000000000000000000000000000000000000000000000 0 --rpc-url https://testnet.aurora.dev
+```
+
+### 3. Sözleşme Kurulumu (Foundry)
 
 ```bash
 forge install pCwOrM/werracle

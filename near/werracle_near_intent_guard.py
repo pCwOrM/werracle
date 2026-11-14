@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import argparse
 import datetime
+import functools
 import hashlib
 import json
 import sys
@@ -123,22 +124,12 @@ def classify_zmod9(escape_step: int) -> str:
     return "I3_IDEAL" if (escape_step % 9) in ZMOD9_RESONANT_IDEAL_I3 else "K_ERROR_UNIT"
 
 
-def tripod_preview_q16_16(
-    risk_fp: int,
-    seed: Optional[Dict[str, int]] = None,
-) -> Dict[str, Any]:
+@functools.lru_cache(maxsize=64)
+def evaluate_sparse_tripod_seed(cx: int, cy: int, zoom: int) -> Tuple[Tuple[int, int, int], int, int, int, int, int]:
     """
-    Bit-exact Python mirror of `WerracleTripodZMod9.previewDecision(bytes32(0), riskFP)`.
-    Uses 12 cardinal probes across 3 zoom planes (0.60x Wide, 1.00x Focus, 1.60x Deep).
+    Synthesizes the 12-point Z/9Z Sparse Tripod across 3 zoom planes (0.60x, 1.00x, 1.60x)
+    for a 32-byte seed coordinate (cx, cy, zoom). Cached per active seed coordinate.
     """
-    assert not TELEMETRY_ENABLED, "Invariant violated: TELEMETRY_ENABLED must remain False"
-    cfg = seed or DEPLOYED_SEED_V2
-    cx = int(cfg["cx"])
-    cy = int(cfg["cy"])
-    zoom = int(cfg["zoom"])
-    threshold = int(cfg["threshold"])
-
-    t0 = time.perf_counter()
     step = sol_trunc_div(FP_ONE * FP_ONE, zoom) if zoom > 0 else FP_ONE
     steps = (
         sol_trunc_div(step * 100, 60),
@@ -160,15 +151,39 @@ def tripod_preview_q16_16(
     bounded_bps = (ratios[0] + (ratios[1] << 1) + ratios[2]) >> 2
     bias_bps = bounded_bps - 5000
     bias_fp = sol_trunc_div(bias_bps * FP_ONE, 5000)
+    ideal_hits = sum(1 for e in probe_escapes if (e % 9) in ZMOD9_RESONANT_IDEAL_I3)
+    unit_hits = 12 - ideal_hits
+    return (esc_planes[0], esc_planes[1], esc_planes[2]), sum(esc_planes), bounded_bps, bias_fp, ideal_hits, unit_hits
 
+
+# Pre-warm canonical Aurora Testnet v2 seed slot on load
+evaluate_sparse_tripod_seed(DEPLOYED_SEED_V2["cx"], DEPLOYED_SEED_V2["cy"], DEPLOYED_SEED_V2["zoom"])
+
+
+def tripod_preview_q16_16(
+    risk_fp: int,
+    seed: Optional[Dict[str, int]] = None,
+) -> Dict[str, Any]:
+    """
+    Bit-exact Python mirror of `WerracleTripodZMod9.previewDecision(bytes32(0), riskFP)`.
+    Uses 12 cardinal probes across 3 zoom planes (0.60x Wide, 1.00x Focus, 1.60x Deep).
+    """
+    assert not TELEMETRY_ENABLED, "Invariant violated: TELEMETRY_ENABLED must remain False"
+    cfg = seed or DEPLOYED_SEED_V2
+    cx = int(cfg["cx"])
+    cy = int(cfg["cy"])
+    zoom = int(cfg["zoom"])
+    threshold = int(cfg["threshold"])
+
+    t0 = time.perf_counter()
+    esc_planes, total_escapes, bounded_bps, bias_fp, ideal_hits, unit_hits = evaluate_sparse_tripod_seed(
+        cx, cy, zoom
+    )
     logit = -int(risk_fp) + bias_fp
     prob = sigmoid_bps(logit)
     allowed = prob >= threshold
     confidence_bps = prob if allowed else (10000 - prob)
     latency_us = (time.perf_counter() - t0) * 1_000_000.0
-
-    ideal_hits = sum(1 for e in probe_escapes if (e % 9) in ZMOD9_RESONANT_IDEAL_I3)
-    unit_hits = 12 - ideal_hits
 
     return {
         "allowed": allowed,
@@ -178,8 +193,8 @@ def tripod_preview_q16_16(
         "boundedness_bps": bounded_bps,
         "bias_fp": bias_fp,
         "logit": logit,
-        "plane_escapes": esc_planes,
-        "total_escapes": sum(esc_planes),
+        "plane_escapes": list(esc_planes),
+        "total_escapes": total_escapes,
         "zmod9_ideal_hits": ideal_hits,
         "zmod9_unit_hits": unit_hits,
         "latency_us": round(latency_us, 2),

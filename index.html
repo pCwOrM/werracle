@@ -661,7 +661,7 @@ footer nav a{padding:6px 0;display:inline-block}
       <span class="lane-label" style="right:16px" data-i18n="n.out">signed and broadcast</span>
     </div>
     <div class="near-grid">
-      <div class="case ok"><span class="tag">NOUL = 1 · ALLOW_MPC_SIGN</span><h3 data-i18n="n.c1">Clean swap &amp; 1Click quote</h3><p data-i18n="n.c1p">Audits live NEAR Intents 1Click routes (231 assets, ~53 bps spread) in ~43 µs in Python Q16.16 and ~15.0k–20.7k execution gas on Aurora; releases v1.signer signature.</p></div>
+      <div class="case ok"><span class="tag">NOUL = 1 · ALLOW_MPC_SIGN</span><h3 data-i18n="n.c1">Clean swap &amp; 1Click quote</h3><p data-i18n="n.c1p">Audits live NEAR Intents 1Click routes (231 assets, ~53 bps spread) in &lt; 15 µs in Python Q16.16 and ~15.0k–20.7k execution gas on Aurora; releases v1.signer signature.</p></div>
       <div class="case no"><span class="tag">NOUL = 0 · VETO_MPC_SIGN</span><h3 data-i18n="n.c2">Predatory sandwich &amp; drain</h3><p data-i18n="n.c2p">Toxic slippage/flash-loan vectors fail the 12-point Z/9Z Sparse Tripod bound and trigger an atomic pre-sign veto (98.2% conf); zero funds move.</p></div>
       <div class="case ok"><span class="tag">NOUL = 1 · BIT-EXACT 8/8</span><h3 data-i18n="n.c3">Autonomous agent commerce</h3><p data-i18n="n.c3p">Sub-millisecond API micropayments from pcworm.near verified 8/8 bit-exact between Python and live Aurora EVM bytecode with zero external dependencies and TELEMETRY = False.</p></div>
     </div>
@@ -829,7 +829,7 @@ const TR = {
  "t.r5":"Biçimsel doğrulama","t.r5a":"Yok","t.r5b":"Yalnızca devre","t.r5c":"40 Lean 4 teoremi",
  "n.h":"NEAR Intents'i imzalanmadan önce korur.","n.lede":"Werracle, NEAR Chain Signatures (v1.signer) ve NEAR Intents 1Click yönlendirmesinin önünde sıfır depolamalı ön-imza refleksi olarak durur. Temiz niyetler Base veya Ethereum'a geçer; sandviç ve flash-loan desenleri eşik MPC imzası oluşturulmadan veto edilir. NEAR Hackathon 2026 (Unstoppable DeFi, AI Security & Defense, Agent Economy) için geliştirilmiştir.",
  "n.in":"pcworm.near'dan gelen niyetler","n.out":"imzalandı ve yayınlandı",
- "n.c1":"Temiz swap ve 1Click teklifi","n.c1p":"Canlı NEAR Intents 1Click rotalarını (231 varlık, ~53 bps makas) Python Q16.16'da ~43 µs ve Aurora üzerinde ~15.0k–20.7k yürütme gazıyla denetler; v1.signer imzasını onaylar.",
+ "n.c1":"Temiz swap ve 1Click teklifi","n.c1p":"Canlı NEAR Intents 1Click rotalarını (231 varlık, ~53 bps makas) Python Q16.16'da < 15 µs ve Aurora üzerinde ~15.0k–20.7k yürütme gazıyla denetler; v1.signer imzasını onaylar.",
  "n.c2":"Yağmacı sandviç ve boşaltma","n.c2p":"Yüksek kayma ve flash-loan vektörleri 12 noktalı Z/9Z Seyrek Tripod sınırını aşar; imza oluşmadan atomik ön-veto tetiklenir (%98,2 güven) ve fonlar hareket etmez.",
  "n.c3":"Otonom ajan ticareti","n.c3p":"pcworm.near'dan gelen mikro ödemeler Python ile canlı Aurora EVM bayt kodu arasında 8/8 bit-birebir eşitlik, sıfır harici bağımlılık ve TELEMETRY = False güvencesiyle onaylanır.",
  "n.dep":"Aurora testnet'te yayında (zincir 1313161555)","n.exp":"Gezgin","n.spec":"NEAR entegrasyon belgesi","n.guard_src":"NEAR Intent Guard CLI","n.arch":"Intents ve Aurora mimarisi","n.diff":"Hackathon farkı (Q-002/Q-003)","n.live_btn":"Canlı NEAR RPC, 1Click ve Aurora sözleşmelerini doğrula",

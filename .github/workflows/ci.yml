@@ -38,6 +38,7 @@ jobs:
       - name: Run NEAR Intent Guard (Offline Parity Suite)
         run: |
           python near/werracle_near_intent_guard.py --offline --eval-risk 2.5
+          python tests/test_near_intent_guard.py
 
       - name: Run Orthogonal Parameter & All-States Lean 4 Bridge Verification
         run: |

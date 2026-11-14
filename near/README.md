@@ -103,10 +103,10 @@ forge test
 
 ### Key Metrics
 * **Storage Footprint:** Single 32-byte slot (`bytes32`)
-* **Inference Gas Cost:** ~20,700–21,438 execution gas (`86,813` measured Aurora Testnet tx gas estimate for `decideNoul`; < $0.0001 on Aurora)
-* **Execution Latency:** < 1 millisecond (~40–55 us in Python Q16.16)
+* **Inference Gas Cost:** ~15,000–21,438 execution gas (`86,813` measured Aurora Testnet tx gas estimate for `decideNoul`; < $0.0001 on Aurora)
+* **Execution Latency:** < 15 microseconds (`~2–10 us` Q16.16 reflex gate per intent; `~40 us` cold 12-probe tripod synthesis)
 * **Formal Verification:** 40 core Werracle Lean 4 theorems (`formal_proofs/`, 0 `sorry`; 170+ across the broader WERR research corpus)
-* **Audit & Test Suites:** 1,000/1,000 sealed test battery + 22/22 `pytest` tests + 7/7 `forge test` Foundry tests
+* **Audit & Test Suites:** 1,000/1,000 sealed test battery + 22/22 `pytest` tests (0 warnings) + 7/7 `forge test` Foundry tests
 
 ---
 

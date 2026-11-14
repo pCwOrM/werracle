@@ -63,6 +63,8 @@ def test_canonical_intent_triage_invariants():
     assert results["intent_002_predatory_sandwich"]["verdict"] == "VETO"
     assert results["intent_002_predatory_sandwich"]["mpc_policy"] == "VETO_MPC_SIGN"
     assert results["intent_003_flashloan_lending_drain"]["verdict"] == "VETO"
+    for r in results.values():
+        assert r["latency_us"] < 50.0
 
 
 def test_adversarial_monotone_veto():
@@ -101,10 +103,24 @@ def test_zmod9_classification():
         assert classify_zmod9(step) == "K_ERROR_UNIT"
 
 
-def test_cli_offline_json_exit_zero(capsys):
-    rc = main(["--offline", "--json"])
-    assert rc == 0
-    out = json.loads(capsys.readouterr().out)
+def test_cli_offline_json_exit_zero(capsys=None):
+    if capsys is not None:
+        rc = main(["--offline", "--json"])
+        assert rc == 0
+        out = json.loads(capsys.readouterr().out)
+    else:
+        out = run_suite(offline=True)
     assert out["telemetry_enabled"] is False
     assert out["live"]["mode"] == "OFFLINE"
     assert len(out["scenarios"]) == 4
+
+
+if __name__ == "__main__":
+    test_privacy_invariant()
+    test_bit_exact_aurora_v2_vectors()
+    test_canonical_intent_triage_invariants()
+    test_adversarial_monotone_veto()
+    test_abi_calldata_and_decode_roundtrip()
+    test_zmod9_classification()
+    test_cli_offline_json_exit_zero()
+    print("[PASS] All 7 NEAR Intent Guard unit tests passed.")

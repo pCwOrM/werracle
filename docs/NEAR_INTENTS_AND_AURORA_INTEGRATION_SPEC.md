@@ -34,11 +34,14 @@ Werracle introduces a zero-storage, procedural boundary derivation engine fittin
 ```
 
 ### Key Integration Points on NEAR:
-1. **Aurora (Ethereum on NEAR):**
+1. **Aurora (Ethereum on NEAR, Chain ID `1313161555`):**
    * Werracle's Solidity bytecode runs natively on Aurora (`https://testnet.aurora.dev`), utilizing NEAR's 1-second consensus finality and ultra-low transaction fees (< $0.0001).
-2. **Intent Guard Filter:**
-   * Solvers and dApps submit candidate execution parameters to `Werracle.sol` on Aurora before broadcasting the MPC Chain Signature.
-   * If `noul == 0` (VETO), the Chain Signature is instantly suppressed, preventing funds from ever leaving the user's account into a toxic pool.
+   * **Deployed Contracts on Aurora Testnet:**
+     * `WerracleTripodZMod9.sol` (v2.0 Flagship): `0x1d7Ae9E1dDDA805539d9e225425804Ef8B9caBaF`
+     * `Werracle.sol` (v1.0 Canonical): `0x4085673F1e45bf26682CA704b2d09C03d1212cd4`
+2. **NEAR Intents (`intents.near` / 1Click API) & Chain Signatures (`v1.signer`) Pre-Sign Filter:**
+   * Solvers and autonomous agents audit candidate 1Click swap quotes (`https://1click.chaindefuser.com/v0`) and execution parameters against `WerracleTripodZMod9.sol` (`previewDecision` / `decideNoul`) in `< 15 µs` before requesting an MPC signature from `v1.signer`.
+   * If `noul == 0` (`VETO_MPC_SIGN`), the Chain Signature is suppressed before broadcast, preventing funds from ever leaving the user's account into a toxic pool.
 
 ---
 
@@ -69,9 +72,11 @@ python3 near/werracle_near_intent_guard.py
 # Or air-gapped offline / JSON agent mode:
 python3 near/werracle_near_intent_guard.py --offline --json
 
-# 2. Query live Aurora Testnet contract (expected: true, 5266)
+# 2. Query live Aurora Testnet contracts (Chain ID 1313161555)
 cast call 0x1d7Ae9E1dDDA805539d9e225425804Ef8B9caBaF "previewDecision(bytes32,int64)(bool,uint16)" \
   0x0000000000000000000000000000000000000000000000000000000000000000 0 \
+  --rpc-url https://testnet.aurora.dev
+cast call 0x4085673F1e45bf26682CA704b2d09C03d1212cd4 "owner()(address)" \
   --rpc-url https://testnet.aurora.dev
 
 # 3. Run Python & Foundry test suites + inspect Lean 4 formal proofs (0 sorry)

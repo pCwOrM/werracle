@@ -38,7 +38,7 @@ except ImportError:
 from werr_fixed_point import WerracleFixedPointEngine, ONE
 
 
-def test_cross_validation():
+def run_cross_validation() -> bool:
     print("\n" + "=" * 65)
     print(" 🌊 WERRACLE Q16.16 FIXED-POINT CROSS-VALIDATION SUITE")
     print("=" * 65)
@@ -107,6 +107,10 @@ def test_cross_validation():
     return accuracy == 100.0
 
 
+def test_cross_validation() -> None:
+    assert run_cross_validation()
+
+
 if __name__ == "__main__":
-    success = test_cross_validation()
+    success = run_cross_validation()
     sys.exit(0 if success else 1)
