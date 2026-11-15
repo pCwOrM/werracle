@@ -3,7 +3,7 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://werracle.io/</loc>
-    <lastmod>2026-10-26</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -11,25 +11,25 @@
       <image:title>Werracle On-Chain AI Decision Oracle</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://werracle.io/assets/werracle_logo_oracle.svg</image:loc>
+      <image:loc>https://werracle.io/assets/werracle-mark.png</image:loc>
       <image:title>Werracle Protocol Emblem</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://werracle.io/Werracle_EVM_AI_Oracle_Research_Paper.html</loc>
-    <lastmod>2026-10-26</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://werracle.io/apidocs.html</loc>
-    <lastmod>2026-10-26</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://werracle.io/radar.html</loc>
-    <lastmod>2026-10-26</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.9</priority>
   </url>

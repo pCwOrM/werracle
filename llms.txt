@@ -1,0 +1,21 @@
+# werracle.io — Zero-Storage On-Chain AI Decision Oracle
+
+> Werracle is an intra-block, zero-storage on-chain AI decision oracle encoded inside a single 32-byte EVM storage slot (`bytes32`). It executes fixed-point Q16.16 polynomial escape dynamics directly in Solidity (~20.7k execution gas) and protects NEAR Intents & Aurora smart contracts with 40 Lean 4 formal proofs. Developed by ITouch Systems.
+
+## Canonical Pages
+- [Werracle Protocol Overview & EVM/NEAR Demo](https://werracle.io/): Live 32-byte slot oracle, gas benchmarks, and 40 Lean 4 formal safety proofs.
+- [Research Paper (arXiv:2609.30719)](https://werracle.io/Werracle_EVM_AI_Oracle_Research_Paper.html): Sub-cent intra-block AI reflex oracles, Uniswap v4 dynamic fee hooks (`WerracleFeeHook.sol`), and flash-loan circuit breakers.
+- [EVM & REST Gateway API Docs](https://werracle.io/apidocs.html): Solidity interface (`IWerracle`), Chain ID 4242 devnet & Aurora Testnet (`1313161555`) RPC endpoints.
+- [Werracle Radar Observatory](https://werracle.io/radar.html): Empirical DeFi liquidation order-flow observatory and Chainlink SVR telemetry preview.
+
+## Key Technical Facts
+- Model storage: 1 EVM storage slot (`bytes32`), 0 bytes persistent tensor weights.
+- Gas cost: ~20.7k execution gas on EVM L1/L2 (sub-cent on Base & Arbitrum).
+- Formal verification: 40 Lean 4 theorems; 1,000-vector sealed parity battery.
+- GitHub: https://github.com/pCwOrM/werracle
+
+## Connected Ecosystem
+- [radar.werracle.com](https://radar.werracle.com/): Production DeFi liquidation surveillance across Morpho Blue and Aave v3 + Chainlink SVR API.
+- [werracle.com](https://werracle.com/): Corporate portal, commercial BSL 1.1 licensing, and institutional data room (ITouch Systems).
+- [werr.io](https://werr.io/): Off-chain Zero-VRAM System-1 fractal decision engine powering Werracle.
+- [answerr.me](https://answerr.me/): Deterministic natural-language policy compiler and System-1 decision gate SaaS.
