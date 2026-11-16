@@ -385,6 +385,54 @@
   -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}'</code></pre>
     </div>
 
+    <!-- Section: Werracle Radar & Anti-Liquidation Shield Commercial REST/SSE Gateway -->
+    <div style="margin-top:42px; margin-bottom:14px; display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:12px;">
+      <div>
+        <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.8px; color:var(--accent-blue); font-weight:700; margin-bottom:4px;">Production Surveillance &amp; Anti-Liquidation API (api.werracle.com)</div>
+        <h2 style="font-size:1.4rem; margin:0; color:#fff;">Werracle Radar &amp; Phase-3 Shield Gateway</h2>
+      </div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <a href="https://radar.werracle.com/docs" target="_blank" rel="noopener" class="btn-try" style="text-decoration:none;">📘 Full Radar Docs ↗</a>
+        <a href="https://radar.werracle.com/pricing#subscribe-section" target="_blank" rel="noopener" class="btn-try" style="text-decoration:none; border-color:var(--accent-blue); color:var(--accent-blue);">⚡ API Key Checkout ($99 / $199 / $499) ↗</a>
+      </div>
+    </div>
+
+    <div class="endpoint-card">
+      <div class="endpoint-header">
+        <span class="badge badge-post">POST</span>
+        <span class="endpoint-url">https://api.werracle.com/v1/radar/shield/check</span>
+      </div>
+      <p style="color:var(--text-muted); font-size:0.9rem;">
+        <strong>Anti-Liquidation Shield Pre-Flight Gate (Developer+ &bull; $99/30d, 300 req/min):</strong> Evaluates proposed borrow or collateral operations across Base, Ethereum L1, and Arbitrum before signing. Returns deterministic <code>PASS</code> / <code>WARN</code> / <code>BLOCK</code> verdict, post-action Health Factor, oracle-shock survival, and rescue metrics. Companion institutional bulk endpoint: <code>POST /v1/radar/shield/batch</code> (up to 25 wallets).
+      </p>
+      <pre><code>curl -s -X POST "https://api.werracle.com/v1/radar/shield/check" \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: $WERRACLE_KEY" \
+  -d '{"address":"0xe7be437c...","chain":"base","action":"borrow","delta_debt_usd":500,"min_safe_hf":1.15,"shock_pct":10}'</code></pre>
+    </div>
+
+    <div class="endpoint-card">
+      <div class="endpoint-header">
+        <span class="badge badge-get">GET</span>
+        <span class="endpoint-url">https://api.werracle.com/v1/radar/opportunities/open-race</span>
+      </div>
+      <p style="color:var(--text-muted); font-size:0.9rem;">
+        <strong>12-Chain Non-SVR Open-Race, Live Solvers &amp; Wallet Dossier (Pro+ &bull; $199/30d, 1,200 req/min):</strong> Also includes <code>GET /v1/radar/shield/position/{chain}/{address}</code> (wallet deleverage planner), <code>GET /v1/radar/solvers/live</code> (1,600+ live multi-chain solver wins &amp; HHI), and 24/7 active push worker <code>POST /v1/radar/alerts/subscribe</code>.
+      </p>
+      <pre><code>curl -s -H "X-API-Key: $WERRACLE_KEY" "https://api.werracle.com/v1/radar/opportunities/open-race?window=7d&amp;chain=all"</code></pre>
+    </div>
+
+    <div class="endpoint-card">
+      <div class="endpoint-header">
+        <span class="badge badge-get">SSE / GET</span>
+        <span class="endpoint-url">https://api.werracle.com/v1/radar/stream/oracle-shocks</span>
+      </div>
+      <p style="color:var(--text-muted); font-size:0.9rem;">
+        <strong>Faz-2 Sub-Second Oracle Shock Stream &amp; Vault Stress Testing (Institutional &bull; $499/30d, 3,000 req/min):</strong> Real-time Server-Sent Events (<code>text/event-stream</code>) of Arbitrum/Base oracle shocks, <code>GET /v1/radar/telemetry/faz2-leads</code>, MetaMorpho stress tests (<code>/curator/{vault}</code>), and <code>/neural-alpha</code>.
+      </p>
+      <pre><code>curl -N -H "X-API-Key: $WERRACLE_KEY" "https://api.werracle.com/v1/radar/stream/oracle-shocks?chain=all&amp;replay=5"</code></pre>
+    </div>
+
   </main>
 
   <footer>

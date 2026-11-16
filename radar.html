@@ -188,9 +188,26 @@ footer a:hover{color:var(--nacre)}
       </p>
       <div class="actions">
         <a class="btn primary" href="https://radar.werracle.com" target="_blank" rel="noopener">⚡ Open Fullscreen Radar</a>
+        <a class="btn ghost" href="https://radar.werracle.com/docs#phase3-shield" target="_blank" rel="noopener">🛡️ Anti-Liquidation Shield &amp; API Docs</a>
+        <a class="btn ghost" href="https://radar.werracle.com/pricing#subscribe-section" target="_blank" rel="noopener">💳 API Pricing ($99 / $199 / $499)</a>
         <a class="btn ghost" href="https://doi.org/10.5281/zenodo.23642090" target="_blank" rel="noopener">📄 Read Academic Paper (DOI)</a>
         <a class="btn ghost" href="https://github.com/pCwOrM/werracle/blob/main/docs/EMPIRICAL_OEV_AND_LIQUIDATION_RESEARCH_2026.md" target="_blank" rel="noopener">📘 GitHub Monograph</a>
         <a class="btn ghost" href="https://api.werracle.com/v1/radar/overview" target="_blank" rel="noopener">🔌 JSON Status API</a>
+      </div>
+
+      <!-- Phase-3 Commercial B2B Gateway Strip -->
+      <div class="panel" style="margin-bottom:24px;border-color:rgba(122,226,255,.32);background:linear-gradient(135deg,rgba(15,13,43,.85),rgba(16,185,129,.08))">
+        <div class="panel-h" style="margin-bottom:10px">
+          <div class="panel-title"><span>🛡️ Commercial DaaS &amp; Anti-Liquidation Shield Gateway (<code>api.werracle.com</code>)</span></div>
+          <a class="pill" href="https://radar.werracle.com/pricing#subscribe-section" target="_blank" rel="noopener">$0 Explorer &bull; $99 Dev &bull; $199 Pro &bull; $499 Institutional</a>
+        </div>
+        <p class="panel-note" style="margin:0;color:var(--nacre);font-size:13.5px;line-height:1.6">
+          Production REST + SSE intelligence layer on top of our Base L2, Arbitrum One, Ethereum L1, and 12-chain feeds:
+          <b>Anti-Liquidation Shield</b> (<code>POST /v1/radar/shield/check</code>, <code>POST /shield/batch</code>, <code>GET /shield/position/{chain}/{address}</code> returning deterministic <code>PASS</code>/<code>WARN</code>/<code>BLOCK</code> &amp; repair plans),
+          <b>12-Chain Non-SVR Open-Race &amp; Live Solvers</b> (<code>/opportunities/open-race</code>, <code>/solvers/live</code>),
+          <b>24/7 Webhook &amp; Telegram HF Alerts</b> (<code>/alerts/subscribe</code>),
+          and <b>Faz-2 Sub-Second Oracle Shocks</b> (<code>/telemetry/faz2-leads</code>, SSE <code>/stream/oracle-shocks</code>).
+        </p>
       </div>
 
       <!-- Surveillance Metrics Grid -->

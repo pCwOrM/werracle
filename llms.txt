@@ -15,7 +15,7 @@
 - GitHub: https://github.com/pCwOrM/werracle
 
 ## Connected Ecosystem
-- [radar.werracle.com](https://radar.werracle.com/): Production DeFi liquidation surveillance across Morpho Blue and Aave v3 + Chainlink SVR API.
+- [radar.werracle.com](https://radar.werracle.com/): Production DeFi liquidation surveillance across Morpho Blue, Aave v3 & Compound v3, Anti-Liquidation Shield (`POST /v1/radar/shield/check`, `GET /v1/radar/shield/position/{chain}/{address}`), 12-chain open-race & live solver intelligence (`/v1/radar/opportunities/open-race`, `/v1/radar/solvers/live`), 24/7 `/alerts/subscribe` push worker, and Faz-2 oracle-shock SSE streaming (`/v1/radar/stream/oracle-shocks`) ($0 Explorer · $99 Developer · $199 Pro · $499 Institutional).
 - [werracle.com](https://werracle.com/): Corporate portal, commercial BSL 1.1 licensing, and institutional data room (ITouch Systems).
 - [werr.io](https://werr.io/): Off-chain Zero-VRAM System-1 fractal decision engine powering Werracle.
 - [answerr.me](https://answerr.me/): Deterministic natural-language policy compiler and System-1 decision gate SaaS.
