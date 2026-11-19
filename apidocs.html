@@ -417,7 +417,7 @@
         <span class="endpoint-url">https://api.werracle.com/v1/radar/opportunities/open-race</span>
       </div>
       <p style="color:var(--text-muted); font-size:0.9rem;">
-        <strong>12-Chain Non-SVR Open-Race, Live Solvers &amp; Wallet Dossier (Pro+ &bull; $199/30d, 1,200 req/min):</strong> Also includes <code>GET /v1/radar/shield/position/{chain}/{address}</code> (wallet deleverage planner), <code>GET /v1/radar/solvers/live</code> (1,600+ live multi-chain solver wins &amp; HHI), and 24/7 active push worker <code>POST /v1/radar/alerts/subscribe</code>.
+        <strong>12-Chain Non-SVR Open-Race, Live Solvers &amp; Wallet Dossier (Pro+ &bull; $199/30d, 1,200 req/min):</strong> Base events include per-tx execution telemetry (<code>winner_tx_index</code>, <code>oracle_update_tx_index</code>, <code>priority_fee_gwei</code>, <code>gas_used</code>, <code>after_svr_bundle</code> for same-block post-SVR leftovers). Also includes <code>GET /v1/radar/shield/position/{chain}/{address}</code> (wallet deleverage planner), <code>GET /v1/radar/solvers/live</code> (1,600+ live multi-chain solver wins &amp; HHI), and 24/7 active push worker <code>POST /v1/radar/alerts/subscribe</code>.
       </p>
       <pre><code>curl -s -H "X-API-Key: $WERRACLE_KEY" "https://api.werracle.com/v1/radar/opportunities/open-race?window=7d&amp;chain=all"</code></pre>
     </div>
@@ -428,7 +428,7 @@
         <span class="endpoint-url">https://api.werracle.com/v1/radar/stream/oracle-shocks</span>
       </div>
       <p style="color:var(--text-muted); font-size:0.9rem;">
-        <strong>Faz-2 Sub-Second Oracle Shock Stream &amp; Vault Stress Testing (Institutional &bull; $499/30d, 3,000 req/min):</strong> Real-time Server-Sent Events (<code>text/event-stream</code>) of Arbitrum/Base oracle shocks, <code>GET /v1/radar/telemetry/faz2-leads</code>, MetaMorpho stress tests (<code>/curator/{vault}</code>), and <code>/neural-alpha</code>.
+        <strong>Faz-2 Sub-Millisecond Event-Driven Oracle Shock Stream &amp; Vault Stress Testing (Institutional &bull; $499/30d, 3,000 req/min):</strong> Linux <code>inotify</code> event-driven Server-Sent Events (<code>text/event-stream</code>) of Base Flashblocks &amp; Arbitrum Sequencer oracle shocks with <code>feed_address</code>, <code>new_price</code>, <code>affected_assets</code>, <code>borrower</code>, and <code>hf_projected</code>; plus <code>GET /v1/radar/telemetry/faz2-leads</code>, MetaMorpho stress tests (<code>/curator/{vault}</code>), and <code>/neural-alpha</code>.
       </p>
       <pre><code>curl -N -H "X-API-Key: $WERRACLE_KEY" "https://api.werracle.com/v1/radar/stream/oracle-shocks?chain=all&amp;replay=5"</code></pre>
     </div>
