@@ -3,7 +3,7 @@
 > **Document Status:** Permanent Historical & Empirical Research Archive (Unabridged)  
 > **Repository:** [pCwOrM/werracle](https://github.com/pCwOrM/werracle)  
 > **Archival Snapshot Date:** October 2026  
-> **Licensor:** ITouch Bilişim Sistemleri Ltd. Şti. (`ITouch Systems` · Cukurova University Science Park)  
+> **Licensor:** ITouch Bilişim Sistemleri Ltd. Şti. (`ITouch Systems` · Cukurova University Technopark)  
 > **Scientific Co-Authors & Inventors:** Volkan Dağlı (Anadolu University), Dr. Zerrin Dağlı (Mersin University), Dağhan Dağlı (Toros University)  
 >
 > *Notice: This document permanently preserves the cumulative historical research logs, ablation matrices, experimental hardware telemetry, and empirical benchmarks of the werracle initiative. It serves as an unalterable academic ledger supporting our published monographs, CERN Zenodo records, and patent disclosures.*
