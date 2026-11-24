@@ -42,6 +42,25 @@
 >   * **Built During NEAR Hackathon 2026 ([Compare `pre-hackathon...hackathon-submission`](https://github.com/pCwOrM/werracle/compare/pre-hackathon...hackathon-submission)):** NEAR Intents 1Click API & Chain Signatures (`v1.signer`) pre-signing policy guard (`near/werracle_near_intent_guard.py`, `tests/test_near_intent_guard.py`); live Aurora Testnet deployments of `WerracleTripodZMod9` (`0x1d7Ae9E...BaF`) and `Werracle` (`0x4085673...cd4`) with bit-exact RPC parity checker; live [`werracle.io`](https://werracle.io) v2.0 interactive Aurora simulator & [`radar.werracle.com`](https://radar.werracle.com) OEV observatory; extended 40-theorem Lean 4 core proof suite & Starknet/Foundry test suites.
 >   * **Reused Tooling / Libraries:** Python 3.11+ stdlib (`near/werracle_near_intent_guard.py`, `run_1000_sealed_battery.py`), Solidity `^0.8.20` + Foundry (`forge`/`cast`), Lean 4 + Mathlib4 (`formal_proofs/`), self-hosted Three.js (UI visualization).
 
+<p align="center">
+  <img src="assets/demo.gif" alt="Werracle On-Chain AI Guard Live Demo" width="820" />
+</p>
+
+## ⚡ 30-Second Quick Start
+
+```bash
+git clone https://github.com/pCwOrM/werracle.git && cd werracle
+python near/werracle_near_intent_guard.py --offline --json
+```
+
+**Observed Output:**
+```json
+{
+  "deployed_seed": {"cx": -93061, "cy": 14417, "zoom": 2949120, "threshold": 5000},
+  "scenarios": [{"intent_id": "intent_001_clean_swap", "risk_fp": -12873}]
+}
+```
+
 ---
 
 ## 🏛️ The Paradigm
