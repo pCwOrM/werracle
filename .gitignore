@@ -42,3 +42,7 @@ id_ed25519*
 *credentials*.json
 *credentials*.py
 *.secret*
+
+# Internal mail / outreach logs
+mail.json
+tests/results/*dispatch_log*.json
