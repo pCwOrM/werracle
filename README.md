@@ -1,15 +1,17 @@
 <div align="center">
 
 # WERRACLE
-### Zero-Storage On-Chain AI Decision Oracle & DeFi Risk Radar
+### Constant-Storage (Single-Slot) On-Chain AI Decision Oracle & DeFi Risk Radar
 
+[![arXiv Preprint](https://img.shields.io/badge/arXiv-2611.32393_%7C_2609.30719_%7C_2609.33066-b31b1b.svg?logo=arxiv&logoColor=white)](https://arxiv.org/abs/2609.30719)
+[![alphaXiv: 2609.30719](https://img.shields.io/badge/alphaXiv-2609.30719_(Poster%20v2)-6d28d9.svg)](https://www.alphaxiv.org/abs/2609.30719)
+[![Elsevier SSRN](https://img.shields.io/badge/SSRN-7659198_(v4.0)_%7C_7626279-005a9c.svg?logo=elsevier&logoColor=white)](https://papers.ssrn.com/abstract=7626279)
+[![Hugging Face: WERR Lab](https://img.shields.io/badge/Hugging_Face-WERR_Lab-FFD21E.svg?logo=huggingface&logoColor=black)](https://huggingface.co/werr-lab)
 [![License: BSL 1.1](https://img.shields.io/badge/License-BSL_1.1-0ea5e9.svg)](LICENSE)
 [![Solidity: ^0.8.24](https://img.shields.io/badge/Solidity-^0.8.24%20(Q16.16)-6366f1.svg)](contracts/)
 [![EVM Devnet: Chain ID 4242](https://img.shields.io/badge/EVM_Devnet-Chain_4242-10b981.svg)](https://api.answerr.me/werracle/status)
 [![Oracle Concept DOI](https://img.shields.io/badge/Oracle_Concept_DOI-10.5281%2Fzenodo.22942598-024dad.svg)](https://doi.org/10.5281/zenodo.22942598)
 [![OEV v2 Concept DOI](https://img.shields.io/badge/OEV_v2_Concept_DOI-10.5281%2Fzenodo.23623588-024dad.svg)](https://doi.org/10.5281/zenodo.23623588)
-[![arXiv Preprint](https://img.shields.io/badge/arXiv-2609.30719_%7C_2609.33066-b91c1c.svg)](https://arxiv.org/abs/2609.30719)
-[![Elsevier SSRN](https://img.shields.io/badge/SSRN-7626279_(Distributed)-002f6c.svg)](https://papers.ssrn.com/abstract=7626279)
 [![HF OEV Dataset](https://img.shields.io/badge/%F0%9F%A4%97_HF_Dataset-werracle--oev--liquidation--2026_(1.16k%2B)-ffcc00.svg)](https://huggingface.co/datasets/pCwOrM/werracle-oev-liquidation-dataset-2026)
 [![Base Mainnet: Werrium (WERR)](https://img.shields.io/badge/Base_Mainnet-Werrium_(%24WERR)_0xFfa2...96d2-0052ff.svg)](https://basescan.org/address/0xFfa2c95b68B76af00FBD84295cBA5e5268a996d2)
 [![Starknet Grant: In Screening](https://img.shields.io/badge/Starknet_Seed_Grant-In_Screening_(Cairo_2.x)-8b5cf6.svg)](docs/STARKNET_ARCHITECTURE_AND_SEED_GRANT_ROADMAP.md)
@@ -17,7 +19,7 @@
 [![Live Radar](https://img.shields.io/badge/Live_Telemetry-radar.werracle.com-38bdf8.svg)](https://radar.werracle.com)
 
 <p align="center">
-  <b>A zero-storage, fixed-point procedural decision oracle that executes deterministic AI reflexes directly inside the Ethereum Virtual Machine (EVM)—enabling dynamic Uniswap v4 fee hooks, sub-block MEV defense, and real-time lending vault risk telemetry without off-chain trust assumptions.</b>
+  <b>A constant-storage (single bytes32/felt252 slot), fixed-point procedural decision oracle that executes deterministic AI reflexes directly inside the Ethereum Virtual Machine (EVM)—enabling dynamic Uniswap v4 fee hooks, sub-block MEV defense, and real-time lending vault risk telemetry without off-chain trust assumptions.</b>
 </p>
 
 [Quickstart](#-quickstart--deployment) •
